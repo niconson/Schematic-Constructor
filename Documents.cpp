@@ -168,6 +168,7 @@ BEGIN_MESSAGE_MAP(CFreePcbDoc, CDocument)
 	ON_COMMAND(ID_PLAY_REFLIST20, PlayRefList20)
 	ON_COMMAND(ID_VIEW_SWITCH_PCB, SwitchToPCB)
 	ON_COMMAND(ID_EDIT_SELECT_ALL, OnEditSelectAll)
+	ON_COMMAND(ID_SEL_ADJACENT, SelectAdj)
 	ON_COMMAND(ID_SEL_SIMILAR_POLY, OnSimilarPoly)
 	ON_COMMAND(ID_SEL_REPLACE_POLY, OnReplacePoly)
 	ON_COMMAND(ID_COMPONENT_NOTE, OnComponentNote)
@@ -246,7 +247,7 @@ CFreePcbDoc::CFreePcbDoc()
 	m_auto_elapsed = 0;
 	bNoFilesOpened = TRUE;
 	// VERSION (key)
-	m_version = 1.415;
+	m_version = 1.416;
 	m_file_version = m_version;
 	m_protection = 0;
 	m_current_page = 0;
@@ -12635,6 +12636,17 @@ int CFreePcbDoc::RenumberComplexPart( CText * description, CString * old_suff, C
 	return 1;
 }
 
+void CFreePcbDoc::SelectAdj()
+{
+	int nc = SelectAdjacent(m_outline_poly);
+	if (nc)
+	{
+		m_view->m_sel_count += nc;
+		m_view->SetCursorMode(CUR_GROUP_SELECTED);
+		m_view->HighlightGroup();
+		OnRangeCmds(NULL);
+	}
+}
 
 void CFreePcbDoc::OnSimilarPoly()
 {

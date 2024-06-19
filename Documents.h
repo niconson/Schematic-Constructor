@@ -376,6 +376,7 @@ public:
 	afx_msg void OnEditPasteFromFile();
 	afx_msg void OnEditSelectAll();
 	afx_msg void OnFilePrint();
+	afx_msg void SelectAdj();
 	afx_msg void OnSimilarPoly();
 	afx_msg void OnReplacePoly();
 	afx_msg BOOL OnCompare( UINT CMD );

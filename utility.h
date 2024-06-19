@@ -172,3 +172,4 @@ CText * GetPartPin( CArray<CPolyLine> * poly_arr, CText * partT, CString * pinN 
 void ExtractComponentName( CString * V, CString * F );
 void ReplaceCharsForURL( CString * sURL );
 CString AnsiToUtf8 ( CString * url );
+int SelectAdjacent(CArray<CPolyLine>* arr);

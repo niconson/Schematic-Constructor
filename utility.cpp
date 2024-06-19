@@ -3384,3 +3384,80 @@ CString AnsiToUtf8 ( CString * url )
 	delete aurl;
 	return ret;
 }
+
+int SelectAdjacent ( CArray<CPolyLine>* arr )
+{
+	int nc = 0;
+	int mnc = 0;
+	//BOOL bBreak;
+	do
+	{
+		mnc = nc;
+		for (int i = 0; i < arr->GetSize(); i++)
+		{
+			//bBreak = 0;
+			CPolyLine* p = &arr->GetAt(i);
+			for (int ii = 0; ii < p->GetNumSides(); ii++)
+			{
+				if (p->GetSideSel(ii) == 0)
+				{
+					RECT R1 = p->GetBounds();
+					for (int i2 = 0; i2 < arr->GetSize(); i2++)
+					{
+						CPolyLine* p2 = &arr->GetAt(i2);
+						RECT R2 = p2->GetBounds();
+						if (RectsIntersection(R1, R2) == -1)
+							continue;
+						for (int ii2 = 0; ii2 < p2->GetNumSides(); ii2++)
+						{
+							if (p2->GetSideSel(ii2))
+							{
+								int x1 = p->GetX(ii);
+								int y1 = p->GetY(ii);
+								int inxt = p->GetNextCornerIndex(ii);
+								int x2 = p->GetX(inxt);
+								int y2 = p->GetY(inxt);
+								int w1 = p->GetW();
+								//
+								int x3 = p2->GetX(ii2);
+								int y3 = p2->GetY(ii2);
+								inxt = p2->GetNextCornerIndex(ii2);
+								int x4 = p2->GetX(inxt);
+								int y4 = p2->GetY(inxt);
+								int w2 = p2->GetW();
+								int w = (w1 + w2) / 8;
+								//
+								int dx1 = abs(x1 - x3);
+								int dx2 = abs(x1 - x4);
+								int dx3 = abs(x2 - x3);
+								int dx4 = abs(x2 - x4);
+								//
+								int dy1 = abs(y1 - y3);
+								int dy2 = abs(y1 - y4);
+								int dy3 = abs(y2 - y3);
+								int dy4 = abs(y2 - y4);
+								if ((dx1 < w && dy1 < w) ||
+									(dx2 < w && dy2 < w) ||
+									(dx3 < w && dy3 < w) ||
+									(dx4 < w && dy4 < w))
+								{
+									p->SetSideSel(ii, 1);
+									nc++;
+									//bBreak = 1;
+									//i = -1;
+								}
+							}
+							//if (bBreak)
+							//	break;
+						}
+						//if (bBreak)
+						//	break;
+					}
+				}
+				//if (bBreak)
+				//	break;
+			}
+		}
+	} while (mnc != nc);
+	return nc;
+}
