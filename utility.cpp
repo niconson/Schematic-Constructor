@@ -3402,11 +3402,15 @@ int SelectAdjacent ( CArray<CPolyLine>* arr )
 				if (p->GetSideSel(ii) == 0)
 				{
 					RECT R1 = p->GetBounds();
+					int L1 = p->GetLayer();
 					for (int i2 = 0; i2 < arr->GetSize(); i2++)
 					{
 						CPolyLine* p2 = &arr->GetAt(i2);
 						RECT R2 = p2->GetBounds();
 						if (RectsIntersection(R1, R2) == -1)
+							continue;
+						int L2 = p2->GetLayer();
+						if( L1 != L2 )
 							continue;
 						for (int ii2 = 0; ii2 < p2->GetNumSides(); ii2++)
 						{

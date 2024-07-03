@@ -12643,6 +12643,7 @@ void CFreePcbDoc::SelectAdj()
 	{
 		m_view->m_sel_count += nc;
 		m_view->SetCursorMode(CUR_GROUP_SELECTED);
+		m_dlist->CancelHighLight();
 		m_view->HighlightGroup();
 		OnRangeCmds(NULL);
 	}
