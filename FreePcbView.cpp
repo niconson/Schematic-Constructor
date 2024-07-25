@@ -13651,7 +13651,7 @@ int CFreePcbView::NewSelect( void * ptr, id * sid, BOOL bSet_cursor_mode, BOOL b
 					}
 					for( int get = t->m_polyline_start; get >= 0; get = m_Doc->m_outline_poly->GetAt(get).Next[n_att] )
 						for( int ico=m_Doc->m_outline_poly->GetAt(get).GetNumCorners()-1; ico>=0; ico-- )
-							m_Doc->m_outline_poly->GetAt(get).HighlightSide( ico, m_Doc->m_outline_poly->GetAt(get).GetW()*3, TRANSPARENT_HILITE );
+							m_Doc->m_outline_poly->GetAt(get).HighlightSide( ico, max(m_Doc->m_outline_poly->GetAt(get).GetW()*3,t->m_stroke_width), TRANSPARENT_HILITE );
 				}
 				if( BOM )
 				{
