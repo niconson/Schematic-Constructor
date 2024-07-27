@@ -13,11 +13,11 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// Английский (США) resources
+// Русский (Россия) resources
 
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
-#pragma code_page(1252)
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_RUS)
+LANGUAGE LANG_RUSSIAN, SUBLANG_DEFAULT
+#pragma code_page(1251)
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -66,9 +66,13 @@ END
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
 IDR_MAINFRAME           ICON                    "res\\new_fotor3.ico"
+
 IDR_FREEPCTYPE          ICON                    "res\\FreePcbDoc.ico"
+
 IDI_ICON1               ICON                    "res\\icon1.ico"
+
 IDI_ICON2               ICON                    "res\\icon2.ico"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -76,25 +80,45 @@ IDI_ICON2               ICON                    "res\\icon2.ico"
 //
 
 IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
+
 IDR_MYTOOLBAR           BITMAP                  "res\\Toolbar.bmp"
+
 IDB_BITMAP_QUAD         BITMAP                  "res\\quad.bmp"
+
 IDB_BITMAP_DIP          BITMAP                  "res\\SMT dip.bmp"
+
 IDB_BITMAP_SIP          BITMAP                  "res\\sip.bmp"
+
 IDB_BITMAP_HDR1         BITMAP                  "res\\header.bmp"
+
 IDB_BITMAP_HDR2         BITMAP                  "res\\header2.bmp"
+
 IDB_BITMAP_BGA          BITMAP                  "res\\bga.bmp"
+
 IDB_BITMAP_EDGE         BITMAP                  "res\\edge.bmp"
+
 IDB_BITMAP_EDGE2        BITMAP                  "res\\edge2.bmp"
+
 IDB_BITMAP_VIEWMATE     BITMAP                  "res\\ViewMate.bmp"
+
 IDB_BITMAP_GERBV        BITMAP                  "res\\Gerbv.bmp"
+
 IDB_BITMAP_GERBERLOGIX  BITMAP                  "res\\GerberLogix.bmp"
+
 IDB_BITMAP_PNG          BITMAP                  "res\\PNG.bmp"
+
 IDB_BITMAP_NL           BITMAP                  "res\\netlist.bmp"
+
 IDB_BITMAP_INTERSECT    BITMAP                  "res\\Intersect.bmp"
+
 IDB_BITMAP_WORD         BITMAP                  "res\\Microsoft_Word.bmp"
+
 IDB_BITMAP_TEXT         BITMAP                  "res\\TXT3.bmp"
+
 IDB_BITMAP_PDF          BITMAP                  "res\\PDF.bmp"
+
 IDB_BITMAP_URL          BITMAP                  "res\\URL.bmp"
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -161,238 +185,238 @@ IDR_MAINFRAME MENU
 BEGIN
     POPUP "&File"
     BEGIN
-        MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
-        MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
-        POPUP "Project Folder Menu"
+        MENUITEM "Новая схема\tCtrl+N",         ID_FILE_NEW
+        MENUITEM "Открыть\tCtrl+O",             ID_FILE_OPEN
+        POPUP "Папка проектов"
         BEGIN
             MENUITEM SEPARATOR
-            MENUITEM "Select folder",               ID_FILE_SEL_FOLDER
-            MENUITEM "Reload menu\tR",              ID_FILE_RELOAD_MENU
+            MENUITEM "Выбрать папку",               ID_FILE_SEL_FOLDER
+            MENUITEM "Обновить меню\tR",            ID_FILE_RELOAD_MENU
         END
-        MENUITEM "&Save\tCtrl+S",               ID_FILE_SAVE
-        MENUITEM "Save &As...",                 ID_FILE_SAVE_AS
-        MENUITEM "Close",                       ID_FILE_CLOSE
+        MENUITEM "Сохранить\tCtrl+S",           ID_FILE_SAVE
+        MENUITEM "Сохранить как...",            ID_FILE_SAVE_AS
+        MENUITEM "Закрыть файл",                ID_FILE_CLOSE
         MENUITEM SEPARATOR
-        MENUITEM "Save with Netlist file",      ID_FILE_EXPORTNETLIST
-        MENUITEM "Netlist Settings",            ID_FILE_SETNETLIST
+        MENUITEM "Сохранить со списком эл.цепей", ID_FILE_EXPORTNETLIST
+        MENUITEM "Настройки списка эл.цепей",   ID_FILE_SETNETLIST
         MENUITEM SEPARATOR
-        MENUITEM "Generate BOM file",           ID_FILE_GENERATEREPORTFILE
-        MENUITEM "Generate extended BOM file",  ID_FILE_GENERATEREPORT2
-        POPUP "BOM in Table"
+        MENUITEM "Генерировать спецификацию",   ID_FILE_GENERATEREPORTFILE
+        MENUITEM "Генерировать расширенную спецификацию", ID_FILE_GENERATEREPORT2
+        POPUP "Спецификация (ГОСТ)"
         BEGIN
-            MENUITEM "Generate",                    ID_FILE_GENERATEREPORT4
+            MENUITEM "Генерировать",                ID_FILE_GENERATEREPORT4
             MENUITEM SEPARATOR
-            MENUITEM "Open template",               ID_FILE_OPEN_TEMPLATE
+            MENUITEM "Редактировать шаблон",        ID_FILE_OPEN_TEMPLATE
         END
-        POPUP "Partlist Table"
+        POPUP "Перечень элементов (ГОСТ)"
         BEGIN
-            MENUITEM "Generate",                    ID_FILE_GENERATEREPORT3
+            MENUITEM "Генерировать",                ID_FILE_GENERATEREPORT3
             MENUITEM SEPARATOR
-            MENUITEM "Open template",               ID_FILE_OPEN_TEMPLATE2
+            MENUITEM "Редактировать шаблон",        ID_FILE_OPEN_TEMPLATE2
         END
         MENUITEM SEPARATOR
-        MENUITEM "&Print to PDF\tCtrl+P",       ID_FILE_PRINT
-        MENUITEM "&Print to Gerber files\tCtrl+G", ID_FILE_GENERATECADFILES
+        MENUITEM "Печатать в PDF\tCtrl+P",      ID_FILE_PRINT
+        MENUITEM "Печатать в Gerber (без изобр.)\tCtrl+G", ID_FILE_GENERATECADFILES
         MENUITEM SEPARATOR
-        POPUP "Polyline Picture"
+        POPUP "Картинка на полилинии"
         BEGIN
-            MENUITEM "Hide All",                    ID_HIDE_BMP
-            MENUITEM "Show All",                    ID_SHOW_BMP
+            MENUITEM "Скрыть картинки",             ID_HIDE_BMP
+            MENUITEM "Отображать картинки",         ID_SHOW_BMP
             MENUITEM SEPARATOR
-            MENUITEM "Attach",                      ID_ATTACH_BMP1
-            MENUITEM "Detach",                      ID_DETACH_BMP
+            MENUITEM "Прикрепить",                  ID_ATTACH_BMP1
+            MENUITEM "Убрать",                      ID_DETACH_BMP
             MENUITEM SEPARATOR
-            MENUITEM "Invert",                      ID_ATTACH_BMP2
+            MENUITEM "Инвертировать цвета",         ID_ATTACH_BMP2
         END
         MENUITEM SEPARATOR
         MENUITEM "Recent File",                 ID_FILE_MRU_FILE1, GRAYED
         MENUITEM SEPARATOR
-        MENUITEM "E&xit",                       ID_APP_EXIT
+        MENUITEM "Выход",                       ID_APP_EXIT
         MENUITEM SEPARATOR
     END
-    POPUP "&Edit"
+    POPUP "Редактирование"
     BEGIN
-        MENUITEM "&Undo\tCtrl+Z",               ID_EDIT_UNDO
-        MENUITEM "&Redo\tCtrl+Y",               ID_EDIT_REDO
+        MENUITEM "Отменить\tCtrl+Z",            ID_EDIT_UNDO
+        MENUITEM "Вернуть\tCtrl+Y",             ID_EDIT_REDO
         MENUITEM SEPARATOR
-        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
-        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
-        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
+        MENUITEM "Вырезать\tCtrl+X",            ID_EDIT_CUT
+        MENUITEM "Копировать\tCtrl+C",          ID_EDIT_COPY
+        MENUITEM "Вставить\tCtrl+V",            ID_EDIT_PASTE
         MENUITEM SEPARATOR
-        MENUITEM "Save group to file...",       ID_EDIT_SAVEGROUPTOFILE
-        MENUITEM "Paste page from file...",     ID_EDIT_PASTEFROMFILE
+        MENUITEM "Сохранить объекты в файл",    ID_EDIT_SAVEGROUPTOFILE
+        MENUITEM "Вставить объекты из файла",   ID_EDIT_PASTEFROMFILE
         MENUITEM SEPARATOR
-        POPUP "Select"
+        POPUP "Выделить"
         BEGIN
-            MENUITEM "Polylines",                   ID_SEL_POLYLINES
-            MENUITEM "Reserved polyline layers",    ID_SEL_RSVPOLYLINES
-            MENUITEM "Attributes",                  ID_SEL_ATTRIBUTES
-            MENUITEM "Ref,Value,Footprint",         ID_SEL_REFVALUEFOOTPRINT
+            MENUITEM "Полилинии",                   ID_SEL_POLYLINES
+            MENUITEM "Основные слои полилиний",     ID_SEL_RSVPOLYLINES
+            MENUITEM "TXT Атрибуты",                ID_SEL_ATTRIBUTES
+            MENUITEM "TXT Обозначения,Названия,Футпринты", ID_SEL_REFVALUEFOOTPRINT
             MENUITEM SEPARATOR
-            MENUITEM "Part Name (ref)",             ID_SEL_PARTNAME
-            MENUITEM "Part Value",                  ID_SEL_PARTVALUE
-            MENUITEM "Footprint",                   ID_SEL_FOOTPRINTNAME
-            MENUITEM "Pin Name",                    ID_SEL_PINNAME
-            MENUITEM "Net Name",                    ID_SEL_NETNAME
-            MENUITEM "Description",                 ID_SEL_DESCRIPTION
+            MENUITEM "TXT Обозначения",             ID_SEL_PARTNAME
+            MENUITEM "TXT Названия",                ID_SEL_PARTVALUE
+            MENUITEM "TXT Футпринты",               ID_SEL_FOOTPRINTNAME
+            MENUITEM "TXT Пины",                    ID_SEL_PINNAME
+            MENUITEM "TXT Эл.цепи",                 ID_SEL_NETNAME
+            MENUITEM "TXT Описания",                ID_SEL_DESCRIPTION
             MENUITEM SEPARATOR
-            MENUITEM "Ownerless layer",             ID_SEL_OWNERLESS
-            MENUITEM "Part Outline",                ID_SEL_PARTOUTLINE
-            MENUITEM "Pin Line",                    ID_SEL_PINLINE
-            MENUITEM "Net Polyline",                ID_SEL_NETPOLYLINE
-            MENUITEM "Front layer 1",               ID_SEL_FRONTLAYER1
-            MENUITEM "Front layer 2",               ID_SEL_FRONTLAYER2
-            MENUITEM "Back layer 1",                ID_SEL_BACKLAYER1
-            MENUITEM "Back layer 2",                ID_SEL_BACKLAYER2
-            MENUITEM "Back layer 3",                ID_SEL_BACKLAYER3
-            MENUITEM "Back layer 4",                ID_SEL_BACKLAYER4
-            MENUITEM "Back layer 5",                ID_SEL_BACKLAYER5
-            MENUITEM "Back layer 6",                ID_SEL_BACKLAYER6
-            MENUITEM "Back layer 7",                ID_SEL_BACKLAYER7
-            MENUITEM "Back layer 8",                ID_SEL_BACKLAYER8
-            MENUITEM "Back layer 9",                ID_SEL_BACKLAYER9
-            MENUITEM "Back layer 10",               ID_SEL_BACKLAYER10
-            MENUITEM "Back layer 11",               ID_SEL_BACKLAYER11
-            MENUITEM "Back layer 12",               ID_SEL_BACKLAYER12
-            MENUITEM "Back layer 13",               ID_SEL_BACKLAYER13
-            MENUITEM "Back layer 14",               ID_SEL_BACKLAYER14
+            MENUITEM "Бесхозный слой",              ID_SEL_OWNERLESS
+            MENUITEM "Контур деталей",              ID_SEL_PARTOUTLINE
+            MENUITEM "Линии пинов",                 ID_SEL_PINLINE
+            MENUITEM "Линии эл.цепей",              ID_SEL_NETPOLYLINE
+            MENUITEM "Верхний слой 1",              ID_SEL_FRONTLAYER1
+            MENUITEM "Верхний слой 2",              ID_SEL_FRONTLAYER2
+            MENUITEM "Нижний слой 1",               ID_SEL_BACKLAYER1
+            MENUITEM "Нижний слой 2",               ID_SEL_BACKLAYER2
+            MENUITEM "Нижний слой 3",               ID_SEL_BACKLAYER3
+            MENUITEM "Нижний слой 4",               ID_SEL_BACKLAYER4
+            MENUITEM "Нижний слой 5",               ID_SEL_BACKLAYER5
+            MENUITEM "Нижний слой 6",               ID_SEL_BACKLAYER6
+            MENUITEM "Нижний слой 7",               ID_SEL_BACKLAYER7
+            MENUITEM "Нижний слой 8",               ID_SEL_BACKLAYER8
+            MENUITEM "Нижний слой 9",               ID_SEL_BACKLAYER9
+            MENUITEM "Нижний слой 10",              ID_SEL_BACKLAYER10
+            MENUITEM "Нижний слой 11",              ID_SEL_BACKLAYER11
+            MENUITEM "Нижний слой 12",              ID_SEL_BACKLAYER12
+            MENUITEM "Нижний слой 13",              ID_SEL_BACKLAYER13
+            MENUITEM "Нижний слой 14",              ID_SEL_BACKLAYER14
         END
-        POPUP "Unselect"
+        POPUP "Снять выделение"
         BEGIN
-            MENUITEM "Polylines",                   ID_UNSEL_POLYLINES
-            MENUITEM "Reserved polyline layers",    ID_UNSEL_RSVPOLYLINES
-            MENUITEM "Attributes",                  ID_UNSEL_ATTRIBUTES
-            MENUITEM "Ref,Value,Footprint",         ID_UNSEL_REFVALUEFOOTPRINT
+            MENUITEM "Полилинии",                   ID_UNSEL_POLYLINES
+            MENUITEM "Основные слои полилиний",     ID_UNSEL_RSVPOLYLINES
+            MENUITEM "TXT Атрибуты",                ID_UNSEL_ATTRIBUTES
+            MENUITEM "TXT Обозначения,Названия,Футпринты", ID_UNSEL_REFVALUEFOOTPRINT
             MENUITEM SEPARATOR
-            MENUITEM "Part Name (ref)",             ID_UNSEL_PARTNAME
-            MENUITEM "Part Value",                  ID_UNSEL_PARTVALUE
-            MENUITEM "Footprint",                   ID_UNSEL_FOOTPRINTNAME
-            MENUITEM "Pin Name",                    ID_UNSEL_PINNAME
-            MENUITEM "Net Name",                    ID_UNSEL_NETNAME
-            MENUITEM "Description",                 ID_UNSEL_DESCRIPTION
+            MENUITEM "TXT Обозначения",             ID_UNSEL_PARTNAME
+            MENUITEM "TXT Названия",                ID_UNSEL_PARTVALUE
+            MENUITEM "TXT Футпринты",               ID_UNSEL_FOOTPRINTNAME
+            MENUITEM "TXT Пины",                    ID_UNSEL_PINNAME
+            MENUITEM "TXT Эл.цепи",                 ID_UNSEL_NETNAME
+            MENUITEM "TXT Описания",                ID_UNSEL_DESCRIPTION
             MENUITEM SEPARATOR
-            MENUITEM "Ownerless layer",             ID_UNSEL_OWNERLESS
-            MENUITEM "Part Outline",                ID_UNSEL_PARTOUTLINE
-            MENUITEM "Pin Line",                    ID_UNSEL_PINLINE
-            MENUITEM "Net Polyline",                ID_UNSEL_NETPOLYLINE
-            MENUITEM "Front layer 1",               ID_UNSEL_FRONTLAYER1
-            MENUITEM "Front layer 2",               ID_UNSEL_FRONTLAYER2
-            MENUITEM "Back layer 1",                ID_UNSEL_BACKLAYER1
-            MENUITEM "Back layer 2",                ID_UNSEL_BACKLAYER2
-            MENUITEM "Back layer 3",                ID_UNSEL_BACKLAYER3
-            MENUITEM "Back layer 4",                ID_UNSEL_BACKLAYER4
-            MENUITEM "Back layer 5",                ID_UNSEL_BACKLAYER5
-            MENUITEM "Back layer 6",                ID_UNSEL_BACKLAYER6
-            MENUITEM "Back layer 7",                ID_UNSEL_BACKLAYER7
-            MENUITEM "Back layer 8",                ID_UNSEL_BACKLAYER8
-            MENUITEM "Back layer 9",                ID_UNSEL_BACKLAYER9
-            MENUITEM "Back layer 10",               ID_UNSEL_BACKLAYER10
-            MENUITEM "Back layer 11",               ID_UNSEL_BACKLAYER11
-            MENUITEM "Back layer 12",               ID_UNSEL_BACKLAYER12
-            MENUITEM "Back layer 13",               ID_UNSEL_BACKLAYER13
-            MENUITEM "Back layer 14",               ID_UNSEL_BACKLAYER14
+            MENUITEM "Бесхозный слой",              ID_UNSEL_OWNERLESS
+            MENUITEM "Контур деталей",              ID_UNSEL_PARTOUTLINE
+            MENUITEM "Линии пинов",                 ID_UNSEL_PINLINE
+            MENUITEM "Линии эл.цепей",              ID_UNSEL_NETPOLYLINE
+            MENUITEM "Верхний слой 1",              ID_UNSEL_FRONTLAYER1
+            MENUITEM "Верхний слой 2",              ID_UNSEL_FRONTLAYER2
+            MENUITEM "Нижний слой 1",               ID_UNSEL_BACKLAYER1
+            MENUITEM "Нижний слой 2",               ID_UNSEL_BACKLAYER2
+            MENUITEM "Нижний слой 3",               ID_UNSEL_BACKLAYER3
+            MENUITEM "Нижний слой 4",               ID_UNSEL_BACKLAYER4
+            MENUITEM "Нижний слой 5",               ID_UNSEL_BACKLAYER5
+            MENUITEM "Нижний слой 6",               ID_UNSEL_BACKLAYER6
+            MENUITEM "Нижний слой 7",               ID_UNSEL_BACKLAYER7
+            MENUITEM "Нижний слой 8",               ID_UNSEL_BACKLAYER8
+            MENUITEM "Нижний слой 9",               ID_UNSEL_BACKLAYER9
+            MENUITEM "Нижний слой 10",              ID_UNSEL_BACKLAYER10
+            MENUITEM "Нижний слой 11",              ID_UNSEL_BACKLAYER11
+            MENUITEM "Нижний слой 12",              ID_UNSEL_BACKLAYER12
+            MENUITEM "Нижний слой 13",              ID_UNSEL_BACKLAYER13
+            MENUITEM "Нижний слой 14",              ID_UNSEL_BACKLAYER14
         END
-        MENUITEM "Select All",                  ID_SELECTALL
+        MENUITEM "Выделить всё",                ID_SELECTALL
     END
-    POPUP "&View"
+    POPUP "Вид"
     BEGIN
-        MENUITEM "Layers...",                   ID_VIEW_LAYERS
-        MENUITEM "Show all ",                   ID_VIEW_ALLELEMENTS
-        MENUITEM "Show Log\tkey L",             ID_VIEW_LOG
-        MENUITEM "Show merges ",                ID_VIEW_MERGES
+        MENUITEM "Цветовая гамма",              ID_VIEW_LAYERS
+        MENUITEM "Показать всё",                ID_VIEW_ALLELEMENTS
+        MENUITEM "Показать лог\tkey L",         ID_VIEW_LOG
+        MENUITEM "Показать слияния",            ID_VIEW_MERGES
         MENUITEM SEPARATOR
-        MENUITEM "Add new page",                ID_NEW_PAGE
-        POPUP "Delete page"
+        MENUITEM "Добавить новую страницу",     ID_NEW_PAGE
+        POPUP "Удалить страницу"
         BEGIN
-            MENUITEM "Page 1",                      ID_DPAGE_1, GRAYED
+            MENUITEM "Страница 1",                  ID_DPAGE_1, GRAYED
         END
-        POPUP "Rename page"
+        POPUP "Переименовать страницу"
         BEGIN
-            MENUITEM "Page 1",                      ID_RNPAGE_1
+            MENUITEM "Страница 1",                  ID_RNPAGE_1
         END
-        POPUP "Switch to page"
+        POPUP "Переключиться на страницу"
         BEGIN
-            MENUITEM "Page 1",                      ID_PAGE_1
+            MENUITEM "Страница 1",                  ID_PAGE_1
         END
         MENUITEM SEPARATOR
-        MENUITEM "Switch to PCB editor",        ID_VIEW_SWITCH_PCB
+        MENUITEM "Переключиться на редактор печатных плат", ID_VIEW_SWITCH_PCB
     END
-    POPUP "Project"
+    POPUP "Проект"
     BEGIN
-        MENUITEM "Options",                     ID_PROJECT_OPTIONS
-        MENUITEM "Protection",                  ID_MAKE_ARCHIVED
-        MENUITEM "Create branch",               ID_CREATE_BRANCH
+        MENUITEM "Опции",                       ID_PROJECT_OPTIONS
+        MENUITEM "Доступ к редактированию",     ID_MAKE_ARCHIVED
+        MENUITEM "Создать ветку проекта",       ID_CREATE_BRANCH
         MENUITEM SEPARATOR
-        MENUITEM "Interpage Attribute Synchronization", ID_ATTR_SYNC
-        POPUP "Compare"
+        MENUITEM "Межстраничная синхронизация атрибутов", ID_ATTR_SYNC
+        POPUP "Сравнить"
         BEGIN
-            MENUITEM "Pages",                       ID_PROJECT_COMPARE_1
-            MENUITEM "PADS-PCB Netlists",           ID_PROJECT_COMPARE_2
+            MENUITEM "Страницы",                    ID_PROJECT_COMPARE_1
+            MENUITEM "Файлы списков эл.цепей (PADS-PCB)", ID_PROJECT_COMPARE_2
         END
         MENUITEM SEPARATOR
-        MENUITEM "Part List",                   ID_PROJECT_PARTLIST
-        POPUP "Ref Lists"
+        MENUITEM "Список деталей",              ID_PROJECT_PARTLIST
+        POPUP "Списки обозначений"
         BEGIN
-            MENUITEM "Create by selected parts",    ID_PROJECT_REFLIST
-            MENUITEM "Remove",                      ID_PROJECT_DELREFLIST
+            MENUITEM "Создать список по выделенным...", ID_PROJECT_REFLIST
+            MENUITEM "Удалить...",                  ID_PROJECT_DELREFLIST
             MENUITEM SEPARATOR
         END
-        POPUP "Search"
+        POPUP "Искать"
         BEGIN
-            MENUITEM "Find attribute\tCtrl+F",      ID_VIEW_FINDPART
-            MENUITEM "Find amoung hidden...\tCtrl+H", ID_VIEW_FINDHID
-            MENUITEM "Find amoung selected...\tCtrl+T", ID_VIEW_FINDSEL
+            MENUITEM "TXT Атрибут\tCtrl+F",         ID_VIEW_FINDPART
+            MENUITEM "TXT Скрытый атрибут\tCtrl+H", ID_VIEW_FINDHID
+            MENUITEM "TXT Выделенный атрибут\tCtrl+T", ID_VIEW_FINDSEL
         END
-        POPUP "Import"
+        POPUP "Импортировать"
         BEGIN
-            MENUITEM "Merge by name\tCtrl+M",       ID_MERGE_PASTEFROMFILE
-            MENUITEM "Part by attribute\tF1",       ID_PART_PASTEFROMFILE
-            MENUITEM "Array of parts\tCtrl+W",      ID_PARTS_PASTEFROMFILE
+            MENUITEM "Слияние по имени\tCtrl+M",    ID_MERGE_PASTEFROMFILE
+            MENUITEM "Деталь по атрибуту\tF1",      ID_PART_PASTEFROMFILE
+            MENUITEM "Детали оптом\tCtrl+W",        ID_PARTS_PASTEFROMFILE
             MENUITEM SEPARATOR
-            MENUITEM "PADS-PCB Netlist File",       ID_IMPORT_NETLIST
+            MENUITEM "Список эл.цепей (PADS-PCB)",  ID_IMPORT_NETLIST
         END
         MENUITEM SEPARATOR
-        MENUITEM "Adapt to grid",               ID_PROJECT_ADAPT_GRID
+        MENUITEM "Адаптировать к сетке",        ID_PROJECT_ADAPT_GRID
     END
-    POPUP "Tools"
+    POPUP "Инструменты"
     BEGIN
-        MENUITEM "Move origin",                 ID_TOOLS_MOVEORIGIN
-        MENUITEM "Set origin into selected item", ID_TOOLS_SETORIGIN
-        MENUITEM "Combine Intersecting Polylines...", ID_PROJECT_COMBINEBOARD
-        MENUITEM "Create Polyline From Selected", ID_CREATE_POLYLINE
+        MENUITEM "Переместить начало координат", ID_TOOLS_MOVEORIGIN
+        MENUITEM "Поместить начало координат в выделение", ID_TOOLS_SETORIGIN
+        MENUITEM "Объединить пересекающиеся полилинии", ID_PROJECT_COMBINEBOARD
+        MENUITEM "Создать полилинию из выделенного", ID_CREATE_POLYLINE
         MENUITEM SEPARATOR
-        MENUITEM "Renumber Part Designations",  ID_PART_RENUMB
-        MENUITEM "Raise Part Numbers",          ID_PART_RAISE
-        MENUITEM "Clear Part Numbers",          ID_PART_CLEAR
-        MENUITEM "Try to remove suffix",        ID_PART_REMOVE_SUFFIX
+        MENUITEM "Перенумеровать обозначения деталей", ID_PART_RENUMB
+        MENUITEM "Сместить номера обозначений", ID_PART_RAISE
+        MENUITEM "Сбросить номера обозначений", ID_PART_CLEAR
+        MENUITEM "Убрать суффикс в обозначениях", ID_PART_REMOVE_SUFFIX
         MENUITEM SEPARATOR
-        MENUITEM "Design Rule Check",           ID_TOOLS_DRC
-        MENUITEM "Repeat &DRC\tCtrl+D",         ID_TOOLS_REPEATDRC
-        MENUITEM "Clear marks on all pages",    ID_TOOLS_CLEAR_ALL_DRC
+        MENUITEM "Правила дизайна",             ID_TOOLS_DRC
+        MENUITEM "Повторить тестирование\tCtrl+D", ID_TOOLS_REPEATDRC
+        MENUITEM "Далить метки со всех страниц", ID_TOOLS_CLEAR_ALL_DRC
         MENUITEM SEPARATOR
-        POPUP "Graphic Correction"
+        POPUP "Заменить форму"
         BEGIN
-            MENUITEM "Replace Polyline Pattern",    ID_SEL_REPLACE_POLY
-            MENUITEM "Replace Part Pattern",        ID_TOOLS_PART_CORR2
+            MENUITEM "...полилиний",                ID_SEL_REPLACE_POLY
+            MENUITEM "...деталей",                  ID_TOOLS_PART_CORR2
         END
-        POPUP "Align Selected Attributes"
+        POPUP "Ровнять выделенные атрибуты"
         BEGIN
-            MENUITEM "Left",                        ID_TEXT_ALIGN_L
-            MENUITEM "Right",                       ID_TEXT_ALIGN_R
-            MENUITEM "Top",                         ID_TEXT_ALIGN_T
-            MENUITEM "Bottom",                      ID_TEXT_ALIGN_B
+            MENUITEM "Влево",                       ID_TEXT_ALIGN_L
+            MENUITEM "Вправо",                      ID_TEXT_ALIGN_R
+            MENUITEM "Вверх",                       ID_TEXT_ALIGN_T
+            MENUITEM "Вниз",                        ID_TEXT_ALIGN_B
             MENUITEM SEPARATOR
-            MENUITEM "Ref,Value",                   ID_TEXT_ALIGN_RV
-            MENUITEM "Ref,Footprint",               ID_TEXT_ALIGN_RF
-            MENUITEM "Ref,Value,Footprint",         ID_TEXT_ALIGN_RVF
-            MENUITEM "Ref,Footprint,Value",         ID_TEXT_ALIGN_RFV
+            MENUITEM "Обозначение, затем название", ID_TEXT_ALIGN_RV
+            MENUITEM "Обозначение, затем футпринт", ID_TEXT_ALIGN_RF
+            MENUITEM "Обозначение, название, затем футпринт", ID_TEXT_ALIGN_RVF
+            MENUITEM "Обозначение, футпринт, затем название", ID_TEXT_ALIGN_RFV
         END
-        POPUP "Change Part Attributes"
+        POPUP "Изменить атрибуты у деталей"
         BEGIN
-            MENUITEM "Value",                       ID_CHANGE_VALUE
-            MENUITEM "Footprint",                   ID_CHANGE_FOOT
+            MENUITEM "Название",                    ID_CHANGE_VALUE
+            MENUITEM "Футпринт",                    ID_CHANGE_FOOT
         END
-        POPUP "Apply scale factor"
+        POPUP "Масштабировать"
         BEGIN
             MENUITEM "5/1",                         ID_SCALE1
             MENUITEM "3/1",                         ID_SCALE2
@@ -401,46 +425,40 @@ BEGIN
             MENUITEM "1/3",                         ID_SCALE5
             MENUITEM "1/5",                         ID_SCALE6
         END
-        MENUITEM "Replace Text Fragment",       ID_REPLACE_TEXT
+        MENUITEM "Заменить фрагмент текста",    ID_REPLACE_TEXT
         MENUITEM SEPARATOR
-        POPUP "Insert multi-pin part template"
+        POPUP "Вставить шаблон микросхемы"
         BEGIN
-            MENUITEM "6 pins",                      ID_6_PINS
-            MENUITEM "8 pins",                      ID_8_PINS
-            MENUITEM "10 pins",                     ID_10_PINS
-            MENUITEM "12 pins",                     ID_12_PINS
-            MENUITEM "14 pins",                     ID_14_PINS
-            MENUITEM "16 pins",                     ID_16_PINS
-            MENUITEM "20 pins",                     ID_20_PINS
-            MENUITEM "24 pins",                     ID_24_PINS
-            MENUITEM "28 pins",                     ID_28_PINS
-            MENUITEM "32 pins",                     ID_32_PINS
-            MENUITEM "48 pins",                     ID_48_PINS
-            MENUITEM "64 pins",                     ID_64_PINS
-            MENUITEM "100 pins",                    ID_100_PINS
-            MENUITEM "128 pins",                    ID_128_PINS
-            MENUITEM "256 pins",                    ID_256_PINS
+            MENUITEM "6 контактов",                 ID_6_PINS
+            MENUITEM "8 контактов",                 ID_8_PINS
+            MENUITEM "10 контактов",                ID_10_PINS
+            MENUITEM "12 контактов",                ID_12_PINS
+            MENUITEM "14 контактов",                ID_14_PINS
+            MENUITEM "16 контактов",                ID_16_PINS
+            MENUITEM "20 контактов",                ID_20_PINS
+            MENUITEM "24 контакта",                 ID_24_PINS
+            MENUITEM "28 контактов",                ID_28_PINS
+            MENUITEM "32 контакта",                 ID_32_PINS
+            MENUITEM "48 контактов",                ID_48_PINS
+            MENUITEM "64 контакта",                 ID_64_PINS
+            MENUITEM "100 контактов",               ID_100_PINS
+            MENUITEM "128 контактов",               ID_128_PINS
+            MENUITEM "256 контактов",               ID_256_PINS
         END
     END
-    POPUP "Utils"
+    POPUP "Утилиты"
     BEGIN
-        MENUITEM "Footprint Library Manager",   ID_LIB_MANAGER
-        MENUITEM "Font Manager",                ID_FONT_MANAGER
-        MENUITEM "Import DXF file",             ID_IMP_DXF
-        MENUITEM "Import PCAD schematic file",  ID_IMP_PCAD
+        MENUITEM "Менеджер библиотек футпринтов", ID_LIB_MANAGER
+        MENUITEM "Менеджер шрифтов",            ID_FONT_MANAGER
+        MENUITEM "Импортировать DXF file",      ID_IMP_DXF
+        MENUITEM "Импортировать PCAD schematic file", ID_IMP_PCAD
     END
-    POPUP "&Help"
+    POPUP "Помощь"
     BEGIN
-        POPUP "PDF document"
-        BEGIN
-            MENUITEM "Original text",               ID_HELP_USERGUIDE_PDF
-            MENUITEM SEPARATOR
-            MENUITEM "English translation",         ID_HELP_USERGUIDE_PDF2
-            MENUITEM "Spanish translation",         ID_HELP_USERGUIDE_PDF3
-        END
+        MENUITEM "PDF документ",                ID_HELP_USERGUIDE_PDF
         MENUITEM SEPARATOR
-        MENUITEM "Keyboard shortcuts",          ID_HELP_KEYBOARDSHORTCUTS
-        MENUITEM "&About this ECDS...",         ID_APP_ABOUT
+        MENUITEM "Горячие клавиши",             ID_HELP_KEYBOARDSHORTCUTS
+        MENUITEM "О программе...",              ID_APP_ABOUT
     END
 END
 
@@ -495,134 +513,133 @@ IDR_CONTEXT MENU
 BEGIN
     POPUP "None"
     BEGIN
-        MENUITEM "View All",                    ID_NONE_VIEWALL
+        MENUITEM "Показать всё",                ID_NONE_VIEWALL
         MENUITEM SEPARATOR
-        MENUITEM "Select objects by marks",     ID_NONE_SELECTTEXTSBYLABELS
-        MENUITEM "Clear marks",                 ID_NONE_CLEARDRCERRORS
+        MENUITEM "Выделить объекты по меткам",  ID_NONE_SELECTTEXTSBYLABELS
+        MENUITEM "Очистить метки",              ID_NONE_CLEARDRCERRORS
         MENUITEM SEPARATOR
-        MENUITEM "Cancel highlight",            ID_CANCEL_HIGHLIGHT
-        MENUITEM "Deselect objects on all pages", ID_GLOBAL_CANCEL_SEL
+        MENUITEM "Погасить подсвеченные элементы", ID_CANCEL_HIGHLIGHT
+        MENUITEM "Снять выделение на всех страницах", ID_GLOBAL_CANCEL_SEL
     END
     POPUP "Text"
     BEGIN
-        MENUITEM "Start dragging in the PCB editor", ID_TEXT_GRAB_PART
+        MENUITEM "Начать перемещение детали на плате", ID_TEXT_GRAB_PART
         MENUITEM SEPARATOR
-        MENUITEM "Align Ref Value",             ID_TEXT_ALIGN_RV
-        MENUITEM "Align Ref Footprint",         ID_TEXT_ALIGN_RF
-        MENUITEM "Align Ref Value Footprint",   ID_TEXT_ALIGN_RVF
-        MENUITEM "Align Ref Footprint Value",   ID_TEXT_ALIGN_RFV
+        MENUITEM "Ровнять: Обозначение, название", ID_TEXT_ALIGN_RV
+        MENUITEM "Ровнять: Обозначение, футпринт", ID_TEXT_ALIGN_RF
+        MENUITEM "Ровнять: Обозначение, название, футпринт", ID_TEXT_ALIGN_RVF
+        MENUITEM "Ровнять: Обозначение, футпринт, название", ID_TEXT_ALIGN_RFV
         MENUITEM SEPARATOR
-        MENUITEM "Edit Properties",             ID_TEXT_EDIT
+        MENUITEM "Открыть окно опций",          ID_TEXT_EDIT
         MENUITEM SEPARATOR
-        MENUITEM "Select Similar Texts",        ID_TEXT_SIMILAR
-        MENUITEM "Select object by attribute",  ID_GROUP_SELECT_BY_ATTR3
+        MENUITEM "Выделить такие же тексты",    ID_TEXT_SIMILAR
+        MENUITEM "Выделить объект атрибута",    ID_GROUP_SELECT_BY_ATTR3
         MENUITEM SEPARATOR
-        MENUITEM "Static highlight mode",       ID_STATIC_HIGHLIGHT
+        MENUITEM "Режим статической подсветки", ID_STATIC_HIGHLIGHT
     END
     POPUP "Polyline Corner"
     BEGIN
-        MENUITEM "Move",                        ID_OP_CORNER_MOVE
-        MENUITEM "Set Position",                ID_OP_CORNER_EDIT
+        MENUITEM "Переместить",                 ID_OP_CORNER_MOVE
+        MENUITEM "Задать позицию",              ID_OP_CORNER_EDIT
         MENUITEM SEPARATOR
-        MENUITEM "Delete Corner",               ID_OP_CORNER_DELETECORNER
+        MENUITEM "Удалить вершину",             ID_OP_CORNER_DELETECORNER
     END
     POPUP "Polyline Side"
     BEGIN
-        MENUITEM "Move",                        ID_GROUP_MOVE
+        MENUITEM "Переместить",                 ID_GROUP_MOVE
         MENUITEM SEPARATOR
-        MENUITEM "Set Print Area",              ID_SET_PRINT_AREA
-        POPUP "Set sliding angle"
+        MENUITEM "Сделать областью печати",     ID_SET_PRINT_AREA
+        POPUP "Задать угол скольжения"
         BEGIN
-            MENUITEM "Parallel",                    ID_SLIDING_ANGLE
-            MENUITEM "Perpendicular",               ID_SLIDING_ANGLE2
+            MENUITEM "Параллельно этому сегменту",  ID_SLIDING_ANGLE
+            MENUITEM "Перпендикулярно этому сегменту", ID_SLIDING_ANGLE2
         END
         MENUITEM SEPARATOR
-        MENUITEM "Convert to Straight",         ID_OP_SIDE_CONVERTTOSTRAIGHTLINE
-        MENUITEM "Convert to Arc CW",           ID_OP_SIDE_CONVERTTOARC_CW
-        MENUITEM "Convert to Arc CCW",          ID_OP_SIDE_CONVERTTOARC_CCW
-        MENUITEM "Arc approximation",           ID_APPROXIMATION_ARC
+        MENUITEM "Преобразовать в прямую",      ID_OP_SIDE_CONVERTTOSTRAIGHTLINE
+        MENUITEM "Преобразовать в дугу CW",     ID_OP_SIDE_CONVERTTOARC_CW
+        MENUITEM "Преобразовать в дугу CCW",    ID_OP_SIDE_CONVERTTOARC_CCW
+        MENUITEM "Аппроксимировать дугу",       ID_APPROXIMATION_ARC
         MENUITEM SEPARATOR
-        MENUITEM "Select similar polylines",    ID_SEL_SIMILAR_POLY
-        MENUITEM "Select adjacent",             ID_SEL_ADJACENT
+        MENUITEM "Выделить такие же полилинии", ID_SEL_SIMILAR_POLY
+        MENUITEM "Выделить «волшебной палочкой»", ID_SEL_ADJACENT
         MENUITEM SEPARATOR
-        MENUITEM "Add cutout to polygon",       ID_ADD_CUTOUT
-        MENUITEM "Add to favorite nets",        ID_ADD_FAVORITE
+        MENUITEM "Добавить вырез",              ID_ADD_CUTOUT
+        MENUITEM "Добавить в избранное",        ID_ADD_FAVORITE
         MENUITEM SEPARATOR
-        MENUITEM "Remove from merge",           ID_REMOVEMERGE
+        MENUITEM "Исключить из слияния",        ID_REMOVEMERGE
     END
     POPUP "Group"
     BEGIN
-        MENUITEM "Move",                        ID_GROUP_MOVE
-        MENUITEM "Copy",                        ID_GROUP_COPY
-        MENUITEM "Cut",                         ID_GROUP_CUT
-        MENUITEM "Delete",                      ID_GROUP_DELETE
+        MENUITEM "Переместить",                 ID_GROUP_MOVE
+        MENUITEM "Копировать",                  ID_GROUP_COPY
+        MENUITEM "Вырезать",                    ID_GROUP_CUT
+        MENUITEM "Удалить",                     ID_GROUP_DELETE
         MENUITEM SEPARATOR
-        MENUITEM "Parts Line Up",               ID_GROUP_LINE_UP
+        MENUITEM "Выстроить детали в линию",    ID_GROUP_LINE_UP
         MENUITEM SEPARATOR
-        MENUITEM "Arc approximation",           ID_APPROXIMATION_ARC
-        MENUITEM "Find group center",           ID_ADD_G_ORIGIN
-        MENUITEM "Rectangle from selected",     ID_RECT_FROM_SEL
+        MENUITEM "Аппроксимировать дугу",       ID_APPROXIMATION_ARC
+        MENUITEM "Найти центр этой группы",     ID_ADD_G_ORIGIN
+        MENUITEM "Обвести прямоугольником",     ID_RECT_FROM_SEL
         MENUITEM SEPARATOR
-        MENUITEM "Add marks on polylines",      ID_ADD_MARKS
-        MENUITEM "Static highlight mode",       ID_STATIC_HIGHLIGHT
+        MENUITEM "Добавить метки на полилинии", ID_ADD_MARKS
+        MENUITEM "Режим статической подсветки", ID_STATIC_HIGHLIGHT
         MENUITEM SEPARATOR
-        MENUITEM "Save to file...",             ID_GROUP_SAVETOFILE
-        MENUITEM "Save as Openscad© data...",   ID_GROUP_SAVETOOPENSCAD
+        MENUITEM "Сохранить в файл...",         ID_GROUP_SAVETOFILE
+        MENUITEM "Сохранить как данные OpenSCAD", ID_GROUP_SAVETOOPENSCAD
         MENUITEM SEPARATOR
-        MENUITEM "Get Pin Map",                 ID_GET_PIN_MAP
+        MENUITEM "Открыть карту пинов",         ID_GET_PIN_MAP
         MENUITEM SEPARATOR
-        POPUP "Component Attachments"
+        POPUP "Вложения компонента"
         BEGIN
-            MENUITEM "Attach file",                 ID_COMPONENT_NOTE
-            MENUITEM "Attach URL",                  ID_COMPONENT_URL
-            MENUITEM "Attach package image",        ID_COMPONENT_IMAGE
+            MENUITEM "Прикрепить файл",             ID_COMPONENT_NOTE
+            MENUITEM "Прикрепить URL",              ID_COMPONENT_URL
+            MENUITEM "Прикрепить изображение корпуса", ID_COMPONENT_IMAGE
             MENUITEM SEPARATOR
-            MENUITEM "Main document storage",       ID_OPEN_STORAGE
-            MENUITEM "Storage mirror",              ID_OPEN_STORAGE_M
+            MENUITEM "Главное хранилище документов", ID_OPEN_STORAGE
+            MENUITEM "Зеркало хранилища документов", ID_OPEN_STORAGE_M
         END
     END
     POPUP "TxtGroup"
     BEGIN
-        MENUITEM "Copy as CSV-table",           ID_TEXT_GEN_CSV
+        MENUITEM "Копировать как CSV-таблицу",  ID_TEXT_GEN_CSV
         MENUITEM SEPARATOR
-        MENUITEM "Align Left",                  ID_TEXT_ALIGN_L
-        MENUITEM "Align Right",                 ID_TEXT_ALIGN_R
-        MENUITEM "Align Top",                   ID_TEXT_ALIGN_T
-        MENUITEM "Align Bottom",                ID_TEXT_ALIGN_B
+        MENUITEM "Ровнять влево",               ID_TEXT_ALIGN_L
+        MENUITEM "Ровнять вправо",              ID_TEXT_ALIGN_R
+        MENUITEM "Ровнять вверх",               ID_TEXT_ALIGN_T
+        MENUITEM "Ровнять вниз",                ID_TEXT_ALIGN_B
         MENUITEM SEPARATOR
-        MENUITEM "Add marks on texts",          ID_ADD_MARKS
-        MENUITEM "Select parts by attribute",   ID_GROUP_SELECT_BY_ATTR
-        MENUITEM "Select polylines by attribute", ID_GROUP_SELECT_BY_ATTR2
-        MENUITEM SEPARATOR
+        MENUITEM "Добавить метки на тексты",    ID_ADD_MARKS
         MENUITEM "Static highlight mode",       ID_STATIC_HIGHLIGHT
+        MENUITEM SEPARATOR
+        MENUITEM "Выделить детали по атрибутам", ID_GROUP_SELECT_BY_ATTR
+        MENUITEM "Выделить полилинии по атрибутам", ID_GROUP_SELECT_BY_ATTR2
     END
     POPUP "Protected"
     BEGIN
-        MENUITEM "Add marks on polylines",      ID_ADD_MARKS
+        MENUITEM "Добавить метки на полилинии", ID_ADD_MARKS
+        MENUITEM "Режим статической подсветки", ID_STATIC_HIGHLIGHT
         MENUITEM SEPARATOR
-        MENUITEM "Save to file...",             ID_GROUP_SAVETOFILE
+        MENUITEM "Сохранить в файл...",         ID_GROUP_SAVETOFILE
         MENUITEM SEPARATOR
-        MENUITEM "Get Pin Map",                 ID_GET_PIN_MAP
-        POPUP "Component Attachments"
+        MENUITEM "Открыть карту пинов",         ID_GET_PIN_MAP
+        POPUP "Вложения компонента"
         BEGIN
             MENUITEM SEPARATOR
-            MENUITEM "Attach file",                 ID_COMPONENT_NOTE
-            MENUITEM "Attach URL",                  ID_COMPONENT_URL
-            MENUITEM "Attach package image",        ID_COMPONENT_IMAGE
+            MENUITEM "Прикрепить файл",             ID_COMPONENT_NOTE
+            MENUITEM "Прикрепить URL",              ID_COMPONENT_URL
+            MENUITEM "Прикрепить изображение корпуса", ID_COMPONENT_IMAGE
             MENUITEM SEPARATOR
-            MENUITEM "Main document storage",       ID_OPEN_STORAGE
-            MENUITEM "Storage mirror",              ID_OPEN_STORAGE_M
+            MENUITEM "Главное хранилище документов", ID_OPEN_STORAGE
+            MENUITEM "Зеркало хранилища документов", ID_OPEN_STORAGE_M
         END
-        MENUITEM SEPARATOR
-        MENUITEM "Static highlight mode",       ID_STATIC_HIGHLIGHT
     END
     POPUP "Attach"
     BEGIN
-        MENUITEM "Attach file",                 ID_COMPONENT_NOTE
-        MENUITEM "Attach URL",                  ID_COMPONENT_URL
-        MENUITEM "Attach package image",        ID_COMPONENT_IMAGE
+        MENUITEM "Прикрепить файл",             ID_COMPONENT_NOTE
+        MENUITEM "Прикрепить URL",              ID_COMPONENT_URL
+        MENUITEM "Прикрепить изображение корпуса", ID_COMPONENT_IMAGE
         MENUITEM SEPARATOR
-        MENUITEM "Add to Ref List",             ID_PROJECT_REFLIST
+        MENUITEM "Внести в список обозначений", ID_PROJECT_REFLIST
     END
 END
 
@@ -696,7 +713,7 @@ END
 
 IDR_MAINFRAME_DRAG MENU
 BEGIN
-    POPUP "&File", GRAYED
+    POPUP "Файл", GRAYED
     BEGIN
         MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
         MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
@@ -717,7 +734,7 @@ BEGIN
         MENUITEM "E&xit",                       ID_APP_EXIT
         MENUITEM SEPARATOR
     END
-    POPUP "&Edit", GRAYED
+    POPUP "Редактирование", GRAYED
     BEGIN
         MENUITEM "&Undo\tCtrl+Z",               ID_EDIT_UNDO
         MENUITEM "&Redo\tCtrl+Y",               ID_EDIT_REDO
@@ -731,13 +748,13 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "Select All",                  ID_SELECTALL
     END
-    POPUP "&View", GRAYED
+    POPUP "Вид", GRAYED
     BEGIN
         MENUITEM "Show all ",                   ID_VIEW_ALLELEMENTS
         MENUITEM "Layers...",                   ID_VIEW_LAYERS
         MENUITEM "Show Log...",                 ID_VIEW_LOG
     END
-    POPUP "Project", GRAYED
+    POPUP "Проект", GRAYED
     BEGIN
         MENUITEM "Options...",                  ID_PROJECT_OPTIONS
         MENUITEM SEPARATOR
@@ -748,7 +765,7 @@ BEGIN
         MENUITEM "Find and add part",           ID_PART_PASTEFROMFILE
         MENUITEM "Find and add parts array from files...", ID_PARTS_PASTEFROMFILE
     END
-    POPUP "Tools", GRAYED
+    POPUP "Инструменты", GRAYED
     BEGIN
         MENUITEM "Move origin",                 ID_TOOLS_MOVEORIGIN
         MENUITEM SEPARATOR
@@ -761,7 +778,11 @@ BEGIN
         MENUITEM "Repeat &DRC\tCtrl+D",         ID_TOOLS_REPEATDRC
         MENUITEM "Clear marks",                 ID_TOOLS_CLEAR_DRC
     END
-    POPUP "&Help", GRAYED
+    POPUP "Утилиты", GRAYED
+    BEGIN
+        MENUITEM SEPARATOR
+    END
+    POPUP "Помощь", GRAYED
     BEGIN
         MENUITEM "FreePCB User Guide (HTML)",   ID_HELP_USERGUIDE
         MENUITEM "FreePCB User Guide (PDF)",    ID_HELP_USERGUIDE_PDF
@@ -851,9 +872,6 @@ BEGIN
 END
 
 
-// VERSION
-
-
 /////////////////////////////////////////////////////////////////////////////
 //
 // Dialog
@@ -861,11 +879,11 @@ END
 
 IDD_ABOUTBOX DIALOGEX 0, 0, 235, 126
 STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "About"
+CAPTION "О программе"
 FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,11,12,20,20
-    LTEXT           "Schematic Constructor v1.4.16",IDC_STATIC,42,12,119,8,SS_NOPREFIX  // VERSION
+    LTEXT           "СхемАтор v1.4.16 для ПлатФорм",IDC_STATIC,42,12,119,8,SS_NOPREFIX
     LTEXT           "© duxahtech 2020-2024",IDC_STATIC,42,24,179,8
     DEFPUSHBUTTON   "OK",IDOK,170,15,50,14,WS_GROUP
     LTEXT           "Source libraries:",IDC_STATIC,21,78,51,8
@@ -932,13 +950,13 @@ END
 
 IDD_ADD_MERGE DIALOGEX 0, 0, 262, 49
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Add Merge Name"
+CAPTION "Добавить имя слияния"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     COMBOBOX        IDC_MERGE_NAME,8,18,192,60,CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | CBS_DISABLENOSCROLL | WS_VSCROLL | WS_TABSTOP
     DEFPUSHBUTTON   "OK",IDOK,205,6,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,205,28,50,14
-    LTEXT           "Name",IDC_STATIC_M_TEXT,10,5,28,8
+    LTEXT           "Имя",IDC_STATIC_M_TEXT,10,5,28,8
 END
 
 IDD_RENUMBERS DIALOGEX 0, 0, 159, 161
@@ -987,43 +1005,43 @@ BEGIN
     GROUPBOX        "Trace width",IDC_STATIC,6,48,192,30
 END
 
-IDD_ADD_TEXT DIALOGEX 0, 0, 380, 138
+IDD_ADD_TEXT DIALOGEX 0, 0, 444, 139
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Text string"
+CAPTION "Опции текста"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    COMBOBOX        IDC_EDIT_TEXT,7,17,323,260,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_GROUP | WS_TABSTOP
-    CONTROL         "Right-Top",IDC_CHECK_RT,"Button",BS_AUTO3STATE | WS_TABSTOP,238,103,47,10
+    COMBOBOX        IDC_EDIT_TEXT,7,17,381,260,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_GROUP | WS_TABSTOP
+    CONTROL         "Право-верхнее",IDC_CHECK_RT,"Button",BS_AUTO3STATE | WS_TABSTOP,283,103,65,10
     COMBOBOX        IDC_COMBO_ADD_TEXT_UNITS,7,95,76,65,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    CONTROL         "Use default for height",IDC_DEF_WIDTH,"Button",BS_AUTORADIOBUTTON | WS_GROUP,110,99,86,10
-    CONTROL         "Set width",IDC_SET_WIDTH,"Button",BS_AUTORADIOBUTTON,110,113,46,10
-    EDITTEXT        IDC_EDIT_WIDTH,160,112,57,12,ES_AUTOHSCROLL
+    CONTROL         "По умолчанию для высоты букв",IDC_DEF_WIDTH,"Button",BS_AUTORADIOBUTTON | WS_GROUP,110,99,132,10
+    CONTROL         "Задать",IDC_SET_WIDTH,"Button",BS_AUTORADIOBUTTON,110,113,70,10
+    EDITTEXT        IDC_EDIT_WIDTH,188,112,57,12,ES_AUTOHSCROLL
     LISTBOX         IDC_LIST_LAYER,202,94,17,15,LBS_SORT | LBS_NOINTEGRALHEIGHT | NOT WS_VISIBLE | WS_DISABLED | WS_VSCROLL | WS_TABSTOP
-    CONTROL         "Drag",IDC_RADIO1,"Button",BS_AUTORADIOBUTTON | WS_GROUP,108,51,31,10
-    CONTROL         "Set position",IDC_RADIO2,"Button",BS_AUTORADIOBUTTON,108,66,51,10
-    EDITTEXT        IDC_X,171,49,45,12,ES_AUTOHSCROLL
-    EDITTEXT        IDC_Y,171,65,45,12,ES_AUTOHSCROLL
+    CONTROL         "Перемещать",IDC_RADIO1,"Button",BS_AUTORADIOBUTTON | WS_GROUP,108,51,70,10
+    CONTROL         "Задать позицию",IDC_RADIO2,"Button",BS_AUTORADIOBUTTON,108,66,70,10
+    EDITTEXT        IDC_X,200,49,45,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_Y,200,65,45,12,ES_AUTOHSCROLL
     DEFPUSHBUTTON   "OK",IDOK,8,116,36,14
     PUSHBUTTON      "Cancel",IDCANCEL,47,116,36,14
-    GROUPBOX        "Line width",IDC_STATIC,98,86,126,45
-    GROUPBOX        "Position",IDC_STATIC,98,38,125,46
-    LTEXT           "Text:",IDC_STATIC,8,7,18,8
-    LTEXT           "Y",IDC_STATIC,163,67,8,8
+    GROUPBOX        "Толщина пера",IDC_STATIC,98,86,168,45
+    GROUPBOX        "Позиция",IDC_STATIC,98,38,168,46
+    LTEXT           "Текст:",IDC_STATIC,8,7,23,8
+    LTEXT           "Y",IDC_STATIC,192,67,8,8
     COMBOBOX        IDC_TEXT_FONT,7,42,76,60,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Font:",IDC_STATIC_M_TEXT,9,32,20,8
-    GROUPBOX        "PDF draw type",IDC_STATIC,230,38,69,93
-    CONTROL         "Default",IDC_PDF_DEF,"Button",BS_AUTORADIOBUTTON | WS_GROUP,238,56,39,10
-    CONTROL         "Graphic",IDC_PDF_GRAPHIC,"Button",BS_AUTORADIOBUTTON,238,71,40,10
-    CONTROL         "PDF font",IDC_PDF_USE_FONT,"Button",BS_AUTORADIOBUTTON,238,85,44,10
-    LTEXT           "X",IDC_STATIC,163,51,8,8
-    CONTROL         "Clench",IDC_CHECK_COMPRESSED,"Button",BS_AUTO3STATE | WS_TABSTOP,315,56,35,10
-    LTEXT           "Units:",IDC_STATIC_M_TEXT2,9,84,20,8
-    LTEXT           "Uppercase height:",IDC_STATIC_M_TEXT3,9,58,64,8
-    CONTROL         "Unclench",IDC_CHECK_UNCLENCHED,"Button",BS_AUTO3STATE | WS_TABSTOP,315,71,42,10
-    CONTROL         "Italic font",IDC_CHECK_ITALIC,"Button",BS_AUTO3STATE | WS_TABSTOP,315,103,47,10
-    GROUPBOX        "Options",IDC_STATIC,306,38,67,93
-    LTEXT           "alignment",IDC_STATIC_M_TEXT4,249,116,37,8
-    EDITTEXT        IDC_EDIT_TEXT2,332,17,41,13,ES_AUTOHSCROLL
+    LTEXT           "Шрифт:",IDC_STATIC_M_TEXT,9,32,28,8
+    GROUPBOX        "PDF-рисование",IDC_STATIC,275,38,84,93
+    CONTROL         "По умолчанию",IDC_PDF_DEF,"Button",BS_AUTORADIOBUTTON | WS_GROUP,283,56,65,10
+    CONTROL         "Как на экране",IDC_PDF_GRAPHIC,"Button",BS_AUTORADIOBUTTON,283,71,63,10
+    CONTROL         "PDF-шрифт",IDC_PDF_USE_FONT,"Button",BS_AUTORADIOBUTTON,283,85,51,10
+    LTEXT           "X",IDC_STATIC,192,51,8,8
+    CONTROL         "Узкий",IDC_CHECK_COMPRESSED,"Button",BS_AUTO3STATE | WS_TABSTOP,376,56,35,10
+    LTEXT           "Ед.изм:",IDC_STATIC_M_TEXT2,9,84,26,8
+    LTEXT           "Высота букв:",IDC_STATIC_M_TEXT3,9,58,64,8
+    CONTROL         "Широкий",IDC_CHECK_UNCLENCHED,"Button",BS_AUTO3STATE | WS_TABSTOP,376,71,42,10
+    CONTROL         "Наклонный",IDC_CHECK_ITALIC,"Button",BS_AUTO3STATE | WS_TABSTOP,376,103,53,10
+    GROUPBOX        "Шрифт",IDC_STATIC,367,38,67,93
+    LTEXT           "выравнивание",IDC_STATIC_M_TEXT4,294,116,53,8
+    EDITTEXT        IDC_EDIT_TEXT2,393,17,41,13,ES_AUTOHSCROLL
     COMBOBOX        IDC_EDIT_HEIGHT,7,69,76,160,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
 END
 
@@ -1080,7 +1098,7 @@ END
 
 IDD_EDIT_BOARD_CORNER DIALOGEX 0, 0, 119, 90
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Edit Corner"
+CAPTION "Вершина"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     COMBOBOX        IDC_COMBO_CORNER_UNITS,48,6,36,54,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
@@ -1090,8 +1108,8 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,72,72,30,14
     LTEXT           "X",IDC_STATIC,26,25,8,8
     LTEXT           "Y",IDC_STATIC,26,43,8,8
-    LTEXT           "Units",IDC_STATIC,24,8,17,8
-    CONTROL         "Origin",IDC_ORIGIN,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,38,57,35,10
+    LTEXT           "Ед.изм",IDC_STATIC,22,8,23,8
+    CONTROL         "В начало координат",IDC_ORIGIN,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,21,57,83,10
 END
 
 IDD_ADD_AREA DIALOGEX 0, 0, 386, 182
@@ -1432,50 +1450,50 @@ STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSM
 CAPTION "Generate print layers"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    CONTROL         "Free polyline",IDC_CHECK_FREE_LINE,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,15,20,57,10
-    CONTROL         "Part outline",IDC_CHECK_PART_LINE,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,15,31,53,10
-    CONTROL         "Part name",IDC_CHECK_PART_NAME,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,15,41,51,11
-    CONTROL         "Pin line",IDC_CHECK_PIN_LINE,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,15,52,50,11
-    CONTROL         "Pin name",IDC_CHECK_PIN_NAME,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,15,63,45,10
-    CONTROL         "Net polyline",IDC_CHECK_NET_LINE,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,15,74,52,8
-    CONTROL         "Net name",IDC_CHECK_NET_NAME,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,15,85,47,10
-    CONTROL         "Front layer 1",IDC_CHECK_INNER1,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,15,128,54,10
-    CONTROL         "Front layer 2",IDC_CHECK_INNER2,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,15,139,54,11
-    CONTROL         "Back layer 1",IDC_CHECK_INNER3,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,72,19,54,11
-    CONTROL         "Back layer 2",IDC_CHECK_INNER4,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,72,31,55,10
-    CONTROL         "Back layer 3",IDC_CHECK_INNER5,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,72,42,55,10
-    CONTROL         "Back layer 4",IDC_CHECK_INNER6,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,72,53,55,10
-    CONTROL         "Back layer 5",IDC_CHECK_INNER7,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,72,63,56,11
-    CONTROL         "Back layer 6",IDC_CHECK_INNER8,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,72,74,55,10
-    CONTROL         "Back layer 7",IDC_CHECK_INNER9,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,72,85,55,10
-    CONTROL         "Back layer 8",IDC_CHECK_INNER10,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,72,96,55,10
-    CONTROL         "Back layer 9",IDC_CHECK_INNER11,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,72,107,56,11
-    CONTROL         "Back layer 10",IDC_CHECK_INNER12,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,72,118,57,11
-    CONTROL         "Back layer 11",IDC_CHECK_INNER13,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,72,129,58,10
-    CONTROL         "Back layer 12",IDC_CHECK_INNER14,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,72,140,59,10
+    CONTROL         "Бесхозн.",IDC_CHECK_FREE_LINE,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,15,20,57,10
+    CONTROL         "Детали",IDC_CHECK_PART_LINE,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,15,31,41,10
+    CONTROL         "Обознач.",IDC_CHECK_PART_NAME,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,15,41,51,11
+    CONTROL         "Пины",IDC_CHECK_PIN_LINE,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,15,52,50,11
+    CONTROL         "Имя пина",IDC_CHECK_PIN_NAME,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,15,63,45,10
+    CONTROL         "Эл.цепи",IDC_CHECK_NET_LINE,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,15,75,52,8
+    CONTROL         "Имя цепи",IDC_CHECK_NET_NAME,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,15,85,47,10
+    CONTROL         "Верхний 1",IDC_CHECK_INNER1,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,15,128,54,10
+    CONTROL         "Верхний 2",IDC_CHECK_INNER2,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,15,139,54,11
+    CONTROL         "Нижний 1",IDC_CHECK_INNER3,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,72,19,54,11
+    CONTROL         "Нижний 2",IDC_CHECK_INNER4,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,72,31,49,10
+    CONTROL         "Нижний 3",IDC_CHECK_INNER5,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,72,42,49,10
+    CONTROL         "Нижний 4",IDC_CHECK_INNER6,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,72,53,49,10
+    CONTROL         "Нижний 5",IDC_CHECK_INNER7,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,72,63,56,11
+    CONTROL         "Нижний 6",IDC_CHECK_INNER8,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,72,74,49,10
+    CONTROL         "Нижний 7",IDC_CHECK_INNER9,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,72,85,49,10
+    CONTROL         "Нижний 8",IDC_CHECK_INNER10,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,72,96,49,10
+    CONTROL         "Нижний 9",IDC_CHECK_INNER11,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,72,107,56,11
+    CONTROL         "Нижний 10",IDC_CHECK_INNER12,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,72,118,57,11
+    CONTROL         "Нижний 11",IDC_CHECK_INNER13,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,72,129,58,10
+    CONTROL         "Нижний 12",IDC_CHECK_INNER14,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,72,140,53,10
     COMBOBOX        IDC_COMBO_CAD_UNITS,424,73,37,87,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    GROUPBOX        "Output folder",IDC_STATIC,132,21,341,32
+    GROUPBOX        "Выходная папка",IDC_STATIC,132,21,341,32
     EDITTEXT        IDC_EDIT_FOLDER,144,34,317,12,ES_AUTOHSCROLL | WS_DISABLED
     PUSHBUTTON      "...",IDC_BUTTON_FOLDER,227,7,18,14,NOT WS_VISIBLE
-    PUSHBUTTON      "Default",IDC_BUTTON_DEF,181,7,34,14,NOT WS_VISIBLE
-    PUSHBUTTON      "Go !",ID_GO,292,7,32,14
-    PUSHBUTTON      "Postpound on later",IDC_BUTTON_DONE,334,7,79,14
-    PUSHBUTTON      "Cancel",IDCANCEL,423,7,50,14
-    GROUPBOX        "Options",IDC_STATIC,293,57,180,92
-    LTEXT           "Units",IDC_STATIC,435,63,17,8
-    LTEXT           "Minimum polyline width",IDC_STATIC,307,105,73,8,0,WS_EX_RIGHT
-    LTEXT           "Minimum text stroke width",IDC_STATIC,308,119,84,8,0,WS_EX_RIGHT
-    LTEXT           "Highlight line width",IDC_STATIC,308,91,60,8,0,WS_EX_RIGHT
-    LTEXT           "Limit text visibility on height",IDC_STATIC,308,132,89,8,0,WS_EX_RIGHT
+    PUSHBUTTON      "По умолчанию",IDC_BUTTON_DEF,147,7,68,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Поехали!",ID_GO,280,7,44,14
+    PUSHBUTTON      "Отложить на потом",IDC_BUTTON_DONE,332,7,82,14
+    PUSHBUTTON      "Сбросить",IDCANCEL,423,7,50,14
+    GROUPBOX        "Опции",IDC_STATIC,293,57,180,92
+    LTEXT           "Ед.изм",IDC_STATIC,430,63,23,8
+    CONTROL         "Минимальная толщина линии",IDC_STATIC,"Static",SS_LEFTNOWORDWRAP | WS_GROUP,307,105,111,8,WS_EX_RIGHT
+    LTEXT           "Минимальная толщина текста",IDC_STATIC,308,119,109,8,0,WS_EX_RIGHT
+    LTEXT           "Толщина линий подсветки",IDC_STATIC,308,91,109,8,0,WS_EX_RIGHT
+    LTEXT           "Предел высоты текста",IDC_STATIC,308,132,109,8,0,WS_EX_RIGHT
     EDITTEXT        IDC_EDIT_CAD_TEXT_H,424,130,37,12,ES_AUTOHSCROLL
     EDITTEXT        IDC_EDIT_CAD_MIN_SSW,424,116,37,12,ES_AUTOHSCROLL
     EDITTEXT        IDC_EDIT_CAD_POLYLINE_WID,424,102,37,12,ES_AUTOHSCROLL
     EDITTEXT        IDC_EDIT_CAD_HIGH_W,424,88,37,12,ES_AUTOHSCROLL
-    CONTROL         "Footprint",IDC_CHECK_FOOTPRINT,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,15,95,41,11
-    CONTROL         "Part Value",IDC_CHECK_PART_VALUE,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,15,106,51,11
-    CONTROL         "Description",IDC_CHECK_DESCRIPTION,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,15,117,51,10
+    CONTROL         "Футпринты",IDC_CHECK_FOOTPRINT,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,15,95,48,11
+    CONTROL         "Названия",IDC_CHECK_PART_VALUE,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,15,106,51,11
+    CONTROL         "Описания",IDC_CHECK_DESCRIPTION,"Button",BS_AUTOCHECKBOX | BS_LEFT | WS_TABSTOP,15,117,51,10
     CONTROL         "",IDC_BMP_VIEWER,"Static",SS_BITMAP | SS_REALSIZEIMAGE,146,115,15,13
-    GROUPBOX        "Output",IDC_STATIC,132,57,156,92
+    GROUPBOX        "Выход на...",IDC_STATIC,132,57,156,92
     CONTROL         "ViewMate",IDC_RADIO_VM,"Button",BS_AUTORADIOBUTTON | BS_PUSHLIKE | WS_GROUP,145,73,58,12
     CONTROL         "Geda's gerbv",IDC_RADIO_GV,"Button",BS_AUTORADIOBUTTON | BS_PUSHLIKE,145,86,58,12
     CONTROL         "GerberLogix",IDC_RADIO_GL,"Button",BS_AUTORADIOBUTTON | BS_PUSHLIKE,215,74,58,12
@@ -1787,19 +1805,20 @@ STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSM
 CAPTION "Design Rule Check"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    CONTROL         "Show hidden attributes",IDC_CHECK_SHOW_UNROUTED,"Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,15,3,123,10
+    CONTROL         "Показать скрытые атрибуты",IDC_CHECK_SHOW_UNROUTED,
+                    "Button",BS_AUTOCHECKBOX | NOT WS_VISIBLE | WS_TABSTOP,15,3,123,10
     COMBOBOX        IDC_COMBO1,88,30,36,48,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
     EDITTEXT        IDC_PART_AA,88,49,36,12,ES_AUTOHSCROLL
     EDITTEXT        IDC_PART_AP,88,67,36,12,ES_AUTOHSCROLL
-    EDITTEXT        IDC_PIN_AA,88,85,36,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
-    EDITTEXT        IDC_PIN_AP,88,102,36,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
-    PUSHBUTTON      "Check",IDC_BUTTON1,13,99,33,14
-    PUSHBUTTON      "Done",IDOK,61,99,31,14
-    PUSHBUTTON      "Cancel",IDCANCEL,106,99,27,14
-    LTEXT           "text to polyline",IDC_STATIC,22,69,49,8
-    LTEXT           "Units",IDC_STATIC,64,33,17,8
-    GROUPBOX        "Minimum distance allowed",IDC_STATIC,13,17,120,69
-    LTEXT           "Text to Text",IDC_STATIC,22,52,41,8
+    EDITTEXT        IDC_PIN_AA,21,30,36,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    EDITTEXT        IDC_PIN_AP,22,37,36,12,ES_AUTOHSCROLL | NOT WS_VISIBLE
+    PUSHBUTTON      "Тестировать",IDC_BUTTON1,13,99,56,14
+    PUSHBUTTON      "ОК",IDOK,72,99,20,14
+    PUSHBUTTON      "Отмена",IDCANCEL,96,99,37,14
+    LTEXT           "Текст - Полилиния",IDC_STATIC,19,69,64,8
+    LTEXT           "Ед.изм",IDC_STATIC,61,32,23,8
+    GROUPBOX        "Минимальные зазоры",IDC_STATIC,13,17,120,69
+    LTEXT           "Текст - Текст",IDC_STATIC,19,52,59,8
 END
 
 IDD_SHOW_ATTR DIALOGEX 0, 0, 245, 243
@@ -1878,33 +1897,33 @@ BEGIN
     CONTROL         "Retain areas if possible",IDC_CHECK_KEEP_AREAS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,12,216,90,10
 END
 
-IDD_ADD_MASK_CUTOUT DIALOGEX 0, 0, 289, 193
+IDD_ADD_MASK_CUTOUT DIALOGEX 0, 0, 350, 194
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Add/Edit Polyline"
+CAPTION "Опции полилинии"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,153,168,57,14
-    PUSHBUTTON      "Cancel",IDCANCEL,223,168,55,14
-    GROUPBOX        "Style",IDC_STATIC,153,9,125,72
-    COMBOBOX        IDC_COMBO3,219,42,49,95,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    CONTROL         "Plain",IDC_RADIO1,"Button",BS_AUTORADIOBUTTON | WS_GROUP,161,24,31,10
-    CONTROL         "Halftone fill:",IDC_RADIO2,"Button",BS_AUTORADIOBUTTON,161,43,53,10
-    CONTROL         "Fill",IDC_RADIO3,"Button",BS_AUTORADIOBUTTON,202,24,24,10
-    CONTROL         "Dotted",IDC_DOTTED,"Button",BS_AUTORADIOBUTTON,235,24,36,10
-    CONTROL         "Do not change style",IDC_NOT_CHANGE2,"Button",BS_AUTORADIOBUTTON,161,61,89,10
-    GROUPBOX        "Layer",IDC_STATIC,153,86,125,73
-    COMBOBOX        IDC_COMBO1,165,101,102,95,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    CONTROL         "Set default layer",IDC_DEF_LAYER,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,165,141,69,10
-    CONTROL         "Do not change layer",IDC_NOT_CHANGE3,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,165,124,81,10
-    GROUPBOX        "Type",IDC_STATIC,11,9,131,72
-    CONTROL         "Opened (i.e. polyline)",IDC_RADIO_OPEN,"Button",BS_AUTORADIOBUTTON | WS_GROUP,22,24,91,10
-    CONTROL         "Closed (i.e. polygon)",IDC_RADIO_CLOSED,"Button",BS_AUTORADIOBUTTON,22,42,88,10
-    CONTROL         "Do not change type",IDC_NOT_CHANGE1,"Button",BS_AUTORADIOBUTTON,22,61,87,10
-    GROUPBOX        "Width",IDC_STATIC,12,86,130,97
+    DEFPUSHBUTTON   "OK",IDOK,164,168,57,14
+    PUSHBUTTON      "Cancel",IDCANCEL,234,168,55,14
+    GROUPBOX        "Стиль",IDC_STATIC,164,9,173,72
+    COMBOBOX        IDC_COMBO3,238,42,49,95,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Простая",IDC_RADIO1,"Button",BS_AUTORADIOBUTTON | WS_GROUP,172,24,43,10
+    CONTROL         "Полутоновая:",IDC_RADIO2,"Button",BS_AUTORADIOBUTTON,172,43,61,10
+    CONTROL         "Закрашенная",IDC_RADIO3,"Button",BS_AUTORADIOBUTTON,219,24,58,10
+    CONTROL         "Пунктирная",IDC_DOTTED,"Button",BS_AUTORADIOBUTTON,282,24,51,10
+    CONTROL         "Без изменений",IDC_NOT_CHANGE2,"Button",BS_AUTORADIOBUTTON,172,61,89,10
+    GROUPBOX        "Слой",IDC_STATIC,164,86,173,73
+    COMBOBOX        IDC_COMBO1,176,101,151,95,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Задать слой по умолчанию",IDC_DEF_LAYER,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,176,141,117,10
+    CONTROL         "Без изменений",IDC_NOT_CHANGE3,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,176,124,66,10
+    GROUPBOX        "Тип",IDC_STATIC,11,9,144,72
+    CONTROL         "Открытая",IDC_RADIO_OPEN,"Button",BS_AUTORADIOBUTTON | WS_GROUP,22,24,91,10
+    CONTROL         "Закрытая (т.е. полигон)",IDC_RADIO_CLOSED,"Button",BS_AUTORADIOBUTTON,22,42,103,10
+    CONTROL         "Без изменений",IDC_NOT_CHANGE1,"Button",BS_AUTORADIOBUTTON,22,61,87,10
+    GROUPBOX        "Толщина пера",IDC_STATIC,12,86,143,97
     EDITTEXT        IDC_WIDTH_MIN,67,142,61,13,ES_AUTOHSCROLL
     EDITTEXT        IDC_WIDTH_MAX,67,160,61,13,ES_AUTOHSCROLL
-    CONTROL         "Apply to lines in a width range",IDC_APPLY_IN_RANGE,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,23,125,108,10
+    CONTROL         "Применить в диапазоне толщин:",IDC_APPLY_IN_RANGE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,21,125,123,10
     LTEXT           "min",IDC_STATIC,51,144,12,8
     LTEXT           "max",IDC_STATIC,50,162,14,8
     EDITTEXT        IDC_EDIT_WIDTH,23,102,53,13,ES_AUTOHSCROLL
@@ -2001,79 +2020,79 @@ BEGIN
     COMBOBOX        IDC_REFDES,68,10,141,150,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
     COMBOBOX        IDC_PINNAME,68,82,141,150,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
     DEFPUSHBUTTON   "OK",IDOK,338,237,61,20
-    LTEXT           "Ref Des",IDC_STATIC,11,12,26,8
-    LTEXT           "Pin Name",IDC_STATIC,11,84,30,8
+    LTEXT           "Обозначение",IDC_STATIC,11,12,46,8
+    CONTROL         "Имя пина",IDC_STATIC,"Static",SS_LEFTNOWORDWRAP | WS_GROUP,11,84,38,8
     COMBOBOX        IDC_NETNAME,68,106,141,150,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Net Name",IDC_STATIC,11,108,32,8
+    CONTROL         "Имя эл.цепи",IDC_STATIC,"Static",SS_LEFTNOWORDWRAP | WS_GROUP,11,108,49,8
     COMBOBOX        IDC_FNAME,68,58,128,150,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
     COMBOBOX        IDC_PARTVALUE,68,34,141,150,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Part Value",IDC_STATIC,11,36,34,8
-    EDITTEXT        IDC_ATTR_HEIGHT_REF,324,10,41,12,ES_AUTOHSCROLL
+    LTEXT           "Название",IDC_STATIC,11,36,34,8
+    EDITTEXT        IDC_ATTR_HEIGHT_REF,321,10,41,12,ES_AUTOHSCROLL
     EDITTEXT        IDC_ATTR_WIDTH_REF,420,10,41,12,ES_AUTOHSCROLL
-    LTEXT           "Height",IDC_STATIC,299,12,22,8
-    LTEXT           "Stroke width",IDC_STATIC,375,12,41,8
+    LTEXT           "Высота",IDC_STATIC,293,12,25,8
+    CONTROL         "Толщина пера",IDC_STATIC,"Static",SS_LEFTNOWORDWRAP | WS_GROUP,366,12,52,8
     GROUPBOX        "",IDC_STATIC,4,2,462,25
-    CONTROL         "Apply sizes:",IDC_ATTR_APPLY_REF,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,239,12,54,10
-    EDITTEXT        IDC_ATTR_HEIGHT_FOOT,324,58,41,12,ES_AUTOHSCROLL
+    CONTROL         "Под размер:",IDC_ATTR_APPLY_REF,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,234,11,56,10
+    EDITTEXT        IDC_ATTR_HEIGHT_FOOT,321,58,41,12,ES_AUTOHSCROLL
     EDITTEXT        IDC_ATTR_WIDTH_FOOT,420,58,41,12,ES_AUTOHSCROLL
-    LTEXT           "Height",IDC_STATIC,299,61,22,8
-    LTEXT           "Stroke width",IDC_STATIC,375,61,41,8
+    LTEXT           "Высота",IDC_STATIC,293,61,25,8
+    CONTROL         "Толщина пера",IDC_STATIC,"Static",SS_LEFTNOWORDWRAP | WS_GROUP,366,61,51,8
     GROUPBOX        "",IDC_STATIC,4,50,462,25
-    CONTROL         "Apply sizes:",IDC_ATTR_APPLY_FOOT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,239,60,54,10
-    EDITTEXT        IDC_ATTR_HEIGHT_VALUE,324,34,41,12,ES_AUTOHSCROLL
+    CONTROL         "Под размер:",IDC_ATTR_APPLY_FOOT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,234,60,54,10
+    EDITTEXT        IDC_ATTR_HEIGHT_VALUE,321,34,41,12,ES_AUTOHSCROLL
     EDITTEXT        IDC_ATTR_WIDTH_VALUE,420,34,41,12,ES_AUTOHSCROLL
-    LTEXT           "Height",IDC_STATIC,299,36,22,8
-    LTEXT           "Stroke width",IDC_STATIC,375,36,41,8
+    LTEXT           "Высота",IDC_STATIC,293,36,25,8
+    CONTROL         "Толщина пера",IDC_STATIC,"Static",SS_LEFTNOWORDWRAP | WS_GROUP,366,36,50,8
     GROUPBOX        "",IDC_STATIC,4,26,462,25
-    CONTROL         "Apply sizes:",IDC_ATTR_APPLY_VALUE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,239,36,54,10
-    EDITTEXT        IDC_ATTR_HEIGHT_PIN,324,82,41,12,ES_AUTOHSCROLL
+    CONTROL         "Под размер:",IDC_ATTR_APPLY_VALUE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,234,35,54,10
+    EDITTEXT        IDC_ATTR_HEIGHT_PIN,321,82,41,12,ES_AUTOHSCROLL
     EDITTEXT        IDC_ATTR_WIDTH_PIN,420,82,41,12,ES_AUTOHSCROLL
-    LTEXT           "Height",IDC_STATIC,299,84,22,8
-    LTEXT           "Stroke width",IDC_STATIC,375,83,41,8
+    LTEXT           "Высота",IDC_STATIC,293,84,25,8
+    CONTROL         "Толщина пера",IDC_STATIC,"Static",SS_LEFTNOWORDWRAP | WS_GROUP,366,83,50,8
     GROUPBOX        "",IDC_STATIC,4,74,462,25
-    CONTROL         "Apply sizes:",IDC_ATTR_APPLY_PIN,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,239,83,54,10
-    EDITTEXT        IDC_ATTR_HEIGHT_NET,324,106,41,12,ES_AUTOHSCROLL
+    CONTROL         "Под размер:",IDC_ATTR_APPLY_PIN,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,234,83,54,10
+    EDITTEXT        IDC_ATTR_HEIGHT_NET,321,106,41,12,ES_AUTOHSCROLL
     EDITTEXT        IDC_ATTR_WIDTH_NET,420,106,41,12,ES_AUTOHSCROLL
-    LTEXT           "Height",IDC_STATIC,299,109,22,8
-    LTEXT           "Stroke width",IDC_STATIC,375,108,41,8
+    LTEXT           "Высота",IDC_STATIC,293,109,25,8
+    CONTROL         "Толщина пера",IDC_STATIC,"Static",SS_LEFTNOWORDWRAP | WS_GROUP,366,108,52,8
     GROUPBOX        "",IDC_STATIC,4,98,462,25
-    CONTROL         "Apply sizes:",IDC_ATTR_APPLY_NET,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,239,108,54,10
-    EDITTEXT        IDC_ATTR_HEIGHT_DESC,281,170,41,12,ES_AUTOHSCROLL
-    EDITTEXT        IDC_ATTR_WIDTH_DESC,281,202,41,12,ES_AUTOHSCROLL
-    LTEXT           "Height",IDC_STATIC,284,160,22,8
-    LTEXT           "Stroke width",IDC_STATIC,284,192,41,8
-    GROUPBOX        "Description",IDC_STATIC,4,123,328,135
-    CONTROL         "Apply sizes",IDC_ATTR_APPLY_DESC,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,280,140,46,10
+    CONTROL         "Под размер:",IDC_ATTR_APPLY_NET,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,234,108,54,10
+    EDITTEXT        IDC_ATTR_HEIGHT_DESC,281,175,41,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_ATTR_WIDTH_DESC,281,218,41,12,ES_AUTOHSCROLL
+    LTEXT           "Высота",IDC_STATIC,284,165,25,8
+    LTEXT           "Толщина пера",IDC_STATIC,284,199,41,17
+    GROUPBOX        "Описание",IDC_STATIC,4,123,328,135
+    CONTROL         "Под размер:",IDC_ATTR_APPLY_DESC,"Button",BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,280,137,46,17
     EDITTEXT        IDC_LIST_DESCRIPTION,10,137,265,114,ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_WANTRETURN | WS_VSCROLL | WS_HSCROLL | NOT WS_TABSTOP
     PUSHBUTTON      "?",ID_Q1,213,10,10,13,BS_FLAT
     PUSHBUTTON      "?",ID_Q3,213,82,10,13,BS_FLAT
     PUSHBUTTON      "?",ID_Q4,213,106,10,13,BS_FLAT
     PUSHBUTTON      "L",ID_OPEN_LIB,200,58,10,13
     PUSHBUTTON      "?",ID_Q2,213,58,10,13,BS_FLAT
-    LTEXT           "Link to part",IDC_STATIC,348,153,37,8
+    LTEXT           "Ссылка на деталь",IDC_STATIC,348,153,66,8
     PUSHBUTTON      "?",ID_Q5,450,138,10,11,BS_FLAT
-    LTEXT           "Date",IDC_STATIC,348,141,16,8
-    GROUPBOX        "Add command template",IDC_STATIC,338,123,128,108
+    LTEXT           "Дата изменения",IDC_STATIC,348,141,56,8
+    GROUPBOX        "Добавить шаблон кода",IDC_STATIC,338,123,128,108
     PUSHBUTTON      "?",ID_Q6,450,151,10,11,BS_FLAT
     PUSHBUTTON      "?",ID_Q7,450,164,10,11,BS_FLAT
     PUSHBUTTON      "add",ID_CMD1,428,138,19,11,BS_FLAT
-    LTEXT           "Outline of complex part",IDC_STATIC,348,166,76,8
+    LTEXT           "Составная деталь",IDC_STATIC,348,166,76,8
     PUSHBUTTON      "add",ID_CMD2,428,151,19,11,BS_FLAT
     PUSHBUTTON      "add",ID_CMD3,428,164,19,11,BS_FLAT
     PUSHBUTTON      "CANCEL",IDCANCEL,405,236,61,20
-    LTEXT           "Bus connect",IDC_STATIC,348,191,40,8
+    LTEXT           "Контакт шины",IDC_STATIC,348,191,59,8
     PUSHBUTTON      "?",ID_Q8,450,177,10,11,BS_FLAT
-    LTEXT           "Pin of complex part",IDC_STATIC,348,179,62,8
+    CONTROL         "Пин составной детали",IDC_STATIC,"Static",SS_LEFTNOWORDWRAP | WS_GROUP,348,179,76,8
     PUSHBUTTON      "?",ID_Q9,450,190,10,11,BS_FLAT
     PUSHBUTTON      "?",ID_Q10,450,203,10,11,BS_FLAT
-    LTEXT           "BOM table",IDC_STATIC,348,204,34,8
+    LTEXT           "Спецификация",IDC_STATIC,348,204,61,8
     PUSHBUTTON      "add",ID_CMD4,428,177,19,11,BS_FLAT
     PUSHBUTTON      "add",ID_CMD5,428,190,19,11,BS_FLAT
     PUSHBUTTON      "add",ID_CMD6,428,203,19,11,BS_FLAT
     PUSHBUTTON      "?",ID_Q11,213,34,10,13,BS_FLAT | WS_DISABLED
-    LTEXT           "Footprint Name",IDC_STATIC,11,60,50,8
+    CONTROL         "Футпринт",IDC_STATIC,"Static",SS_LEFTNOWORDWRAP | WS_GROUP,11,60,53,8
     PUSHBUTTON      "?",ID_Q12,450,216,10,11,BS_FLAT | WS_DISABLED
-    LTEXT           "Path to file",IDC_STATIC,348,217,36,8
+    CONTROL         "Путь к этому файлу",IDC_STATIC,"Static",SS_LEFTNOWORDWRAP | WS_GROUP,348,217,73,8
     PUSHBUTTON      "add",ID_CMD7,428,216,19,11,BS_FLAT
 END
 
@@ -2669,12 +2688,12 @@ END
 
 IDD_ATTR_SYNC DIALOGEX 0, 0, 400, 209
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Interpage Attribute Synchronization"
+CAPTION " Межстраничная синхронизация текстовых атрибутов"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,136,182,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,212,182,50,14
-    GROUPBOX        "Mirror of Values and Footprints",IDC_STATIC,13,93,183,76
+    GROUPBOX        "Страница назначения",IDC_STATIC,13,93,183,76
     CONTROL         "undefined",IDC_CHECK_MP1,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,19,108,83,10
     CONTROL         "undefined",IDC_CHECK_MP2,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,19,122,83,10
     CONTROL         "undefined",IDC_CHECK_MP3,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,19,136,83,10
@@ -2683,7 +2702,7 @@ BEGIN
     CONTROL         "undefined",IDC_CHECK_MP6,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,110,122,83,10
     CONTROL         "undefined",IDC_CHECK_MP7,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,110,136,83,10
     CONTROL         "undefined",IDC_CHECK_MP8,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,110,150,68,10
-    GROUPBOX        "Main Page",IDC_STATIC,13,13,183,76
+    GROUPBOX        "Главная страница",IDC_STATIC,13,13,183,76
     CONTROL         "undefined",IDC_MP1,"Button",BS_AUTORADIOBUTTON | WS_GROUP,19,28,84,10
     CONTROL         "undefined",IDC_MP2,"Button",BS_AUTORADIOBUTTON,19,42,84,10
     CONTROL         "undefined",IDC_MP3,"Button",BS_AUTORADIOBUTTON,19,56,84,10
@@ -2694,10 +2713,10 @@ BEGIN
     CONTROL         "undefined",IDC_MP8,"Button",BS_AUTORADIOBUTTON,109,70,68,10
     PUSHBUTTON      "?",ID_Q1,180,68,10,14,BS_FLAT
     PUSHBUTTON      "?",ID_Q2,181,148,10,14,BS_FLAT
-    GROUPBOX        "Exclusion List",IDC_STATIC,203,13,183,156
+    GROUPBOX        "Список исключений",IDC_STATIC,203,13,183,156
     LISTBOX         IDC_EXCL_LIST,211,43,168,119,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
-    PUSHBUTTON      "Add  Reference Designator",ID_ADD_NEW_REF,211,25,113,14,BS_FLAT
-    PUSHBUTTON      "Remove",ID_REMOVE_REF,328,25,51,14,BS_FLAT
+    PUSHBUTTON      "Добавить деталь",ID_ADD_NEW_REF,211,25,113,14,BS_FLAT
+    PUSHBUTTON      "Удалить",ID_REMOVE_REF,328,25,51,14,BS_FLAT
 END
 
 IDD_PARTLISTREPORT DIALOGEX 0, 0, 500, 199
@@ -2734,12 +2753,12 @@ END
 
 IDD_IMPORT_PART DIALOGEX 0, 0, 485, 360
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
-CAPTION "Find attribute"
+CAPTION "Поиск деталей по атрибуту"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     COMBOBOX        IDC_COMBO1,11,17,178,234,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    DEFPUSHBUTTON   "START",IDOK,10,229,38,17
-    PUSHBUTTON      "CANCEL",IDCANCEL,49,229,38,17
+    DEFPUSHBUTTON   "СТАРТ",IDOK,10,229,38,17
+    PUSHBUTTON      "ОТМЕНА",IDCANCEL,49,229,38,17
     CONTROL         "Line start",IDC_RADIO_STR_BEGIN,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,21,51,46,10
     CONTROL         "Line end",IDC_RADIO_STR_END,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,21,64,43,10
     CONTROL         "Whole word",IDC_RADIO_WORD,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,21,89,54,10
@@ -2763,17 +2782,17 @@ BEGIN
     LTEXT           "min",IDC_TXT_MIN,99,144,12,8
     LTEXT           "max",IDC_TXT_MAX,142,144,14,8
     PUSHBUTTON      "reset",IDSETDEF,60,142,29,14,BS_CENTER | BS_VCENTER
-    GROUPBOX        "Attribute string",IDC_STATIC,4,3,193,192,BS_FLAT
-    CONTROL         "Choose from a list of ever used parts",IDC_RADIO_LIST,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,18,199,142,10,WS_EX_TRANSPARENT
+    GROUPBOX        "Строка атрибута",IDC_STATIC,4,3,193,192,BS_FLAT
+    CONTROL         "Выбрать из ранее использованных деталей",IDC_RADIO_LIST,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,18,199,164,10,WS_EX_TRANSPARENT
     LISTBOX         IDC_LIST,11,34,178,129,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
     LISTBOX         IDC_LIST2,2,270,357,88,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
-    PUSHBUTTON      "Parts used only in this project",ID_ONLY,58,167,59,24,BS_CENTER | BS_VCENTER | BS_MULTILINE | BS_FLAT
+    PUSHBUTTON      "Используемые только тут",ID_ONLY,58,167,59,24,BS_CENTER | BS_VCENTER | BS_MULTILINE | BS_FLAT
     PUSHBUTTON      "?",ID_QU,179,167,11,24,BS_CENTER | BS_VCENTER | BS_MULTILINE | BS_FLAT,WS_EX_RIGHT
-    PUSHBUTTON      "All parts of this project",ID_PARTS_CURRENT_PR,12,167,46,24,BS_CENTER | BS_VCENTER | BS_MULTILINE | BS_FLAT
-    PUSHBUTTON      "Parts used once in any project",ID_ONCE,117,167,61,24,BS_CENTER | BS_VCENTER | BS_MULTILINE | BS_FLAT
+    PUSHBUTTON      "Детали проекта",ID_PARTS_CURRENT_PR,12,167,46,24,BS_CENTER | BS_VCENTER | BS_MULTILINE | BS_FLAT
+    PUSHBUTTON      "Используемые \nв 1 проекте",ID_ONCE,117,167,61,24,BS_CENTER | BS_VCENTER | BS_MULTILINE | BS_FLAT
     CONTROL         "",IDC_PREVIEW,"Static",SS_ENHMETAFILE | WS_BORDER,202,4,280,230,WS_EX_TRANSPARENT | WS_EX_CLIENTEDGE
-    CONTROL         "Apply default polyline width and text sizes",IDC_RADIO_DEF_SZS,
+    CONTROL         "Применить текущие параметры толщин",IDC_RADIO_DEF_SZS,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,18,210,147,10,WS_EX_TRANSPARENT
     PUSHBUTTON      "",IDRUNL,204,237,152,12,BS_FLAT
     PUSHBUTTON      "",IDC_DOC1,117,227,27,24,BS_ICON | BS_FLAT | NOT WS_VISIBLE,WS_EX_TRANSPARENT
@@ -2781,7 +2800,7 @@ BEGIN
     PUSHBUTTON      "",IDC_DOC3,171,227,27,24,BS_ICON | BS_FLAT | NOT WS_VISIBLE,WS_EX_TRANSPARENT
     COMBOBOX        IDC_DESCRIPTION,2,254,343,234,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
     PUSHBUTTON      "?",ID_Q8,348,254,10,13,BS_FLAT
-    PUSHBUTTON      "Attach Package Image",IDC_DOC5,361,346,118,12
+    PUSHBUTTON      "Доб. изображение корпуса",IDC_DOC5,361,346,118,12
     CONTROL         "",IDC_PREVIEW2,"Static",SS_ENHMETAFILE | WS_BORDER,360,236,122,107,WS_EX_CLIENTEDGE | WS_EX_STATICEDGE
     PUSHBUTTON      "",IDC_DOC4,90,227,27,24,BS_ICON | BS_FLAT | NOT WS_VISIBLE,WS_EX_TRANSPARENT
 END
@@ -2791,31 +2810,31 @@ STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION
 CAPTION "Compare Pages"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    DEFPUSHBUTTON   "Compare",IDCOMPARE,3,81,43,14
-    PUSHBUTTON      "Close",ID_SEL_NL2,55,81,43,14
-    CONTROL         "By ref",IDC_CH_PARTS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,60,31,10
-    CONTROL         "By pos",IDC_CH_NETS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,56,60,35,10
-    GROUPBOX        "Pages",IDC_GROUP_BOARD,4,5,94,44
+    DEFPUSHBUTTON   "Сравнить",IDCOMPARE,3,81,43,14
+    PUSHBUTTON      "Закрыть",ID_SEL_NL2,55,81,43,14
+    CONTROL         "По обозн.",IDC_CH_PARTS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,6,60,43,10
+    CONTROL         "По коорд.",IDC_CH_NETS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,53,60,43,10
+    GROUPBOX        "Страницы",IDC_GROUP_BOARD,4,5,94,44
     COMBOBOX        IDC_COMBO_PAGE_1,9,16,82,234,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
     COMBOBOX        IDC_COMBO_PAGE_2,9,31,82,234,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
-    GROUPBOX        "Compare",IDC_STATIC,4,49,94,27
+    GROUPBOX        "Сравнить",IDC_STATIC,4,49,94,27
     LISTBOX         IDC_LIST_DIFF_1,107,16,42,75,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
-    GROUPBOX        "Added?",IDC_STATIC,103,5,50,91
+    GROUPBOX        "Добавлено?",IDC_STATIC,103,5,50,91
     LISTBOX         IDC_LIST_DIFF_2,215,16,42,75,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
-    GROUPBOX        "Value?",IDC_STATIC,211,5,50,91
+    GROUPBOX        "Название?",IDC_STATIC,211,5,50,91
     LISTBOX         IDC_LIST_DIFF_3,269,16,42,75,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
-    GROUPBOX        "Footprint?",IDC_STATIC,265,5,50,91
+    GROUPBOX        "Футпринт?",IDC_STATIC,265,5,50,91
     LISTBOX         IDC_LIST_DIFF_4,161,16,42,75,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
-    GROUPBOX        "Deleted?",IDC_STATIC,157,5,50,91
+    GROUPBOX        "Удалено?",IDC_STATIC,157,5,50,91
     LISTBOX         IDC_LIST_DIFF_5,323,16,42,75,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
-    GROUPBOX        "Pins && Nets?",IDC_STATIC,319,5,50,91
+    GROUPBOX        "Пины и цепи?",IDC_STATIC,319,5,50,91
     PUSHBUTTON      "",ID_SELECT1,149,6,6,6
     PUSHBUTTON      "",ID_SELECT2,257,6,6,6
     PUSHBUTTON      "",ID_SELECT3,311,6,6,6
     PUSHBUTTON      "",ID_SELECT4,203,6,6,6
     LISTBOX         IDC_LIST_DIFF_6,377,16,42,60,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
-    GROUPBOX        "Swap pins?",IDC_STATIC,373,5,50,91
-    PUSHBUTTON      "Repair all",ID_REPAIR_ALL,377,79,42,13
+    GROUPBOX        "Свапнуть?",IDC_STATIC,373,5,50,91
+    PUSHBUTTON      "Исправить",ID_REPAIR_ALL,377,79,42,13
 END
 
 IDD_PIN_MAP DIALOGEX 0, 0, 454, 262
@@ -2833,13 +2852,13 @@ STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSM
 CAPTION "Component datasheet"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    CONTROL         "Microsoft Word file",IDC_RADIO_1,"Button",BS_AUTORADIOBUTTON,18,22,76,10
-    CONTROL         "Simple TXT file",IDC_RADIO_2,"Button",BS_AUTORADIOBUTTON,18,35,63,10
+    CONTROL         "Microsoft Word файл",IDC_RADIO_1,"Button",BS_AUTORADIOBUTTON,18,22,94,10
+    CONTROL         "Текстовый файл",IDC_RADIO_2,"Button",BS_AUTORADIOBUTTON,18,35,93,10
     DEFPUSHBUTTON   "Create",IDOK,44,65,50,14
-    PUSHBUTTON      "C",IDCANCEL,110,92,17,13,NOT WS_VISIBLE
-    GROUPBOX        "Create",IDC_STATIC,10,5,117,83
-    CONTROL         "Portable Document Format",IDC_RADIO_3,"Button",BS_AUTORADIOBUTTON,18,48,99,10
-    LTEXT           "Attach existing file",IDC_STATIC,30,96,70,8
+    PUSHBUTTON      "C",IDCANCEL,99,65,17,14,NOT WS_VISIBLE
+    GROUPBOX        "Создать новый",IDC_STATIC,10,5,117,83
+    CONTROL         "PDF файл",IDC_RADIO_3,"Button",BS_AUTORADIOBUTTON,18,48,99,10
+    LTEXT           "Прикрепить существующий",IDC_STATIC,30,96,100,8
     PUSHBUTTON      "",IDEXFILE,17,96,10,9,BS_CENTER | BS_VCENTER,WS_EX_CLIENTEDGE
 END
 
@@ -2857,23 +2876,23 @@ END
 
 IDD_CREATE_BRANCH DIALOGEX 0, 0, 141, 86
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "When copying"
+CAPTION "Создание ветки"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,17,65,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,74,65,50,14
-    GROUPBOX        "Change file names",IDC_STATIC_WHAT,6,7,128,53
-    EDITTEXT        IDC_EDIT_SUFF,73,38,49,12,ES_AUTOHSCROLL
-    CONTROL         "Increment numbers",IDC_RADIO_4,"Button",BS_AUTORADIOBUTTON | WS_GROUP,16,24,78,10
-    CONTROL         "Add suffix",IDC_RADIO_5,"Button",BS_AUTORADIOBUTTON,16,39,49,10
+    GROUPBOX        "При дублировании",IDC_STATIC_WHAT,6,7,128,53
+    EDITTEXT        IDC_EDIT_SUFF,80,38,42,12,ES_AUTOHSCROLL
+    CONTROL         "Инкрементировать номера",IDC_RADIO_4,"Button",BS_AUTORADIOBUTTON | WS_GROUP,16,24,108,10
+    CONTROL         "Доб. суффикс",IDC_RADIO_5,"Button",BS_AUTORADIOBUTTON,16,39,60,10
 END
 
 IDD_IMPORT_MERGE DIALOGEX 0, 0, 507, 288
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
-CAPTION "Find Merge"
+CAPTION "Импорт слияния из других проектов"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    DEFPUSHBUTTON   "Start",IDOK,8,189,135,17,0,WS_EX_CLIENTEDGE
+    DEFPUSHBUTTON   "Старт",IDOK,8,189,135,17,0,WS_EX_CLIENTEDGE
     LISTBOX         IDC_LIST,8,7,134,177,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
     LISTBOX         IDC_LIST2,8,210,492,72,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
     CONTROL         "",IDC_PREVIEW,"Static",SS_ENHMETAFILE | SS_SUNKEN | WS_BORDER,150,5,349,199,WS_EX_DLGMODALFRAME | WS_EX_TRANSPARENT | WS_EX_CLIENTEDGE
@@ -3016,9 +3035,9 @@ BEGIN
     IDD_ADD_TEXT, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 374
+        RIGHTMARGIN, 438
         TOPMARGIN, 7
-        BOTTOMMARGIN, 133
+        BOTTOMMARGIN, 134
     END
 
     IDD_NET_LIST, DIALOG
@@ -3229,9 +3248,9 @@ BEGIN
     IDD_ADD_MASK_CUTOUT, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 282
+        RIGHTMARGIN, 343
         TOPMARGIN, 7
-        BOTTOMMARGIN, 186
+        BOTTOMMARGIN, 187
     END
 
     IDD_CHANGE_LAYER, DIALOG
@@ -3511,6 +3530,77 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_ADD_MASK_CUTOUT AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_ADD_MERGE AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_ADD_TEXT AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_ATTR AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_ATTR_SYNC AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_CAD AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_COMPARE AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_COMPONENT_NOTE_EXT AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_CREATE_BRANCH AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_DRC AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_EDIT_BOARD_CORNER AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_IMPORT_MERGE AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_IMPORT_PART AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
 // String Table
 //
 
@@ -3633,7 +3723,7 @@ BEGIN
     AFX_IDS_PREVIEW_CLOSE   "Close print preview mode\nCancel Preview"
 END
 
-#endif    // Английский (США) resources
+#endif    // Русский (Россия) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
