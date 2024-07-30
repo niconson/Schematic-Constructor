@@ -19,8 +19,13 @@
 #define TMR_SW_CDS 4
 #define TMR_SW_CDSM 5
 #define TMR_SW_STATIC 6
+#if G_LANGUAGE==0
 #define CDS_HEADER "Schematic Constructor - "
 #define FPC_HEADER "FreePCB - "
+#else
+#define CDS_HEADER "—хемјтор - "
+#define FPC_HEADER "ѕлат‘орм - "
+#endif
 class CMainFrame : public CFrameWnd
 {
 	

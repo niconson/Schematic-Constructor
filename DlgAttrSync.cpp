@@ -177,11 +177,17 @@ void CDlgAttrSync::OnCheck2()
 			if( getbit( m_pl->m_page_mirror_mask, MAX_PAGES+i ) == 0 && m_mirror[i].GetCheck() )
 			{
 				bFirst = 0;
-				AfxMessageBox( 	"By enabling this option, you set the synchronization of part "\
+				AfxMessageBox(G_LANGUAGE == 0 ? 
+					("By enabling this option, you set the synchronization of part "\
 					"attributes between this page and the main page. This means that the attributes "\
 					"\"value\", \"footprint\", as well as the names of the pins will be the same "\
 					"for the same reference designators. Before proceeding, "\
-					"make sure that the pages are selected correctly." );
+					"make sure that the pages are selected correctly."):
+					("¬ключа€ эту опцию, вы устанавливаете синхронизацию атрибутов детали "\
+					"между этой страницей и главной страницей. Ёто означает, что атрибуты "\
+					"\"название\", \"футпринт\", а также имена пинов будут одинаковыми "\
+					"дл€ идентичных позиционных обозначений. ѕрежде чем продолжить, "\
+					"убедитесь, что страницы выбраны правильно."));
 			}
 }
 void CDlgAttrSync::OnAddRef()
@@ -209,16 +215,27 @@ void CDlgAttrSync::OnRemove()
 
 void CDlgAttrSync::OnQ1()
 {
-	AfxMessageBox("If on any page you have a modified copy of the layout "\
-					"of another page, then you can configure the synchronization "\
-					"of the value and footprint attributes for these pages. "\
-					"Select the main page on the left and the destination page on the right. "\
-					"As soon as you change the part attribute on the main page, "\
-					"it will also change on the selected pages, provided "\
-					"that the reference designators are the same.",MB_ICONINFORMATION);
+	AfxMessageBox(G_LANGUAGE == 0 ? 
+		("If on any page you have a modified copy of the layout "\
+		"of another page, then you can configure the synchronization "\
+		"of the value and footprint attributes for these pages. "\
+		"Select the main page on the left and the destination page on the right. "\
+		"As soon as you change the part attribute on the main page, "\
+		"it will also change on the selected pages, provided "\
+		"that the reference designators are the same."):
+		("≈сли на какой-либо странице у вас есть видоизмененна€ копи€ схемы "\
+		"другой страницы, то вы можете настроить синхронизацию "\
+		"атрибутов значени€ и футпринта дл€ этих страниц. "\
+		"¬ыберите главную страницу слева и страницу назначени€ справа. "\
+		" ак только вы измените атрибут детали на главной странице, "\
+		"он также изменитс€ на выбранных страницах, при условии, "\
+		"что ссылочные обозначени€ одинаковы."), MB_ICONINFORMATION);
 }
 void CDlgAttrSync::OnQ2()
 {
-	AfxMessageBox("If the page is included in the netlist, then it cannot be selected, "\
-					"because interpage duplication of reference designators for these pages is not allowed.",MB_ICONINFORMATION);
+	AfxMessageBox(G_LANGUAGE == 0 ? 
+		("If the page is included in the netlist, then it cannot be selected, "\
+		"because interpage duplication of reference designators for these pages is not allowed."):
+		("≈сли страница включена в список эл.цепей, то ее нельз€ выбрать, "\
+		"поскольку межстраничное дублирование ссылочных обозначений дл€ этих страниц не допускаетс€."), MB_ICONINFORMATION);
 }

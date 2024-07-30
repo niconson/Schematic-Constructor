@@ -2398,6 +2398,8 @@ CString CFreePcbDoc::ReadGraphics( CStdioFile * pcb_file, CArray<CPolyLine> * ss
 int CFreePcbDoc::ReadOptions( CStdioFile * pcb_file, BOOL rColors )
 {
 	int err, pos, np;
+	int layer_info_number = 0;
+	int pdf_layer_info_number = 0;
 	CArray<CString> p;
 	CString in_str, key_str;
 	BOOL m_org_changed = FALSE;
@@ -2862,6 +2864,7 @@ int CFreePcbDoc::ReadOptions( CStdioFile * pcb_file, BOOL rColors )
 						if( file_layer_name == layer_string )
 						{
 							layer = il;
+							layer_info_number = -1;
 							break;
 						}
 					}
@@ -2872,9 +2875,15 @@ int CFreePcbDoc::ReadOptions( CStdioFile * pcb_file, BOOL rColors )
 						if( file_layer_name == layer_string )
 						{
 							layer = il;
+							layer_info_number = -1;
 							break;
 						}
 					}
+				if (layer < 0 && layer_info_number >= 0)
+				{
+					layer = layer_info_number;
+					layer_info_number++;
+				}
 				if( layer < 0 )
 				{
 					//AfxMessageBox( "Warning: layer \"" + file_layer_name + "\" not supported" );
@@ -2901,9 +2910,15 @@ int CFreePcbDoc::ReadOptions( CStdioFile * pcb_file, BOOL rColors )
 						if( file_layer_name == layer_string )
 						{
 							layer = il;
+							pdf_layer_info_number = -1;
 							break;
 						}
 					}
+				if (layer < 0 && pdf_layer_info_number >= 0)
+				{
+					layer = pdf_layer_info_number;
+					pdf_layer_info_number++;
+				}
 				if( layer < 0 )
 				{
 					//AfxMessageBox( "Warning: layer \"" + file_layer_name + "\" not supported" );
@@ -12401,6 +12416,8 @@ void CFreePcbDoc::SwitchToCDS( CString * CdsFile, CString * PartRef, BOOL bMERGE
 		else
 			frm->SetTimer( TMR_SW_CDS, 1000, 0 );
 		CString FreePcb2 = m_app_dir + "\\FreeCds.exe";
+		if(G_LANGUAGE)
+			FreePcb2 = m_app_dir + "\\ÑõåìÀòîð.exe";
 		if( CdsFile->CompareNoCase( m_pcb_full_path ) )
 			if ( (UINT)ShellExecute(	NULL,"open", "\""+FreePcb2+"\"", "\""+(*CdsFile)+"\"", "\""+m_app_dir+"\"", SW_SHOWNORMAL) > 32 )
 			{
@@ -12795,7 +12812,7 @@ BOOL CFreePcbDoc::OnOpenTemplate( UINT CMD )
 	}
 	ShellExecute(	NULL, 
 					"open", 
-					"\""+m_app_dir+"\\freecds.exe\"", 
+					G_LANGUAGE == 0 ? ("\""+m_app_dir+"\\freecds.exe\""): ("\"" + m_app_dir + "\\ÑõåìÀòîð.exe\""),
 					("\""+Path+"\""), 
 					m_app_dir, 
 					SW_SHOWNORMAL );

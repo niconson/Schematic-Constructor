@@ -132,8 +132,11 @@ void CDlgAttr::DoDataExchange(CDataExchange* pDX)
 		{
 			if( m_att->m_Reflist->GetText( &m_ref, &it ) )	// duplication
 			{
-				AfxMessageBox( "Group editing of parts is not possible when the circuit contains the same part designations !\n"\
-					"You can use the automatic renumbering tool", MB_ICONERROR );
+				AfxMessageBox(G_LANGUAGE == 0 ? 
+					("Group editing of parts is not possible when the circuit contains the same part designations !\n"\
+					"You can use the automatic renumbering tool"):
+					("Групповое редактирование деталей невозможно, если схема содержит одинаковые обозначения деталей!\n"\
+					"Вы можете использовать инструмент автоматической перенумерации"), MB_ICONERROR);
 				pDX->Fail();
 			}
 		}
@@ -277,7 +280,9 @@ void CDlgAttr::DoDataExchange(CDataExchange* pDX)
 		{
 			CString mess;
 			CString illegal = ILLEGAL_REF;
-			mess.Format( "Illegal reference designator \"%s\"\n%s - these characters cannot be used", m_ref, illegal );
+			mess.Format(G_LANGUAGE == 0 ? 
+				"Illegal reference designator \"%s\"\n%s - these characters cannot be used":
+				"Недопустимое обозначение ссылки \"%s\"\n%s - эти символы не могут быть использованы", m_ref, illegal);
 			AfxMessageBox( mess );
 			pDX->Fail();
 		} 
@@ -285,14 +290,18 @@ void CDlgAttr::DoDataExchange(CDataExchange* pDX)
 		{
 			CString mess;
 			CString illegal = ILLEGAL_PIN;
-			mess.Format( "Illegal pin name \"%s\"\n%s - these characters cannot be used", m_pin, illegal );
+			mess.Format(G_LANGUAGE == 0 ? 
+				"Illegal pin name \"%s\"\n%s - these characters cannot be used":
+				"Недопустимое имя пина \"%s\"\n%s - эти символы не могут быть использованы", m_pin, illegal);
 			AfxMessageBox( mess );
 			pDX->Fail();
 		} 
 		if( m_pin.Left(1) < "9" && m_pin.Right(1) > "9" && m_pin.Find(",") == 0 )
 		{
 			CString mess;
-			mess.Format( "Illegal pin name \"%s\"\nHere is the correct pin naming style: A1, A2... B1, B2...", m_pin );
+			mess.Format(G_LANGUAGE == 0 ? 
+				"Illegal pin name \"%s\"\nHere is the correct pin naming style: A1, A2... B1, B2...":
+				"Недопустимое имя пина \"%s\"\nВот правильный стиль именования пинов: A1, A2... B1, B2...", m_pin);
 			AfxMessageBox( mess );
 			pDX->Fail();
 		} 
@@ -300,14 +309,16 @@ void CDlgAttr::DoDataExchange(CDataExchange* pDX)
 		{
 			CString mess;
 			CString illegal = ILLEGAL_NET;
-			mess.Format( "Illegal net name \"%s\"\n%s - these characters cannot be used", m_net, illegal );
+			mess.Format(G_LANGUAGE == 0 ? 
+				"Illegal net name \"%s\"\n%s - these characters cannot be used":
+				"Недопустимое имя эл.цепи \"%s\"\n%s - эти символы не могут быть использованы", m_net, illegal);
 			AfxMessageBox( mess );
 			pDX->Fail();
 		} 
 		if( m_fname.FindOneOf( "\"@|'" ) != -1 || m_pindesc.FindOneOf( "\"" ) != -1 || m_partv.FindOneOf( "\"@" ) != -1 )
 		{
 			CString mess;
-			mess.Format( "Illegal characters: ( ) | ' \" @ " );
+			mess.Format(G_LANGUAGE == 0 ? "Illegal characters: ( ) | ' \" @ ":"Недопустимые символы: ( ) | ' \" @ ");
 			AfxMessageBox( mess );
 			pDX->Fail();
 		} 
@@ -327,8 +338,11 @@ void CDlgAttr::DoDataExchange(CDataExchange* pDX)
 			if( m_att->m_Reflist->GetText( &m_ref, &it ) )
 				if( m_att->m_Reflist->GetText( &m_ref, &it ) )
 				{
-					AfxMessageBox( "Group editing of parts is not possible when the circuit contains the same part designations !"\
-						"You can use the automatic renumbering tool", MB_ICONERROR );
+					AfxMessageBox(G_LANGUAGE == 0 ? 
+						("Group editing of parts is not possible when the circuit contains the same part designations !"\
+						"You can use the automatic renumbering tool"):
+						("Групповое редактирование деталей невозможно, если схема содержит одинаковые обозначения деталей!"\
+						"Вы можете использовать инструмент автоматической перенумерации"), MB_ICONERROR);
 					pDX->Fail();
 				}
 			CText * t = NULL;
@@ -375,10 +389,16 @@ void CDlgAttr::DoDataExchange(CDataExchange* pDX)
 			if( t )
 				if( t->utility == 0 ) // not in sel group
 				{
-					int ret = AfxMessageBox( "A part with the same name already exists. "\
+					int ret = AfxMessageBox(G_LANGUAGE == 0 ? 
+						("A part with the same name already exists. "\
 						"Determine free index value and rename part automatically?\n\n(If "\
 						"you want to attach a polyline to any part, then you need to select "\
-						"both the part and the polyline, and then call this dialog box and click OK.)", MB_YESNO | MB_ICONWARNING );
+						"both the part and the polyline, and then call this dialog box and click OK.)"):
+						("Деталь с таким же именем уже существует. "\
+						"Хотите определить свободное значение индекса и обозначить деталь автоматически?\n\n"\
+						"(Если вы хотите просто прикрепить полилинию к любой детали, то вам нужно выделить "\
+						"и деталь, и полилинию, затем вызвать это диалоговое окно и нажать ГОТОВО.)"), MB_YESNO | MB_ICONWARNING);
+
 					if( ret == IDNO )
 						pDX->Fail();
 					// use next available ref
@@ -652,117 +672,202 @@ void CDlgAttr::OnOpenLib()
 
 void CDlgAttr::OnQ1()
 {
-	AfxMessageBox("The part designation must begin with a letter, followed by a part number. "\
-					"Use a dash or period to create a multi-graphic character. "\
-					"For example, name one part DA1-1, and another name DA1-2. "\
-					"In netlist, this will appear as the same part DA1",MB_ICONINFORMATION);
+	AfxMessageBox(G_LANGUAGE == 0 ? 
+		("The part designation must begin with a letter, followed by a part number. "\
+		"Use a dash or period to create a multi-graphic character. "\
+		"For example, name one part DA1-1, and another name DA1-2. "\
+		"In netlist, this will appear as the same part DA1"):
+		("Обозначение детали должно начинаться с буквы, за которой следует номер детали. "\
+		"Используйте тире или точку для создания многографического символа. "\
+		"Например, назовите одну деталь DA1-1, а другую — DA1-2. "\
+		"В списке цепей это будет выглядеть как та же деталь DA1"), MB_ICONINFORMATION);
 }
 
 void CDlgAttr::OnQ2()
 {
-	AfxMessageBox("Indicate the path to the FreePcb-2 footprint library via the Project->Options menu"\
-					"so that you can select them in this combo box, and also "\
-					"so that the "PROGRAM_NAME" can check for the presence "\
-					"of the specified footprint in the library",MB_ICONINFORMATION);
+	AfxMessageBox(G_LANGUAGE == 0 ? 
+		("Indicate the path to the FreePcb-2 footprint library via the Project->Options menu"\
+		"so that you can select them in this combo box, and also "\
+		"so that the "PROGRAM_NAME" can check for the presence "\
+		"of the specified footprint in the library"):
+		("Укажите путь к библиотеке футпринтов ПлатФорм через меню Проект->Настройки, "\
+		"чтобы можно было выбрать их в этом выпадающем списке, а также "\
+		"чтобы "PROGRAM_NAME" мог проверить наличие "\
+		"указанного футпринта в библиотеке"), MB_ICONINFORMATION);
 }
 
 void CDlgAttr::OnQ3()
 {
-	AfxMessageBox("You can turn any open polyline into a pin."\
-					"In order to connect several pins to one polyline, you can list "\
-					"the pin names separated by commas, or you can use a dash to "\
-					"indicate the range of pins. For example, 24,36,50-52 or A2,B1-B3. "\
-					"A space character is not allowed.\n\n",MB_ICONINFORMATION);
+	AfxMessageBox(G_LANGUAGE == 0 ? 
+		("You can turn any open polyline into a pin."\
+		"In order to connect several pins to one polyline, you can list "\
+		"the pin names separated by commas, or you can use a dash to "\
+		"indicate the range of pins. For example, 24,36,50-52 or A2,B1-B3. "\
+		"A space character is not allowed.\n\n"):
+		("В СхемАторе можно превратить любую полилинию в пин. "\
+		"Чтобы назначить несколько пинов одной полилиний, вы можете перечислить "\
+		"имена пинов, разделенные запятыми, или использовать тире, чтобы "\
+		"указать диапазон пинов. Например, 24,36,50-52 или A2,B1-B3. "\
+		"Символ пробела не допускается.\n\n"), MB_ICONINFORMATION);
 }
 
 void CDlgAttr::OnQ4()
 {
-	AfxMessageBox("You can create a net label on any polyline. "\
-					"At least one end of the net label polyline must "\
-					"located on another polyline to connect to it. "\
-					"For net naming, do not use lines starting with NET..., "\
-					"because this is reserved for automatic generation of net names "\
-					"when creating netlist",MB_ICONINFORMATION);
+	AfxMessageBox(G_LANGUAGE == 0 ? 
+		("You can create a net label on any polyline. "\
+		"At least one end of the net label polyline must "\
+		"located on another polyline to connect to it. "\
+		"For net naming, do not use lines starting with NET..., "\
+		"because this is reserved for automatic generation of net names "\
+		"when creating netlist"):
+		("Вы можете создать метку эл.цепи на любой полилинии. "\
+		"Хотя бы один конец метки эл.цепи должен "\
+		"располагаться на другой полилинии для соединения с ней. "\
+		"Для имени цепи не используйте строки, начинающиеся с NET..., "\
+		"потому что это зарезервировано для автоматической генерации имен эл.цепей "\
+		"при создании списка"), MB_ICONINFORMATION);
 }
 
 void CDlgAttr::OnQ5()
 {
-	AfxMessageBox("Each time the file is saved, this text will change "\
-				  "to reflect the current date. You can change the pattern "\
-				  "by swapping DD and MM, and you can also use the \"/\" character "\
-				  "instead of a period as a separator",MB_ICONINFORMATION);
+	AfxMessageBox(G_LANGUAGE == 0 ? 
+		("Each time the file is saved, this text will change "\
+		"to reflect the current date. You can change the pattern "\
+		"by swapping DD and MM, and you can also use the \"/\" character "\
+		"instead of a period as a separator"):
+		("Каждый раз при сохранении изменённого файла этот текст будет меняться "\
+		"чтобы отразить текущую дату. Вы можете изменить шаблон "\
+		"поменяв местами ДД и ММ, а также можете использовать символ \"/\" "\
+		"вместо точки в качестве разделителя"), MB_ICONINFORMATION);
 }
 
 void CDlgAttr::OnQ6()
 {
-	AfxMessageBox("In the first line you can enter any link text. "\
-				  "After the text: "CP_LINK", separated by a space, indicate which part you want to jump to. "\
-				  "For the link to work, you need to click on it "\
-				  "while holding down the CTRL key",MB_ICONINFORMATION);
+	AfxMessageBox(G_LANGUAGE == 0 ? 
+		("In the first line you can enter any link text. "\
+		"After the text: "CP_LINK", separated by a space, indicate which part you want to jump to. "\
+		"For the link to work, you need to click on it "\
+		"while holding down the CTRL key"):
+		("В первой строке можно ввести любой текст ссылки. "\
+		"После текста: "CP_LINK", через пробел укажите, к какой детали вы хотите перейти. "\
+		"Чтобы ссылка сработала, нужно нажать на нее "\
+		"удерживая клавишу CTRL"), MB_ICONINFORMATION);
 }
 
 void CDlgAttr::OnQ7()
 {
-	AfxMessageBox("For multi-channel circuits, it is convenient to use a complex part that contains "\
-				  "a small schematic diagram inside, consisting of other parts.. "\
-				  "It is best to create a circuit of a complex part on a separate page. "\
-				  "Create a new page via the View-> Add New Page menu and then "\
-				  "exclude it from the netlist via the File-> Netlist_Settings menu. "\
-				  "Draw the outline of a complex part then add pins, just like you usually "\
-				  "draw any other part, and enter its designation for example \"Channel\". "\
-				  "Place a schematic diagram of this complex part inside it, "\
-				  "and connect the leads to the desired nodes of the circuits. The complex part template is ready."\
-				  "\n\nNow switch to the page "\
-				  "where you want to add this complex part. This page must be included "\
-				  "in the netlist via the File-> Netlist_Settings menu. "\
-				  "To add any complex part to the diagram and, accordingly, to the netlist, "\
-				  "you must first draw a contour line of this complex part and then "\
-				  "in the \"description\" attribute of the polyline, enter "\
-				  "for example the following text \n\n\tChannel_1\n\t"CP_SUFFIX" _1\n\t"COMMAND" BLK\n\n "\
-				  "The program will create a parts block named [ref des of complex part]_1 (those. Channel_1) and the suffix _1 "\
-				  "will be added to all part numbers in that block. See next item to continue ...",MB_ICONINFORMATION);
+	AfxMessageBox(G_LANGUAGE == 0 ? 
+		("For multi-channel circuits, it is convenient to use a complex part that contains "\
+		"a small schematic diagram inside, consisting of other parts.. "\
+		"It is best to create a circuit of a complex part on a separate page. "\
+		"Create a new page via the View-> Add New Page menu and then "\
+		"exclude it from the netlist via the File-> Netlist_Settings menu. "\
+		"Draw the outline of a complex part then add pins, just like you usually "\
+		"draw any other part, and enter its designation for example \"Channel\". "\
+		"Place a schematic diagram of this complex part inside it, "\
+		"and connect the leads to the desired nodes of the circuits. The complex part template is ready."\
+		"\n\nNow switch to the page "\
+		"where you want to add this complex part. This page must be included "\
+		"in the netlist via the File-> Netlist_Settings menu. "\
+		"To add any complex part to the diagram and, accordingly, to the netlist, "\
+		"you must first draw a contour line of this complex part and then "\
+		"in the \"description\" attribute of the polyline, enter "\
+		"for example the following text \n\n\tChannel_1\n\t"CP_SUFFIX" _1\n\t"COMMAND" BLK\n\n "\
+		"The program will create a parts block named [ref des of complex part]_1 (those. Channel_1) and the suffix _1 "\
+		"will be added to all part numbers in that block. See next item to continue ..."):
+		("Создание сложной детали: Для многоканальных схем удобно использовать иерархическую деталь, содержащую внутри "\
+		"небольшую принципиальную схему, состоящую из других деталей.. "\
+		"Схему иерархической детали лучше всего создавать на отдельной странице. "\
+		"Создайте новую страницу через меню «Вид -> Добавить новую страницу», а затем "\
+		"исключите ее из списка соединений через меню «Файл-> Настройки списка эл.цепей». "\
+		"Нарисуйте контур иерархической детали, затем добавьте пины, как будто "\
+		"вы создаёте обычную деталь, и введите ее обозначение, например \"Канал\". "\
+		"Поместите внутрь нее принципиальную схему этой иерархической детали, "\
+		"и подключите пины к нужным узлам схем. Шаблон иерархической детали готов."\
+		"\n\nТеперь перейдите на страницу с основной схемой, "\
+		"куда вы хотите добавить эту иерархическую деталь. Эту страницу необходимо включить "\
+		"в список эл.цепей через меню «Файл -> Настройки списка эл.цепей». "\
+		"Чтобы добавить любую иерархическую деталь к схеме и соответственно к списку эл.цепей, "\
+		"необходимо сначала нарисовать контурную полилинию этой иерархической детали, а затем "\
+		"в атрибуте \"описание\" полилинии ввести "\
+		"например следующий текст \n\n\tChannel_1\n\t"CP_SUFFIX" _1\n\t"COMMAND" BLK\n\n "\
+		"Программа создаст блок деталей с именем [обозначение]_1 (т.е. в нашем примере Channel_1) и суффикс _1 "\
+		"будет добавлен ко всем номерам деталей в этом блоке. Продолжение см. в следующем пункте..."), MB_ICONINFORMATION);
 }
 
 void CDlgAttr::OnQ8()
 {
-	AfxMessageBox("To get started, see the previous question\n\n"\
-				  "Draw a pin of block, that should touch the outline of this block. "\
-				  "In the \"description\" attribute of the pin polyline, "\
-				  "enter the following for example: \n\n\t8\n\t"CP_SUFFIX" _1"\
-				  "\n\t"CP_LINK" Channel\n\t|pin_name: 8\n\t"CP_PAGE_NUM" 2\n\t"COMMAND" BLK_PTR\n\nThe program "\
-				  "will add a suffix _1 to the ref \"Channel\" (and also to all parts inside this complex part) and connect "\
-				  "pin 8 of part Channel_1 to this polyline. \n"\
-				  "A suffix will be added to the nets with an automatically generated name "\
-				  "(these include nets starting with \"NET0 ....\").Nets named by the user inside a "\
-				  "complex part will remain unchanged, which means that no suffix will be added to their names.\n"\
-				  "It should be borne in mind that in fact the Channel_1 part and "\
-				  "its connections inside it are not displayed anywhere, but are inside the program.",MB_ICONINFORMATION);
+	AfxMessageBox(G_LANGUAGE == 0 ? 
+		("To get started, see the previous question\n\n"\
+		"Draw a pin of block, that should touch the outline of this block. "\
+		"In the \"description\" attribute of the pin polyline, "\
+		"enter the following for example: \n\n\t8\n\t"CP_SUFFIX" _1"\
+		"\n\t"CP_LINK" Channel\n\t|pin_name: 8\n\t"CP_PAGE_NUM" 2\n\t"COMMAND" BLK_PTR\n\nThe program "\
+		"will add a suffix _1 to the ref \"Channel\" (and also to all parts inside this complex part) and connect "\
+		"pin 8 of part Channel_1 to this polyline. \n"\
+		"A suffix will be added to the nets with an automatically generated name "\
+		"(these include nets starting with \"NET0 ....\").Nets named by the user inside a "\
+		"complex part will remain unchanged, which means that no suffix will be added to their names.\n"\
+		"It should be borne in mind that in fact the Channel_1 part and "\
+		"its connections inside it are not displayed anywhere, but are inside the program."):
+		("Для начала см. предыдущий вопрос\n\n"\
+		"Нарисуйте пин блока, который должен касаться контура этого блока. "\
+		"В атрибуте \"Описание\" полилинии пина, "\
+		"введите следующее, например: \n\n\t8\n\t"CP_SUFFIX" _1"\
+		"\n\t"CP_LINK" Channel\n\t|pin_name: 8\n\t"CP_PAGE_NUM" 2\n\t"COMMAND" BLK_PTR\n\nПрограмма "\
+		"добавит указанный суффикс _1 к ссылке \"Channel\" (а также ко всем деталям внутри этой иерархической детали) и подключит "\
+		"к пину 8 детали Channel_1. \n"\
+		"Суффикс _1 также будет добавлен к эл.цепям (к ним относятся цепи, формата "\
+		"NETxxxxx). Глобальные (межстраничные) эл.цепи, названные пользователем "\
+		"останутся без изменений, то есть к их именам не будет добавлен суффикс.\n"\
+		"Следует иметь в виду, что на самом деле деталь Channel_1 и ее "\
+		"соединения внутри нее нигде не отображаются, а находятся внутри программы."), MB_ICONINFORMATION);
 }
 
 void CDlgAttr::OnQ9()
 {
-	AfxMessageBox("If you add the pipe character \"|\" to the end of the net name "\
-				  "then the text following it will be interpreted by the program "\
-				  "as the name of the electronic bus. For example 1|bus1. "\
-				  "For the electronic bus to work, you will need to draw a thick line "\
-				  "and enter the same bus1 bus name in the \"description\" "\
-				  "attribute of this polyline. This polyline will be the graphic "\
-				  "representation of the electronic bus.",MB_ICONINFORMATION);
+	AfxMessageBox(G_LANGUAGE == 0 ? 
+		("If you add the pipe character \"|\" to the end of the net name "\
+		"then the text following it will be interpreted by the program "\
+		"as the name of the electronic bus. For example 1|bus1. "\
+		"For the electronic bus to work, you will need to draw a thick line "\
+		"and enter the same bus1 bus name in the \"description\" "\
+		"attribute of this polyline. This polyline will be the graphic "\
+		"representation of the electronic bus."):
+		("Если вы добавите символ вертикальной черты \"|\" в конец имени эл.цепи "\
+		"то текст, следующий за ним, будет интерпретироваться программой "\
+		"как имя электронной шины. Например, 1|bus1. "\
+		"Чтобы электронная шина работала, вам нужно будет нарисовать толстую линию "\
+		"и также ввести имя шины bus1 в атрибут \"description\" "\
+		"этой полилинии. Эта полилиния будет графическим "\
+		"представлением электронной шины."), MB_ICONINFORMATION);
 }
 
 void CDlgAttr::OnQ10()
 {
-	AfxMessageBox("You can add a BOM table snippet to the page. "\
-				  "Draw a rectangle at the desired size Draw a rectangle of the desired size "\
-				  "by moving the mouse while holding down the button from the "\
-				  "upper left corner to the lower right corner in line drawing mode. In the "\
-				  "\"description\" attribute of this polyline enter "\
-				  "the following for example: \n\n\tTable\n\t|start_number: 1\n\t|"\
-				  "end_number: 100\n\t|sorting_column: 1\n\t|detail_column_width: 20\n\t"\
-				  "|ignore_those_without_value: 1\n\t|include_ref_list: not_used\n\t"\
-				  "|exclude_ref_list: not_used\n\t|column_order: 12345\n\t|pcb_name: example.fpc\n\t"COMMAND" BOM\n\n"\
-				  "The program will insert into the outline of this "\
-				  "rectangle from 1 to 100 lines of the BOM list. Auto-update table when saving file.",MB_ICONINFORMATION);
+	AfxMessageBox(G_LANGUAGE == 0 ? 
+		("You can add a BOM table snippet to the page. "\
+		"Draw a rectangle of the desired size "\
+		"by moving the mouse while holding down the button from the "\
+		"upper left corner to the lower right corner in line drawing mode. In the "\
+		"\"description\" attribute of this polyline enter "\
+		"the following for example: \n\n\tTable\n\t|start_number: 1\n\t|"\
+		"end_number: 100\n\t|sorting_column: 1\n\t|detail_column_width: 20\n\t"\
+		"|ignore_those_without_value: 1\n\t|include_ref_list: not_used\n\t"\
+		"|exclude_ref_list: not_used\n\t|column_order: 12345\n\t|pcb_name: example.fpc\n\t"COMMAND" BOM\n\n"\
+		"The program will insert into the outline of this "\
+		"rectangle from 1 to 100 lines of the BOM list. Auto-update table when saving file."):
+		("Вы можете добавить фрагмент таблицы спецификации на страницу. "\
+		"Нарисуйте прямоугольник нужного размера "\
+		"перемещая мышь, удерживая кнопку, из "\
+		"верхнего левого угла в нижний правый угол в режиме рисования линий. "\
+		"Далее в атрибуте \"Описание\" этой полилинии (в этом окне) введите следующее, например: "\
+		"\n\n\tTable\n\t|start_number: 1\n\t|"\
+		"end_number: 100\n\t|sorting_column: 1\n\t|detail_column_width: 20\n\t"\
+		"|ignore_those_without_value: 1\n\t|include_ref_list: not_used\n\t"\
+		"|exclude_ref_list: not_used\n\t|column_order: 12345\n\t|pcb_name: example.fpc\n\t"COMMAND" BOM\n\n"\
+		"Программа вставит в контур этого прямоугольника от 1 до 100 строк списка спецификации. "\
+		"Авто-обновление таблицы происходит при сохранении файла"), MB_ICONINFORMATION);
 }
 
 void CDlgAttr::OnCmd1()
@@ -774,7 +879,9 @@ void CDlgAttr::OnCmd1()
 	int f = str.Find("|");
 	if( f > 0 )
 	{
-		AfxMessageBox("The description text already contains the command");
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"The description text already contains the command":
+			"Текст описания уже содержит код команды");
 		return;
 	}
 	m_edit_pindesc.SetWindowTextA(str+"|DD.MM.YYYY DATE");
@@ -794,7 +901,9 @@ void CDlgAttr::OnCmd2()
 	int f = str.Find("|");
 	if( f > 0 )
 	{
-		AfxMessageBox("The description text already contains the command");
+		AfxMessageBox(G_LANGUAGE == 0 ?
+			"The description text already contains the command" :
+			"Текст описания уже содержит код команды");
 		return;
 	}
 	m_edit_pindesc.SetWindowTextA(str + "\r\n"CP_LINK" "+str2+"\r\n"CP_PAGE_NUM" 1");
@@ -809,7 +918,9 @@ void CDlgAttr::OnCmd3()
 	int f = str.Find("|");
 	if( f > 0 )
 	{
-		AfxMessageBox("The description text already contains the command");
+		AfxMessageBox(G_LANGUAGE == 0 ?
+			"The description text already contains the command" :
+			"Текст описания уже содержит код команды");
 		return;
 	}
 	m_edit_pindesc.SetWindowTextA(str+"\r\n"CP_SUFFIX" xx\r\n"CP_LINK" xx\r\n"CP_PAGE_NUM" xx\r\n"COMMAND" BLK");
@@ -824,7 +935,9 @@ void CDlgAttr::OnCmd4()
 	int f = str.Find("|");
 	if( f > 0 )
 	{
-		AfxMessageBox("The description text already contains the command");
+		AfxMessageBox(G_LANGUAGE == 0 ?
+			"The description text already contains the command" :
+			"Текст описания уже содержит код команды");
 		return;
 	}
 	m_edit_pindesc.SetWindowTextA(str+"\r\n"CP_SUFFIX" xx\r\n"CP_LINK" xx\r\n|pin_name: xx\r\n"CP_PAGE_NUM" xx\r\n"COMMAND" BLK_PTR");
@@ -839,7 +952,9 @@ void CDlgAttr::OnCmd5()
 	int f = str.Find("|");
 	if( f > 0 )
 	{
-		AfxMessageBox("The net name already contains the command");
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"The net name already contains the command":
+			"Имя сети уже содержит код команды");
 		return;
 	}
 	m_edit_netname.SetWindowTextA(str+"|EnterBusName");
@@ -854,7 +969,9 @@ void CDlgAttr::OnCmd6()
 	int f = str.Find("|");
 	if( f > 0 )
 	{
-		AfxMessageBox("The description text already contains the command");
+		AfxMessageBox(G_LANGUAGE == 0 ?
+			"The description text already contains the command" :
+			"Текст описания уже содержит код команды");
 		return;
 	}
 	if( m_pl->m_pcb_names.GetSize() )
@@ -868,7 +985,9 @@ void CDlgAttr::OnCmd6()
 	}
 	else
 	{
-		AfxMessageBox("PCB name is missing. First you need to attach the PCB to this project. Go to File >> NetlistSettings and set the name of the circuit board.");
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"PCB name is missing. First you need to attach the PCB to this project. Go to File >> NetlistSettings and set the name of the circuit board.":
+			"Отсутствует имя печатной платы. Сначала необходимо прикрепить печатную плату к этой странице. Перейдите в «Файл >> Опции списка эл.цепей» и задайте имя печатной платы.");
 		return;
 	}
 }
@@ -882,7 +1001,9 @@ void CDlgAttr::OnCmd7()
 	int f = str.Find("|");
 	if( f > 0 )
 	{
-		AfxMessageBox("The description text already contains the command");
+		AfxMessageBox(G_LANGUAGE == 0 ?
+			"The description text already contains the command" :
+			"Текст описания уже содержит код команды");
 		return;
 	}
 	m_edit_pindesc.SetWindowTextA(str+"\r\n|path: 0\r\n|name: 1\r\n|pcb_flag: 1\r\n|extention: 1\r\n|length: 99\r\n|make_lower: 0\r\n"COMMAND" PATH");

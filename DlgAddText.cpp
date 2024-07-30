@@ -66,7 +66,7 @@ void CDlgAddText::DoDataExchange(CDataExchange* pDX)
 			if( m_str.FindOneOf( ILLEGAL_REF ) != -1 )
 			{
 				CString mess;
-				mess.Format( "Illegal reference designator \"%s\"", m_str );
+				mess.Format(G_LANGUAGE == 0 ? "Illegal reference designator \"%s\"":"Ќедопустимое обозначение детали \"%s\"", m_str);
 				AfxMessageBox( mess );
 				pDX->Fail();
 			} 
@@ -100,13 +100,17 @@ void CDlgAddText::DoDataExchange(CDataExchange* pDX)
 				{
 					CString s,nm;
 					m_pl->GetPageName( pg, &nm );
-					s.Format("Part present on page %d - %s.\n\n(Edit reference designators through the polyline attributes dialog window to automatically find a free part number)",pg+1,nm);
+					s.Format(G_LANGUAGE == 0 ? 
+						"Part present on page %d - %s.\n\n(Edit reference designators through the polyline attributes dialog window to automatically find a free part number)":
+						"ƒеталь присутствует на странице %d - %s.\n\n(»змените позиционные обозначени€ через диалоговое окно атрибутов полилинии, чтобы автоматически определить свободный номер дл€ детали)", pg + 1, nm);
 					AfxMessageBox( s, MB_ICONWARNING );
 					pDX->Fail();
 				}
 				else if( f )
 				{
-					AfxMessageBox( "Part already exists on this page.\n\n(Edit reference designators through the polyline attributes dialog window to automatically find a free part number)", MB_ICONWARNING );
+					AfxMessageBox(G_LANGUAGE == 0 ? 
+						"Part already exists on this page.\n\n(Edit reference designators through the polyline attributes dialog window to automatically find a free part number)":
+						"ƒеталь уже существует на этой странице.\n\n(»змените позиционные обозначени€ через диалоговое окно атрибутов полилинии, чтобы автоматически определить свободный номер дл€ детали)", MB_ICONWARNING);
 					pDX->Fail();
 				}
 			}
@@ -118,14 +122,14 @@ void CDlgAddText::DoDataExchange(CDataExchange* pDX)
 				if( m_str.FindOneOf( "\"@" ) != -1 )
 				{
 					CString mess;
-					mess.Format( "Illegal string \"%s\"", m_str );
+					mess.Format(G_LANGUAGE == 0 ? "Illegal string \"%s\"":"Ќедопустима€ строка \"%s\"", m_str);
 					AfxMessageBox( mess );
 					pDX->Fail();
 				} 
 				if( m_str.FindOneOf( "|'" ) != -1 && getbit( m_mask_att, index_foot_attr ) )
 				{
 					CString mess;
-					mess.Format( "Illegal footprint name \"%s\"", m_str );
+					mess.Format(G_LANGUAGE == 0 ? "Illegal footprint name \"%s\"":"Ќедопустимое им€ футпринта \"%s\"", m_str);
 					AfxMessageBox( mess );
 					pDX->Fail();
 				} 
@@ -135,7 +139,7 @@ void CDlgAddText::DoDataExchange(CDataExchange* pDX)
 				if( m_str.FindOneOf( "\"" ) != -1 )
 				{
 					CString mess;
-					mess.Format( "Illegal description text \"%s\"", m_str );
+					mess.Format(G_LANGUAGE == 0 ? "Illegal description text \"%s\"":"Ќедопустимый текст описани€ \"%s\"", m_str);
 					AfxMessageBox( mess );
 					pDX->Fail();
 				} 
@@ -145,7 +149,7 @@ void CDlgAddText::DoDataExchange(CDataExchange* pDX)
 				if( m_str.FindOneOf( ILLEGAL_NET ) != -1 )
 				{
 					CString mess;
-					mess.Format( "Illegal net name \"%s\"", m_str );
+					mess.Format(G_LANGUAGE == 0 ? "Illegal net name \"%s\"":"Ќедопустимое им€ эл.цепи \"%s\"", m_str);
 					AfxMessageBox( mess );
 					pDX->Fail();
 				} 
@@ -155,7 +159,7 @@ void CDlgAddText::DoDataExchange(CDataExchange* pDX)
 				if( m_str.FindOneOf( ILLEGAL_PIN ) != -1 )
 				{
 					CString mess;
-					mess.Format( "Illegal pin name \"%s\"", m_str );
+					mess.Format(G_LANGUAGE == 0 ? "Illegal pin name \"%s\"":"Ќедопустимое им€ пина \"%s\"", m_str);
 					AfxMessageBox( mess );
 					pDX->Fail();
 				} 
@@ -165,7 +169,7 @@ void CDlgAddText::DoDataExchange(CDataExchange* pDX)
 		m_str = m_str.Trim();
 		if( m_str.Find( '\"' ) != -1 )
 		{
-			AfxMessageBox( "Text string can't contain \"" );
+			AfxMessageBox(G_LANGUAGE == 0 ? "Text string can't contain \"":"“екстова€ строка не может содержать \"");
 			pDX->Fail();
 		}
 		GetFields();

@@ -1,12 +1,88 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\FreePCBDev\\Schematic Constructor\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{48B16142-FBCE-4203-996C-8DEC8AAE6546}|FreePcb.vcxproj|D:\\FreePCBDev\\Schematic Constructor\\FreePcbView.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{48B16142-FBCE-4203-996C-8DEC8AAE6546}|FreePcb.vcxproj|solutionrelative:FreePcbView.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{48B16142-FBCE-4203-996C-8DEC8AAE6546}|FreePcb.vcxproj|D:\\FreePCBDev\\Schematic Constructor\\DlgAttr.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{48B16142-FBCE-4203-996C-8DEC8AAE6546}|FreePcb.vcxproj|solutionrelative:DlgAttr.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{48B16142-FBCE-4203-996C-8DEC8AAE6546}|FreePcb.vcxproj|D:\\FreePCBDev\\Schematic Constructor\\ReadFootprintFolder.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{48B16142-FBCE-4203-996C-8DEC8AAE6546}|FreePcb.vcxproj|solutionrelative:ReadFootprintFolder.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{48B16142-FBCE-4203-996C-8DEC8AAE6546}|FreePcb.vcxproj|D:\\FreePCBDev\\Schematic Constructor\\FreeSch.rc||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{48B16142-FBCE-4203-996C-8DEC8AAE6546}|FreePcb.vcxproj|solutionrelative:FreeSch.rc||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DlgAttr.cpp",
+              "DocumentMoniker": "D:\\FreePCBDev\\Schematic Constructor\\DlgAttr.cpp",
+              "RelativeDocumentMoniker": "DlgAttr.cpp",
+              "ToolTip": "D:\\FreePCBDev\\Schematic Constructor\\DlgAttr.cpp",
+              "RelativeToolTip": "DlgAttr.cpp",
+              "ViewState": "AQIAAAIDAAAAAAAAAAD4vxsDAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-07-30T06:20:54.24Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ReadFootprintFolder.cpp",
+              "DocumentMoniker": "D:\\FreePCBDev\\Schematic Constructor\\ReadFootprintFolder.cpp",
+              "RelativeDocumentMoniker": "ReadFootprintFolder.cpp",
+              "ToolTip": "D:\\FreePCBDev\\Schematic Constructor\\ReadFootprintFolder.cpp",
+              "RelativeToolTip": "ReadFootprintFolder.cpp",
+              "ViewState": "AQIAAEAAAAAAAAAAAAAkwEoAAAAgAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-07-30T06:20:09.929Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "FreeSch.rc",
+              "DocumentMoniker": "D:\\FreePCBDev\\Schematic Constructor\\FreeSch.rc",
+              "RelativeDocumentMoniker": "FreeSch.rc",
+              "ToolTip": "D:\\FreePCBDev\\Schematic Constructor\\FreeSch.rc",
+              "RelativeToolTip": "FreeSch.rc",
+              "ViewState": "AQIAAHYOAAAAAAAAAAD4v4AOAAAlAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
+              "WhenOpened": "2024-07-30T06:13:24.939Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "FreePcbView.cpp",
+              "DocumentMoniker": "D:\\FreePCBDev\\Schematic Constructor\\FreePcbView.cpp",
+              "RelativeDocumentMoniker": "FreePcbView.cpp",
+              "ToolTip": "D:\\FreePCBDev\\Schematic Constructor\\FreePcbView.cpp",
+              "RelativeToolTip": "FreePcbView.cpp",
+              "ViewState": "AQIAADw1AAAAAAAAAAAkwEM1AAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-07-29T15:01:00.639Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

@@ -72,7 +72,7 @@ int FindFootprintInFolder( CFreePcbDoc * doc, CString * fname, CString * old_fna
 								"in the current footprint library folder, which "\
 								"is specified in the project settings (Project >> Options):\n\n%s"\
 								"\n\nFootprint %s found in another directory:\n\n%s\n\n"\
-								"Want the Schematic Constructor to save this footprint in the current library? (is recommended)", *fname, mem_lib_dir, *fname, catalog ); 
+								"Want the "PROGRAM_NAME" to save this footprint in the current library? (is recommended)", *fname, mem_lib_dir, *fname, catalog );
 		int retQ = AfxMessageBox( str, MB_ICONQUESTION | MB_YESNO );
 		if( retQ == IDYES )
 		{

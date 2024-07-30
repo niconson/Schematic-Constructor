@@ -294,7 +294,7 @@ void CDlgProjectOptions::OnBnClickedQ11()
 					"for reading to complete successfully. If your PCB editor uses "\
 					"this library format, then success is guaranteed. Associate "\
 					"the footprint file extension with your footprint viewer so "\
-					"that Schematic Constructor and Windows know which program to "\
+					"that "PROGRAM_NAME" and Windows know which program to "\
 					"open these files. In this case, you can open and view the "\
 					"footprint from the attribute setting dialog by pressing the \"L\" button. "\
 					"So, to see the list of loaded names, select a part (or a group "\

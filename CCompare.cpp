@@ -610,7 +610,9 @@ void CDlgCompare::DoDataExchange(CDataExchange* pDX)
 	{
 		if( m_doc->Pages.GetNumPages() < 2 && CNETLIST == 0 )
 		{
-			AfxMessageBox("This project has only one page");
+			AfxMessageBox(G_LANGUAGE == 0 ? 
+				"This project has only one page":
+				"Этот проект имеет только одну страницу");
 			pDX->Fail();
 		}
 		else
@@ -708,7 +710,9 @@ void CDlgCompare::OnBnClickedCompare()
 	int it = -1;
 	if( ret == 0 && m_doc->Attr->m_Reflist->GetNextText( &it ) )
 	{
-		AfxMessageBox("These pages are completely identical.");
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"These pages are completely identical.":
+			"Эти страницы полностью идентичны.");
 	}
 }
 
@@ -1315,15 +1319,19 @@ void CDlgCompare::OnBnClickedRepairAll()
 	int CUR = m_doc->Pages.GetActiveNumber();
 	if( m_doc->Pages.GetPcbIndex( CUR ) != m_doc->Pages.GetPcbIndex(IP1) )
 	{
-		AfxMessageBox( "This page does not belong to the testable netlist", MB_ICONERROR );
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"This page does not belong to the testable netlist":
+			"Эта страница не принадлежит к тестируемому списку эл.цепей", MB_ICONERROR);
 		return;
 	}
 	if( m_doc->m_view->m_protect )
 	{
-		AfxMessageBox( "This PCB is protected.", MB_ICONERROR );
+		AfxMessageBox(G_LANGUAGE == 0 ? "This PCB is protected":"Эта печатная плата защищена", MB_ICONERROR);
 		return;
 	}
-	int ok = AfxMessageBox( "Do you want the program to swap pins with names 1 and 2 for this listbox parts?", MB_YESNO );
+	int ok = AfxMessageBox(G_LANGUAGE == 0 ? 
+		"Do you want the program to swap pins with names 1 and 2 for this listbox parts?":
+		"Хотите чтобы программа поменяла местами пины с именами 1 и 2 для деталей этого списка?", MB_YESNO );
 	if( ok == IDYES )
 	{
 		// cancel sel on all pcb pages
@@ -1411,7 +1419,9 @@ void CDlgCompare::OnBnClickedRepairAll()
 						}
 						else
 						{
-							AfxMessageBox( "It is not possible to swap the pins of the "+t->m_str+" part. One pin has a description and the other does not.");
+							AfxMessageBox(G_LANGUAGE == 0 ? 
+								"It is not possible to swap the pins of the " + t->m_str + " part. One pin has a description and the other does not.":
+								"Невозможно поменять местами пины детали " + t->m_str + ". У одного пина есть описание, а у другого нет.");
 						}
 					}
 				}
@@ -1463,8 +1473,12 @@ BOOL CDlgCompare::SelectNetlist()
 	else 
 	{
 		if( m_doc->m_netlist_full_path.GetLength() )
-			AfxMessageBox("Unable to open file: \n" + nList1, MB_ICONERROR);
-		AfxMessageBox("First, generate a PADS-PCB netlist via 'File -> Save with Netlist' menu item. Before that, make sure that the PADS-PCB format is selected in the 'File -> Netlist Settings' menu. ");
+			AfxMessageBox(G_LANGUAGE == 0 ? 
+				("Unable to open file: \n" + nList1):
+				("Невозможно открыть файл: \n" + nList1), MB_ICONERROR);
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"First, generate a PADS-PCB netlist via 'File -> Save with Netlist' menu item. Before that, make sure that the PADS-PCB format is selected in the 'File -> Netlist Settings' menu. ":
+			"Сначала сгенерируйте список соединений PADS-PCB через пункт меню «Файл -> Сохранить со списком эл.цепей». Перед этим убедитесь, что в меню «Файл -> Настройки списка эл.цепей» выбран формат PADS-PCB.");
 		return 0;
 	}
 	// load netlist 2
@@ -1482,7 +1496,9 @@ BOOL CDlgCompare::SelectNetlist()
 			m_doc->SwitchToPage( old_pg, TRUE );
 		}
 		else
-			AfxMessageBox("Unable to open file: \n" + m_netlist_path, MB_ICONERROR);
+			AfxMessageBox(G_LANGUAGE == 0 ? 
+				("Unable to open file: \n" + m_netlist_path):
+				("Невозможно открыть файл: \n" + m_netlist_path), MB_ICONERROR);
 	}
 	m_doc->m_view->m_fk_button_index = -1;
 	m_doc->m_view->DrawBottomPane();

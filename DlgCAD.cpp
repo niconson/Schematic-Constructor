@@ -180,7 +180,9 @@ void CDlgCAD::OnBnClickedGo()
 		if( err )
 		{
 			CString str;
-			str.Format( "Unable to create folder \"%s\". Try to save your project and retry again", m_folder );
+			str.Format(G_LANGUAGE == 0 ? 
+				"Unable to create folder \"%s\". Try to save your project and retry again":
+				"Невозможно создать папку \"%s\". Попробуйте сохранить проект и повторить попытку", m_folder);
 			AfxMessageBox( str, MB_OK );
 			return;
 		}

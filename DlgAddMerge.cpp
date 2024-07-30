@@ -33,12 +33,14 @@ void CDlgAddMerge::DoDataExchange(CDataExchange* pDX)
 		m_box_index = m_edit.GetCurSel();
 		if( m_merge_name.GetLength() == 0 && m_mode != M_URL )
 		{
-			AfxMessageBox( "Empty string?" );
+			AfxMessageBox(G_LANGUAGE == 0 ? "Empty string?":"Пустая строка?");
 			pDX->Fail();
 		}
 		if (m_merge_name.Find("\"",0) >= 0)
 		{
-			AfxMessageBox( "Illegal string. The name can not contain the quote character!" );
+			AfxMessageBox(G_LANGUAGE == 0 ? 
+				"Illegal string. The name can not contain the quote character!":
+				"Недопустимая строка. Имя не может содержать символ кавычек!");
 			pDX->Fail();
 		}
 		if( m_mode == M_ADDPAGE || m_mode == M_RENAMEPAGE )
@@ -51,7 +53,9 @@ void CDlgAddMerge::DoDataExchange(CDataExchange* pDX)
 				str = str.Trim();
 				if( str.CompareNoCase( m_merge_name ) == 0 )
 				{
-					AfxMessageBox( "This page is already present, enter a different name!", MB_ICONERROR );
+					AfxMessageBox(G_LANGUAGE == 0 ? 
+						"This page is already present, enter a different name!":
+						"Такая страница уже существует, введите другое имя!", MB_ICONERROR);
 					pDX->Fail();
 				}
 			}
@@ -60,7 +64,7 @@ void CDlgAddMerge::DoDataExchange(CDataExchange* pDX)
 		{
 			if( m_box_index == -1 )
 			{
-				AfxMessageBox( "Illegal string!" );
+				AfxMessageBox(G_LANGUAGE == 0 ? "Illegal string!":"Недопустимая строка!");
 				pDX->Fail();
 			}
 		}
@@ -84,7 +88,7 @@ void CDlgAddMerge::DoDataExchange(CDataExchange* pDX)
 					m_box_index = m_edit.FindStringExact( -1, m_merge_name );
 				if( m_box_index < 0 || m_box_index >= m_edit.GetCount() )
 				{
-					AfxMessageBox( "Illegal object index!" );
+					AfxMessageBox(G_LANGUAGE == 0 ? "Illegal object index!":"Недопустимый индекс объекта!");
 					pDX->Fail();
 				}
 			}
@@ -93,13 +97,17 @@ void CDlgAddMerge::DoDataExchange(CDataExchange* pDX)
 		{
 			if (m_merge_name.FindOneOf(ILLEGAL_FILENAME) >= 0 || m_merge_name.Find(" ",0) >= 0)
 			{
-				AfxMessageBox( "Illegal string. The name can not contain a special characters and space character!" );
+				AfxMessageBox(G_LANGUAGE == 0 ? 
+					"Illegal string. The name can not contain a special characters and space character!":
+					"Недопустимая строка. Имя не может содержать специальные символы и пробел!");
 				pDX->Fail();
 			}
 		}
 		else if (m_merge_name.Find(" ",0) >= 0)
 		{
-			AfxMessageBox( "Illegal string. The name can not contain a space character!" );
+			AfxMessageBox(G_LANGUAGE == 0 ? 
+				"Illegal string. The name can not contain a space character!":
+				"Недопустимая строка. Имя не может содержать пробел!");
 			pDX->Fail();
 		}
 		else if( m_mode != M_URL )

@@ -290,7 +290,7 @@ void BomInTable::MakeReport()
 		r.Close();
 		w.Close();
 		if( (UINT)ShellExecute(	NULL,"open", 
-			"\""+m_doc->m_app_dir+"\\freecds.exe\"", 
+			G_LANGUAGE==0?("\""+m_doc->m_app_dir+"\\freecds.exe\""): ("\"" + m_doc->m_app_dir + "\\—хемјтор.exe\""),
 			"\""+s0+"\\"+title + " - " + FILE_NAME + ".cds\"", 
 			m_doc->m_app_dir, SW_SHOWNORMAL ) <= 32 )
 		{
@@ -585,7 +585,7 @@ int BomInTable::ReadParamsFromTagFile()
 	}
 	else 
 	{
-		AfxMessageBox("Unable to open file bom.cds", MB_ICONERROR);
+		AfxMessageBox(G_LANGUAGE==0?"Unable to open file bom.cds":"Ќевозможно открыть файл bom.cds", MB_ICONERROR);
 		return 1;
 	}
 	for(int i=2; i<MAX_PAGES; i++)

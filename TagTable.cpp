@@ -272,7 +272,7 @@ void TagTable::MakeReport( CFreePcbDoc * doc )
 		r.Close();
 		w.Close();
 		if( (UINT)ShellExecute(	NULL,"open", 
-			"\""+m_doc->m_app_dir+"\\freecds.exe\"", 
+			G_LANGUAGE == 0 ? ("\""+m_doc->m_app_dir+"\\freecds.exe\""): ("\"" + m_doc->m_app_dir + "\\ÑõåìÀòîð.exe\""),
 			"\""+s0+"\\"+title+" - "+FILE_NAME+".cds\"", 
 			m_doc->m_app_dir, SW_SHOWNORMAL ) <= 32 )
 		{

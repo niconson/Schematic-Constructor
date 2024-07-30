@@ -101,7 +101,9 @@ void CComponentNoteExt::Sync( CFreePcbDoc * doc )
 		if( err )
 		{
 			CString str;
-			str.Format( "Unable to create folder \"%s\"", Path2 );
+			str.Format(G_LANGUAGE == 0 ? 
+				"Unable to create folder \"%s\"":
+				"Невозможно создать папку \"%s\"", Path2);
 			AfxMessageBox( str, MB_OK );
 			return;
 		}

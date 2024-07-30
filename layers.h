@@ -1,7 +1,7 @@
 // define standard drawing layers
 //
 #pragma once
-
+#define G_LANGUAGE 1 // 0=eng, 1=rus
 #define MAX_LAYERS 32
 
 enum
@@ -52,7 +52,7 @@ enum
 	LAY_FP_BOTTOM_COPPER,
 	NUM_FP_LAYERS
 };
-
+#if G_LANGUAGE == 0
 static char layer_str[MAX_LAYERS][64] = 
 { 
 	"dragging",
@@ -108,5 +108,62 @@ static char fp_layer_str[NUM_FP_LAYERS][64] =
 	"inner",
 	"bottom"
 };
+#else
+static char layer_str[MAX_LAYERS][64] =
+{
+	"перемещение",
+	"фон доски",
+	"видимая сетка",
+	"подсветка",
+	"метки",
+	"безхозный",
+	"контур детали",
+	"обозначения",
+	"линни пинов",
+	"имена пинов",
+	"линни цепей",
+	"имена цепей",
+	"футпринты",
+	"названия",
+	"описания",
+	"верхний 1",
+	"верхний 2",
+	"нижний 1",
+	"нижний 2",
+	"нижний 3",
+	"нижний 4",
+	"нижний 5",
+	"нижний 6",
+	"нижний 7",
+	"нижний 8",
+	"нижний 9",
+	"нижний 10",
+	"нижний 11",
+	"нижний 12",
+	"нижний 13",
+	"нижний 14",
+	"undefined"
+};
+
+static char fp_layer_str[NUM_FP_LAYERS][64] =
+{
+	"selection",
+	"background",
+	"visible grid",
+	"highlight",
+	"top silk",
+	"bottom silk",
+	"centroid",
+	"adhesive",
+	"thru pad",
+	"top mask",
+	"top paste",
+	"bottom mask",
+	"bottom paste",
+	"top copper",
+	"inner",
+	"bottom"
+};
+#endif
 
 static char layer_char[19] = "12345678QWERTYUIOP";

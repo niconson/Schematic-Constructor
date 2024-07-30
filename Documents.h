@@ -34,9 +34,15 @@
 ///#define getbit(reg,bit) (__asm{ BT reg, bit })
 
 #define RENUMBERING_PATTERN "%s --> %s"
+#if G_LANGUAGE==0
 #define PROGRAM_NAME "Schematic Constructor"
 #define NETLIST_UPDATED "The netlist was updated but was not loaded into the PCB editor." /*this phrase must be the same in both PCB and CDS*/
 #define NETLIST_WARNING "The netlist was loaded into FreePcb-2, but after that the file was not saved!" /*this phrase must be the same in both PCB and CDS*/
+#else
+#define PROGRAM_NAME "—хемјтор"
+#define NETLIST_UPDATED "Ќетлист был обновлЄн через редактор схем, но пока не был загружен в редактор плат." /*this phrase must be the same in both PCB and CDS*/
+#define NETLIST_WARNING "ќбновлЄнный нетлист загружали в редактор плат, но изменени€ не сохранили!" /*this phrase must be the same in both PCB and CDS*/
+#endif
 #define FILE_PROTECTED "Protected"
 #define CLR_REF 50000
 
