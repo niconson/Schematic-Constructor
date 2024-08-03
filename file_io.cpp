@@ -130,7 +130,7 @@ int ParseKeyString( CString * str, CString * key_str, CArray<CString> * param_st
 		np++;
 	}
 	if( np > param_str->GetSize() )
-		AfxMessageBox("Warning: error of ParseKeyString.cpp");
+		AfxMessageBox(G_LANGUAGE == 0 ? "Warning: error of ParseKeyString.cpp":"Предупреждение: ошибка ParseKeyString.cpp");
 	return np+1;
 }
 
@@ -164,7 +164,9 @@ int my_atoi( CString * in_str )
 			if( !( c == '+' || c == '-' || ( c >= '0' ) ) )
 			{
 				CString err_str;
-				err_str.Format( "Unable to convert string \"%s\" to int", *in_str );
+				err_str.Format(G_LANGUAGE == 0 ? 
+					"Unable to convert string \"%s\" to int":
+					"Невозможно преобразовать строку \"%s\" в целое число", *in_str);
 				AfxMessageBox( err_str );
 			}
 		}
@@ -206,7 +208,9 @@ double my_atof( CString * in_str )
 			if( !( c == '.' || c == '+' || c == '-' || c == '0' || c == ' ' ) )
 			{
 				CString err_str;
-				err_str.Format( "Unable to convert string \"%s\" to double", *in_str );
+				err_str.Format(G_LANGUAGE == 0 ? 
+					"Unable to convert string \"%s\" to double":
+					"Невозможно преобразовать строку \"%s\" в число с плавающей точкой", *in_str);
 				AfxMessageBox( err_str );
 			}
 		}

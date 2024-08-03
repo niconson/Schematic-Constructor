@@ -664,7 +664,9 @@ void CDlgPartlist::OnTXT()
 	{
 		// error opening file
 		CString mess;
-		mess.Format( "Unable to open file \"%s\"", path ); 
+		mess.Format(G_LANGUAGE == 0 ? 
+			"Unable to open file \"%s\"":
+			"Невозможно открыть файл \"%s\"", path );
 		AfxMessageBox( mess );
 		return;
 	}

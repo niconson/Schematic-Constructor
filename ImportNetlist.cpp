@@ -10,7 +10,7 @@ void Import_PADSPCB_Netlist( CFreePcbDoc * doc, CStdioFile * f )
 	instr.Trim();
 	if( instr.Compare( "*PADS-PCB*" ) )
 	{
-		AfxMessageBox( "This file is not a PADS-PCB file", MB_ICONERROR );
+		AfxMessageBox(G_LANGUAGE == 0 ? "This file is not a PADS-PCB file":"Этот файл не является файлом PADS-PCB", MB_ICONERROR);
 		return;
 	}
 	CText * CurNet = NULL;
@@ -312,7 +312,7 @@ void Import_PADSPCB_Netlist( CFreePcbDoc * doc, CStdioFile * f )
 		}
 	}
 	if( vpPresent == 0 )
-		AfxMessageBox("Netlist successfully imported");
+		AfxMessageBox(G_LANGUAGE == 0 ? "Netlist successfully imported":"Список эл.цепей успешно импортирован");
 	doc->m_view->OnRangeCmds(NULL);
 }
 

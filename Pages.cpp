@@ -329,7 +329,9 @@ int CPageList::IsThePageIncludesCP( int cppg )
 				return ip;
 			else if( WarShown == 0 )
 			{
-				AfxMessageBox("A complex part cannot link to a page with a lower index! Place complex parts on the last pages", MB_ICONERROR );
+				AfxMessageBox(G_LANGUAGE == 0 ? 
+					"A complex part cannot link to a page with a lower index! Place complex parts on the last pages":
+					"Составная деталь не может ссылаться на страницу с более низким индексом! Размещайте иерархические части на последних страницах", MB_ICONERROR);
 				WarShown = 1;
 			}
 	}
@@ -1089,7 +1091,9 @@ int CPageList::FindBOMNextLine( CString * Value,
 						if( IsThePageIncludedInNetlist( np ) )
 						{
 							// деталь ссылается на страницу вкл в нетлист
-							AfxMessageBox( "Error! The complex part links to a page included in the netlist", MB_ICONERROR );
+							AfxMessageBox(G_LANGUAGE == 0 ? 
+								"Error! The complex part links to a page included in the netlist":
+								"Ошибка! Составная деталь ссылается на страницу, включенную в какой-либо список эл.цепей, что недопустимо", MB_ICONERROR);
 							continue;
 						}
 						CString pgName;
@@ -1340,7 +1344,9 @@ int CPageList::GetNetPins(	CString * NetName,
 							CText * Cpart = p_list->GetText( &REF, &it );
 							if( Cpart == NULL )
 							{
-								AfxMessageBox("Fatal error of \"Get Net Pins\" function (Cpart == NULL). See Pages.cpp", MB_ICONERROR );
+								AfxMessageBox(G_LANGUAGE == 0 ? 
+									"Fatal error of \"Get Net Pins\" function (Cpart == NULL). See Pages.cpp":
+									"Фатальная ошибка функции \"GetNetPins\" (Cpart == NULL). См. Pages.cpp", MB_ICONERROR);
 								return ERR;
 							}
 							if( Cpart->m_polyline_start < 0 )
@@ -1357,7 +1363,9 @@ int CPageList::GetNetPins(	CString * NetName,
 							}
 							if( fPin == NULL )
 							{
-								AfxMessageBox("Fatal error of \"Get Net Pins\" function (fPin == NULL). See Pages.cpp", MB_ICONERROR );
+								AfxMessageBox(G_LANGUAGE == 0 ? 
+									"Fatal error of \"Get Net Pins\" function (fPin == NULL). See Pages.cpp":
+									"Фатальная ошибка функции \"GetNetPins\" (fPin == NULL). См. Pages.cpp", MB_ICONERROR);
 								return ERR;
 							}
 							if( CText * BlockNet = pgs[BlockPage].PolyLines->GetAt(fPin->m_polyline_start).Check(index_net_attr) )
@@ -1370,7 +1378,9 @@ int CPageList::GetNetPins(	CString * NetName,
 									// conflict of nets
 									// different nets connect
 									CString s;
-									s.Format( "Fatal error! Different nets are connected inside a complex part:  %s%s. Fix the error and try again\n\n%s", REF, SUFF, fStr );
+									s.Format(G_LANGUAGE == 0 ? 
+										"Fatal error! Different nets are connected inside a complex part:  %s%s. Fix the error and try again\n\n%s":
+										"Фатальная ошибка! Цепи с разными именами накоротко соединены внутри иерархической детали: %s%s. Исправьте ошибку и попробуйте снова\n\n%s", REF, SUFF, fStr);
 									AfxMessageBox(s,MB_ICONERROR);
 									return ERR;
 								}
@@ -1411,7 +1421,9 @@ int CPageList::GetNetPins(	CString * NetName,
 											// conflict of nets
 											// different nets connect
 											CString s;
-											s.Format( "Fatal error! Different nets connect (%s and %s):\n\n\tName of complex part: %s%s\n\nOne net label is in a schematic diagram and the other is in a complex part. Fix the error and try again", BlockNet->m_str, *NetName, REF, SUFF );
+											s.Format(G_LANGUAGE == 0 ? 
+												"Fatal error! Different nets connect (%s and %s):\n\n\tName of complex part: %s%s\n\nOne net label is in a schematic diagram and the other is in a complex part. Fix the error and try again":
+												"Фатальная ошибка! Соединяются цепи с разными именами (%s и %s):\n\n\tИмя иерархической детали: %s%s\n\nОдна метка эл.цепи находится на принципиальной схеме, а другая — на странице иерархической детали. Исправьте ошибку и попробуйте снова", BlockNet->m_str, *NetName, REF, SUFF);
 											AfxMessageBox(s,MB_ICONERROR);
 											return ERR;
 										}
@@ -1893,7 +1905,9 @@ int CPageList::GetBlockParts(	CString * destination,
 				{
 					// FATAL
 					CString s;
-					s.Format( "Fatal Error! Designation conflict within complex parts %s%s. The %s%s part previously encountered in the process is duplicated", REF, SUFF, RD, SUFF );
+					s.Format(G_LANGUAGE == 0 ? 
+						"Fatal Error! Designation conflict within complex parts %s%s. The %s%s part previously encountered in the process is duplicated":
+						"Фатальная ошибка! Конфликт обозначений в сотавных деталях %s%s. Деталь %s%s, ранее встречавшаяся в процессе, дублируется. Прервано...", REF, SUFF, RD, SUFF);
 					AfxMessageBox(s, MB_ICONERROR);
 					if( ThisNumber != sv_page )
 						theApp.m_Doc->SwitchToPage(sv_page);
@@ -2134,7 +2148,9 @@ int CPageList::GetBlockNets(	CString * destination,
 						if( Found )
 						{
 							CString s;
-							s.Format( "Fatal Error! Invalid net name in complex part %s%s. There was a duplication of the net name %s in a complex part when generating nets.", REF, SUFF, FullNetName );
+							s.Format(G_LANGUAGE == 0 ? 
+								"Fatal Error! Invalid net name in complex part %s%s. There was a duplication of the net name %s in a complex part when generating nets.":
+								"Фатальная ошибка! Недопустимое имя эл.цепи в иерархической детали %s%s. При генерации цепей произошло дублирование имени цепи %s в иерархической части.", REF, SUFF, FullNetName);
 							AfxMessageBox(s);
 							continue;
 						}
@@ -2613,7 +2629,9 @@ void CPageList::Protection( int pcb_num )
 		pcb_num = GetPcbIndex( ThisNumber, TRUE );
 	if( pcb_num < 0 )
 	{
-		AfxMessageBox("This page is not included in any of the netlists.");
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"This page is not included in any of the netlists.":
+			"Эта страница не включена ни в один из списков электрических цепей");
 		return;
 	}
 	CString in_str="";
@@ -2658,7 +2676,9 @@ void CPageList::Protection( int pcb_num )
 		}
 		else if( in_str.Compare( FILE_PROTECTED ) && in_str.GetLength() ) // fail
 		{
-			AfxMessageBox(	"It is not possible to protect the project when schematic and PCB netlists are mismatched.\n("+in_str+")", MB_ICONERROR );
+			AfxMessageBox(G_LANGUAGE == 0 ? 
+				("It is not possible to protect the project when schematic and PCB netlists are mismatched.\n("+in_str+")"):
+				("Невозможно защитить проект, если списки эл.цепей схемы и печатной платы не совпадают.\n(" + in_str + ")"), MB_ICONERROR);
 		}
 	}
 	else 
@@ -2666,11 +2686,17 @@ void CPageList::Protection( int pcb_num )
 		if( theApp.m_Doc->m_view )
 		{
 			if( theApp.m_Doc->m_view->m_protect == 0 && bUNPROTECT == 0 )
-				AfxMessageBox(	"The page could not be protected. "\
-								"The new project must first be synchronized "\
-								"with the board, and then you can turn on the "\
-								"protection.\n\nClick the \"File -> Save with netlist file\" "\
-								"menu to export the netlist to the PCB editor.", MB_ICONERROR );
+				AfxMessageBox(G_LANGUAGE == 0 ? 
+					"The page could not be protected. "\
+					"The new project must first be synchronized "\
+					"with the board, and then you can turn on the "\
+					"protection.\n\nClick the \"File -> Save with netlist file\" "\
+					"menu to export the netlist to the PCB editor.":
+					"Страница не может быть защищена. "\
+					"Новый проект сначала должен быть синхронизирован "\
+					"с платой, а затем можно будет включить "\
+					"защиту.\n\nНажмите меню \"Файл -> Сохранить со списком цепей\" "\
+					"для экспорта списка соединений в файл, зетем импортируйте его из редактора печатных плат ПлатФорм.", MB_ICONERROR );
 			else
 			{
 				clrbit( theApp.m_Doc->m_protection, pcb_num );

@@ -343,7 +343,7 @@ BEGIN
     END
     POPUP "Проект"
     BEGIN
-        MENUITEM "Опции",                       ID_PROJECT_OPTIONS
+        MENUITEM "Настройки",                   ID_PROJECT_OPTIONS
         MENUITEM "Доступ к редактированию",     ID_MAKE_ARCHIVED
         MENUITEM "Создать ветку проекта",       ID_CREATE_BRANCH
         MENUITEM SEPARATOR
@@ -560,7 +560,7 @@ BEGIN
         MENUITEM "Преобразовать в дугу CCW",    ID_OP_SIDE_CONVERTTOARC_CCW
         MENUITEM "Аппроксимировать дугу",       ID_APPROXIMATION_ARC
         MENUITEM SEPARATOR
-        MENUITEM "Выделить такие же полилинии", ID_SEL_SIMILAR_POLY
+        MENUITEM "Выделить аналогичные полилинии", ID_SEL_SIMILAR_POLY
         MENUITEM "Выделить «волшебной палочкой»", ID_SEL_ADJACENT
         MENUITEM SEPARATOR
         MENUITEM "Добавить вырез",              ID_ADD_CUTOUT
@@ -884,13 +884,14 @@ FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,11,12,20,20
     LTEXT           "СхемАтор v1.4.16 для ПлатФорм",IDC_STATIC,42,12,119,8,SS_NOPREFIX
-    LTEXT           "© duxahtech 2020-2024",IDC_STATIC,42,24,179,8
-    DEFPUSHBUTTON   "Готово",IDOK,170,15,50,14,WS_GROUP
+    LTEXT           "© Duxahtech 2020-2024, Российская Федерация",IDC_STATIC,42,24,178,8
+    DEFPUSHBUTTON   "Готово",IDOK,165,61,50,14,WS_GROUP
     LTEXT           "Source libraries:",IDC_STATIC,21,78,51,8
     LTEXT           "ClibPDF © FastIO Systems Inc.",IDC_STATIC,27,90,117,9
     LTEXT           "Generic Polygon Clipper © Advanced Interfaces Group, University of Manchester",IDC_STATIC,27,101,165,20
     LTEXT           "Additional Copyrights:",IDC_STATIC,12,54,68,8
     LTEXT           "CSVFileView v2.64 © Nir Sofer",IDC_STATIC,27,66,117,9
+    LTEXT           "Техническая поддержка: duxahtech@yandex.ru",IDC_STATIC,42,36,179,8
 END
 
 IDD_ADD_PART DIALOGEX 0, 0, 366, 348
@@ -3692,6 +3693,11 @@ BEGIN
 END
 
 IDD_SHOW_ATTR AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_ABOUTBOX AFX_DIALOG_LAYOUT
 BEGIN
     0
 END

@@ -31,12 +31,14 @@ void DlgReplaceText::DoDataExchange(CDataExchange* pDX)
 		m_edit2.GetWindowText(m_str2);
 		if( m_str1.GetLength() == 0 )
 		{
-			AfxMessageBox( "Empty string?" );
+			AfxMessageBox(G_LANGUAGE == 0 ? "Empty string?":"Пустая строка?");
 			pDX->Fail();
 		}
 		if ( m_str1.FindOneOf( "\"" ) >= 0 )
 		{
-			AfxMessageBox( "The string must not contain a special character!" );
+			AfxMessageBox(G_LANGUAGE == 0 ? 
+				"The string must not contain a special character!":
+				"Строка не должна содержать специальные символы!");
 			pDX->Fail();
 		}
 		if( m_mode == M_REPLACE_TEXT )

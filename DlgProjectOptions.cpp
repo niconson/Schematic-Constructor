@@ -68,19 +68,25 @@ void CDlgProjectOptions::DoDataExchange(CDataExchange* pDX)
 		if( m_name.GetLength() == 0 || m_name.Trim().GetLength() == 0 || m_name.FindOneOf( ILLEGAL_FILENAME ) >= 0 )
 		{
 			pDX->PrepareEditCtrl( IDC_EDIT_NAME );
-			AfxMessageBox( "Please enter name for project" );
+			AfxMessageBox(G_LANGUAGE == 0 ? 
+				"Please enter name for project":
+				"Введите название проекта");
 			pDX->Fail();
 		}
 		else if( m_path_to_folder.GetLength() == 0 )
 		{
 			pDX->PrepareEditCtrl( IDC_EDIT_FOLDER );
-			AfxMessageBox( "Please enter project folder" );
+			AfxMessageBox(G_LANGUAGE == 0 ? 
+				"Please enter project folder":
+				"Пожалуйста, введите папку проекта");
 			pDX->Fail();
 		}
 		else if( m_lib_folder.GetLength() == 0 )
 		{
 			pDX->PrepareEditCtrl( IDC_EDIT_LIBRARY_FOLDER );
-			AfxMessageBox( "Please enter library folder" );
+			AfxMessageBox(G_LANGUAGE == 0 ? 
+				"Please enter library folder":
+				"Пожалуйста, введите папку библиотеки");
 			pDX->Fail();
 		}
 		else
@@ -257,7 +263,8 @@ void CDlgProjectOptions::OnEnKillfocusEditFolder()
 
 void CDlgProjectOptions::OnBnClickedButtonLib()
 {
-	CPathDialog dlg( "Library Folder", "Select default library folder", m_lib_folder );
+	CPathDialog dlg(G_LANGUAGE == 0 ? "Library Folder":"Папка библиотек", 
+					G_LANGUAGE == 0 ? "Select default library folder":"Выберите папку", m_lib_folder);
 	int ret = dlg.DoModal();
 	if( ret == IDOK )
 	{
@@ -270,7 +277,8 @@ void CDlgProjectOptions::OnBnClickedButtonProjectFolder()
 {
 	if( m_new_project )
 	{
-		CPathDialog dlg( "Project Folder", "Select project folder", m_path_to_folder );
+		CPathDialog dlg(G_LANGUAGE == 0 ? "Project Folder":"Папка проекта", 
+						G_LANGUAGE == 0 ? "Select project folder":"Выберите папку", m_path_to_folder);
 		int ret = dlg.DoModal();
 		if( ret == IDOK )
 		{
@@ -284,23 +292,41 @@ void CDlgProjectOptions::OnBnClickedButtonProjectFolder()
 void CDlgProjectOptions::OnBnClickedQ11()
 {
 	// TODO: добавьте свой код обработчика уведомлений
-	AfxMessageBox(	"Specify the path to the FreePCB-2 footprint library.\n\n"\
-					"If you use some other PCB editor instead of FreePCB-2, "\
-					"then still specify the path to your library to load the list "\
-					"of footprints. Version 1.3 is configured to read third-party "\
-					"libraries so that you can always select a footprint name "\
-					"from the list when editing part attributes. The library folder "\
-					"must contain footprint files (<footprint name>. <extension>) "\
-					"for reading to complete successfully. If your PCB editor uses "\
-					"this library format, then success is guaranteed. Associate "\
-					"the footprint file extension with your footprint viewer so "\
-					"that "PROGRAM_NAME" and Windows know which program to "\
-					"open these files. In this case, you can open and view the "\
-					"footprint from the attribute setting dialog by pressing the \"L\" button. "\
-					"So, to see the list of loaded names, select a part (or a group "\
-					"of polylines) and press the F1 button. The \"SET ATTRIBUTES\" dialog "\
-					"box will pop up, and you will find the \"FOOTPRINT NAME\" combobox "\
-					"and the \"L\" button to the right of it.", MB_ICONINFORMATION);
+	AfxMessageBox(G_LANGUAGE == 0 ? 
+		("Specify the path to the FreePCB-2 footprint library.\n\n"\
+		"If you use some other PCB editor instead of FreePCB-2, "\
+		"then still specify the path to your library to load the list "\
+		"of footprints. Version 1.4 is configured to read third-party "\
+		"libraries so that you can always select a footprint name "\
+		"from the list when editing part attributes. The library folder "\
+		"must contain footprint files (<footprint name>. <extension>) "\
+		"for reading to complete successfully. If your PCB editor uses "\
+		"this library format, then success is guaranteed. Associate "\
+		"the footprint file extension with your footprint viewer so "\
+		"that "PROGRAM_NAME" and Windows know which program to "\
+		"open these files. In this case, you can open and view the "\
+		"footprint from the attribute setting dialog by pressing the \"L\" button. "\
+		"So, to see the list of loaded names, select a part (or a group "\
+		"of polylines) and press the F1 button. The \"SET ATTRIBUTES\" dialog "\
+		"box will pop up, and you will find the \"FOOTPRINT NAME\" combobox "\
+		"and the \"L\" button to the right of it."):
+		("Укажите путь к библиотеке посадочных мест ПлатФорм.\n\n"\
+		"Если вы используете какой-либо другой редактор печатных плат вместо ПлатФорм, "\
+		"тогда всё равно укажите путь к вашей библиотеке для загрузки списка "\
+		"посадочных мест. Версия 1.4 настроена на чтение сторонних "\
+		"библиотек, чтобы вы всегда могли выбрать имя посадочного места "\
+		"из списка при редактировании атрибутов детали. Папка библиотеки "\
+		"должна содержать файлы посадочных мест (<имя посадочного места>.<расширение>) "\
+		"для успешного завершения чтения. Если ваш редактор печатных плат использует "\
+		"этот формат библиотеки, то успех гарантирован. Свяжите "\
+		"расширение файла посадочного места с вашим средством просмотра посадочных мест, чтобы "\
+		PROGRAM_NAME" и Windows знали, какой программой "\
+		"открывать эти файлы. В этом случае вы можете открыть и просмотреть "\
+		"посадочное место из диалогового окна настройки атрибутов, нажав кнопку «L».\n\n"\
+		"Чтобы увидеть список загруженных имен, выберите деталь "\
+		"и нажмите кнопку F1. Появится диалоговое окно атрибутов, "\
+		"в котором вы найдёте выпадающий список футпринтов и "\
+		"кнопку «L» справа от него."), MB_ICONINFORMATION);
 }
 
 

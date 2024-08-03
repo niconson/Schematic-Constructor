@@ -23,9 +23,13 @@ void CDlgNetlistSettings::Ini( CPageList * pl, BOOL rnmb_present )
 	m_box_index = m_pl->m_netlist_format;
 	m_rnmb_present = rnmb_present;
 	if( m_rnmb_present )
-		AfxMessageBox("It is highly recommended that you do not change "\
-		"the netlist page map after renaming the part reference designations "\
-		"in the project. You must first update the netlist in FreePcb-2.", MB_ICONERROR );
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"It is highly recommended that you do not change "\
+			"the netlist page map after renaming the part reference designations "\
+			"in the project. You must first update the netlist in FreePcb-2.":
+			"Настоятельно рекомендуется не изменять "\
+			"карту страниц списка цепей после переименования обозначений деталей "\
+			"в проекте. Сначала необходимо синхронизировать обозначения с печатной платой, обновив список цепей в ПлатФорм.", MB_ICONERROR);
 }
 
 void CDlgNetlistSettings::DoDataExchange(CDataExchange* pDX)
@@ -199,15 +203,25 @@ void CDlgNetlistSettings::TryConnectPage( int i_page )
 	if( Conf.GetLength() != 2 )
 	{
 		CString Str;
-		Str.Format(		"Duplicate Reference Designators: %s\n\n"\
-						"At the moment, it is impossible to include the page "\
-						"in the netlist, because There will be a conflict of "\
-						"part numbers on this page with other pages. Use the "\
-						"\"Clear Part Numbers\" tool, having previously selected "\
-						"all the parts on this page, and then try again. It is "\
-						"recommended to select pages before starting work, and "\
-						"then the renumbering tool will not allow duplication "\
-						"of reference designations of parts.", Conf );
+		Str.Format(G_LANGUAGE == 0 ? 
+			("Duplicate Reference Designators: %s\n\n"\
+			"At the moment, it is impossible to include the page "\
+			"in the netlist, because There will be a conflict of "\
+			"part numbers on this page with other pages. Use the "\
+			"\"Clear Part Numbers\" tool, having previously selected "\
+			"all the parts on this page, and then try again. It is "\
+			"recommended to select pages before starting work, and "\
+			"then the renumbering tool will not allow duplication "\
+			"of reference designations of parts."):
+			("Повторяющиеся позиционные обозначения: %s\n\n"\
+			"В данный момент невозможно включить эту страницу "\
+			"в список соединений, т.к. возникнет конфликт "\
+			"номеров деталей на этой странице с другими страницами. Воспользуйтесь инструментом "\
+			"«Сбросить номера обозначений», предварительно выбрав "\
+			"все детали на этой странице, а затем повторите попытку. Рекомендуется "\
+			"выбирать страницы непосредственно при создании проекта, перед началом работы, и "\
+			"тогда инструмент перенумерации не допустит дублирования "\
+			"позиционных обозначений деталей"), Conf);
 		AfxMessageBox( Str, MB_ICONERROR );
 		if( m_current_i >= 0 )
 			clrbit( m_pl->m_netlist_page_mask[m_current_i], i_page );
@@ -257,7 +271,7 @@ void CDlgNetlistSettings::OnAddPcb()
 	str.Trim();
 	if( str.GetLength() == 0 )
 	{
-		AfxMessageBox( "First enter new pcb name", MB_ICONWARNING );
+		AfxMessageBox(G_LANGUAGE == 0 ? "First enter new pcb name":"Сначала введите новое имя печатной платы.", MB_ICONWARNING);
 		return;
 	}
 	if( str.Right(4) != ".fpc" && str.Right(4) != ".FPC" )
@@ -266,11 +280,15 @@ void CDlgNetlistSettings::OnAddPcb()
 	{
 		if( m_pl->m_pcb_names.GetAt(f).Compare( str ) == 0 )
 		{
-			AfxMessageBox( "This name is already in use. Please enter some other name", MB_ICONWARNING );
+			AfxMessageBox(G_LANGUAGE == 0 ? 
+				"This name is already in use. Please enter some other name":
+				"Это имя уже используется. Введите другое имя", MB_ICONWARNING);
 			return;
 		}
 	}
-	AfxMessageBox( "PCB successfully connected to the project\n\n(If this file does not already exist in the project folder, then click the View >> Switch to PCB menu and the program will create it.)" );
+	AfxMessageBox(G_LANGUAGE == 0 ? 
+		"PCB successfully connected to the project\n\n(If this file does not already exist in the project folder, then click the View >> Switch to PCB menu and the program will create it.)":
+		"Печатная плата успешно подключена к проекту\n\n(Если этот файл еще не существует в папке проекта, нажмите меню «Вид >> Переключиться на редактор печатных плат», и программа создаст его)");
 	m_pl->m_pcb_names.Add( str );
 	m_edit_pcb_names.InsertString( m_edit_pcb_names.GetCount(), str );
 	m_current_i = m_edit_pcb_names.GetCount() - 1;
@@ -297,7 +315,9 @@ void CDlgNetlistSettings::OnDeletePcb()
 	if( ind != -1 )
 	{
 		CString mess;
-		mess.Format( "Are you sure you want to remove the %s PCB?", str );
+		mess.Format(G_LANGUAGE == 0 ? 
+			"Are you sure you want to remove the %s from this list? (this will not affect the file in the folder)":
+			"Вы уверены, что хотите удалить из этого списка %s? (это не затронет файл в папке)", str);
 		int ret = AfxMessageBox( mess, MB_ICONQUESTION | MB_OKCANCEL );
 		if( ret == IDOK )
 		{

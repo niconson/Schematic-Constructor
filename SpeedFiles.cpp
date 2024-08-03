@@ -192,16 +192,24 @@ void LoadSpeedFiles( CFreePcbDoc * doc )
 				}
 			}
 			if( win >= 0 )
-				AfxMessageBox("Project folder and file names cannot contain the reserved word <Windows>");
+				AfxMessageBox(G_LANGUAGE == 0 ? 
+					"Project folder and file names cannot contain the reserved word <Windows>":
+					"Имена папок и файлов проекта не могут содержать зарезервированное слово «Windows»");
 		}
 	}
 	out_str.MakeLower();
 	if( out_str.GetLength() )
-		AfxMessageBox( "The following files have been modified by a program "\
-		"version with a different ID:\n\n"+out_str+"\nIt is possible that "\
-		"changes were made to the component datasheet library, which is "\
-		"stored in the root directory with the program. In this regard, it is "\
-		"recommended to open each of these files and resave in the current version of the program." );
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			("The following files have been modified by a program "\
+			"version with a different ID:\n\n"+out_str+"\nIt is possible that "\
+			"changes were made to the component datasheet library, which is "\
+			"stored in the root directory with the program. In this regard, it is "\
+			"recommended to open each of these files and resave in the current version of the program."):
+			("Следующие файлы были изменены программой СхемАтор "\
+			"с другим идентификатором:\n\n" + out_str + "\nВозможно, что "\
+			"были внесены изменения в библиотеку спецификаций компонентов, которая "\
+			"хранится в корневом каталоге с программой. В связи с этим рекомендуется "\
+			"открыть каждый из этих файлов и пересохранить в текущей версии программы."));
 	CWnd * frm = AfxGetMainWnd();
 	if( frm )
 	{

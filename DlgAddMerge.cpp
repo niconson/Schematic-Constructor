@@ -144,49 +144,87 @@ void CDlgAddMerge::DoDataExchange(CDataExchange* pDX)
 			HWND wnd = CDialog::GetSafeHwnd();
 			if( m_mode == M_REPLACE_PATT )
 			{
-				::SetWindowText( wnd, "Select new pattern" );
-				m_stat.SetWindowTextA( "Same as" );
+				if (G_LANGUAGE == 0)
+				{
+					::SetWindowText(wnd, "Select new pattern");
+					m_stat.SetWindowTextA("Same as");
+				}
+				else
+				{
+					::SetWindowText(wnd, "Выбор образца детали");
+					m_stat.SetWindowTextA("Как у...");
+				}
 			}
 			else	
 			{
-				::SetWindowText( wnd, "Do not sync part attributes" );
-				m_stat.SetWindowTextA( "Part" );
+				if (G_LANGUAGE == 0)
+				{
+					::SetWindowText(wnd, "Do not sync part attributes");
+					m_stat.SetWindowTextA("Part");
+				}
+				else
+				{
+					::SetWindowText(wnd, "Исключение из синхронизации");
+					m_stat.SetWindowTextA("Обозн.");
+				}
 			}
 			int it = -1;
 			for( CText * t=Doc->Attr->m_Reflist->GetNextText(&it); t; t=Doc->Attr->m_Reflist->GetNextText(&it) )
 			{
 				m_edit.AddString( t->m_str );
 			}
-			m_edit.SetWindowText("*** choose ref des ***");
+			if (G_LANGUAGE == 0)
+				m_edit.SetWindowText("*** choose ref des ***");
+			else
+				m_edit.SetWindowText("*** выберите деталь ***");
 		}
 		else if( m_mode == M_REPLACE_POLY )
 		{
 			HWND wnd = CDialog::GetSafeHwnd();
-			::SetWindowText( wnd, "Select new pattern" );
-			m_stat.SetWindowTextA( "Same as" );
+			if (G_LANGUAGE == 0)
+			{
+				::SetWindowText(wnd, "Select new pattern");
+				m_stat.SetWindowTextA("Same as");
+			}
+			else
+			{
+				::SetWindowText(wnd, "Выбор формы полилинии");
+				m_stat.SetWindowTextA("Как у...");
+			}
 			for( int i=0; i<Doc->m_outline_poly->GetSize(); i++ )
 			{
 				CString nmb;
 				nmb.Format( "%.4d", i+1 );
 				m_edit.AddString( nmb );
 			}
-			m_edit.SetWindowText("*** choose polyline ***");
+			if (G_LANGUAGE == 0)
+				m_edit.SetWindowText("*** choose polyline ***");
+			else
+				m_edit.SetWindowText("*** выберите полилинию ***");
 		}
 		else if( m_mode == M_ADDPAGE || m_mode == M_RENAMEPAGE )
 		{
 			HWND wnd = CDialog::GetSafeHwnd();
 			if( m_mode == M_ADDPAGE )
 			{
-				::SetWindowText( wnd, "Add new page" );
-				m_stat.SetWindowTextA( "Name" );
+				if (G_LANGUAGE == 0)
+				{
+					::SetWindowText(wnd, "Add new page");
+					m_stat.SetWindowTextA("Name");
+				}
+				else
+				{
+					::SetWindowText(wnd, "Новая страница");
+					m_stat.SetWindowTextA("Имя");
+				}
 			}
 			else
 			{
 				CString str;
 				//Doc->Pages.GetPageName( Doc->Pages.GetActiveNumber(), &cName );
-				str.Format("Rename page");
+				str.Format(G_LANGUAGE == 0?"Rename page":"Переименование страницы");
 				::SetWindowText( wnd, str );
-				m_stat.SetWindowTextA( "New name" );
+				m_stat.SetWindowTextA(G_LANGUAGE == 0 ? "New name":"Новое имя");
 			}
 			//
 			int it = -1;
@@ -206,8 +244,8 @@ void CDlgAddMerge::DoDataExchange(CDataExchange* pDX)
 			for( int p=0; p<pks.GetSize(); p++ )
 				m_edit.InsertString( p, pks[p] );
 			HWND wnd = CDialog::GetSafeHwnd();
-			::SetWindowText( wnd, "Select page you want to insert" );
-			m_stat.SetWindowTextA( "Name" );
+			::SetWindowText( wnd, G_LANGUAGE == 0 ? "Select page you want to insert":"Выберите страницу для вставки");
+			m_stat.SetWindowTextA(G_LANGUAGE == 0 ? "Name":"Имя");
 		}
 		else if( m_mode == M_REF_LIST || m_mode == M_REM_LIST )
 		{
@@ -232,10 +270,10 @@ void CDlgAddMerge::DoDataExchange(CDataExchange* pDX)
 			if( m_mode == M_REM_LIST )
 			{
 				m_merge_name = "";
-				::SetWindowText( wnd, "Remove RefList" );
+				::SetWindowText( wnd, G_LANGUAGE == 0 ? "Remove RefList":"Удаление списка обозначений");
 			}
 			else
-				::SetWindowText( wnd, "Add new RefList" );
+				::SetWindowText( wnd, G_LANGUAGE == 0 ? "Add new RefList":"Создание списка обозначений");
 			m_edit.SetWindowText(m_merge_name);
 		}
 		else if( m_mode == M_REPLACE_FAV )
@@ -258,28 +296,28 @@ void CDlgAddMerge::DoDataExchange(CDataExchange* pDX)
 				}
 			}
 			HWND wnd = CDialog::GetSafeHwnd();
-			::SetWindowText( wnd, "Remove one of your favorite nets" );
-			m_stat.SetWindowTextA( "Select" );
+			::SetWindowText( wnd, G_LANGUAGE == 0 ? "Remove one of your favorite nets":"Удаление из избранных");
+			m_stat.SetWindowTextA(G_LANGUAGE == 0 ? "Select":"Выберите");
 		}
 		else if( m_mode == M_COPY_FOOTPRINT )
 		{
 			m_edit.SetWindowText(m_merge_name);
 			HWND wnd = CDialog::GetSafeHwnd();
-			::SetWindowText( wnd, "Save footprint" );
+			::SetWindowText( wnd, G_LANGUAGE == 0 ? "Save footprint":"Сохранение футпринта");
 		}
 		else if( m_mode == M_URL )
 		{
 			m_edit.SetWindowText(m_merge_name);
 			HWND wnd = CDialog::GetSafeHwnd();
-			::SetWindowText( wnd, "Component URL" );
-			m_stat.SetWindowTextA( "Enter line" );
+			::SetWindowText( wnd, G_LANGUAGE == 0 ? "Component URL":"URL компонента");
+			m_stat.SetWindowTextA(G_LANGUAGE == 0 ? "Enter line":"Адрес");
 		}
 		else if( m_mode == M_SET_POLY_LENGTH )
 		{
 			m_edit.SetWindowText(m_merge_name);
 			HWND wnd = CDialog::GetSafeHwnd();
-			::SetWindowText( wnd, "Set segment length" );
-			m_stat.SetWindowTextA( "Enter value" );
+			::SetWindowText( wnd, G_LANGUAGE == 0 ? "Set segment length":"Длина сегмента");
+			m_stat.SetWindowTextA(G_LANGUAGE == 0 ? "Enter value":"Введите");
 		}
 	}
 }

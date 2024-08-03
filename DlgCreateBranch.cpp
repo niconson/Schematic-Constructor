@@ -103,7 +103,9 @@ void DlgCreateBranch::DoDataExchange(CDataExchange* pDX)
 			int err = _mkdir( Path2 );
 			if( err )
 			{
-				str.Format( "Unable to create folder \"%s\"", Path2 );
+				str.Format(G_LANGUAGE == 0 ? 
+					"Unable to create folder \"%s\"":
+					"Невозможно создать папку \"%s\"", Path2);
 				AfxMessageBox( str, MB_OK );
 				pDX->Fail();
 			}
@@ -111,7 +113,7 @@ void DlgCreateBranch::DoDataExchange(CDataExchange* pDX)
 		else
 		{
 			CString str;
-			str.Format( "Error! %s folder already exists", Path2 );
+			str.Format(G_LANGUAGE == 0 ? "Error! %s folder already exists":"Ошибка! Папка %s уже существует", Path2);
 			AfxMessageBox( str, MB_ICONERROR );
 			pDX->Fail();
 		}
@@ -164,7 +166,9 @@ void DlgCreateBranch::DoDataExchange(CDataExchange* pDX)
 										if( LEN )
 										{
 											CString s;
-											s.Format("The number in the file name %s is %d. Increment this file number?", name, num );
+											s.Format(G_LANGUAGE == 0 ? 
+												"The number in the file name %s is %d. Increment this file number?":
+												"Номер в имени файла %s равен %d. Увеличить этот номер файла?", name, num);
 											int Q = AfxMessageBox(s, MB_YESNOCANCEL);
 											if( Q == IDYES )
 											{
@@ -275,7 +279,9 @@ void DlgCreateBranch::DoDataExchange(CDataExchange* pDX)
 							int err = _mkdir( Path2 );
 							if( err )
 							{
-								str.Format( "Unable to create folder \"%s\"", Path2 );
+								str.Format(G_LANGUAGE == 0 ? 
+									"Unable to create folder \"%s\"":
+									"Невозможно создать папку \"%s\"", Path2);
 								AfxMessageBox( str, MB_OK );
 								pDX->Fail();
 							}

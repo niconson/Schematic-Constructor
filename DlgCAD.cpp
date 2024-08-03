@@ -376,7 +376,7 @@ void CDlgCAD::OnBnClickedGo()
 				f.WriteString( line );
 				line.Format( "G04 Version: %s v1.1*\n", PROGRAM_NAME );
 				f.WriteString( line );
-				line.Format( "G04 WebSite: www.freepcb.dev*\n" );
+				line.Format( "G04 WebSite: https://github.com/niconson*\n" );
 				f.WriteString( line );
 				line.Format( "G04 %s*\n", f_str );
 				f.WriteString( line );
@@ -666,7 +666,8 @@ void CDlgCAD::OnBnClickedButtonFolder()
 		m_folder.Format( "%s\\CAM(%s)", m_project_folder, m_f_name );
 		m_edit_folder.SetWindowText( m_folder );
 	}
-	CPathDialog dlg( "Select Folder", "Set CAM output folder", m_folder );
+	CPathDialog dlg(G_LANGUAGE==0?"Select Folder":"Папка для герберов", 
+					G_LANGUAGE == 0 ? "Set CAM output folder":"Выберите папку", m_folder);
 	int ret = dlg.DoModal();
 	if( ret == IDOK )
 	{

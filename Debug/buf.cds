@@ -27,16 +27,16 @@ m_client_rect_left: 0
 m_client_rect_right: 1132
 m_client_rect_bottom: 587
 m_client_rect_top: 0
-m_org_x: -71539
-m_org_y: -52698
-m_scale_factor: 40015
+m_org_x: -48360
+m_org_y: -16598
+m_scale_factor: 33346
 m_attr_size: 500000 60000 500000 60000 500000 60000 500000 60000 500000 60000 500000 60000
 m_user_scale: 1.0000000000
 units: MM
 
 m_sel_mask: 111
 m_visible_layers: 1048571
-m_top_layer: 6
+m_top_layer: 10
 m_grid_style: 1
 visible_grid_spacing: 2000000.000000
   visible_grid_item: 20mil
@@ -210,6 +210,13 @@ m_bom_colors: 0 0 0 155 155 155 0 0 0 166 166 166 255 255 111 0 0 255 255 193 19
 rename_page: "OVO-78(v3.0) - схема"
 bmp_src: "D:\Разработки\Projects\duxahtech\OVO\OVO-78_old\related_files\pictures\00002.PIC"
 bmp_src: "D:\Разработки\Projects\duxahtech\OVO\OVO-78_old\related_files\pictures\00001.PIC"
+polyline: 4 1 10 100004 -1 -1 -1 0 9
+  corner: 1 -48250000 -9935552 0 1
+  corner: 2 -48250000 -11185552 0 0
+  corner: 3 -49500000 -11185552 0 0
+  corner: 4 -47000000 -11185552 0 0
+net_name: "GND" -48750000 -11915552 11 0 500000 60000 -1 -1 11 1
+
 add_new_page: "PCB-netlist"
 bmp_src: "D:\Разработки\Projects\duxahtech\OVO\OVO-78_old\related_files\pictures\00002.PIC"
 [end]

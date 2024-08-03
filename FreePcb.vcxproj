@@ -54,7 +54,7 @@
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\Debug\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">FreeCds</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">FreeCds</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">СхемАтор</TargetName>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</GenerateManifest>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -142,7 +142,7 @@
     <Link>
       <AdditionalOptions>/MACHINE:I386 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>winmm.lib;rpcrt4.lib;clibpdf.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>.\Debug/FreeCds.exe</OutputFile>
+      <OutputFile>%(OutputFile)</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>./libs/Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ProgramDatabaseFile>.\Debug/FreeCds.pdb</ProgramDatabaseFile>

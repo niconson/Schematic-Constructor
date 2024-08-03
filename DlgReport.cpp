@@ -522,7 +522,9 @@ void CDlgPartlistRep::OnTXT()
 	{
 		// error opening file
 		CString mess;
-		mess.Format( "Unable to open file \"%s\"", path ); 
+		mess.Format(G_LANGUAGE == 0 ? 
+			"Unable to open file \"%s\"":
+			"Невозможно открыть файл \"%s\"", path);
 		AfxMessageBox( mess );
 		return;
 	}
@@ -802,7 +804,9 @@ void CDlgPartlistRep::OnNMDblclkList1(NMHDR *pNMHDR, LRESULT *pResult)
 	SetClipboardData(CF_TEXT,cmd);
 	CloseClipboard();
 	CString mess;
-	mess.Format("The text %s has been copied to the clipboard", str);
+	mess.Format(G_LANGUAGE == 0 ? 
+		"The text %s has been copied to the clipboard":
+		"Текст %s был скопирован в буфер обмена.", str);
 	AfxMessageBox( mess );
 	*pResult = 0;
 }

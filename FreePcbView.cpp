@@ -486,7 +486,7 @@ void CFreePcbView::OnDraw(CDC* pDC)
 		r.left = x_off;
 		r.bottom += VSTEP*2;
 		r.top += VSTEP*2;
-		pDC->DrawText( "SELECTION MASK", -1, &r, DT_TOP );
+		pDC->DrawText( G_LANGUAGE==0? "SELECTION MASK":"МАСКА ВЫБОРА", -1, &r, DT_TOP);
 		y_off = r.bottom;
 		for( int i=0; i<NUM_SEL_MASKS; i++ )
 		{
@@ -2491,13 +2491,17 @@ void CFreePcbView::HandleKeyPress(UINT nChar, UINT nRepCnt, UINT nFlags)
 		{
 			if( m_sel_text->m_layer == LAY_PIN_DESC )
 			{
-				if( AfxMessageBox( "Are you sure you want to change the text color layer to a last polyline layer?", MB_ICONQUESTION | MB_OKCANCEL ) == IDOK )
+				if( AfxMessageBox(G_LANGUAGE == 0 ? 
+					"Are you sure you want to change the text color layer to a last polyline layer?":
+					"Вы уверены, что хотите изменить слой текста на последний слой полилинии, по которой кликнули до этого?", MB_ICONQUESTION | MB_OKCANCEL) == IDOK)
 					if( m_polyline_layer >= LAY_ADD_1 )
 						for( int ip=0; ip<m_Doc->m_outline_poly->GetSize(); ip++ )
 							if( m_Doc->m_outline_poly->GetAt(ip).Check( index_desc_attr ) == m_sel_text )
 								m_sel_text->m_layer = m_polyline_layer;
 			}
-			else if( AfxMessageBox( "Are you sure you want to reset the text color layer?", MB_ICONQUESTION | MB_OKCANCEL ) == IDOK )
+			else if( AfxMessageBox(G_LANGUAGE == 0 ? 
+				"Are you sure you want to reset the text color layer?":
+				"Вы уверены, что хотите сбросить цветовой слой текста? (сделать слой текста по умолчанию)", MB_ICONQUESTION | MB_OKCANCEL) == IDOK)
 				m_sel_text->m_layer = LAY_PIN_DESC;
 			m_sel_text->MakeVisible();
 			CancelSelection();
@@ -2561,7 +2565,9 @@ void CFreePcbView::HandleKeyPress(UINT nChar, UINT nRepCnt, UINT nFlags)
 				if( mer >= 0 )
 				{
 					CString ps;
-					ps.Format("This polyline is connected to other objects through the \"MERGE\" property. Move all objects of the group %s?", m_Doc->m_mlist->GetStr( mer ) );
+					ps.Format(G_LANGUAGE == 0 ? 
+						"This polyline is connected to other objects through the \"MERGE\" property. Move all objects of the group %s?":
+						"Эта полилиния связана с другими объектами через свойство «СЛИЯНИЕ». Переместить все объекты группы %s?", m_Doc->m_mlist->GetStr(mer));
 					if( AfxMessageBox( ps, MB_YESNO ) == IDNO )
 					{
 						mer = -1;
@@ -2579,7 +2585,7 @@ void CFreePcbView::HandleKeyPress(UINT nChar, UINT nRepCnt, UINT nFlags)
 					else
 					{
 						CString ps;
-						ps.Format("Move entire contour?");
+						ps.Format(G_LANGUAGE == 0 ? "Move entire contour?":"Переместить контур целиком?");
 						if( AfxMessageBox( ps, MB_YESNO ) == IDYES )
 						{
 							//NewSelect( NULL, &m_sel_id, 0, 0 );
@@ -2686,7 +2692,9 @@ void CFreePcbView::HandleKeyPress(UINT nChar, UINT nRepCnt, UINT nFlags)
 			if( mer >= 0 )
 			{
 				CString ps;
-				ps.Format("This polyline is connected to other objects through the \"MERGE\" property. Move all objects of the group %s?", m_Doc->m_mlist->GetStr( mer ) );
+				ps.Format(G_LANGUAGE == 0 ?
+					"This polyline is connected to other objects through the \"MERGE\" property. Move all objects of the group %s?" :
+					"Эта полилиния связана с другими объектами через свойство «СЛИЯНИЕ». Переместить все объекты группы %s?", m_Doc->m_mlist->GetStr( mer ) );
 				if( AfxMessageBox( ps, MB_YESNO ) == IDNO )
 				{
 					mer = -1;
@@ -2702,7 +2710,7 @@ void CFreePcbView::HandleKeyPress(UINT nChar, UINT nRepCnt, UINT nFlags)
 				else
 				{
 					CString ps;
-					ps.Format("Move entire contour?");
+					ps.Format(G_LANGUAGE == 0 ? "Move entire contour?" : "Переместить контур целиком?");
 					if( AfxMessageBox( ps, MB_YESNO ) == IDYES )
 					{
 						SelectContour();
@@ -2716,7 +2724,7 @@ void CFreePcbView::HandleKeyPress(UINT nChar, UINT nRepCnt, UINT nFlags)
 				NewSelectM(mer);
 				m_Doc->SelectGroupAttributes();
 			}
-			int ret = AfxMessageBox("Clockwise rotate objects?", MB_ICONQUESTION|MB_YESNO);
+			int ret = AfxMessageBox(G_LANGUAGE == 0 ? "Clockwise rotate objects?":"Поворачивать объекты по часовой стрелке?", MB_ICONQUESTION | MB_YESNO);
 			if( (ret == IDYES && (by*bx) > 0 ) || 
 				(ret == IDNO && (by*bx) < 0 ) )
 			{
@@ -3006,7 +3014,9 @@ void CFreePcbView::HandleKeyPress(UINT nChar, UINT nRepCnt, UINT nFlags)
 							val *= NM_PER_MM;
 					}
 					val /= m_user_scale;
-					ret = AfxMessageBox("Do you want to save the segment angle?", MB_ICONQUESTION|MB_YESNOCANCEL);
+					ret = AfxMessageBox(G_LANGUAGE == 0 ? 
+						"Do you want to save the segment angle?":
+						"Хотите сохранить угол сегмента?", MB_ICONQUESTION | MB_YESNOCANCEL);
 					if( ret == IDYES )
 					{
 						// keep the seg angle
@@ -3019,12 +3029,19 @@ void CFreePcbView::HandleKeyPress(UINT nChar, UINT nRepCnt, UINT nFlags)
 					}
 					else if( ret == IDNO )
 					{
-						ret = AfxMessageBox("Do you want to keep the X coordinates "\
+						ret = AfxMessageBox(G_LANGUAGE == 0 ? 
+							("Do you want to keep the X coordinates "\
 							"of the vertices of the selected segment unchanged "\
 							"when performing this procedure? \n\n(Click YES for the "\
 							"program to complete this task by changing the Y "\
 							"coordinates of the vertices. \nClick NO for the program to "\
-							"complete the task by changing the X coordinates of the vertices)", MB_ICONQUESTION|MB_YESNOCANCEL);
+							"complete the task by changing the X coordinates of the vertices)"):
+							("Сохранить координаты X "\
+							"вершин выбранного сегмента неизменными "\
+							"при выполнении этой функции? \n\n(Нажмите ДА, чтобы программа "\
+							"сделала это, изменив только координаты Y "\
+							"вершин. \nНажмите НЕТ, чтобы программа "\
+							"выполнила задачу, изменив только координаты X вершин)"), MB_ICONQUESTION | MB_YESNOCANCEL);
 						if( ret == IDYES )
 						{
 							// keep the X coord
@@ -3275,7 +3292,9 @@ void CFreePcbView::HandleKeyPress(UINT nChar, UINT nRepCnt, UINT nFlags)
 		{
 			if( m_sel_text->m_layer == LAY_PIN_DESC )
 			{
-				if( AfxMessageBox( "Are you sure you want to change the text color layer to a last polyline layer?", MB_ICONQUESTION | MB_OKCANCEL ) == IDOK )
+				if( AfxMessageBox(G_LANGUAGE == 0 ?
+					"Are you sure you want to change the text color layer to a last polyline layer?" :
+					"Вы уверены, что хотите изменить слой текста на последний слой полилинии, по которой кликнули до этого?", MB_ICONQUESTION | MB_OKCANCEL ) == IDOK )
 					if( m_polyline_layer >= LAY_ADD_1 )
 					{
 						int it = -1;
@@ -3288,7 +3307,9 @@ void CFreePcbView::HandleKeyPress(UINT nChar, UINT nRepCnt, UINT nFlags)
 					}
 						
 			}
-			else if( AfxMessageBox( "Are you sure you want to reset the text color layer?", MB_ICONQUESTION | MB_OKCANCEL ) == IDOK )
+			else if( AfxMessageBox(G_LANGUAGE == 0 ?
+				"Are you sure you want to reset the text color layer?" :
+				"Вы уверены, что хотите сбросить цветовой слой текста? (сделать слой текста по умолчанию)", MB_ICONQUESTION | MB_OKCANCEL ) == IDOK )
 			{
 				int it = -1;
 				for( CText * t=m_Doc->Attr->m_pDesclist->GetNextText(&it); t; t=m_Doc->Attr->m_pDesclist->GetNextText(&it) )
@@ -4929,7 +4950,9 @@ void CFreePcbView::OnTextEdit()
 {
 	if( m_sel_text == NULL )
 	{
-		AfxMessageBox( "The selected group contains not only texts", MB_ICONERROR );
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"The selected group contains not only texts":
+			"Выбранная группа содержит не только тексты", MB_ICONERROR);
 		return;
 	}
 	// clear memory
@@ -5055,14 +5078,18 @@ void CFreePcbView::OnTextEdit()
 					s = "Disabled";
 				else
 				{
-					str.Format("Error!\nThe selected group contains different footprints:\n%s\n\nAbort this process?", Texts );
+					str.Format(G_LANGUAGE == 0 ? 
+						"Error!\nThe selected group contains different footprints:\n%s\n\nAbort this process?":
+						"Ошибка!\nВыбранная группа содержит разные футпринты:\n%s\n\nПрервать этот процесс?", Texts);
 					if( AfxMessageBox( str, MB_ICONERROR | MB_YESNO ) == IDYES )
 						return;
 				}
 			}
 			else
 			{
-				str.Format("The selected group contains texts:\n %s", Texts );
+				str.Format(G_LANGUAGE == 0 ? 
+					"The selected group contains texts:\n %s":
+					"Выбранная группа содержит тексты:\n %s", Texts);
 				//if( nt == 1 )
 				//	s = Texts;
 				s = s.Trim();
@@ -5276,7 +5303,9 @@ void CFreePcbView::OnOPCornerEdit()
 		if( gm >= 0 )
 		{
 			CString ps;
-			ps.Format("This polyline is connected to other objects through the \"MERGE\" property. Move all objects of the group %s?", m_Doc->m_mlist->GetStr( gm ) );
+			ps.Format(G_LANGUAGE == 0 ?
+				"This polyline is connected to other objects through the \"MERGE\" property. Move all objects of the group %s?" :
+				"Эта полилиния связана с другими объектами через свойство «СЛИЯНИЕ». Переместить все объекты группы %s?", m_Doc->m_mlist->GetStr( gm ) );
 			if( AfxMessageBox( ps, MB_YESNO ) == IDNO )
 				gm = -1;
 		}
@@ -5290,7 +5319,7 @@ void CFreePcbView::OnOPCornerEdit()
 			else
 			{
 				CString ps;
-				ps.Format("Move entire contour?");
+				ps.Format(G_LANGUAGE == 0 ? "Move entire contour?" : "Переместить контур целиком?");
 				if( AfxMessageBox( ps, MB_YESNO ) == IDYES )
 				{
 					SelectContour();
@@ -5338,7 +5367,9 @@ void CFreePcbView::OnOPCornerDelete()
 	{
 		if( gnc < 3 )
 		{
-			AfxMessageBox( "Outline has too few corners" );
+			AfxMessageBox(G_LANGUAGE == 0 ? 
+				"Outline has too few corners":
+				"У контура слишком мало вершин");
 			return;
 		}
 		else if( m_sel_op.GetClosed() )
@@ -5462,8 +5493,8 @@ void CFreePcbView::MultipleAttributes( int MODE )
 		clrbit( E_MASK, index_desc_attr );
 	}
 	CString Parts = "";
-	CString Values = "different values:\n";
-	CString Footprints = "different footprints:\n";
+	CString Values = G_LANGUAGE == 0 ? "different values:\n":"разные названия:";
+	CString Footprints = G_LANGUAGE == 0 ? "different footprints:\n":"разные футпринты:";
 	int WARNING_P = 0;
 	int WARNING_V = 0;
 	int WARNING_F = 0;
@@ -5484,17 +5515,25 @@ void CFreePcbView::MultipleAttributes( int MODE )
 	}
 	else if( WARNING_P == 1 && no_part_attribute )
 	{
-		Mess.Format("You want to dock adjacent polylines to part%s\n\n", Parts );
+		Mess.Format(G_LANGUAGE == 0 ? 
+			"You want to dock adjacent polylines to part%s\n\n":
+			"Вы хотите прикрепить соседние полилинии к детали%s\n\n", Parts);
 	}
 	else if( WARNING_P > 1 )
 	{
 		clrbit( E_MASK, index_part_attr );
 		if( no_part_attribute ) 
-			Mess.Format("You want to edit polylines with completely different text attributes. "\
-						"The selected group contains both free polylines and parts. "\
-						"By pressing the \"OK\" button you can enter the \"value\" and "\
-						"\"footprint\" attributes for these parts. Free polylines will be "\
-						"ignored.( %d parts found%s )\n\n", WARNING_P, Parts );
+			Mess.Format(G_LANGUAGE == 0 ? 
+				("You want to edit polylines with completely different text attributes. "\
+				"The selected group contains both free polylines and parts. "\
+				"By pressing the \"OK\" button you can enter the \"value\" and "\
+				"\"footprint\" attributes for these parts. Free polylines will be "\
+				"ignored.( %d parts found%s )\n\n"):
+				("Вы хотите редактировать полилинии с совершенно разными текстовыми атрибутами. "\
+				"Выбранная группа содержит как свободные полилинии, так и детали. "\
+				"Нажав кнопку «Готово», вы можете ввести атрибуты «название» и "\
+				"«футпринт» для этих деталей. Свободные полилинии будут "\
+				"игнорированы.( Найдено %d деталей%s )\n\n"), WARNING_P, Parts);
 		else
 			Mess.Format("This group contains the %d parts"\
 						"%s\n\n", WARNING_P, Parts );
@@ -5504,7 +5543,9 @@ void CFreePcbView::MultipleAttributes( int MODE )
 		(WARNING_F > 1 && (MODE == 0 || MODE == index_foot_attr)))
 	{	
 		CString str;
-		str.Format("Warning! You want to set the same name for different attributes:" );
+		str.Format(G_LANGUAGE == 0 ? 
+			"Warning! You want to set the same name for different attributes:":
+			"Внимание! Вы хотите задать одно и то же имя для разных атрибутов:");
 		Mess += str;
 		if( WARNING_V > 1 && (MODE == 0 || MODE == index_value_attr) )
 		{
@@ -5530,11 +5571,13 @@ void CFreePcbView::MultipleAttributes( int MODE )
 			if( WARNING_F < 3 )
 			{
 				MB = MB_YESNO;
-				Mess += "\n\ncontinue anyway?";
+				Mess += G_LANGUAGE == 0 ? "\n\ncontinue anyway?":"\n\nпродолжить всё равно?";
 			}
 			else
 			{
-				Mess += "\n\nThe attributes in this group include a large number of different footprints and cannot be changed.";
+				Mess += (G_LANGUAGE == 0 ? 
+					"\n\nThe attributes in this group include a large number of different footprints and cannot be changed.":
+					"\n\nАтрибуты в этой группе включают в себя большое количество различных футпринтов и не могут быть одновременно изменены.");
 				AfxMessageBox( Mess, ICON );
 				return;
 			}
@@ -6318,7 +6361,9 @@ CString CFreePcbView::OPSetAttributes( CString * bDialog )
 				fa = m_Doc->Pages.FindPrintableArea( &fa );
 				if( fa.st > 0 )// same index found
 				{
-					int ok = AfxMessageBox("This page number already used, so the printable area indexes of other pages will be offset by one", MB_ICONINFORMATION|MB_OKCANCEL);
+					int ok = AfxMessageBox(G_LANGUAGE == 0 ? 
+						"This page number already used, so the printable area indexes of other pages will be offset by one":
+						"Этот номер страницы уже используется, поэтому индексы печатной области других страниц будут смещены на единицу", MB_ICONINFORMATION | MB_OKCANCEL);
 					if( ok == IDCANCEL )
 					{
 						desc->m_str = OLD_STR;
@@ -7506,7 +7551,9 @@ int CFreePcbView::FindStrInFile( CString * file,
 	int OK = File.Open( *file, CFile::modeRead );
 	if( !OK )     
 	{
-		CString mess = "Unable to open library file\n\n \"" + *file + "\"";
+		CString mess = (G_LANGUAGE == 0 ? 
+			("Unable to open library file\n\n \"" + *file + "\""):
+			("Невозможно открыть файл библиотеки\n\n \"" + *file + "\""));
 		AfxMessageBox( mess, MB_ICONERROR );
 		m_Doc->m_dlg_log->OnShowMe();
 		return 0;
@@ -7855,12 +7902,14 @@ void CFreePcbView::OnReplacePartPattern()
 {
 	if( m_sel_count == 0 )
 	{
-		AfxMessageBox("First select objects.");
+		AfxMessageBox(G_LANGUAGE == 0 ? "First select objects.":"Сначала выберите объекты.");
 		return;
 	}
 	if( m_Doc->m_project_modified )
 	{
-		AfxMessageBox("This tool has no undo, so save the project first");
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"This tool has no undo, so save the project first":
+			"Этот инструмент не имеет функции отмены, поэтому сначала сохраните проект.");
 		return;
 	}
 	CDlgAddMerge dlg;
@@ -7876,7 +7925,7 @@ void CFreePcbView::OnReplacePartPattern()
 		if( part )
 			m_Doc->ReplacePartPattern( part );
 		else
-			AfxMessageBox("This ref not found",MB_ICONERROR);
+			AfxMessageBox(G_LANGUAGE == 0 ? "This ref not found":"Это обозначение не найдено", MB_ICONERROR);
 		CancelSelection(0);
 		m_Doc->ProjectModified( TRUE );
 		m_draw_layer = 0;//OnReplacePartPattern()
@@ -7949,7 +7998,7 @@ void CFreePcbView::FindAttr( int insertMode, int singleMode, CString * autoRun )
 	{
 		if( m_protect )
 		{
-			AfxMessageBox( "This PCB is protected.", MB_ICONERROR );
+			AfxMessageBox(G_LANGUAGE == 0 ? "This PCB is protected.":"Эта печатная плата защищена.", MB_ICONERROR);
 			return;
 		}
 		//
@@ -8453,9 +8502,9 @@ void CFreePcbView::FindAttr( int insertMode, int singleMode, CString * autoRun )
 					if( ThisPage != m_Doc->Pages.GetActiveNumber() )
 						m_Doc->SwitchToPage(ThisPage, TRUE);
 					if( ALL_PAGES )
-						AfxMessageBox("Nothing found in current project");
+						AfxMessageBox(G_LANGUAGE == 0 ? "Nothing found in current project":"Ничего не найдено в текущем проекте");
 					else
-						AfxMessageBox("Nothing found in current page");
+						AfxMessageBox(G_LANGUAGE == 0 ? "Nothing found in current page":"На текущей странице ничего не найдено");
 				}
 				else
 				{
@@ -8475,7 +8524,9 @@ void CFreePcbView::FindAttr( int insertMode, int singleMode, CString * autoRun )
 						else
 						{
 							int PRES = 0;
-							CString str = "Nothing was found on this page, but found on the following pages: ";
+							CString str = (G_LANGUAGE == 0 ? 
+								"Nothing was found on this page, but found on the following pages: ":
+								"На этой странице ничего не найдено, но найдено на следующих страницах: ");
 							for( int pg=0; pg<m_Doc->Pages.GetNumPages(); pg++ )
 								if( getbit( sel_pages, pg ) )
 								{
@@ -8629,7 +8680,9 @@ void CFreePcbView::FindAttr( int insertMode, int singleMode, CString * autoRun )
 				}
 				else if( cnt == 0 )
 				{
-					AfxMessageBox("Nothing found in other projects");
+					AfxMessageBox(G_LANGUAGE == 0 ? 
+						"Nothing found in other projects":
+						"Ничего не найдено в других проектах");
 				}
 				else
 				{
@@ -8857,7 +8910,9 @@ void CFreePcbView::AddOutlinePoly( BOOL bREPEAT_OR_ADD_CUTOUT )
 					
 					if( desc )
 					{
-						if( AfxMessageBox( "Want to move the description text onto the polyline layer?", MB_ICONQUESTION | MB_YESNO ) == IDYES )
+						if( AfxMessageBox(G_LANGUAGE == 0 ? 
+							"Want to move the description text onto the polyline layer?":
+							"Хотите переместить текст описания на слой полилинии?", MB_ICONQUESTION | MB_YESNO) == IDYES)
 						{
 							if( m_polyline_layer >= LAY_ADD_1 )
 								desc->m_layer = m_polyline_layer;
@@ -9011,7 +9066,9 @@ void CFreePcbView::OnAddCutout()
 	if( m_sel_op.GetClosed() && m_sel_op.GetNumCorners() > 2 )
 		AddOutlinePoly(TRUE);
 	else
-		AfxMessageBox("The number of polyline vertices must be more than 2, and the polyline should be closed!", MB_ICONERROR );
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"The number of polyline vertices must be more than 2, and the polyline should be closed!":
+			"Количество вершин полилинии должно быть больше 2, и полилиния должна быть замкнутой!", MB_ICONERROR);
 	Invalidate( FALSE );// (doubtful)
 }
 
@@ -10260,7 +10317,7 @@ void CFreePcbView::GroupCopy( int clearBuf )
 	// see if anything copied
 	if( !g_op->GetSize() )
 	{
-		AfxMessageBox( "Nothing copied!" );
+		AfxMessageBox(G_LANGUAGE == 0 ? "Nothing copied!":"Ничего не скопировано!");
 		CWnd* pMain = AfxGetMainWnd();
 		if (pMain != NULL)
 		{
@@ -10387,7 +10444,7 @@ void CFreePcbView::DeleteGroup( BOOL wMerge )
 {
 	if( m_protect )
 	{
-		AfxMessageBox( "This PCB is protected.", MB_ICONERROR );
+		AfxMessageBox(G_LANGUAGE == 0 ? "This PCB is protected." : "Эта печатная плата защищена.", MB_ICONERROR );
 		return;
 	}
 	if( getbit( m_sel_mask, SEL_MASK_PART ) == 0 )
@@ -10457,13 +10514,20 @@ void CFreePcbView::DeleteGroup( BOOL wMerge )
 	{
 		if( m_Doc->m_library.IsEmpty() )
 		{
-			AfxMessageBox( "It is not recommended to delete this part when the library is uninitialized. Press F1 to initialize it", MB_ICONINFORMATION );
+			AfxMessageBox(G_LANGUAGE == 0 ? 
+				"It is not recommended to delete this part when the library is uninitialized. Press F1 to initialize it":
+				"Не рекомендуется удалять ту или иную деталь, пока библиотека не инициализирована. Нажмите F1, чтобы инициализировать ее.", MB_ICONINFORMATION);
 		}
 		ExclusiveParts += "\n\n";
-		int ret = AfxMessageBox(ExclusiveParts+".. is the last part "\
+		int ret = AfxMessageBox(G_LANGUAGE == 0 ? 
+			(ExclusiveParts+".. is the last part "\
 			"of this type and it is not used anywhere else except here. "\
 			"If you delete it, it will no longer be in your inventory. "\
-			"Are you sure to remove this part?",MB_YESNO);
+			"Are you sure to remove this part?"):
+			(ExclusiveParts + "..— последняя деталь "\
+			"этого типа, и она больше нигде не используется, кроме как здесь. "\
+			"Если вы удалите ее, ее больше не будет в вашем инвентаре. "\
+			"Вы уверены, что хотите удалить эту деталь ? "), MB_YESNO);
 		if( ret == IDNO )
 			return;
 	}
@@ -10481,7 +10545,7 @@ void CFreePcbView::OnGroupPaste( BOOL bwDialog, BOOL bSaveMerges, int m_apply_de
 		return;
 	if( m_protect )
 	{
-		AfxMessageBox( "This PCB is protected.", MB_ICONERROR );
+		AfxMessageBox(G_LANGUAGE == 0 ? "This PCB is protected." : "Эта печатная плата защищена.", MB_ICONERROR );
 		return;
 	}
 #define ELEMENT_SELECTED 1
@@ -11071,7 +11135,9 @@ void CFreePcbView::OnGroupPaste( BOOL bwDialog, BOOL bSaveMerges, int m_apply_de
 						p->pAttr[index_foot_attr]  = op->GetAt(m_polyline_start).pAttr[index_foot_attr] ;
 					}
 					else
-						AfxMessageBox( " Error code 238. Please report the error to freepcb.dev", MB_ICONERROR );
+						AfxMessageBox(G_LANGUAGE == 0 ? 
+							"Error code 238. Please report the error to freepcb-2":
+							"Error code 238. Пожалуйста, сообщите об этой ошибке разработчику", MB_ICONERROR);
 				}
 			}
 			else
@@ -11319,7 +11385,7 @@ void CFreePcbView::OnGroupPaste( BOOL bwDialog, BOOL bSaveMerges, int m_apply_de
 	if( bDragGroup )
 	{
 		if( min_x == INT_MAX || min_y == INT_MAX )
-			AfxMessageBox( "No items to drag" );
+			AfxMessageBox(G_LANGUAGE == 0 ? "No items to drag":"Нет элементов для перетаскивания");
 		else
 		{
 			SetFKText( CUR_GROUP_SELECTED );
@@ -11504,7 +11570,7 @@ void CFreePcbView::SaveToFile( CString * fileS )
 	{
 		// error opening partlist file
 		CString mess;
-		mess.Format( "Unable to save file %s", pathname );
+		mess.Format(G_LANGUAGE == 0 ? "Unable to save file %s":"Не удалось сохранить файл %s", pathname);
 		AfxMessageBox( mess );
 	}
 	else
@@ -11530,7 +11596,7 @@ void CFreePcbView::SaveToFile( CString * fileS )
 					int err = _mkdir( pathname );
 					if( err )
 					{
-						str.Format( "Unable to create folder \"%s\"", pathname );
+						str.Format(G_LANGUAGE == 0 ? "Unable to create folder \"%s\"":"Невозможно создать папку \"%s\"", pathname);
 						AfxMessageBox( str, MB_OK );
 					}
 					pathname += "\\pictures";
@@ -11540,7 +11606,7 @@ void CFreePcbView::SaveToFile( CString * fileS )
 						int err = _mkdir( pathname );
 						if( err )
 						{
-							str.Format( "Unable to create folder \"%s\"", pathname );
+							str.Format(G_LANGUAGE == 0 ? "Unable to create folder \"%s\"" : "Невозможно создать папку \"%s\"", pathname );
 							AfxMessageBox( str, MB_OK );
 						}
 					}
@@ -11559,11 +11625,17 @@ void CFreePcbView::SaveToFile( CString * fileS )
 							pic_name.Compare( filename.Right( pic_name.GetLength() ) ) )
 						{
 							PicFail = 1;
-							AfxMessageBox("The concept of the circuit editor does not "\
+							AfxMessageBox(G_LANGUAGE == 0 ? 
+								("The concept of the circuit editor does not "\
 								"allow saving several circuit design files in one folder. "\
 								"There is already a cds file in this folder. Select a "\
 								"different folder to save the file so as not to lose the "\
-								"images attached to the schematic files.");
+								"images attached to the schematic files."):
+								("Концепция редактора схем не "\
+								"позволяет сохранять несколько файлов схем в одной папке. "\
+								"В этой папке уже есть файл cds. Выберите "\
+								"другую папку для сохранения файла, чтобы не потерять "\
+								"изображения, прикрепленные к файлам схем."));
 							break;
 						}
 					}
@@ -11625,7 +11697,9 @@ void CFreePcbView::OnEditCopy()
 	if( getbit( m_sel_mask, SEL_MASK_PART ) == 0 && bWar == 0 )
 	{
 		bWar = 1;
-		AfxMessageBox("In the disabled mode of the part mask, the copied part will be destroyed into primitives. To preserve the part on insertion, first enable the selection of the parts in the selection mask on the left of the window.");
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"In the disabled mode of the part mask, the copied part will be destroyed into primitives. To preserve the part on insertion, first enable the selection of the parts in the selection mask on the left of the window.":
+			"В отключенном режиме маски детали скопированная деталь будет расформирована на примитивы. Чтобы сохранить деталь при вставке, сначала включите выделение деталей в маске выбора в левой части окна.");
 	}
 	OnGroupCopy();
 }
@@ -11639,7 +11713,9 @@ void CFreePcbView::OnEditPaste()
 	//else
 	if( m_Doc->clip_outline_poly.GetSize() == 0 )
 	{
-		AfxMessageBox( "Objects will be pasted from the clipboard" );
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"Objects will be pasted from the clipboard":
+			"Объекты будут вставлены из буфера обмена.");
 		m_Doc->PasteFromFile( (m_Doc->m_app_dir + "\\buf.cds"), 0 );
 	}
 	else
@@ -11693,7 +11769,9 @@ void CFreePcbView::OnEditCut()
 		return;
 	if( getbit( m_sel_mask, SEL_MASK_PART ) == 0 )
 	{
-		AfxMessageBox("You cannot cut out a group of objects in the disabled part mask mode, because this leads to the destruction of the parts into their component entities. First enable the selection of parts in the selection mask on the left.");
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"You cannot cut out a group of objects in the disabled part mask mode, because this leads to the destruction of the parts into their component entities. First enable the selection of parts in the selection mask on the left.":
+			"Вы не можете вырезать группу объектов в режиме отключенной маски деталей, поскольку это приводит к разрушению деталей на составляющие их полилинии. Сначала включите выделение деталей в маске выделения слева.");
 		return;
 	}
 	OnGroupCopy();
@@ -11755,7 +11833,9 @@ void CFreePcbView::RotateGroup( int angle, int cx, int cy, double accurate )
 			//Ïðè ïîâîðîòå íà  óãîë íå êðàòíûé 90 ãðàäóñîâ 
 			//ëèíèÿ ìîæåò îòîáðàæàòüñÿ íåêîððåêòíî. 
 			//Êîíâåðòèðîâàòü àðê ëèíèè ñ ïîìîùüþ àïïðîêñèìàòîðà?
-			if( AfxMessageBox( "This group contains arc elements. When turning at an angle not a multiple of 90 degrees, the line may not be displayed correctly. Convert an arc line using an approximator?", MB_YESNO ) == IDYES )
+			if( AfxMessageBox(G_LANGUAGE == 0 ? 
+				"This group contains arc elements. When turning at an angle not a multiple of 90 degrees, the line may not be displayed correctly. Convert an arc line using an approximator?":
+				"Эта группа содержит элементы эллиптической дуги. При повороте на угол, не кратный 90°, линия может отображаться некорректно. Преобразовать линию дуги с помощью аппроксиматора?", MB_YESNO) == IDYES)
 				conv_ARC = TRUE;
 		}
 		
@@ -12472,7 +12552,9 @@ void CFreePcbView::OnSetClearance ()
 		el->transparent = TRANSPARENT_HILITE;
 	}
 	if( bMess )
-		AfxMessageBox("Unable to align colinear segments!");
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"Unable to align colinear segments!":
+			"Невозможно выровнять коллинеарные сегменты!");
 	m_seg_clearance = cl;
 	m_page = 2;
 	SetFKText(m_cursor_mode);
@@ -12864,7 +12946,9 @@ void CFreePcbView::MergeGroup( int merge0 )
 		}
 	}
 	if( m_Doc->Pages.InvalidateMerges( merge0 ) )
-		AfxMessageBox( "Other pages have canceled a merge with the exact same name because the same merge name is not allowed on different pages" );
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"Other pages have canceled a merge with the exact same name because the same merge name is not allowed on different pages":
+			"Другие страницы имеют слияние с точно таким же именем. Одно и то же имя слияния не допускается на разных страницах.");
 	m_Doc->ProjectModified( TRUE );
 }
 
@@ -12895,7 +12979,9 @@ void CFreePcbView::MergeGroup()
 	}
 	else
 	{
-		AfxMessageBox("This group already has a merge name!", MB_ICONERROR );
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"This group already has a merge name!":
+			"У этой группы уже имеется название слияния!", MB_ICONERROR);
 		return;
 	}
 	if (ret == IDOK)
@@ -12908,7 +12994,7 @@ void CFreePcbView::MergeGroup()
 		merge0 = m_Doc->m_mlist->AddNew(dlg.m_merge_name);
 		if( merge0 != m_Doc->m_mlist->GetSize()-1 )
 		{
-			AfxMessageBox("This name already used!", MB_ICONERROR );
+			AfxMessageBox(G_LANGUAGE == 0 ? "This name already used!":"Это имя уже используется!", MB_ICONERROR);
 			return;
 		}
 		MergeGroup(merge0);
@@ -12925,7 +13011,7 @@ void CFreePcbView::MergeGroup()
 //===============================================================================================
 void CFreePcbView::ExplodeGroup()
 {
-	int ret = AfxMessageBox(" Delete this merger?", MB_YESNO );
+	int ret = AfxMessageBox(G_LANGUAGE == 0 ? " Delete this merger?":"Расформировать это слияние?", MB_YESNO);
 	if( ret == IDYES )
 	{
 		m_Doc->SelectGroupAttributes();
@@ -13862,7 +13948,9 @@ void CFreePcbView::OnTextReplace()
 {
 	if( m_sel_flags != TEXT_ONLY )
 	{
-		AfxMessageBox( "First select only the text you want to replace!" );
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"First select only the text you want to replace!":
+			"Сначала выберите только тексты, в той области доски, где хотите заменить!");
 		return;
 	}
 	DlgReplaceText dlg;
@@ -13894,7 +13982,9 @@ void CFreePcbView::OnTextReplace()
 						{
 							if( StrR.FindOneOf( ILLEGAL_REF ) >= 0 )
 							{
-								AfxMessageBox( "The Reference Designator must not contain a special character!" );
+								AfxMessageBox(G_LANGUAGE == 0 ? 
+									"The Reference Designator must not contain a special character!":
+									"Условное обозначение не должно содержать специальных символов!");
 								err++;
 								continue;
 							}
@@ -13904,7 +13994,9 @@ void CFreePcbView::OnTextReplace()
 						{
 							if( StrR.FindOneOf( ILLEGAL_NET ) >= 0 )
 							{
-								AfxMessageBox( "The Net Name must not contain a special character!" );
+								AfxMessageBox(G_LANGUAGE == 0 ? 
+									"The Net Name must not contain a special character!":
+									"Имя эл.цепи не должно содержать специальных символов!");
 								err++;
 								continue;
 							}
@@ -13914,7 +14006,9 @@ void CFreePcbView::OnTextReplace()
 						{
 							if( StrR.FindOneOf( ILLEGAL_PIN ) >= 0 )
 							{
-								AfxMessageBox( "The Pin Name must not contain a special character!" );
+								AfxMessageBox(G_LANGUAGE == 0 ? 
+									"The Pin Name must not contain a special character!":
+									"Имя пина не должно содержать специальных символов!");
 								err++;
 								continue;
 							}
@@ -13924,7 +14018,9 @@ void CFreePcbView::OnTextReplace()
 						{
 							if( StrR.FindOneOf( ILLEGAL_CP ) >= 0 )
 							{
-								AfxMessageBox( "The Complex Part must not contain a special character!" );
+								AfxMessageBox(G_LANGUAGE == 0 ? 
+									"The Complex Part must not contain a special character!":
+									"Иерархическая деталь не должна содержать специальных символов!");
 								err++;
 								continue;
 							}
@@ -14032,7 +14128,7 @@ void CFreePcbView::OnTextReplace()
 					}
 			}
 		}
-		Str.Format( "%d fragments modified, %d error(s)", cnt, err );
+		Str.Format(G_LANGUAGE == 0 ? "%d fragments modified, %d error(s)":"%d фрагментов изменено, %d ошибок", cnt, err);
 		AfxMessageBox ( Str );
 		m_Doc->ProjectModified(TRUE);
 		m_draw_layer = LAY_BACKGND;
@@ -14054,7 +14150,7 @@ void CFreePcbView::OnTextChangeAttr( int iatt )
 {
 	if( m_sel_count == 0 )
 	{
-		AfxMessageBox("First select objects.");
+		AfxMessageBox(G_LANGUAGE == 0 ? "First select objects." : "Сначала выберите объекты.");
 		return;
 	}
 	int it = -1;
@@ -14757,16 +14853,22 @@ CString CFreePcbView::SelectBlock( CPolyLine * poly, int npage, BOOL bSelect  )
 	}
 	if( BNAME.GetLength() == 0 )
 	{
-		ret.Format("Complex part has no suffix" );
+		ret.Format(G_LANGUAGE == 0 ? 
+			"Complex part has no suffix":
+			"Ошибка: иерархическая деталь не имеет суффикса");
 	}
 	else if( BNAME[0] >= '0' && BNAME[0] <= '9' )
 	{
-		ret.Format("The suffix of a complex part must not start with a number" );
+		ret.Format(G_LANGUAGE == 0 ? 
+			"The suffix of a complex part must not start with a number":
+			"Суффикс у иерархической детали не должен начинаться с цифры. Идеальный вариант - использовать заглавные буквы A, B, C...");
 	}
 	
 	if( CText * ref_err = poly->Check(index_part_attr) )
 	{
-		ret.Format("It is impossible to combine a complex part with an ordinary part %s", ref_err->m_str );
+		ret.Format(G_LANGUAGE == 0 ? 
+			"It is impossible to combine a complex part with an ordinary part %s":
+			"Невозможно объединить иерархическую деталь с обычной деталью %s", ref_err->m_str);
 	}
 	// save m_sel_id
 	id save_id = m_sel_id;
@@ -14792,7 +14894,9 @@ CString CFreePcbView::SelectBlock( CPolyLine * poly, int npage, BOOL bSelect  )
 					ptr_present = TRUE;
 					if( CText * ref_err = get_error->Check(index_part_attr) )
 					{
-						ret.Format("It is impossible to combine a complex part with an ordinary part %s", ref_err->m_str );
+						ret.Format(G_LANGUAGE == 0 ? 
+							"It is impossible to combine a complex part with an ordinary part %s":
+							"Невозможно объединить иерархическую деталь с обычной деталью %s", ref_err->m_str);
 						get_error = NULL;
 						return ret;
 					}
@@ -14813,7 +14917,9 @@ CString CFreePcbView::SelectBlock( CPolyLine * poly, int npage, BOOL bSelect  )
 						}
 						else
 						{
-							ret.Format("Pin pointer must contain the suffix %s of the complex part", BNAME );
+							ret.Format(G_LANGUAGE == 0 ? 
+								"Pin pointer must contain the suffix %s of the complex part":
+								"Указатель пина должен содержать суффикс %s иерархической детали.", BNAME);
 							break;
 						}
 					}
@@ -14837,7 +14943,9 @@ CString CFreePcbView::SelectBlock( CPolyLine * poly, int npage, BOOL bSelect  )
 						}
 						else
 						{
-							ret.Format("Complex part contains different suffixes %s and %s.", BNAME, get_name );
+							ret.Format(G_LANGUAGE == 0 ? 
+								"Complex part contains different suffixes %s and %s.":
+								"Ошибка: составная деталь содержит разные суффиксы %s и %s.", BNAME, get_name);
 							break;
 						}
 					}
@@ -14846,7 +14954,9 @@ CString CFreePcbView::SelectBlock( CPolyLine * poly, int npage, BOOL bSelect  )
 						if( BLINK.FindOneOf( ILLEGAL_CP ) >= 0 )
 						{
 							CString illegal = ILLEGAL_CP;
-							ret.Format("Complex part link must not contain special characters (%s)\nLINK: %s", illegal, BLINK );
+							ret.Format(G_LANGUAGE == 0 ? 
+								"Complex part link must not contain special characters (%s)\nLINK: %s":
+								"Составная деталь не должна содержать специальные символы (%s)\nLINK: %s", illegal, BLINK);
 						}
 						if( get_ref.Compare( BLINK ) )
 						{
@@ -14895,33 +15005,43 @@ CString CFreePcbView::SelectBlock( CPolyLine * poly, int npage, BOOL bSelect  )
 						BPAGE = get_np;
 					if( BPAGE == m_Doc->Pages.GetActiveNumber() )
 					{
-						ret = "Complex part must link to different page";
+						ret = (G_LANGUAGE == 0 ? 
+							"Complex part must link to different page":
+							"Составная деталь должна ссылаться на другую страницу");
 						get_error = poly;
 						break;
 					}
 					if( get_name.FindOneOf( ILLEGAL_CP ) >= 0 )
 					{
 						CString illegal = ILLEGAL_CP;
-						ret.Format("Complex part must not contain special characters (%s)", illegal );
+						ret.Format(G_LANGUAGE == 0 ? 
+							"Complex part must not contain special characters (%s)":
+							"Ссылка не должна содержать специальные символы (%s)", illegal);
 						get_error = poly;
 						break;
 					}
 					get_ref.Trim();
 					if( get_ref.GetLength() == 0 )
 					{
-						ret.Format("Complex part pin is missing a pointer to a part" );
+						ret.Format(G_LANGUAGE == 0 ? 
+							"Complex part pin is missing a pointer to a part":
+							"У пина составной детали отсутствует указатель на обозначение иерархического символа");
 						break;
 					}
 					get_pin.Trim();
 					if( get_pin.GetLength() == 0 )
 					{
-						ret.Format("Complex part pin is missing a pointer to a pin" );
+						ret.Format(G_LANGUAGE == 0 ? 
+							"Complex part pin is missing a pointer to a pin":
+							"У составной детали отсутствует указатель на пин иерархического символа");
 						break;
 					}
 					CTextList * get_PL = m_Doc->Pages.GetTextList( get_np, index_part_attr );
 					if( get_PL == NULL )
 					{
-						ret.Format("Complex part pin points to a non-existent page %d", get_np+1 );
+						ret.Format(G_LANGUAGE == 0 ? 
+							"Complex part pin points to a non-existent page %d":
+							"Иерархическая деталь ссылается на несуществующую страницу %d", get_np + 1);
 						get_error = poly;
 						break;
 					}
@@ -14929,7 +15049,9 @@ CString CFreePcbView::SelectBlock( CPolyLine * poly, int npage, BOOL bSelect  )
 					CText * get_part = get_PL->GetText( &get_ref, &it2 );
 					if( get_part == NULL )
 					{
-						ret.Format("Pointer error inside this complex part. Part %s not found on page %d", get_ref, get_np+1 );
+						ret.Format(G_LANGUAGE == 0 ? 
+							"Pointer error inside this complex part. Part %s not found on page %d":
+							"Ошибка указателя внутри этой иерархической детали. Деталь %s не найдена на странице %d", get_ref, get_np + 1);
 						get_error = poly;
 						break;
 					}
@@ -14964,12 +15086,16 @@ CString CFreePcbView::SelectBlock( CPolyLine * poly, int npage, BOOL bSelect  )
 					}
 					if( pin_found == NULL )
 					{
-						ret.Format("Complex part contains a pointer to a non-existent pin %s.%s", get_ref, get_pin );
+						ret.Format(G_LANGUAGE == 0 ? 
+							"Complex part contains a pointer to a non-existent pin %s.%s":
+							"Иерархическая деталь содержит указатель на несуществующий пин %s.%s", get_ref, get_pin);
 						break;
 					}
 					if( m_Doc->Pages.IsThePageIncludedInNetlist( get_np, TRUE ) )
 					{	
-						ret.Format("Error! Complex part schematic pages should not be included in the netlist" );
+						ret.Format(G_LANGUAGE == 0 ? 
+							"Error! Complex part schematic pages should not be included in the netlist":
+							"Ошибка! Страницы схем иерархических деталей не должны быть включены в список соединений");
 						get_error = poly;
 						break;
 					}
@@ -14978,7 +15104,9 @@ CString CFreePcbView::SelectBlock( CPolyLine * poly, int npage, BOOL bSelect  )
 				{
 					if( get_ref.Compare(BLINK) == 0 )
 					{
-						ret.Format("Error! The pin of a complex part does not touch the outline polyline" );
+						ret.Format(G_LANGUAGE == 0 ? 
+							"Error! The pin of a complex part does not touch the outline polyline":
+							"Ошибка! Пин иерархической детали не касается контурной полилинии");
 						get_error = NULL;
 						break;
 					}
@@ -15020,7 +15148,9 @@ CString CFreePcbView::SelectBlock( CPolyLine * poly, int npage, BOOL bSelect  )
 	}
 	else if( ptr_present == 0 )
 	{
-		ret.Format("Error! Complex part has no pins" );
+		ret.Format(G_LANGUAGE == 0 ? 
+			"Error! Complex part has no pins":
+			"Ошибка! Иерархическая деталь не имеет пинов");
 		if( bSelect )
 			AfxMessageBox( ret, MB_ICONERROR );
 		return ret;
@@ -15562,7 +15692,9 @@ void CFreePcbView::OnImportMerges()
 {
 	if( m_Doc->m_merge_library.IsEmpty() )
 	{
-		AfxMessageBox("Objects have not been loaded. Press F1 to load objects",MB_ICONERROR);
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"Objects have not been loaded. Press F1 to load objects":
+			"Объекты не загружены. Нажмите F1, чтобы загрузить объекты", MB_ICONERROR);
 		return;
 	}
 	CDlgImportMerge dlg;
@@ -15592,7 +15724,7 @@ BOOL CFreePcbView::OnApplyScale( UINT CMD )
 {
 	if( m_sel_count == 0 )
 	{
-		AfxMessageBox("First select objects.");
+		AfxMessageBox(G_LANGUAGE == 0 ? "First select objects." : "Сначала выберите объекты.");
 		return 0;
 	}
 	double sc = 1.0;
@@ -15686,7 +15818,9 @@ void CFreePcbView::OnGroupSaveToOpenscadFile()
 	{
 		int sFont = 1;
 		if( getbit(m_sel_flags, FLAG_SEL_TEXT) )
-			if( AfxMessageBox("Want to use Openscad font to reduce file size?", MB_YESNO) == IDYES )
+			if( AfxMessageBox(G_LANGUAGE == 0 ? 
+				"Want to use Openscad font to reduce file size?":
+				"Хотите использовать шрифт Openscad для оптимизации размера генерируемого файла?", MB_YESNO) == IDYES)
 				sFont = 0;
 		double h = NM_PER_MM;
 		h /= (double)(m_Doc->m_units==MM?NM_PER_MM:NM_PER_MIL);
@@ -15695,7 +15829,9 @@ void CFreePcbView::OnGroupSaveToOpenscadFile()
 		s.Format( "$fn = 50;\nh_ex = %s;\n\npolylines();\ntexts();\n\nmodule polylines () {\n", hstr );
 		f.WriteString( s );
 		if( ::RemoveColinearSegments( m_Doc->m_outline_poly ) )
-			AfxMessageBox("Some segments were removed due to collinearity");
+			AfxMessageBox(G_LANGUAGE == 0 ? 
+				"Some segments were removed due to collinearity":
+				"Некоторые сегменты были удалены из-за коллинеарности");
 		for( int i=0; i<m_Doc->m_outline_poly->GetSize(); i++ )
 		{
 			if( m_Doc->m_outline_poly->GetAt(i).GetSel() == 0 )
@@ -15890,12 +16026,14 @@ BOOL CFreePcbView::OnSetSlidingAngle( UINT CMD )
 		if( m_ang_axis > 360.0 )
 			m_ang_axis -= 360.0;
 		CString s;
-		s.Format("The axis tilt angle is %.3f degrees, now movement using the arrows will be carried out along this axis",m_ang_axis);
+		s.Format(G_LANGUAGE == 0 ? 
+			"The axis tilt angle is %.3f degrees, now movement using the arrows will be carried out along this axis":
+			"Угол наклона оси составляет %.3f градусов, теперь движение объектов с помощью стрелок будет осуществляться вдоль этой оси", m_ang_axis);
 		AfxMessageBox(s);
 	}
 	else
 	{
-		AfxMessageBox("The axis tilt angle is 0.0");
+		AfxMessageBox(G_LANGUAGE == 0 ? "The axis tilt angle is 0.0":"Установлен угол наклона оси равным 0,0");
 		m_ang_axis = 0.0;
 	}
 	return 0;

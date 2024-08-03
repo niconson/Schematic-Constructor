@@ -79,7 +79,9 @@ BOOL CFreeasyApp::InitInstance()
 	CWinApp::LoadStdProfileSettings();  // Load standard INI file options (including MRU)
 	if( CWinApp::m_pRecentFileList == NULL)
 	{
-		AfxMessageBox( "NOTE: The recent file list is disabled on your system.\nUse the system policy editor to re-enable." );
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"NOTE: The recent file list is disabled on your system.\nUse the system policy editor to re-enable.":
+			"ПРИМЕЧАНИЕ. Список последних файлов отключен в вашей системе.\nИспользуйте редактор системной политики для повторного включения.");
 	}
 	//else
 	//	CWinApp::m_pRecentFileList->m_nSize = _AFX_MRU_COUNT;
@@ -285,7 +287,7 @@ int CFreeasyApp::ExitInstance()
 void CFreeasyApp::OnHelpGotoWebsite()
 {
     SHELLEXECUTEINFO ShExecInfo;
-	CString fn = "https://freepcb.dev/How_to_cd.html";
+	CString fn = "https://github.com/niconson";
 
 	ShExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);
 	ShExecInfo.fMask = NULL;
@@ -392,7 +394,8 @@ void CFreeasyApp::OnHelpUserGuidePdf()
 {
     SHELLEXECUTEINFO ShExecInfo;
 	CString fn = m_Doc->m_app_dir + "\\doc\\Schematic_Constructor.pdf";
-
+	if(G_LANGUAGE)
+		fn = m_Doc->m_app_dir + "\\doc\\СхемАтор.pdf";
 	ShExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);
 	ShExecInfo.fMask = NULL;
 	ShExecInfo.hwnd = NULL;

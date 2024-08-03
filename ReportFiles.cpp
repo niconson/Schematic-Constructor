@@ -594,7 +594,9 @@ Package:			// (footprint name)
 		{
 			if( !m_doc->m_dlg_log )
 			{
-				AfxMessageBox( "Error: Unable to write file\nIt may be read-only or open in another application", MB_OK );
+				AfxMessageBox(G_LANGUAGE == 0 ? 
+					"Error: Unable to write file\nIt may be read-only or open in another application":
+					"Ошибка: Невозможно записать файл\nВозможно, он доступен только для чтения или открыт в другом приложении", MB_OK);
 			}
 			else
 			{
@@ -610,7 +612,9 @@ Package:			// (footprint name)
 	{
 		if( m_doc->Pages.IsThePageIncludedInNetlist( m_doc->Pages.GetActiveNumber() ) == 0 )
 		{
-			AfxMessageBox("The current page is not included in any netlist.\n\nUse the file menu Netlist Settings",MB_ICONERROR);
+			AfxMessageBox(G_LANGUAGE == 0 ? 
+				"The current page is not included in any netlist.\n\nUse the file menu Netlist Settings":
+				"Текущая страница не включена ни в один список электрических цепей.\n\nИспользуйте «Настройки списка цепей» из меню «Файл»", MB_ICONERROR);
 			pDX->Fail();
 		}
 		for( int i=0; i<m_doc->m_ref_lists->GetSize(); i++ )

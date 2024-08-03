@@ -115,7 +115,7 @@ void DlgRenumbers::DoDataExchange(CDataExchange* pDX)
 		//
 		if( m_start_num < 0 )
 		{
-			AfxMessageBox( "Illegal start number" );
+			AfxMessageBox(G_LANGUAGE == 0 ? "Illegal start number":"Недопустимый стартовый номер");
 			pDX->Fail();
 		}
 	}

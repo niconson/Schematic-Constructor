@@ -359,7 +359,9 @@ void CDlgImportPart::OnDblClickList()
 		OnDblClickList2();
 	}
 	else
-		AfxMessageBox("This part is not used in the current project");
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"This part is not used in the current project":
+			"Эта деталь не используется в текущем проекте.");
 }
 
 void CDlgImportPart::OnDblClickList2()
@@ -502,7 +504,7 @@ void CDlgImportPart::OnUniqueParts()
 {
 	if( PcbAssemblyKit(0) == 0 )
 	{
-		AfxMessageBox("No unique parts found");
+		AfxMessageBox(G_LANGUAGE == 0 ? "No unique parts found":"Уникальных деталей не найдено");
 		OnChange();
 	}
 }
@@ -511,7 +513,7 @@ void CDlgImportPart::OnPartsCurrentProject()
 {
 	if( PcbAssemblyKit(1) == 0 )
 	{
-		AfxMessageBox("No parts used in the current project");
+		AfxMessageBox(G_LANGUAGE == 0 ? "No parts used in the current project":"Детали не используются в текущем проекте.");
 		OnChange();
 	}
 }
@@ -520,7 +522,9 @@ void CDlgImportPart::OnOnceAnyProject()
 {
 	if( PcbAssemblyKit(2) == 0 )
 	{
-		AfxMessageBox("No part found that was used only once");
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"No part found that was used only once":
+			"Не обнаружено ни одной детали, которая использовалась бы только один раз.");
 		OnChange();
 	}
 }
@@ -569,7 +573,9 @@ int CDlgImportPart::PcbAssemblyKit( int MODE )
 
 void CDlgImportPart::OnAboutUniqueParts()
 {
-	AfxMessageBox("Filters to help optimize pcb assembly kit.\nDouble-clicking on the file path (bottom listbox) will open this file and the program will jump to the selected part.", MB_ICONINFORMATION);
+	AfxMessageBox(G_LANGUAGE == 0 ? 
+		"Filters to help optimize pcb assembly kit.\nDouble-clicking on the file path (bottom listbox) will open this file and the program will jump to the selected part.":
+		"Фильтры для оптимизации комплекта для сборки печатной платы.\nДвойной щелчок по пути к файлу (нижний список) откроет этот файл, и программа перейдет к выбранной детали.", MB_ICONINFORMATION);
 }
 
 void CDlgImportPart::DrawPattern( CString * VdP )
@@ -919,7 +925,9 @@ void CDlgImportPart::OnBnClickedOk()
 
 			BOOL OK = FindFootprintInFolder( theApp.m_Doc, &F, &F, &fpath );
 			if( OK == 0 && F.Compare( NO_FOOTPRINT ) )
-				AfxMessageBox("WARNING: The footprint of this part was not found in the library!");
+				AfxMessageBox(G_LANGUAGE == 0 ? 
+					"WARNING: The footprint of this part was not found in the library!":
+					"ВНИМАНИЕ: футпринт этой детали не найден в библиотеке!");
 			else if( OK > 1 )
 				m_str2 = theApp.m_Doc->m_FootprintNames.GetAt( theApp.m_Doc->m_FootprintNames.GetSize()-1 );
 		}
@@ -945,7 +953,9 @@ void CDlgImportPart::OnCbnDropdownCombo1()
 	
 	if( bOpenTXTPreixes || m_prefixes.Find( OLD_NO_FP ) != -1 )
 	{
-		AfxMessageBox("Fill in the missing part class names in the text file. Enter text instead of question marks and when finished save this text file");
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"Fill in the missing part class names in the text file. Enter text instead of question marks and when finished save this text file":
+			"Заполните недостающие имена классов деталей в текстовом файле. Введите текст вместо вопросительных знаков и по завершению, сохраните этот текстовый файл");
 		bOpenTXTPreixes = 0;
 		m_prefixes = "";
 		OpenTXTPreixes();
@@ -1064,10 +1074,14 @@ void CDlgImportPart::ReadPrefixes()
 			m_prefixes = "[C]  Capacitors[R]  Resistors[";
 		}
 		else
-			AfxMessageBox("Unable to open file prefixes.txt (Error code 9532)", MB_ICONERROR );
+			AfxMessageBox(G_LANGUAGE == 0 ? 
+				"Unable to open file prefixes.txt (Error code 9532)":
+				"Невозможно открыть файл prefixes.txt (код ошибки 9532)", MB_ICONERROR);
 	}
 	else
-		AfxMessageBox("Unable to open file prefixes.txt (Error code 4756)", MB_ICONERROR );
+		AfxMessageBox(G_LANGUAGE == 0 ?
+			"Unable to open file prefixes.txt (Error code 4756)" :
+			"Невозможно открыть файл prefixes.txt (код ошибки 4756)", MB_ICONERROR );
 }
 
 
@@ -1124,19 +1138,27 @@ void CDlgImportPart::OnBnClickedRunl()
 		if( FindFootprint( theApp.m_Doc, &F ) ==  0 ) // now m_full_lib_dir = "LibMan" folder
 		{
 			theApp.m_Doc->m_full_lib_dir = mem_str; // cancel replacement
-			AfxMessageBox(F+" not found in the current footprint library:\n\n"+theApp.m_Doc->m_full_lib_dir, MB_ICONERROR);	
+			AfxMessageBox(G_LANGUAGE == 0 ? 
+				(F+" not found in the current footprint library:\n\n"+theApp.m_Doc->m_full_lib_dir):
+				(F + " не найден в текущей библиотеке футпринтов:\n\n" + theApp.m_Doc->m_full_lib_dir), MB_ICONERROR);
 		}
 		else
 		{
 			if( mem_str.Compare( theApp.m_Doc->m_full_lib_dir ) )
 			{
 				CString str;
-				str.Format(				"Warning! Footprint %s was not found "\
-										"in the current footprint library folder, which "\
-										"is specified in the project settings (Project >> Options):\n\n%s"\
-										"\n\nFootprint %s found in another folder:\n\n%s\n\n"\
-										"Want to set this folder as your footprint library folder?", 
-										F, mem_str, F, theApp.m_Doc->m_full_lib_dir ); 
+				str.Format(G_LANGUAGE == 0 ? 
+					("Warning! Footprint %s was not found "\
+					"in the current footprint library folder, which "\
+					"is specified in the project settings (Project >> Options):\n\n%s"\
+					"\n\nFootprint %s found in another folder:\n\n%s\n\n"\
+					"Want to set this folder as your footprint library folder?"):
+					("Внимание! Футпринт %s не найден "\
+					"в текущей папке библиотеки футпринтов, которая "\
+					"указана в настройках проекта (Проект >> Настройки):\n\n%s"\
+					"\n\nФутпринт %s найден в другой папке:\n\n%s\n\n"\
+					"Хотите установить эту папку в качестве папки библиотеки футпринтов?"),
+					F, mem_str, F, theApp.m_Doc->m_full_lib_dir ); 
 				int retQ = AfxMessageBox( str, MB_ICONQUESTION|MB_YESNO );
 				if( retQ == IDNO )
 					theApp.m_Doc->m_full_lib_dir = mem_str;
@@ -1286,7 +1308,9 @@ void CDlgImportPart::OnBnClickedDoc1()
 		if( t > 0 )
 			P = m_doc_path[0].Left(t);
 		if( P.Find( rel_f_component ) > 0 )
-			AfxMessageBox("Warning! This file is read-only",MB_ICONINFORMATION);
+			AfxMessageBox(G_LANGUAGE == 0 ? 
+				"Warning! This file is read-only":
+				"Внимание! Этот файл доступен только для чтения", MB_ICONINFORMATION);
 		ShellExecute(	NULL, "open", m_doc_path[0], NULL, P, SW_SHOWNORMAL );
 	}
 }
@@ -1302,7 +1326,9 @@ void CDlgImportPart::OnBnClickedDoc2()
 		if( t > 0 )
 			P = m_doc_path[1].Left(t);
 		if( P.Find( rel_f_component ) > 0 )
-			AfxMessageBox("Warning! This file is read-only",MB_ICONINFORMATION);
+			AfxMessageBox(G_LANGUAGE == 0 ?
+				"Warning! This file is read-only" :
+				"Внимание! Этот файл доступен только для чтения",MB_ICONINFORMATION);
 		ShellExecute(	NULL, "open", m_doc_path[1], NULL, P, SW_SHOWNORMAL );
 	}
 	if( m_doc_path[2].GetLength() )
@@ -1312,7 +1338,9 @@ void CDlgImportPart::OnBnClickedDoc2()
 		if( t > 0 )
 			P = m_doc_path[2].Left(t);
 		if( P.Find( rel_f_component ) > 0 )
-			AfxMessageBox("Warning! This file is read-only",MB_ICONINFORMATION);
+			AfxMessageBox(G_LANGUAGE == 0 ?
+				"Warning! This file is read-only" :
+				"Внимание! Этот файл доступен только для чтения",MB_ICONINFORMATION);
 		ShellExecute(	NULL, "open", m_doc_path[2], NULL, P, SW_SHOWNORMAL );
 	}
 }
@@ -1328,7 +1356,9 @@ void CDlgImportPart::OnBnClickedDoc3()
 		if( t > 0 )
 			P = m_doc_path[3].Left(t);
 		if( P.Find( rel_f_component ) > 0 )
-			AfxMessageBox("Warning! This file is read-only",MB_ICONINFORMATION);
+			AfxMessageBox(G_LANGUAGE == 0 ?
+				"Warning! This file is read-only" :
+				"Внимание! Этот файл доступен только для чтения",MB_ICONINFORMATION);
 		ShellExecute(	NULL, "open", m_doc_path[3], NULL, P, SW_SHOWNORMAL );
 	}
 }
@@ -1480,7 +1510,8 @@ void CDlgImportPart::OnSelChangeDescription()
 void CDlgImportPart::OnBnClickedQ8()
 {
 	// TODO: ???????? ???? ??? ??????????? ???????????
-	AfxMessageBox("This combo box displays the first line of the text "\
+	AfxMessageBox(G_LANGUAGE == 0 ? 
+		("This combo box displays the first line of the text "\
 		"file attached to the part. In a text file, you can store "\
 		"any information related to this part. To attach a text file "\
 		"to a part, close this window, select a part on the workspace, "\
@@ -1498,7 +1529,26 @@ void CDlgImportPart::OnBnClickedQ8()
 		"projects in the working folder. Thus, you can see the  partlist "\
 		"used in any of the projects. Select the file you are interested "\
 		"in from the drop-down list and the project partlist will be "\
-		"displayed in the filter.", MB_ICONINFORMATION);
+		"displayed in the filter."):
+		("В этом поле со списком отображается первая строка текстового "\
+		"файла, прикрепленного к детали. В текстовом файле можно хранить "\
+		"любую информацию, связанную с этой деталью. Чтобы прикрепить текстовый файл "\
+		"к детали, закройте это окно, выберите деталь на рабочем пространстве, "\
+		"и в контекстном меню выберите \"Вложения компонента\", затем "\
+		"подменю \"Прикрепить файл\", а затем \"Создать текстовый файл\"."\
+		"\n\nВ этом поле со списком также можно выполнять поиск деталей "\
+		"по текстовому фрагменту описания. Введите текстовый фрагмент "\
+		"содержимого файла, и вы увидите, что в "\
+		"списке деталей будут отображаться те детали, в описании которых "\
+		"есть этот текстовый фрагмент.Когда вы полностью стираете "\
+		"введенный текстовый фрагмент с помощью клавиши Backspace, то все "\
+		"детали, к которым прикреплен текстовый файл, останутся в фильтре. "\
+		"\nДля множественной фильтрации введите текстовые фрагменты содержимого файла через символ пробела"\
+		"\n\nРаскрывающийся список этого поля со списком сохраняет все проекты схем "\
+		"в рабочей папке.Таким образом, вы можете увидеть список деталей, "\
+		"используемых в любом из проектов. Выберите интересующий вас файл "\
+		"из раскрывающегося списка, и список деталей проекта будет "\
+		"отображен в фильтре"), MB_ICONINFORMATION);
 }
 
 

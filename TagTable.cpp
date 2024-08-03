@@ -98,12 +98,18 @@ void TagTable::MakeReport( CFreePcbDoc * doc )
 		}
 	}
 	if( nPages == -1 )
-		AfxMessageBox( "Big amount of data! The program currently "\
-		"supports up to eight pages. Try changing the partlist "\
-		"generation parameters in the tag.cds file. "\
-		"Open this file with a schematic editor in the "\
-		"same way as the project files. (This file is located "\
-		"in the program's executable folder)", MB_ICONERROR );
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"Big amount of data! The program currently "\
+			"supports up to eight pages. Try changing the partlist "\
+			"generation parameters in the tag.cds file. "\
+			"Open this file with a schematic editor in the "\
+			"same way as the project files. (This file is located "\
+			"in the program's executable folder)":
+			"Большой объем данных! В настоящее время программа "\
+			"поддерживает до восьми страниц. Попробуйте изменить параметры генерации "\
+			"списка деталей в файле tag.cds. "\
+			"Откройте этот файл в редакторе схем тем же способом, что и файлы проекта. (Этот файл находится "\
+			"в исполняемой папке программы)", MB_ICONERROR );
 	nPages = MAX_PAGES-1;
 	RemoveEmptyRows();
 	int cnt_pgs = 0;
@@ -487,7 +493,7 @@ int TagTable::ReadParamsFromTagFile()
 	}
 	else 
 	{
-		AfxMessageBox("Unable to open file tag.cds", MB_ICONERROR);
+		AfxMessageBox(G_LANGUAGE == 0 ? "Unable to open file tag.cds":"Невозможно открыть файл tag.cds", MB_ICONERROR);
 		return 1;
 	}
 	for(int i=2; i<MAX_PAGES; i++)

@@ -35,8 +35,11 @@ int FindFootprintInFolder( CFreePcbDoc * doc, CString * fname, CString * old_fna
 		if( doc->m_full_lib_dir.GetLength() )
 		{
 			CString qstr;
-			qstr.Format("The current footprint library folder does not exist:\n\n%s\n\n"\
-			"Want to set the following folder as your footprint library folder?\n\n%s", doc->m_full_lib_dir, catalog );
+			qstr.Format(G_LANGUAGE == 0 ? 
+				("The current footprint library folder does not exist:\n\n%s\n\n"\
+				"Want to set the following folder as your footprint library folder?\n\n%s"):
+				("Текущая папка библиотеки футпринтов не существует:\n\n%s\n\n"\
+				"Хотите установить следующую папку в качестве папки библиотеки футпринтов?\n\n%s"), doc->m_full_lib_dir, catalog);
 			answ = AfxMessageBox(qstr, MB_ICONQUESTION | MB_YESNO);
 		}
 		else
@@ -68,11 +71,17 @@ int FindFootprintInFolder( CFreePcbDoc * doc, CString * fname, CString * old_fna
 	if( FootprintData.GetSize() )
 	{
 		CString str;
-		str.Format(				"Warning! Footprint %s was not found "\
-								"in the current footprint library folder, which "\
-								"is specified in the project settings (Project >> Options):\n\n%s"\
-								"\n\nFootprint %s found in another directory:\n\n%s\n\n"\
-								"Want the "PROGRAM_NAME" to save this footprint in the current library? (is recommended)", *fname, mem_lib_dir, *fname, catalog );
+		str.Format(G_LANGUAGE == 0 ? 
+			("Warning! Footprint %s was not found "\
+			"in the current footprint library folder, which "\
+			"is specified in the project settings (Project >> Options):\n\n%s"\
+			"\n\nFootprint %s found in another directory:\n\n%s\n\n"\
+			"Want the "PROGRAM_NAME" to save this footprint in the current library? (is recommended)"):
+			("Внимание! Футпринт %s не найден "\
+			"в текущей папке библиотеки, которая "\
+			"указана в настройках проекта (Проект>>Настройки):\n\n%s"\
+			"\n\nВместо этого футпринт %s найден в другом каталоге:\n\n%s\n\n"\
+			"Хотите, чтобы "PROGRAM_NAME" сохранила этот footprint в текущей библиотеке? (рекомендуется)"), *fname, mem_lib_dir, *fname, catalog);
 		int retQ = AfxMessageBox( str, MB_ICONQUESTION | MB_YESNO );
 		if( retQ == IDYES )
 		{
@@ -97,7 +106,9 @@ int FindFootprintInFolder( CFreePcbDoc * doc, CString * fname, CString * old_fna
 				FileAlreadyExists |= !(_stat( newname, &buf ));
 				if( FileAlreadyExists )
 				{
-					AfxMessageBox("This name already used. Please enter different name", MB_ICONERROR );
+					AfxMessageBox(G_LANGUAGE == 0 ? 
+						"This name already used. Please enter different name":
+						"Это имя уже используется. Введите другое имя", MB_ICONERROR);
 				}
 			} while( FileAlreadyExists );
 			//write footprint data
@@ -231,7 +242,9 @@ void ReadFootprintNames( CFreePcbDoc * doc, CString * FPL, CString * FindFootpri
 	int OK = file.Open( *FPL, CFile::modeRead );
 	if( !OK )     
 	{
-		CString mess = "Unable to open library file\n\n \"" + *FPL + "\"";
+		CString mess = (G_LANGUAGE == 0 ? 
+			("Unable to open library file\n\n \"" + *FPL + "\""):
+			("Невозможно открыть файл библиотеки\n\n \"" + *FPL + "\""));
 		AfxMessageBox( mess, MB_ICONERROR );
 	}
 

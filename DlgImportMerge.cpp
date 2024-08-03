@@ -115,7 +115,9 @@ void CDlgImportMerge::OnDblClickList()
 		OnDblClickList2();
 	}
 	else
-		AfxMessageBox("This part is not used in the current project");
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"This part is not used in the current project":
+			"Эта деталь не используется в текущем проекте.");
 }
 
 void CDlgImportMerge::OnDblClickList2()

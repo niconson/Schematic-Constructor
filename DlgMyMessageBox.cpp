@@ -30,7 +30,7 @@ void CDlgMyMessageBox::DoDataExchange(CDataExchange* pDX)
 	{
 		// incoming
 		m_message.SetWindowText( m_mess );
-		m_q.SetWindowText( "Do you want to continue working in FreePcb-2?" );
+		m_q.SetWindowText( G_LANGUAGE==0?"Do you want to continue working in FreePcb-2?":"’отите продолжить работу с печатной платой в ѕлат‘орм?");
 
 		// show cursor
 		::ShowCursor( TRUE );

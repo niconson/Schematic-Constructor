@@ -330,7 +330,7 @@ BOOL CFreePcbDoc::OnNewDocument()
 	if (!CDocument::OnNewDocument())
 		return FALSE;
 
-	m_window_title = "no project open";
+	m_window_title = (G_LANGUAGE==0?"no project open":"конструктор схем");
 	m_parent_folder = ""; // is empty !
 	m_lib_dir = OLD_NO_FP ;
 	return TRUE;
@@ -405,7 +405,9 @@ void CFreePcbDoc::OnFileNew()
 		{
 			err = _mkdir( m_path_to_folder );
 			if( err )
-				AfxMessageBox( "Unable to create folder "+m_path_to_folder, MB_ICONERROR );
+				AfxMessageBox(G_LANGUAGE == 0 ? 
+					("Unable to create folder "+m_path_to_folder):
+					("Невозможно создать папку " + m_path_to_folder), MB_ICONERROR);
 		}
 		if( err )
 			return;
@@ -415,7 +417,9 @@ void CFreePcbDoc::OnFileNew()
 		{
 			err = _mkdir( m_path_to_folder );
 			if( err )
-				AfxMessageBox( "Unable to create folder "+m_path_to_folder, MB_ICONERROR );
+				AfxMessageBox(G_LANGUAGE == 0 ?
+					("Unable to create folder " + m_path_to_folder) :
+					("Невозможно создать папку " + m_path_to_folder), MB_ICONERROR );
 		}
 		if( err )
 			return;
@@ -430,7 +434,9 @@ void CFreePcbDoc::OnFileNew()
 		{
 			err = _mkdir( m_path_to_folder );
 			if( err )
-				AfxMessageBox( "Unable to create folder "+m_path_to_folder, MB_ICONERROR );
+				AfxMessageBox(G_LANGUAGE == 0 ?
+					("Unable to create folder " + m_path_to_folder) :
+					("Невозможно создать папку " + m_path_to_folder), MB_ICONERROR );
 		}
 		if( err )
 			return;
@@ -556,7 +562,9 @@ CString CFreePcbDoc::RunFileDialog( BOOL bOPEN, CString format )
 		HWND dlg = FindWindow(NULL,"File dialog");
 		if( dlg )
 		{
-			AfxMessageBox( "File dialog already running!" );
+			AfxMessageBox(G_LANGUAGE == 0 ? 
+				"File dialog already running!":
+				"Диалоговое окно «Файл» уже запущено!");
 			return Path;
 		}
 		if ( (UINT)ShellExecute(	NULL,"open",command_str, NULL,buffer,SW_SHOWNORMAL) > 32 )
@@ -613,7 +621,9 @@ CString CFreePcbDoc::RunFileDialog( BOOL bOPEN, CString format )
 					Sleep(50);
 					if( ITERATOR > 50 )
 					{
-						AfxMessageBox( "Unable to open global configuration file \"file_dialog.pth\"\nYou installed FreePcb-2 in a protected folder, so the application will not work correctly. Remove the read-only attribute to continue." );
+						AfxMessageBox(G_LANGUAGE == 0 ? 
+							"Unable to open global configuration file \"file_dialog.pth\"\nYou installed FreePcb-2 in a protected folder, so the application will not work correctly. Remove the read-only attribute to continue.":
+							"Невозможно открыть глобальный файл конфигурации «file_dialog.pth»\nВы установили ПлатФорм в защищенную папку, поэтому приложение не будет работать правильно. Снимите атрибут «только для чтения», чтобы продолжить.");
 						return Path;
 					}
 				}
@@ -621,7 +631,7 @@ CString CFreePcbDoc::RunFileDialog( BOOL bOPEN, CString format )
 				pth.Close();
 			}
 			else
-				AfxMessageBox("File dialog is not connected!");
+				AfxMessageBox(G_LANGUAGE == 0 ? "File dialog is not connected!":"Диалоговое окно файла не подключено!");
 		}
 	}
 	#undef BUFSIZE
@@ -697,7 +707,9 @@ void CFreePcbDoc::OnFileAutoOpen( LPCTSTR fn )
 	else if( ext.CompareNoCase("CDS") == 0 )
 		FileOpen( fn );	
 	else
-		AfxMessageBox("This format is not supported. CDS JPEG or BMP formats supported");
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"This format is not supported. CDS JPEG or BMP formats supported":
+			"Этот формат не поддерживается. Поддерживаются форматы CDS JPEG или BMP");
 }
 
 // open project file, fn = full path to file
@@ -724,7 +736,7 @@ BOOL CFreePcbDoc::FileOpen( LPCTSTR fn )
 	{
 		// error opening project file
 		CString mess;
-		mess.Format( "Unable to open file %s", fn );
+		mess.Format(G_LANGUAGE == 0 ? "Unable to open file %s":"Невозможно открыть файл %s", fn);
 		AfxMessageBox( mess );
 		return FALSE;
 	}
@@ -751,7 +763,9 @@ BOOL CFreePcbDoc::FileOpen( LPCTSTR fn )
 		if( m_file_version > m_version )
 		{
 			CString mess;
-			mess.Format( "Warning: the file version is %5.3f\n\nYou are running an earlier "PROGRAM_NAME" version %5.3f", 
+			mess.Format(G_LANGUAGE == 0 ? 
+				("Warning: the file version is %5.3f\n\nYou are running an earlier "PROGRAM_NAME" version %5.3f"):
+				("Внимание: версия файла %5.3f\n\nВы используете более раннюю версию "PROGRAM_NAME" %5.3f"),
 				m_file_version, m_version );
 			mess += "\n\nErrors may occur\n\nClick on OK to continue reading or CANCEL to cancel";
 			int ret = AfxMessageBox( mess, MB_OKCANCEL );
@@ -807,9 +821,13 @@ BOOL CFreePcbDoc::FileOpen( LPCTSTR fn )
 		if( m_name.Compare( m_pcb_filename ) ) 
 		{
 			m_name = m_pcb_filename;
-			AfxMessageBox("The project file has been renamed.\n"\
-						  "You can rename "\
-						  "a project through the OPTIONS dialog box.", MB_ICONINFORMATION );
+			AfxMessageBox(G_LANGUAGE == 0 ? 
+				("The project file has been renamed.\n"\
+				"You can rename "\
+				"a project through the OPTIONS dialog box."):
+				("The project file has been renamed.\n"\
+				"You can rename "\
+				"a project through the OPTIONS dialog box."), MB_ICONINFORMATION);
 		}
 		if( m_get_app_folder.Compare( m_app_dir ) &&
 			m_pcb_filename.Find("bom.") == -1 &&
@@ -821,7 +839,9 @@ BOOL CFreePcbDoc::FileOpen( LPCTSTR fn )
 			int err = _stat( path+"\\"+m_pcb_filename, &buf );
 			if( err == 0 )
 			{
-				int ret = AfxMessageBox( "This project has been changed in another version of the program. To restore a project that was edited in the current version of the program, open the BackUps folder. This folder contains the most recent versions of files. Open this folder?", MB_OKCANCEL );
+				int ret = AfxMessageBox(G_LANGUAGE == 0 ? 
+					"This project has been changed in another version of the program. To restore a project that was edited in the current version of the program, open the BackUps folder. This folder contains the most recent versions of files. Open this folder?":
+					"Этот проект был изменен в другой версии программы (другой exe-файл, запущенный из другого места). Чтобы восстановить проект, на момент редактирования его именно в текущей версии программы, откройте папку BackUps. Эта папка содержит самые последние версии файлов. Открыть эту папку?", MB_OKCANCEL);
 				if( ret == IDOK )
 				{
 					ShellExecute(	NULL,"open",path,NULL,path,SW_SHOWNORMAL);
@@ -924,7 +944,9 @@ BOOL CFreePcbDoc::FileOpen( LPCTSTR fn )
 						if( pg > 0 )
 						{
 							CString s;
-							s.Format( "The schematic diagram on page %d for the %s PCB-project has been changed.\n(%s)", pg, Pages.m_pcb_names[ipcb], in_str );
+							s.Format(G_LANGUAGE == 0 ? 
+								"The schematic diagram on page %d for the %s PCB-project has been changed.\n(%s)":
+								"Принципиальная схема на странице %d для проекта печатной платы %s была изменена.\n(%s)", pg, Pages.m_pcb_names[ipcb], in_str);
 							AfxMessageBox( s );
 						}
 					}
@@ -941,10 +963,15 @@ BOOL CFreePcbDoc::FileOpen( LPCTSTR fn )
 			{
 				int pg = Pages.ReturnPageByPCB( &Pages.m_pcb_names[RENUMB] ) + 1;
 				CString s;
-				s.Format( "Important message from page %d:\n\nAfter renumbering the parts, you forgot "\
-							"to download the %s.net netlist into FreePcb-2. You can continue to "\
-							"work and download it later, but it is best to always update the "\
-							"netlist immediately after any changes to the schematic file.", pg, Pages.m_pcb_names[RENUMB] );
+				s.Format(G_LANGUAGE == 0 ? 
+					("Important message from page %d:\n\nAfter renumbering the parts, you forgot "\
+					"to download the %s.net netlist into FreePcb-2. You can continue to "\
+					"work and download it later, but it is best to always update the "\
+					"netlist immediately after any changes to the schematic file."):
+					("Важное сообщение со страницы %d:\n\nПосле перенумерации деталей вы забыли "\
+					"загрузить список соединений %s.net в редактор ПлатФорм. Вы можете продолжить "\
+					"работу и загрузить его позже, но лучше всегда обновлять список соединений "\
+					"сразу после любых изменений в файле схемы."), pg, Pages.m_pcb_names[RENUMB]);
 				AfxMessageBox(	s, MB_ICONERROR );
 			}
 		}
@@ -988,7 +1015,9 @@ int CFreePcbDoc::FileClose()
 		}
 		if( m_project_modified )
 		{
-			int ret = AfxMessageBox( "Project modified, save it ? ", MB_YESNOCANCEL );
+			int ret = AfxMessageBox(G_LANGUAGE == 0 ? 
+				"Project modified, save it?":
+				"Проект изменен, сохранить его?", MB_YESNOCANCEL);
 			if( ret == IDCANCEL )
 				return IDCANCEL;
 			else if( ret == IDYES )
@@ -1060,7 +1089,7 @@ int CFreePcbDoc::FileClose()
 	m_view->OnDraw( pDC );
 	m_view->ReleaseDC( pDC );
 	m_view->SetCursorMode( CUR_NONE_SELECTED );
-	m_window_title = CDS_HEADER"no project open";
+	m_window_title = (CString)CDS_HEADER+(G_LANGUAGE == 0 ? "no project open":"конструктор схем");
 	DisableMenuItems();
 
 	return IDOK;
@@ -1074,7 +1103,7 @@ void CFreePcbDoc::OnFileSave()
 	int err = FileSave( &m_path_to_folder, &m_pcb_filename, &m_path_to_folder, &m_pcb_filename );
 	if( !err )
 	{
-		AfxMessageBox("Unable to save file. Write protection.");
+		AfxMessageBox(G_LANGUAGE == 0 ? "Unable to save file. Write protection.":"Невозможно сохранить файл. Защита от записи.");
 	}
 	else if( err == 1 )
 	{
@@ -1103,7 +1132,9 @@ BOOL CFreePcbDoc::AutoSave()
 		if( err )
 		{
 			m_project_modified_since_autosave = 0;
-			str.Format( "Unable to create autosave folder \"%s\"", auto_folder );
+			str.Format(G_LANGUAGE == 0 ? 
+				"Unable to create autosave folder \"%s\"":
+				"Не удалось создать папку автосохранения \"%s\"", auto_folder);
 			AfxMessageBox( str, MB_OK );
 			return FALSE;
 		}
@@ -1118,7 +1149,9 @@ BOOL CFreePcbDoc::AutoSave()
 	{
 		m_project_modified_since_autosave = 0;
 		CString mess;
-		mess.Format( "Unable to open autosave folder \"%s\"", auto_folder );
+		mess.Format(G_LANGUAGE == 0 ? 
+			"Unable to open autosave folder \"%s\"":
+			"Невозможно открыть папку автосохранения \"%s\"", auto_folder);
 		AfxMessageBox( mess );
 	}
 	else
@@ -1203,7 +1236,7 @@ int CFreePcbDoc::FileSave( CString * folder, CString * filename,
 			if( err )
 			{
 				CString str;
-				str.Format( "Unable to create folder \"%s\"", full_path_b );
+				str.Format(G_LANGUAGE == 0 ? "Unable to create folder \"%s\"":"Невозможно создать папку \"%s\"", full_path_b);
 				AfxMessageBox( str, MB_OK );
 				old_folder = NULL;
 			}
@@ -1217,7 +1250,7 @@ int CFreePcbDoc::FileSave( CString * folder, CString * filename,
 			err = _mkdir( full_path_b );
 			if( err )
 			{
-				str.Format( "Unable to create folder \"%s\"", full_path_b );
+				str.Format(G_LANGUAGE == 0 ? "Unable to create folder \"%s\"" : "Невозможно создать папку \"%s\"", full_path_b );
 				AfxMessageBox( str, MB_OK );
 				old_folder = NULL;
 			}
@@ -1237,7 +1270,7 @@ int CFreePcbDoc::FileSave( CString * folder, CString * filename,
 			err = _mkdir( nlist_folder );
 			if( err )
 			{
-				str.Format( "Unable to create folder \"%s\"", nlist_folder );
+				str.Format(G_LANGUAGE == 0 ? "Unable to create folder \"%s\"" : "Невозможно создать папку \"%s\"", nlist_folder );
 				AfxMessageBox( str, MB_OK );
 			}
 		}
@@ -1250,7 +1283,7 @@ int CFreePcbDoc::FileSave( CString * folder, CString * filename,
 			err = _mkdir( pic_folder );
 			if( err )
 			{
-				str.Format( "Unable to create folder \"%s\"", pic_folder );
+				str.Format(G_LANGUAGE == 0 ? "Unable to create folder \"%s\"" : "Невозможно создать папку \"%s\"", pic_folder );
 				AfxMessageBox( str, MB_OK );
 			}
 		}
@@ -1268,7 +1301,9 @@ int CFreePcbDoc::FileSave( CString * folder, CString * filename,
 			{	
 				if( instr.Left(instr.GetLength()) == NETLIST_WARNING )
 				{
-					AfxMessageBox( instr+"\n\nFile save rejected. First, save the PCB-file in the PCB-editor or close it without saving", MB_ICONERROR );
+					AfxMessageBox(G_LANGUAGE == 0 ? 
+						(instr+"\n\nFile save rejected. First, save the PCB-file in the PCB-editor or close it without saving"):
+						(instr + "\n\nСохранение файла отклонено. Сначала сохраните файл печатной платы в редакторе ПлатФорм или закройте его без сохранения"), MB_ICONERROR);
 					m_view->OnRangeCmds(NULL);
 					return 2;
 				}
@@ -1403,7 +1438,7 @@ void CFreePcbDoc::OnFileSaveAs()
 		}
 		else
 		{
-			AfxMessageBox( "Unable to save file. Write protection." );
+			AfxMessageBox(G_LANGUAGE == 0 ? "Unable to save file. Write protection.":"Невозможно сохранить файл. Защита от записи.");
 		}
 	}
 }
@@ -1664,7 +1699,7 @@ void CFreePcbDoc::WriteOutlinesPoly( CStdioFile * file, BOOL SEL_ONLY )
 					continue;
 				if( po->GetNumCorners() < 2 )
 				{
-					AfxMessageBox("Invalid number of corners");
+					AfxMessageBox(G_LANGUAGE == 0 ? "Invalid number of corners":"Неверное количество вершин");
 					continue;
 				}
 				if( SEL_ONLY && po->GetSel() == 0 )
@@ -1898,7 +1933,7 @@ CString CFreePcbDoc::ReadGraphics( CStdioFile * pcb_file, CArray<CPolyLine> * ss
 				{
 					// error reading pcb file
 					CString mess;
-					mess.Format( "Unable to find [end] section in file" );
+					mess.Format(G_LANGUAGE == 0 ? "Unable to find [end] section in file":"Не удалось найти [конец] раздела в файле");
 					AfxMessageBox( mess );
 					return RETSRC;
 				}
@@ -2443,7 +2478,7 @@ int CFreePcbDoc::ReadOptions( CStdioFile * pcb_file, BOOL rColors )
 			{
 				// error reading pcb file
 				CString mess;
-				mess.Format( "Unable to find [options] section in file" );
+				mess.Format(G_LANGUAGE == 0 ? "Unable to find [options] section in file":"Не удалось найти раздел [options] в файле");
 				AfxMessageBox( mess );
 				return 0;
 			}
@@ -3481,7 +3516,9 @@ void CFreePcbDoc::InitializeNewProject()
 	CString def_file = m_app_dir + "\\default.cfg";
 	if( !file.Open( def_file, CFile::modeRead | CFile::typeText ) )
 	{
-		AfxMessageBox( "Unable to open global configuration file \"default.cfg\"\nUsing application defaults" );
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"Unable to open global configuration file \"default.cfg\"\nUsing application defaults":
+			"Невозможно открыть глобальный файл конфигурации «default.cfg», поэтому будут использованы настройки приложения по умолчанию");
 	}
 	else
 	{
@@ -3505,7 +3542,9 @@ void CFreePcbDoc::InitializeNewProject()
 		}
 		catch( CString * err_str )
 		{
-			*err_str = "Unable to open global configuration file \"default.cfg\"\n" + *err_str;
+			*err_str = (G_LANGUAGE == 0 ?
+				"Unable to open global configuration file \"default.cfg\"\n" :
+				"Невозможно открыть файл глобальной конфигурации \"default.cfg\"\n");
 			AfxMessageBox(*err_str,MB_ICONERROR);
 			delete err_str;
 		}
@@ -3513,7 +3552,9 @@ void CFreePcbDoc::InitializeNewProject()
 	CString fn = m_app_dir + "\\default_cds.cfg";
 	if( !file.Open( fn, CFile::modeRead | CFile::typeText ) )
 	{
-		AfxMessageBox( "Unable to open global configuration file \"default_cds.cfg\"\nUsing application defaults" );
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"Unable to open global configuration file \"default_cds.cfg\"\nUsing application defaults":
+			"Невозможно открыть глобальный файл конфигурации «default_cds.cfg», поэтому будут использованы настройки приложения по умолчанию");
 	}
 	else
 	{
@@ -3534,13 +3575,15 @@ void CFreePcbDoc::InitializeNewProject()
 		}
 		catch( CString * err_str )
 		{
-			*err_str = "Unable to open global configuration file \"default_cds.cfg\"\n" + *err_str;
+			*err_str = (G_LANGUAGE == 0 ?
+				"Unable to open global configuration file \"default_cds.cfg\"\n" :
+				"Невозможно открыть файл глобальной конфигурации \"default_cds.cfg\"\n");
 			AfxMessageBox(*err_str,MB_ICONERROR);
 			delete err_str;
 		}
 	}
 	last_el = NULL;
-	m_window_title = CDS_HEADER"no project open";
+	m_window_title = (CString)CDS_HEADER+(G_LANGUAGE == 0 ? "no project open":"конструктор схем");
 	DisableMenuItems();
 }
 
@@ -3645,7 +3688,7 @@ void CFreePcbDoc::SaveOptions()
 	{
 		// error opening file
 		CString mess;
-		mess.Format( "Unable to open file \"%s\"", fn ); 
+		mess.Format(G_LANGUAGE == 0 ? "Unable to open file %s" : "Невозможно открыть файл %s", fn );
 		AfxMessageBox( mess );
 		return;
 	}
@@ -3737,7 +3780,7 @@ void CFreePcbDoc::FileExport( CString str, int type )
 	CStdioFile file;
 	if( !file.Open( str, CFile::modeWrite | CFile::modeCreate ) )
 	{
-		str.Format( "Unable to open file %s", str );
+		str.Format(G_LANGUAGE == 0 ? "Unable to open file %s":"Невозможно открыть файл %s", str);
 		AfxMessageBox( str );
 	}
 	else
@@ -3759,7 +3802,9 @@ void CFreePcbDoc::FileExport( CString str, int type )
 				m_file.Close();
 			}
 			else
-				AfxMessageBox("Error! Unable to save related file. Write protection.", MB_ICONERROR);
+				AfxMessageBox(G_LANGUAGE == 0 ? 
+					"Error! Unable to save related file. Write protection.":
+					"Ошибка! Невозможно сохранить связанный файл. Защита от записи.", MB_ICONERROR);
 		}
 	}
 	m_view->m_draw_layer = 0;
@@ -3770,7 +3815,9 @@ void CFreePcbDoc::OnFileExport1()
 {
 	if( Pages.IsThePageIncludedInNetlist( Pages.GetActiveNumber() ) == 0 )
 	{
-		AfxMessageBox("The current page is not included in the netlist. You can connect the pages in the Netlist Settings dialog box (the File menu)");
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"The current page is not included in the netlist. You can connect the pages in the Netlist Settings dialog box (the File menu)":
+			"Текущая страница не включена в список эл.цепей. Вы можете подключить страницы в диалоговом окне Настройки списка (меню Файл)");
 		return;
 	}
 	// 1
@@ -3795,7 +3842,9 @@ void CFreePcbDoc::OnFileExport1()
 				if( m_netlist_created[pg] == 0 )
 				{
 					m_view->InvalidateLeftPane();
-					AfxMessageBox( "Correct netlist errors on this page.", MB_ICONINFORMATION );
+					AfxMessageBox(G_LANGUAGE == 0 ? 
+						"Correct netlist errors on this page.":
+						"Исправьте ошибки эл.цепей на этой странице.", MB_ICONINFORMATION);
 					m_dlg_log->OnShowMe();
 					m_view->OnRangeCmds(NULL);
 					return;
@@ -3803,7 +3852,9 @@ void CFreePcbDoc::OnFileExport1()
 			}
 			else if( num_parts == 1 )
 			{
-				AfxMessageBox( "The schematic design page must contain at least two PCB parts", MB_ICONERROR );
+				AfxMessageBox(G_LANGUAGE == 0 ? 
+					"The schematic design page must contain at least two PCB parts":
+					"Страница проекта схемы должна содержать не менее двух деталей печатной платы.", MB_ICONERROR);
 				return;
 			}
 		}
@@ -3823,7 +3874,9 @@ void CFreePcbDoc::OnFileExport1()
 		if( error_page >= 0 )
 			SwitchToPage( error_page, TRUE );
 		m_view->InvalidateLeftPane();
-		AfxMessageBox( "Correct errors related to Parts, Pins and Electronic buses", MB_ICONINFORMATION );
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"Correct errors related to Parts, Pins and Electronic buses":
+			"Исправьте ошибки, связанные с деталями, штифтами и/или электронными шинами.", MB_ICONINFORMATION);
 		m_dlg_log->OnShowMe();
 		return;
 	}
@@ -4049,7 +4102,9 @@ int CFreePcbDoc::ExportPCBNetlist( CStdioFile * file, UINT flags, UINT format, C
 					if( net->m_str.Left(3) == FREENET )
 					{
 						ASSERT(0);
-						AfxMessageBox("Fatal.. Invalid net name " + net->m_str + ", process stopped");
+						AfxMessageBox(G_LANGUAGE == 0 ? 
+							("Fatal.. Invalid net name " + net->m_str + ", process stopped"):
+							("Фатальная ошибка. Недопустимое имя эл.цепи " + net->m_str + ", процесс остановлен"));
 						return 0;
 					}
 					else
@@ -4318,7 +4373,9 @@ void CFreePcbDoc::OnFileGenerateCadFiles()
 {
 	if( m_outline_poly->GetSize() == 0 )
 	{
-		AfxMessageBox( "A outline must be present for CAM file generation" );
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"A outline must be present for CAM file generation":
+			"Для генерации этого файла должны присутствовать полилинии.");
 		return;
 	}
 	CDlgCAD dlg;
@@ -4393,12 +4450,12 @@ void CFreePcbDoc::OnProjectAdaptGrid()
 {
 	if( m_view->m_protect )
 	{
-		AfxMessageBox( "This PCB is protected.", MB_ICONERROR );
+		AfxMessageBox(G_LANGUAGE == 0 ? "This PCB is protected.":"Эта печатная плата защищена.", MB_ICONERROR);
 		return;
 	}
 	if( m_view->m_sel_count == 0 )
 	{
-		AfxMessageBox("First select objects.");
+		AfxMessageBox(G_LANGUAGE == 0 ? "First select objects.":"Сначала выберите объекты.");
 		return;
 	}
 	int MIN_D = NM_PER_MIL/3;
@@ -4577,7 +4634,9 @@ void CFreePcbDoc::OnProjectAdaptGrid()
 	{
 		if( total == 0 )
 		{
-			AfxMessageBox("This polyline group has already been adapted to the current grid step.");
+			AfxMessageBox(G_LANGUAGE == 0 ? 
+				"This polyline group has already been adapted to the current grid step.":
+				"Эта группа полилиний уже адаптирована к текущему шагу сетки.");
 			return;
 		}
 		else ///if( m_cursor_mode != CUR_GROUP_SELECTED )
@@ -4595,18 +4654,24 @@ void CFreePcbDoc::OnProjectAdaptGrid()
 		{
 			if( total == 0 )
 			{
-				s.Format("%d part(s) adapted without graphic loss.",refs );
+				s.Format(G_LANGUAGE == 0 ? 
+					"%d part(s) adapted without graphic loss.":
+					"%d деталей адаптированы без потери графики.", refs);
 				AfxMessageBox(s);
 			}
 			else ///if( AfxMessageBox("All pins of this group are adapted to the current grid. Adapt remaining graphic polylines to the grid?", MB_ICONQUESTION|MB_YESNO) == IDYES )
 			{
-				if( AfxMessageBox("This polyline group has already been adapted to the current grid step. Adapt other polylines?", MB_YESNO | MB_ICONQUESTION ) == IDYES )
+				if( AfxMessageBox(G_LANGUAGE == 0 ? 
+					"This polyline group has already been adapted to the current grid step. Adapt other polylines?":
+					"Эта группа полилиний уже адаптирована к текущему шагу сетки. Адаптировать другие полилинии?", MB_YESNO | MB_ICONQUESTION) == IDYES)
 					ok_for_other = 1;			
 			}
 		}
 		else
 		{
-			s.Format("%d part(s) adapted\n%d lines adapted\n%d pins adapted",refs, total, cnt_poly);
+			s.Format(G_LANGUAGE == 0 ? 
+				"%d part(s) adapted\n%d lines adapted\n%d pins adapted":
+				"%d деталей адаптировано\n%d линий адаптировано\n%d пинов адаптировано", refs, total, cnt_poly);
 			AfxMessageBox(s);
 		}
 	}
@@ -4826,7 +4891,9 @@ void CFreePcbDoc::OnProjectGenBOM()
 		OnRangeCmds(NULL);
 	}
 	else
-		AfxMessageBox("The current page is not included in the netlist. You can connect the pages in the Netlist Settings dialog box (the File menu)");
+		AfxMessageBox(G_LANGUAGE == 0 ?
+			"The current page is not included in the netlist. You can connect the pages in the Netlist Settings dialog box (the File menu)" :
+			"Текущая страница не включена в список эл.цепей. Вы можете подключить страницы в диалоговом окне Настройки списка (меню Файл)");
 }
 
 void CFreePcbDoc::OnProjectGenBOM2()
@@ -5127,7 +5194,7 @@ void CFreePcbDoc::OnEditPasteFromFile()
 		{
 			// error opening project file
 			CString mess;
-			mess.Format( "Unable to open file %s", filename );
+			mess.Format(G_LANGUAGE == 0 ? "Unable to open file %s" : "Невозможно открыть файл %s", filename );
 			AfxMessageBox( mess );
 			return;
 		}
@@ -5162,7 +5229,9 @@ void CFreePcbDoc::PasteFromFile( CString pathname, BOOL bwDialog, int i_page )
 {
 	if( m_project_modified )
 	{
-		int ret = AfxMessageBox( "Project modified, save it ? ", MB_OKCANCEL );
+		int ret = AfxMessageBox(G_LANGUAGE == 0 ?
+			"Project modified, save it?" :
+			"Проект изменен, сохранить его?", MB_OKCANCEL );
 		if( ret == IDCANCEL )
 			return;
 		else
@@ -5180,7 +5249,7 @@ void CFreePcbDoc::PasteFromFile( CString pathname, BOOL bwDialog, int i_page )
 	{
 		// error opening project file
 		CString mess;
-		mess.Format( "Currently only cds files are supported." );
+		mess.Format(G_LANGUAGE == 0 ? "Currently only cds files are supported.":"В настоящее время поддерживаются только файлы cds.");
 		AfxMessageBox( mess );
 		return;
 	}
@@ -5191,7 +5260,7 @@ void CFreePcbDoc::PasteFromFile( CString pathname, BOOL bwDialog, int i_page )
 	{
 		// error opening project file
 		CString mess;
-		mess.Format( "Unable to open file %s", pathname );
+		mess.Format(G_LANGUAGE == 0 ? "Unable to open file %s" : "Невозможно открыть файл %s", pathname );
 		AfxMessageBox( mess );
 		return;
 	}
@@ -5273,7 +5342,9 @@ void CFreePcbDoc::OnFileGerbV(CString G, CString app)
     info.hInstApp = NULL;
 	int INF = ShellExecuteEx(&info);
 	if( INF == 0 )  
-		AfxMessageBox("There is a 'Shortcut' folder in the FreePcb directory. Put there a shortcut *.lnk referring to a Gerber file viewer program (for example Pentalogix's ViewMate).");
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"There is a 'Shortcut' folder in the FreePcb directory. Put there a shortcut *.lnk referring to a Gerber file viewer program (for example Pentalogix's ViewMate).":
+			"В каталоге СхемАтора есть папка 'Shortcut'. Поместите туда ярлык *.lnk, ссылающийся на программу просмотра файлов Gerber (например, ViewMate от Pentalogix).");
 }
 
 void CFreePcbDoc::OnEditUndo()
@@ -5842,7 +5913,7 @@ void CFreePcbDoc::OnProjectCombineBoard()
 {
 	if( getbit( m_view->m_sel_flags, m_view->FLAG_SEL_OP ) == 0 )
 	{
-		AfxMessageBox( "No selected polylines!", MB_ICONINFORMATION );
+		AfxMessageBox(G_LANGUAGE == 0 ? "No selected polylines!":"Нет выбранных полилиний!", MB_ICONINFORMATION);
 		return;
 	}
 	if( m_outline_poly->GetSize() > 0 )
@@ -5954,11 +6025,11 @@ void CFreePcbDoc::OnProjectCombineBoard()
 			}
 		}while(CC);
 		if( CL == 0 )
-			AfxMessageBox("Polyline must be closed for this option.", MB_ICONINFORMATION );
+			AfxMessageBox(G_LANGUAGE == 0 ? "Polyline must be closed for this option.":"Для этой опции полилиния должна быть замкнутой.", MB_ICONINFORMATION);
 		else if( AT == 0 )
-			AfxMessageBox( "You cannot combine polylines with different attributes.", MB_ICONERROR );
+			AfxMessageBox(G_LANGUAGE == 0 ? "You cannot combine polylines with different attributes.":"Нельзя комбинировать полилинии с разными атрибутами.", MB_ICONERROR);
 		else if( OK == 0 )
-			AfxMessageBox( "Selected polylines do not intersect or polyline layers are different.", MB_ICONINFORMATION );
+			AfxMessageBox(G_LANGUAGE == 0 ? "Selected polylines do not intersect or polyline layers are different.":"Выбранные полилинии не пересекаются или слои полилиний различны.", MB_ICONINFORMATION);
 		else
 			ProjectModified( TRUE );
 	}
@@ -6354,7 +6425,9 @@ int CFreePcbDoc::DRC()
 					i_st = t->m_polyline_start;
 					if( i_st == -1 )
 					{
-						AfxMessageBox("Fatal! Attribute indexing does not work");
+						AfxMessageBox(G_LANGUAGE == 0 ? 
+							"Fatal! Attribute indexing does not work":
+							"Фатальная ошибка! Индексация атрибутов не работает");
 						return err_page;
 					}
 				}
@@ -6531,13 +6604,15 @@ int CFreePcbDoc::DRC()
 						{
 							CString s="";
 							if( !c1 )
-								s.Format("Fix pin name %s in the part %s", t->m_str, part->m_str );
+								s.Format(G_LANGUAGE == 0 ? "Fix pin name %s in the part %s":"Исправьте имя пина %s в детали %s", t->m_str, part->m_str);
 							else if( !c2 && t2->m_polyline_start >= 0 )
 							{
 								CArray<CPolyLine> * po2 = Pages.GetPolyArray( ip2 );
 								CText * part2 = po2->GetAt(t2->m_polyline_start).pAttr[index_part_attr];
 								if( part2 )
-									s.Format("Fix pin name %s in the part %s", t2->m_str, part2->m_str );
+									s.Format(G_LANGUAGE == 0 ? 
+										"Fix pin name %s in the part %s":
+										"Исправьте имя пина %s в детали %s", t2->m_str, part2->m_str);
 							}
 							if( s.GetLength() )
 								AfxMessageBox(s, MB_ICONINFORMATION);
@@ -7115,7 +7190,7 @@ int CFreePcbDoc::GetGerberPathes(CString Path)
 		DWORD dwError = GetLastError();  
 		if(dwError == ERROR_FILE_NOT_FOUND)  
 		{  
-			AfxMessageBox("Shortcut path not found", MB_OK);  
+			AfxMessageBox(G_LANGUAGE == 0 ? "Shortcut path not found":"Путь ярлыка не найден", MB_OK);
 		}  
 	}	  
 	else if( Path.GetLength() )
@@ -7291,10 +7366,15 @@ int CFreePcbDoc::CreatePCBNets( int ITERATOR )
 {
 	if( ITERATOR > MAX_PAGES )
 	{
-		AfxMessageBox("A loop has occurred between two pages. "\
-					  "This is probably due to the fact that two or "\
-					  "more blocks refer to each other. Blocks cannot be used this way. "\
-					  "Place all blocks on one page and then try again.", MB_ICONERROR );
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			("A loop has occurred between two pages. "\
+			"This is probably due to the fact that two or "\
+			"more blocks refer to each other. Blocks cannot be used this way. "\
+			"Place all blocks on one page and then try again."):
+			("Произошёл цикл между двумя страницами. "\
+			"Вероятно, это связано с тем, что два или "\
+			"более блоков ссылаются друг на друга. Блоки нельзя использовать таким образом. "\
+			"Поместите все блоки на одну страницу и попробуйте ещё раз."), MB_ICONERROR);
 		return INT_MAX;
 	}
 	if( m_netlist_created[Pages.GetActiveNumber()] )
@@ -8531,7 +8611,7 @@ void CFreePcbDoc::TryToRemoveSuffix()
 {
 	if( m_view->m_sel_count == 0 )
 	{
-		AfxMessageBox("First select objects.");
+		AfxMessageBox(G_LANGUAGE == 0 ? "First select objects." : "Сначала выберите объекты.");
 		return;
 	}
 	// reset block indexes
@@ -8551,7 +8631,9 @@ void CFreePcbDoc::TryToRemoveSuffix()
 			suff = ref->m_str.Right(1);
 		if( suff.Compare( ref->m_str.Right(1) ) )
 		{
-			AfxMessageBox( "The selected group of parts contains different suffixes! Operation canceled.", MB_ICONERROR );
+			AfxMessageBox(G_LANGUAGE == 0 ? 
+				"The selected group of parts contains different suffixes! Operation canceled.":
+				"Выбранная группа деталей содержит разные суффиксы! Операция отменена.", MB_ICONERROR);
 			return;
 		}
 		CString newR = ref->m_str.Left( ref->m_str.GetLength()-1 );
@@ -8569,7 +8651,7 @@ void CFreePcbDoc::TryToRemoveSuffix()
 	}
 	if( EN == 0 )
 	{
-		AfxMessageBox( "Cannot rename these parts.", MB_ICONERROR );
+		AfxMessageBox(G_LANGUAGE == 0 ? "Cannot rename these parts.":"Невозможно переименовать эти детали.", MB_ICONERROR);
 		return;
 	}
 	m_dlg_log->Clear();
@@ -8663,7 +8745,9 @@ void CFreePcbDoc::Renumber__Add( CString * old_ref, CString * new_ref, int curre
 				{
 					CString s, pn;
 					Pages.GetPageName( cur_p, &pn );
-					s.Format("Cannot synchronize ref %s on page %s. Part %s already exists on this page!", *old_ref, pn, *new_ref );
+					s.Format(G_LANGUAGE == 0 ? 
+						"Cannot synchronize ref %s on page %s. Part %s already exists on this page!":
+						"Невозможно синхронизировать %s на странице %s. Деталь %s уже существует на этой странице!", *old_ref, pn, *new_ref);
 					AfxMessageBox( s, MB_ICONERROR );
 				}
 				else //if( getbit( main_part->m_pdf_options, SYNC_EXCLUDE ) == 0 )
@@ -8757,7 +8841,7 @@ void CFreePcbDoc::RenumberPartDesignations()
 {
 	if( m_view->m_sel_count == 0 )
 	{
-		AfxMessageBox("First select objects.");
+		AfxMessageBox(G_LANGUAGE == 0 ? "First select objects." : "Сначала выберите объекты.");
 		return;
 	}
 	SelectGroupAttributes();
@@ -8786,7 +8870,7 @@ void CFreePcbDoc::ClearPartDesignations()
 {
 	if( m_view->m_sel_count == 0 )
 	{
-		AfxMessageBox("First select objects.");
+		AfxMessageBox(G_LANGUAGE == 0 ? "First select objects." : "Сначала выберите объекты.");
 		return;
 	}
 	SelectGroupAttributes();
@@ -8817,7 +8901,9 @@ void CFreePcbDoc::RaisePartNumbers()
 {
 	if( m_project_modified )
 	{
-		AfxMessageBox("Raise part numbers will be applied to all pages included in the netlist. This tool does not have the ability to undo an action, so to complete this, you must first save the project.", MB_ICONWARNING );
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"Raise part numbers will be applied to all pages included in the netlist. This tool does not have the ability to undo an action, so to complete this, you must first save the project.":
+			"Смещение номеров деталей будет применено ко всем страницам, включенным в список эл.цепей. Этот инструмент не имеет возможности отменить действие, поэтому для его выполнения необходимо сначала сохранить проект.", MB_ICONWARNING);
 		return;
 	}
 	CString instr="";
@@ -8826,7 +8912,9 @@ void CFreePcbDoc::RaisePartNumbers()
 		if( instr.GetLength() )
 		{
 			AfxMessageBox( instr, MB_ICONERROR );
-			AfxMessageBox( "This option only works when the PCB and Schematic editor netlists are synchronized. Press the \"File --> Reload Netlist\" menu button in the PCB editor, then save the changes. And then try again", MB_ICONINFORMATION );
+			AfxMessageBox(G_LANGUAGE == 0 ? 
+				"This option only works when the PCB and Schematic editor netlists are synchronized. Press the \"File --> Reload Netlist\" menu button in the PCB editor, then save the changes. And then try again":
+				"Эта опция работает только тогда, когда списки эл.цепей редактора печатных плат и схемы синхронизированы. Нажмите кнопку меню «Файл --> Перезагрузить список эл.цепей» в редакторе печатных плат ПлатФорм и сохраните изменения. А затем попробуйте еще раз", MB_ICONINFORMATION);
 			return;
 		}
 	}
@@ -8911,7 +8999,9 @@ void CFreePcbDoc::RaisePartNumbers()
 					if( gT->utility )
 					{
 						CString s;
-						s.Format("It is not possible to renumber part %s. Name %s already exists.\n\nFree number assigned", ref->m_str, new_ref );
+						s.Format(G_LANGUAGE == 0 ? 
+							"It is not possible to renumber part %s. Name %s already exists.\n\nFree number assigned":
+							"Невозможно перенумеровать деталь %s. Имя %s уже существует.\n\nНазначен свободный номер", ref->m_str, new_ref);
 						AfxMessageBox( s, MB_ICONERROR );
 						new_ref = "";
 						CText * found = NULL;
@@ -8949,7 +9039,9 @@ void CFreePcbDoc::RaisePartNumbers()
 					else if( gT->m_selected == 0 )
 					{
 						CString s;
-						s.Format("Error renumbering %s to %s \nPart %s is already used in this project \nIt is recommended to reload the project file without saving", ref->m_str, new_ref, new_ref );
+						s.Format(G_LANGUAGE == 0 ? 
+							"Error renumbering %s to %s \nPart %s is already used in this project \nIt is recommended to reload the project file without saving":
+							"Ошибка перенумерации %s на %s \nДеталь %s уже используется в этом проекте \nРекомендуется перезагрузить файл проекта без сохранения", ref->m_str, new_ref, new_ref);
 						AfxMessageBox( s, MB_ICONERROR );
 						new_ref += "?";
 						break;
@@ -8958,7 +9050,9 @@ void CFreePcbDoc::RaisePartNumbers()
 				if( (i+raise_by) < 0 )
 				{
 					CString s;
-					s.Format("As a result of the offset, the part number is negative! \n\n\tOld ref: %s \n\tNew ref: %s \n\nIt is recommended to reload the project file without saving", ref->m_str, new_ref );
+					s.Format(G_LANGUAGE == 0 ? 
+						"As a result of the offset, the part number is negative! \n\n\tOld ref: %s \n\tNew ref: %s \n\nIt is recommended to reload the project file without saving":
+						"В результате смещения номер детали отрицательный! \n\n\tСтарая ссылка: %s \n\tНовая ссылка: %s \n\nРекомендуется перезагрузить файл проекта без сохранения", ref->m_str, new_ref);
 					AfxMessageBox( s, MB_ICONERROR );
 				}
 				if( new_ref.GetLength() )
@@ -9056,19 +9150,31 @@ void CFreePcbDoc::PartRenumbering( CString * prefix, CString * suffix, int start
 	}while( Found );
 	// 
 	if( WAR_1 )
-		AfxMessageBox(	"Some parts already have a cleaned "\
-						"reference designator index. "\
-						"The option will not be applied to these parts, "\
-						"because repeated cleansing does not make sense", MB_ICONINFORMATION );
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"Some parts already have a cleaned "\
+			"reference designator index. "\
+			"The option will not be applied to these parts, "\
+			"because repeated cleansing does not make sense":
+			"Некоторые детали уже имеют сброшенный "\
+			"индекс условного обозначения. "\
+			"Опция не будет применена к этим деталям, "\
+			"поскольку повторный сброс не имеет смысла", MB_ICONINFORMATION );
 	else if( WAR_2 )
-		AfxMessageBox(	"This option only applies to parts "\
-						"for which the ref number has been cleared. "\
-						"Therefore, first clear the symbols "\
-						"using the Clear Part Numbers option found on the Tools menu.", MB_ICONINFORMATION );
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"This option only applies to parts "\
+			"for which the ref number has been cleared. "\
+			"Therefore, first clear the symbols "\
+			"using the Clear Part Numbers option found on the Tools menu.":
+			"Эта опция применима только к деталям, "\
+			"для которых номер в обозначении был очищен. "\
+			"Поэтому сначала очистите символы, "\
+			"используя опцию «Очистить номера деталей» в меню Инструменты.", MB_ICONINFORMATION );
 	// 
 	if( number == 1 )
 	{
-		AfxMessageBox( "No selected items for renumbering", MB_ICONINFORMATION );
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"No selected items for renumbering":
+			"Нет выбранных элементов для перенумерации", MB_ICONINFORMATION);
 	}
 	else
 	{
@@ -9852,12 +9958,14 @@ void CFreePcbDoc::CheckComponentInLibrary( CText * attr, CString * old_value, CS
 								Fcomps.Find( str_docx ) == -1 )
 							{
 								Fcomps += str_docx;
-								int ret = AfxMessageBox("You have renamed the part to which the datasheet file was attached with the name \n\n"+CNote+".DOCX. \n\nThis file will no longer be called from the <Component Datasheet> right-click menu because the new part name does not match the file name. To save the binding of the datasheet file to the part, you need to rename file. Do it automatically?", MB_ICONQUESTION | MB_YESNO );
+								int ret = AfxMessageBox(G_LANGUAGE == 0 ? 
+									("You have renamed the part to which the datasheet file was attached with the name \n\n"+CNote+".DOCX. \n\nThis file will no longer be called from the <Component Datasheet> right-click menu because the new part name does not match the file name. To save the binding of the datasheet file to the part, you need to rename file. Do it automatically?"):
+									("Вы переименовали деталь, к которой был прикреплен файл таблицы данных, на имя \n\n" + CNote + ".DOCX. \n\nЭтот файл больше не будет вызываться из контекстного меню «Вложения компонента», поскольку новое имя детали не соответствует имени файла. Чтобы сохранить привязку файла таблицы данных к детали, необходимо переименовать файл. Сделать это автоматически?"), MB_ICONQUESTION | MB_YESNO);
 								if( ret == IDYES )
 								{
 									if( CopyFile( CNote+".docx", NewNote+".docx", 1 ) )
 									{
-										ret = AfxMessageBox("Delete old docx file?", MB_ICONQUESTION | MB_YESNO );
+										ret = AfxMessageBox(G_LANGUAGE == 0 ? "Delete old docx file?":"Удалить старый файл docx?", MB_ICONQUESTION | MB_YESNO);
 										if( ret == IDYES )
 										{
 											SetFileAttributes( CNote+".docx", 0 );
@@ -9874,12 +9982,14 @@ void CFreePcbDoc::CheckComponentInLibrary( CText * attr, CString * old_value, CS
 								Fcomps.Find( str_doc ) == -1 )
 							{
 								Fcomps += str_doc;
-								int ret = AfxMessageBox("You have renamed the part to which the datasheet file was attached with the name \n\n"+CNote+".DOC. \n\nThis file will no longer be called from the <Component Datasheet> right-click menu because the new part name does not match the file name. To save the binding of the datasheet file to the part, you need to rename file. Do it automatically?", MB_ICONQUESTION | MB_YESNO );
+								int ret = AfxMessageBox(G_LANGUAGE == 0 ? 
+									("You have renamed the part to which the datasheet file was attached with the name \n\n"+CNote+".DOC. \n\nThis file will no longer be called from the <Component Datasheet> right-click menu because the new part name does not match the file name. To save the binding of the datasheet file to the part, you need to rename file. Do it automatically?"):
+									("Вы переименовали деталь, к которой был прикреплен файл таблицы данных, на имя \n\n" + CNote + ".DOC. \n\nЭтот файл больше не будет вызываться из контекстного меню «Вложения компонента», поскольку новое имя детали не соответствует имени файла. Чтобы сохранить привязку файла таблицы данных к детали, необходимо переименовать файл. Сделать это автоматически?"), MB_ICONQUESTION | MB_YESNO);
 								if( ret == IDYES )
 								{
 									if( CopyFile( CNote+".doc", NewNote+".doc", 1 ) )
 									{
-										ret = AfxMessageBox("Delete old doc file?", MB_ICONQUESTION | MB_YESNO );
+										ret = AfxMessageBox(G_LANGUAGE == 0 ? "Delete old doc file?":"Удалить старый файл doc?", MB_ICONQUESTION | MB_YESNO);
 										if( ret == IDYES )
 										{
 											SetFileAttributes( CNote+".doc", 0 );
@@ -9896,12 +10006,16 @@ void CFreePcbDoc::CheckComponentInLibrary( CText * attr, CString * old_value, CS
 								Fcomps.Find( str_txt ) == -1 )
 							{
 								Fcomps += str_txt;
-								int ret = AfxMessageBox("You have renamed the part to which the datasheet file was attached with the name \n\n"+CNote+".TXT. \n\nThis file will no longer be called from the <Component Datasheet> right-click menu because the new part name does not match the file name. To save the binding of the datasheet file to the part, you need to rename file. Do it automatically?", MB_ICONQUESTION | MB_YESNO );
+								int ret = AfxMessageBox(G_LANGUAGE == 0 ? 
+									("You have renamed the part to which the datasheet file was attached with the name \n\n"+CNote+".TXT. \n\nThis file will no longer be called from the <Component Datasheet> right-click menu because the new part name does not match the file name. To save the binding of the datasheet file to the part, you need to rename file. Do it automatically?"):
+									("Вы переименовали деталь, к которой был прикреплен файл таблицы данных, на имя \n\n" + CNote + ".TXT. \n\nЭтот файл больше не будет вызываться из контекстного меню «Вложения компонента», поскольку новое имя детали не соответствует имени файла. Чтобы сохранить привязку файла таблицы данных к детали, необходимо переименовать файл. Сделать это автоматически?"), MB_ICONQUESTION | MB_YESNO);
 								if( ret == IDYES )
 								{
 									if( CopyFile( CNote+".txt", NewNote+".txt", 1 ) )
 									{
-										ret = AfxMessageBox("Delete old txt file?", MB_ICONQUESTION | MB_YESNO );
+										ret = AfxMessageBox(G_LANGUAGE == 0 ? 
+											"Delete old txt file?":
+											"Удалить старый текстовый файл?", MB_ICONQUESTION | MB_YESNO);
 										if( ret == IDYES )
 										{
 											SetFileAttributes( CNote+".txt", 0 );
@@ -9918,12 +10032,16 @@ void CFreePcbDoc::CheckComponentInLibrary( CText * attr, CString * old_value, CS
 								Fcomps.Find( str_pdf ) == -1 )
 							{
 								Fcomps += str_pdf;
-								int ret = AfxMessageBox("You have renamed the part to which the datasheet file was attached with the name \n\n"+CNote+".PDF. \n\nThis file will no longer be called from the <Component Datasheet> right-click menu because the new part name does not match the file name. To save the binding of the datasheet file to the part, you need to rename file. Do it automatically?", MB_ICONQUESTION | MB_YESNO );
+								int ret = AfxMessageBox(G_LANGUAGE == 0 ? 
+									("You have renamed the part to which the datasheet file was attached with the name \n\n"+CNote+".PDF. \n\nThis file will no longer be called from the <Component Datasheet> right-click menu because the new part name does not match the file name. To save the binding of the datasheet file to the part, you need to rename file. Do it automatically?"):
+									("Вы переименовали деталь, к которой был прикреплен файл таблицы данных, на имя \n\n" + CNote + ".PDF. \n\nЭтот файл больше не будет вызываться из контекстного меню «Вложения компонента», поскольку новое имя детали не соответствует имени файла. Чтобы сохранить привязку файла таблицы данных к детали, необходимо переименовать файл. Сделать это автоматически?"), MB_ICONQUESTION | MB_YESNO);
 								if( ret == IDYES )
 								{
 									if( CopyFile( CNote+".pdf", NewNote+".pdf", 1 ) )
 									{
-										ret = AfxMessageBox("Delete old pdf file?", MB_ICONQUESTION | MB_YESNO );
+										ret = AfxMessageBox(G_LANGUAGE == 0 ? 
+											"Delete old pdf file?":
+											"Удалить старый PDF-файл?", MB_ICONQUESTION | MB_YESNO);
 										if( ret == IDYES )
 										{
 											SetFileAttributes( CNote+".pdf", 0 );
@@ -9940,12 +10058,16 @@ void CFreePcbDoc::CheckComponentInLibrary( CText * attr, CString * old_value, CS
 								Fcomps.Find( str_url ) == -1 )
 							{
 								Fcomps += str_url;
-								int ret = AfxMessageBox("The URL may be lost if the link filename is not corrected now. Do you want to keep this URL?", MB_ICONQUESTION | MB_YESNO );
+								int ret = AfxMessageBox(G_LANGUAGE == 0 ? 
+									"The URL may be lost if the link filename is not corrected now. Do you want to keep this URL?":
+									"URL может быть утерян, если имя файла ссылки не будет исправлено сейчас. Вы хотите сохранить этот URL?", MB_ICONQUESTION | MB_YESNO);
 								if( ret == IDYES )
 								{
 									if( CopyFile( CNote+".url", NewNote+".url", 1 ) )
 									{
-										ret = AfxMessageBox("Delete old url file?", MB_ICONQUESTION | MB_YESNO );
+										ret = AfxMessageBox(G_LANGUAGE == 0 ? 
+											"Delete old url file?":
+											"Удалить старый файл URL?", MB_ICONQUESTION | MB_YESNO);
 										if( ret == IDYES )
 										{
 											SetFileAttributes( CNote+".url", 0 );
@@ -9974,7 +10096,9 @@ void CFreePcbDoc::CheckComponentInLibrary( CText * attr, CString * old_value, CS
 										_stat( Pic2+".jpeg", &buf ) == 0);
 							if( b1 && b2 == 0 )
 							{
-								int ret = AfxMessageBox("The part package image may be lost because you changed the name of the footprint. The previous footprint name is associated with the image of the part body. Do you want to keep linking this image to the new footprint? (if the new footprint is associated with the same part package, then click YES)", MB_ICONQUESTION | MB_YESNO );
+								int ret = AfxMessageBox(G_LANGUAGE == 0 ? 
+									"The part package image may be lost because you changed the name of the footprint. The previous footprint name is associated with the image of the part body. Do you want to keep linking this image to the new footprint? (if the new footprint is associated with the same part package, then click YES)":
+									"Изображение корпуса детали может быть утеряно, поскольку вы изменили имя футпринта. Предыдущее имя футпринта было связано с изображением корпуса детали. Хотите сохранить привязку этого изображения к новому футпринту? (если новый футпринт должен быть связан с тем же корпусом детали, нажмите ДА)", MB_ICONQUESTION | MB_YESNO);
 								if( ret == IDYES )
 								{
 									if( _stat( Pic1+".bmp", &buf ) == 0 &&
@@ -9982,7 +10106,9 @@ void CFreePcbDoc::CheckComponentInLibrary( CText * attr, CString * old_value, CS
 									{
 										if( CopyFile( Pic1+".bmp", Pic2+".bmp", 1 ) )
 										{
-											ret = AfxMessageBox("Delete old image file?\n\n"+Pic1+".bmp", MB_ICONQUESTION | MB_YESNO );
+											ret = AfxMessageBox(G_LANGUAGE == 0 ? 
+												("Delete old image file?\n\n"+Pic1+".bmp"):
+												("Удалить старый файл изображения?\n\n" + Pic1 + ".bmp"), MB_ICONQUESTION | MB_YESNO);
 											if( ret == IDYES )
 											{
 												SetFileAttributes( Pic1+".bmp", 0 );
@@ -9997,7 +10123,9 @@ void CFreePcbDoc::CheckComponentInLibrary( CText * attr, CString * old_value, CS
 									{
 										if( CopyFile( Pic1+".jpg", Pic2+".jpg", 1 ) )
 										{
-											ret = AfxMessageBox("Delete old image file?\n\n"+Pic1+".jpg", MB_ICONQUESTION | MB_YESNO );
+											ret = AfxMessageBox(G_LANGUAGE == 0 ? 
+												("Delete old image file?\n\n"+Pic1+".jpg"):
+												("Удалить старый файл изображения?\n\n" + Pic1 + ".jpg"), MB_ICONQUESTION | MB_YESNO);
 											if( ret == IDYES )
 											{
 												SetFileAttributes( Pic1+".jpg", 0 );
@@ -10012,7 +10140,9 @@ void CFreePcbDoc::CheckComponentInLibrary( CText * attr, CString * old_value, CS
 									{
 										if( CopyFile( Pic1+".jpeg", Pic2+".jpeg", 1 ) )
 										{
-											ret = AfxMessageBox("Delete old image file?\n\n"+Pic1+".jpeg", MB_ICONQUESTION | MB_YESNO );
+											ret = AfxMessageBox(G_LANGUAGE == 0 ? 
+												("Delete old image file?\n\n"+Pic1+".jpeg"):
+												("Удалить старый файл изображения?\n\n" + Pic1 + ".jpeg"), MB_ICONQUESTION | MB_YESNO);
 											if( ret == IDYES )
 											{
 												SetFileAttributes( Pic1+".jpeg", 0 );
@@ -10858,7 +10988,9 @@ void CFreePcbDoc::OnFilePrint()
 		{
 			if( !m_dlg_log )
 			{
-				AfxMessageBox( "Error: Unable to write file\nIt may be read-only or open in another application", MB_OK );
+				AfxMessageBox(G_LANGUAGE == 0 ? 
+					"Error: Unable to write file\nIt may be read-only or open in another application":
+					"Ошибка: Невозможно записать файл. Возможно, он доступен только для чтения или открыт в другом приложении", MB_OK);
 			}
 			else
 			{
@@ -10882,7 +11014,9 @@ void CFreePcbDoc::AddPage()
 	int ret = dlg.DoModal();
 	if( ret == IDOK )
 	{
-		int ret = AfxMessageBox("Do you want to insert a new page in place of the current page?  Indexes of subsequent pages will be shifted by one.", MB_ICONQUESTION | MB_YESNO );
+		int ret = AfxMessageBox(G_LANGUAGE == 0 ? 
+			"Do you want to insert a new page in place of the current page?  Indexes of subsequent pages will be shifted by one.":
+			"Хотите вставить новую страницу вместо текущей? (В этом случае номера последующих страниц будут смещены на единицу)", MB_ICONQUESTION | MB_YESNO);
 		AddNewPage( &dlg.m_merge_name, ret==IDYES?1:0 );
 	}
 }
@@ -10891,7 +11025,7 @@ void CFreePcbDoc::AddNewPage( CString * Name, BOOL insert )
 {
 	if( Pages.GetNumPages() >= MAX_PAGES )
 	{
-		AfxMessageBox("Maximum number of pages is 8", MB_ICONWARNING );
+		AfxMessageBox(G_LANGUAGE == 0 ? "Maximum number of pages is 8":"Максимальное количество страниц - 8", MB_ICONWARNING);
 		return;
 	}
 	int gac = Pages.GetActiveNumber();
@@ -11163,7 +11297,7 @@ void CFreePcbDoc::DeletePage( int number )
 {
 	if( Pages.GetNumPages() <= 1 )
 	{
-		AfxMessageBox("Unable to delete first page", MB_ICONWARNING);
+		AfxMessageBox(G_LANGUAGE == 0 ? "Unable to delete first page":"Невозможно удалить первую страницу", MB_ICONWARNING);
 		return;
 	}
 	CTextList * ptl = Pages.GetTextList( number, index_part_attr );
@@ -11171,7 +11305,7 @@ void CFreePcbDoc::DeletePage( int number )
 	if( ptl )
 		if( ptl->GetNextText(&it) )
 		{
-			AfxMessageBox("Page contains parts, cannot be deleted.", MB_ICONWARNING);
+			AfxMessageBox(G_LANGUAGE == 0 ? "Page contains parts, cannot be deleted.":"Страница содержит детали поэтому не может быть удалена", MB_ICONWARNING);
 			return;
 		}
 	CWnd* pMain = AfxGetMainWnd();
@@ -11427,7 +11561,7 @@ void CFreePcbDoc::OnAttachBMP2()
 {
 	if( m_view->m_sel_id.type != ID_POLYLINE )
 	{
-		AfxMessageBox( "No selected polyline", MB_ICONINFORMATION );
+		AfxMessageBox(G_LANGUAGE == 0 ? "No selected polylines!" : "Нет выбранных полилиний!", MB_ICONINFORMATION );
 		return;
 	}
 	int src = m_outline_poly->GetAt(m_view->m_sel_id.i).GetPicture();
@@ -11453,7 +11587,7 @@ void CFreePcbDoc::OnDetachBMP()
 {
 	if( m_view->m_sel_id.type != ID_POLYLINE )
 	{
-		AfxMessageBox( "No selected polyline", MB_ICONINFORMATION );
+		AfxMessageBox(G_LANGUAGE == 0 ? "No selected polylines!" : "Нет выбранных полилиний!", MB_ICONINFORMATION );
 		return;
 	}
 	int src = m_outline_poly->GetAt(m_view->m_sel_id.i).GetPicture();
@@ -11470,12 +11604,14 @@ void CFreePcbDoc::AttachBMP( int Style, CString * fn )
 {
 	if( m_view->m_sel_id.type != ID_POLYLINE )
 	{
-		AfxMessageBox( "First, select the polyline to which you want to attach the picture.", MB_ICONINFORMATION );
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"First, select the polyline to which you want to attach the picture.":
+			"Сначала выберите полилинию, к которой вы хотите прикрепить изображение.", MB_ICONINFORMATION);
 		return;
 	}
 	if( m_outline_poly->GetAt(m_view->m_sel_id.i).GetNumCorners() < 4 )
 	{
-		AfxMessageBox( "Polyline must have at least 4 vertices.", MB_ICONINFORMATION );
+		AfxMessageBox(G_LANGUAGE == 0 ? "Polyline must have at least 4 vertices.":"Полилиния должна иметь не менее 4 вершин.", MB_ICONINFORMATION);
 		return;
 	}
 	CString filename;
@@ -11611,7 +11747,9 @@ int CFreePcbDoc::AddSource( CString * new_name )
 	if( OK == 0 )
 	{
 		CString ps;
-		ps.Format( "Unable to copy picture.\nsource: %s\ndestination: %s", SRC, *new_name );
+		ps.Format(G_LANGUAGE == 0 ? 
+			"Unable to copy picture.\nsource: %s\ndestination: %s":
+			"Невозможно скопировать изображение.\nисточник: %s\nназначение: %s", SRC, *new_name);
 		AfxMessageBox( ps,  MB_ICONINFORMATION );
 		return -1;
 	}
@@ -11675,7 +11813,9 @@ int CFreePcbDoc::AttributeSync( CText * REF, CString * old_att, CText * new_att,
 			{
 				CString s, pg_name;
 				Pages.GetPageName(pg,&pg_name);
-				s.Format( "Unable to sync attribute \"%s\". Several identical attributes were found for part %s on page %d (%s)", *old_att, REF->m_str, pg+1, pg_name );
+				s.Format(G_LANGUAGE == 0 ? 
+					"Unable to sync attribute \"%s\". Several identical attributes were found for part %s on page %d (%s)":
+					"Невозможно синхронизировать атрибут \"%s\". Для части %s на странице %d (%s) найдено несколько идентичных атрибутов.", *old_att, REF->m_str, pg + 1, pg_name);
 				AfxMessageBox( s, MB_ICONERROR );
 			}
 		}
@@ -11863,7 +12003,7 @@ int CFreePcbDoc::RefList( BOOL clear )
 {
 	if( m_view->m_sel_count == 0 && clear == 0 )
 	{
-		AfxMessageBox("First select objects.");
+		AfxMessageBox(G_LANGUAGE == 0 ? "First select objects." : "Сначала выберите объекты.");
 		return -1;
 	}
 	int cnt = m_ref_lists->GetSize();
@@ -11890,7 +12030,9 @@ int CFreePcbDoc::RefList( BOOL clear )
 			int keep_prev_parts = IDNO;
 			if( new_index != cnt && clear == 0 )
 			{
-				keep_prev_parts = AfxMessageBox("Keep previous parts in this reflist?", MB_ICONQUESTION|MB_YESNOCANCEL);
+				keep_prev_parts = AfxMessageBox(G_LANGUAGE == 0 ? 
+					"Keep previous parts in this reflist?":
+					"Сохранить предыдущие детали в этом списке обозначений?", MB_ICONQUESTION | MB_YESNOCANCEL);
 				if( keep_prev_parts == IDCANCEL )
 					return -1;
 			}
@@ -11927,11 +12069,13 @@ int CFreePcbDoc::RefList( BOOL clear )
 				m_ref_lists->RemoveAt(new_index);
 			}
 			else if( new_index == cnt )
-				AfxMessageBox("Ref list created!", MB_ICONINFORMATION );
+				AfxMessageBox(G_LANGUAGE == 0 ? "Ref list created!":"Список создан!", MB_ICONINFORMATION);
 			else if( keep_prev_parts == IDNO )
-				AfxMessageBox("Ref list modified! Previous parts of this reflist have been removed!");
+				AfxMessageBox(G_LANGUAGE == 0 ? 
+					"Ref list modified! Previous parts of this reflist have been removed!":
+					"Список изменён! Предыдущие детали этого списка были удалены!");
 			else
-				AfxMessageBox("Ref list modified, new parts added.");
+				AfxMessageBox(G_LANGUAGE == 0 ? "Ref list modified, new parts added.":"Список изменен, добавлены новые детали");
 		}
 	}
 	return new_index;
@@ -11942,7 +12086,7 @@ int CFreePcbDoc::AddNewRefList( CString * Name )
 	int cnt = m_ref_lists->GetSize();
 	if( cnt >= MAX_REF_LISTS )
 	{
-		AfxMessageBox("Maximum number of lists is 20", MB_ICONWARNING );
+		AfxMessageBox(G_LANGUAGE == 0 ? "Maximum number of lists is 20":"Максимальное количество списков — 20", MB_ICONWARNING);
 		return -1;
 	}
 	//
@@ -12270,7 +12414,9 @@ void CFreePcbDoc::SwitchToPCB( BOOL duty, BOOL bGRAB, BOOL bIronScale )
 		if( PcbName.GetLength() == 0 )
 		{
 			if( bIronScale == 0 && duty == 0 )
-				AfxMessageBox("The current page is not included in any netlist. You can connect the pages in the Netlist Settings dialog box (the File menu)");
+				AfxMessageBox(G_LANGUAGE == 0 ?
+					"The current page is not included in the netlist. You can connect the pages in the Netlist Settings dialog box (the File menu)" :
+					"Текущая страница не включена в список эл.цепей. Вы можете подключить страницы в диалоговом окне Настройки списка (меню Файл)");
 			return;
 		}
 	}
@@ -12394,6 +12540,8 @@ void CFreePcbDoc::SwitchToPCB( BOOL duty, BOOL bGRAB, BOOL bIronScale )
 				frm->SetTimer( TMR_SW_PCB, 1000, 0 );
 			}
 			CString FreePcb2 = m_app_dir + "\\FreePcb.exe";
+			if(G_LANGUAGE)
+				FreePcb2 = m_app_dir + "\\ПлатФорм.exe";
 			if ( (UINT)ShellExecute(	NULL,"open", "\""+FreePcb2+"\"", "\""+fpc_file+"\"", "\""+m_app_dir+"\"", SW_SHOWNORMAL) > 32 )
 			{
 				
@@ -12556,11 +12704,15 @@ int CFreePcbDoc::RenumberComplexPart( CText * description, CString * old_suff, C
 {
 	static BOOL MessShown = 0;
 	if( MessShown == 0 )
-		AfxMessageBox( "Warning! Complex part renumbering has no undo option. ", MB_ICONWARNING );
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"Warning! Complex part renumbering has no undo option. ":
+			"Внимание! Перенумерация иерархических деталей не имеет возможности отмены", MB_ICONWARNING);
 	MessShown = TRUE;
 	if( m_project_modified )
 	{
-		AfxMessageBox( "The file has been modified. First save the file and then try again", MB_ICONWARNING );
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"The file has been modified. First save the file and then try again":
+			"Файл был изменен. Сначала сохраните файл, а затем попробуйте еще раз.", MB_ICONWARNING);
 		return 0;
 	}
 	
@@ -12701,7 +12853,8 @@ void CFreePcbDoc::OnReplacePoly()
 {
 	if( m_view->m_sel_count == 0 )
 	{
-		AfxMessageBox("First select polylines that you want to replace. "\
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			("First select polylines that you want to replace. "\
 			"You can select the polyline side and use the "\
 			"right-click menu \"Select Similar Polylines\""\
 			"\n\nAll selected polylines will be replaced by a reference polyline, "\
@@ -12709,7 +12862,15 @@ void CFreePcbDoc::OnReplacePoly()
 			"\n\nHow can I find out the reference polyline number?"\
 			"\n\nWhen a segment of any polyline is selected, its number is displayed "\
 			"in the status bar at the bottom of the window. "\
-			"So start by remembering the reference polyline number.", MB_ICONINFORMATION );
+			"So start by remembering the reference polyline number."):
+			("Сначала выберите полилинии, которые вы хотите заменить. "\
+			"Вы можете выбрать сторону полилинии и использовать меню правой кнопки мыши «Выделить аналогичные полилинии»"\
+			"\n\nВсе выбранные полилинии будут заменены опорной полилинией, "\
+			"номер которой вы выбираете из раскрывающегося списка в следующем диалоговом окне."\
+			"\n\nКак узнать номер опорной полилинии?"\
+			"\n\nКогда выбран сегмент любой полилинии, его номер отображается "\
+			"в строке состояния в нижней части окна. "\
+			"Поэтому следует начать с запоминания номера опорной полилинии..."), MB_ICONINFORMATION);
 		return;
 	}
 	CDlgAddMerge dlg;
@@ -12718,7 +12879,9 @@ void CFreePcbDoc::OnReplacePoly()
 	int ret = dlg.DoModal();
 	if( ret == IDOK )
 	{
-		int BEGIN = AfxMessageBox( "By default, the coordinates of the first vertices of both polylines will be the same. Align the beginnings of polylines?", MB_YESNO );
+		int BEGIN = AfxMessageBox(G_LANGUAGE == 0 ? 
+			"By default, the coordinates of the first vertices of both polylines will be the same. Align the beginnings of polylines?":
+			"По умолчанию координаты первых вершин обеих полилиний будут одинаковыми. Выровнять начала полилиний? \n\nДА - начало полилиний  \nНЕТ - конец полилиний", MB_YESNO);
 		this->SelectGroupAttributes();
 		m_view->SaveUndoInfoForGroup( m_undo_list );
 		int nmb = my_atoi( &dlg.m_merge_name );
@@ -12836,12 +12999,16 @@ void CFreePcbDoc::OnProtection()
 	Check_Txt_Msg( NULL, &MSG );
 	if( MSG.Compare( FILE_PROTECTED ) && MSG.GetLength() )
 	{
-		AfxMessageBox( "Unable to protect page\n\n("+MSG+")", MB_ICONERROR );
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			("Unable to protect page\n\n("+MSG+")"):
+			("Невозможно защитить страницу\n\n(" + MSG + ")"), MB_ICONERROR);
 		return;
 	}
 	if( Pages.GetCurrentPcbIndex() == -1 )
 	{
-		AfxMessageBox("The current page is not included in any netlist. You can connect the pages in the Netlist Settings dialog box (the File menu)");
+		AfxMessageBox(G_LANGUAGE == 0 ?
+			"The current page is not included in the netlist. You can connect the pages in the Netlist Settings dialog box (the File menu)" :
+			"Текущая страница не включена в список эл.цепей. Вы можете подключить страницы в диалоговом окне Настройки списка (меню Файл)");
 		return;
 	}
 	CDlgProtection dlg;
@@ -12858,7 +13025,8 @@ void CFreePcbDoc::OnCreateBranch()
 
 void CFreePcbDoc::OnSelectProjectFolder()
 {
-	CPathDialog dlg( "Project Folder", "Select default project folder", m_parent_folder );
+	CPathDialog dlg(G_LANGUAGE == 0 ? "Project Folder":"Папка проекта", 
+					G_LANGUAGE == 0 ? "Select default project folder":"Выберите папку", m_parent_folder);
 	int ret = dlg.DoModal();
 	if( ret == IDOK )
 	{
@@ -12940,12 +13108,16 @@ void CFreePcbDoc::OnImportNetlist()
 {
 	if( m_project_modified )
 	{
-		AfxMessageBox( "The project has been modified. Save the project before using this option", MB_ICONWARNING );
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"The project has been modified. Save the project before using this option":
+			"Проект был изменен. Сохраните проект перед использованием этой опции.", MB_ICONWARNING);
 		return;
 	}
 	if( Pages.IsThePageIncludedInNetlist( Pages.GetActiveNumber(), TRUE ) || m_outline_poly->GetSize() )
 	{
-		AfxMessageBox( "Netlist can only be imported to a blank page that is not included in any netlist", MB_ICONWARNING );
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"Netlist can only be imported to a blank page that is not included in any netlist":
+			"Список эл.цепей можно импортировать только на пустую страницу, которая не включена ни в один список.", MB_ICONWARNING);
 		return;
 	}
 	CString str = RunFileDialog( 1, "net" );
@@ -12968,17 +13140,23 @@ void CFreePcbDoc::OnAddFavorite()
 				 m_outline_poly->GetAt(m_view->m_sel_id.i).Check( index_part_attr ));
 	if( Fail )
 	{
-		AfxMessageBox( "This polyline has part name and cannot be added to favorite net labels.", MB_ICONERROR );
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"This polyline has part name and cannot be added to favorite net labels.":
+			"Эта полилиния относится к детали и не может быть добавлена в избранные метки.", MB_ICONERROR);
 		return;
 	}
 	if( Fav == NULL )
 	{
-		AfxMessageBox( "This polyline has no net name and cannot be added to favorite net labels. Set net attribute with F1- \"Set Attributes\" button", MB_ICONERROR );
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"This polyline has no net name and cannot be added to favorite net labels. Set net attribute with F1- \"Set Attributes\" button":
+			"Эта полилиния не имеет уникального имени цепи и не может быть добавлена в избранные метки эл.цепей. Установите атрибут эл.цепи с помощью кнопки F1 - «Задать атрибут»", MB_ICONERROR);
 		return;
 	}
 	else if( Fav->m_str.Left(3) == FREENET )
 	{
-		AfxMessageBox( "This polyline has no user net name and cannot be added to favorite net labels.", MB_ICONERROR );
+		AfxMessageBox(G_LANGUAGE == 0 ? 
+			"This polyline has no user net name and cannot be added to favorite net labels.":
+			"Эта полилиния не имеет уникального имени цепи и не может быть добавлена в избранные метки эл.цепей.", MB_ICONERROR);
 		return;
 	}
 	int mem_number_of_page = Pages.GetActiveNumber();
@@ -13001,7 +13179,9 @@ void CFreePcbDoc::OnAddFavorite()
 		if( net )
 			if( net->m_str.Compare( Fav->m_str ) == 0 )
 			{
-				int ret = AfxMessageBox( "The favorite net labels already contain this net name. Replace this label?", MB_YESNO|MB_ICONQUESTION );
+				int ret = AfxMessageBox(G_LANGUAGE == 0 ? 
+					"The favorite net labels already contain this net name. Replace this label?":
+					"Избранные метки эл.цепей уже содержат это имя. Заменить этой меткой старую метку? \n\nДА - заменить, \nНЕТ - сохранить как есть, будет две с одинаковыми именами", MB_YESNO | MB_ICONQUESTION);
 				if( ret == IDYES )
 				{
 					find = i;
@@ -13256,7 +13436,7 @@ void CFreePcbDoc::ComponentNote( int MODE )
 					if( err )
 					{
 						CString str;
-						str.Format( "Unable to create folder \"%s\"", CDir );
+						str.Format(G_LANGUAGE == 0 ? "Unable to create folder \"%s\"" : "Невозможно создать папку \"%s\"", CDir );
 						AfxMessageBox( str, MB_OK );
 						return;
 					}
@@ -13305,20 +13485,30 @@ void CFreePcbDoc::ComponentNote( int MODE )
 									dlg.ext = ext;
 									if( _stat( CNote+dlg.ext, &buf ) == 0 )
 									{
-										if( AfxMessageBox("This document already exists in the storage mirror. "\
+										if( AfxMessageBox(G_LANGUAGE == 0 ? 
+											"This document already exists in the storage mirror. "\
 											"Do you want to continue despite this? (If you now create a new document "\
 											"with the same name in the main storage, then when you close the project, "\
 											"the old document that is stored in the mirror will be replaced by "\
-											"the new one) ",MB_YESNO | MB_ICONWARNING) != IDYES )
+											"the new one) ":
+											"Этот документ уже существует в зеркале хранилища. "\
+											"Хотите продолжить, несмотря на это? (Если вы сейчас создадите новый документ "\
+											"с тем же именем в основном хранилище, то при закрытии проекта "\
+											"старый документ, хранящийся в зеркале, будет заменён "\
+											"новым) ",MB_YESNO | MB_ICONWARNING) != IDYES )
 											continue;
 									}
 									CDir = m_app_dir + main_component;
 									CNote = CDir + "\\" + Value + "@" + Footprint;
 									if( _stat( CNote+dlg.ext, &buf ) == 0 )
 									{
-										if( AfxMessageBox("This document already exists in the main storage. "\
+										if( AfxMessageBox(G_LANGUAGE == 0 ?
+											"This document already exists in the main storage. "\
 											"Would you like to continue anyway and replace it "\
-											"with a new file?",MB_YESNO | MB_ICONWARNING) != IDYES )
+											"with a new file?":
+											"Этот документ уже существует в основном хранилище. "\
+											"Хотите ли вы продолжить в любом случае и заменить его "\
+											"новым файлом?",MB_YESNO | MB_ICONWARNING) != IDYES )
 											continue;
 									}
 									if( fileStr.Compare( CNote+ext ) )
@@ -13334,20 +13524,30 @@ void CFreePcbDoc::ComponentNote( int MODE )
 						{		
 							if( _stat( CNote+dlg.ext, &buf ) == 0 )
 							{
-								if( AfxMessageBox("This document already exists in the storage mirror. "\
+								if( AfxMessageBox(G_LANGUAGE == 0 ?
+									"This document already exists in the storage mirror. "\
 									"Do you want to continue despite this? (If you now create a new document "\
 									"with the same name in the main storage, then when you close the project, "\
 									"the old document that is stored in the mirror will be replaced by "\
-									"the new one) ",MB_YESNO | MB_ICONWARNING) != IDYES )
+									"the new one) ":
+									"Этот документ уже существует в зеркале хранилища. "\
+									"Хотите продолжить, несмотря на это? (Если вы сейчас создадите новый документ "\
+									"с тем же именем в основном хранилище, то при закрытии проекта "\
+									"старый документ, хранящийся в зеркале, будет заменён "\
+									"новым) ",MB_YESNO | MB_ICONWARNING) != IDYES )
 									continue;
 							}
 							CDir = m_app_dir + main_component;
 							CNote = CDir + "\\" + Value + "@" + Footprint;
 							if( _stat( CNote+dlg.ext, &buf ) == 0 )
 							{
-								if( AfxMessageBox("This document already exists in the main storage. "\
+								if( AfxMessageBox(G_LANGUAGE == 0 ?
+									"This document already exists in the main storage. "\
 									"Would you like to continue anyway and replace it "\
-									"with a new empty file?",MB_YESNO | MB_ICONWARNING) != IDYES )
+									"with a new empty file?":
+									"Этот документ уже существует в основном хранилище. "\
+									"Хотите ли вы продолжить в любом случае и заменить его "\
+									"новым пустым файлом?",MB_YESNO | MB_ICONWARNING) != IDYES )
 									continue;
 							}
 							if( dlg.ext_num < 2 )	// docx, txt
@@ -13383,7 +13583,9 @@ void CFreePcbDoc::ComponentNote( int MODE )
 		}
 		else
 		{
-			AfxMessageBox( "First enter \"value\" text to create a note file", MB_ICONERROR );
+			AfxMessageBox(G_LANGUAGE == 0 ? 
+				"First enter \"value\" text to create a note file":
+				"Сначала введите атрибут детали «Название», чтобы создать файл заметки.", MB_ICONERROR);
 		}
 	}
 }

@@ -62,7 +62,7 @@ void CDlgPDFLayers::DoDataExchange(CDataExchange* pDX)
 			m_print_7 == 0 &&
 			m_print_8 == 0 )
 		{
-			AfxMessageBox("Select print pages !");
+			AfxMessageBox(G_LANGUAGE == 0 ? "Select print pages !":"Выберите страницы для печати!");
 			pDX->Fail();
 		}
 
