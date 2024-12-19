@@ -3,41 +3,42 @@
 version: 1.416
 file_version: 1.416
 project_name: "buf.cds"
-library_folder: "D:\–азработки\Projects\duxahtech"
-full_library_folder: "?\ovo-78"
+library_folder: "d:\works\fp_lib"
+full_library_folder: "d:\works\fp_lib\lib"
 CAM_folder: ""
 netlist_completed: "0"
-bom_options: "83886240"
+bom_options: "83886112"
 page_number: "0"
 parent_index: "2"
 alignment: 0.80
 partlist_size_x: "534"
-partlist_size_y: "283"
-partlist_pos_x: "751"
-partlist_pos_y: "76"
-partlist_col_w: "961333308"
-netlist_file_path: "D:\–азработки\Projects\duxahtech\OVO\OVO-78_old\related_files\CDS_netlist\1.pcb_old.fpc"
-pcb_name: "1.pcb_old.fpc" 1
+partlist_size_y: "391"
+partlist_pos_x: "1088"
+partlist_pos_y: "95"
+partlist_col_w: "960223292"
+netlist_file_path: "d:\works\projects\Smart-Servo-1\version-01\related_files\CDS_netlist\import.fpc"
+pcb_name: "Smart-Servo-1-01.fpc" 0
+pcb_name: "import.fpc" 1
 netlist_format: 0
 page_mirror_mask: 0
 default_font: 11
-default_node_width: -550000
+default_node_width: -1100000
 autosave_interval: 60
 m_client_rect_left: 0
 m_client_rect_right: 1132
-m_client_rect_bottom: 587
+m_client_rect_bottom: 713
 m_client_rect_top: 0
-m_org_x: -48360
-m_org_y: -16598
-m_scale_factor: 33346
-m_attr_size: 500000 60000 500000 60000 500000 60000 500000 60000 500000 60000 500000 60000
+m_org_x: 35755
+m_org_y: 7418
+m_scale_factor: 12415
+m_attr_size: 1000000 110000 1000000 110000 1000000 110000 1000000 110000 1000000 110000 1000000 110000
 m_user_scale: 1.0000000000
 units: MM
 
-m_sel_mask: 111
-m_visible_layers: 1048571
+m_sel_mask: -1
+m_visible_layers: 524283
 m_top_layer: 10
-m_grid_style: 1
+m_grid_style: 0
 visible_grid_spacing: 2000000.000000
   visible_grid_item: 20mil
   visible_grid_item: 50mil
@@ -64,7 +65,7 @@ visible_grid_spacing: 2000000.000000
   visible_grid_item: 50mm
   visible_grid_item: 100mm
 
-polyline_grid_spacing: 250000.000000
+polyline_grid_spacing: 100000.000000
   placement_grid_item: 5mil
   placement_grid_item: 10mil
   placement_grid_item: 20mil
@@ -94,7 +95,7 @@ polyline_grid_spacing: 250000.000000
   placement_grid_item: 5mm
   placement_grid_item: 10mm
 
-text_grid_spacing: 50000.000000
+text_grid_spacing: 100000.000000
   text_grid_item: 0.1mil
   text_grid_item: 0.5mil
   text_grid_item: 1mil
@@ -143,12 +144,12 @@ drc_pin_attr_to_attr: 254000
 drc_pin_attr_to_poly: 254000
 
 default_polyline_width:0.2mm
-n_additional_layers: 5
+n_additional_layers: 4
 m_pdf_font_i: 22
 m_pdf_margin: 0.01
 pdf_checking: 34
   layer_info: "перемещение" 0 130 130 130 1
-  layer_info: "фон доски" 1 178 178 178 1
+  layer_info: "фон доски" 1 79 79 79 1
   layer_info: "видима€ сетка" 2 22 22 22 0
   layer_info: "подсветка" 3 255 255 0 1
   layer_info: "метки" 4 0 255 128 1
@@ -166,7 +167,6 @@ pdf_checking: 34
   layer_info: "верхний 2" 16 0 255 0 1
   layer_info: "нижний 1" 17 0 0 0 1
   layer_info: "нижний 2" 18 128 128 255 1
-  layer_info: "нижний 3" 19 250 250 250 1
 
   pdf_layer_info: "перемещение" 0 255 255 255 0
   pdf_layer_info: "фон доски" 1 255 255 255 0
@@ -184,10 +184,10 @@ pdf_checking: 34
   pdf_layer_info: "названи€" 13 0 0 0 1
   pdf_layer_info: "описани€" 14 0 0 0 1
   pdf_layer_info: "верхний 1" 15 0 0 0 1
-  pdf_layer_info: "верхний 2" 16 155 155 155 1
-  pdf_layer_info: "нижний 1" 17 255 255 255 0
-  pdf_layer_info: "нижний 2" 18 128 128 255 1
-  pdf_layer_info: "нижний 3" 19 255 187 255 0
+  pdf_layer_info: "верхний 2" 16 127 127 127 1
+  pdf_layer_info: "нижний 1" 17 254 254 254 1
+  pdf_layer_info: "нижний 2" 18 164 164 164 1
+  pdf_layer_info: "нижний 3" 19 255 255 0 1
   pdf_layer_info: "нижний 4" 20 0 0 0 1
   pdf_layer_info: "нижний 5" 21 255 255 255 1
   pdf_layer_info: "нижний 6" 22 64 128 128 1
@@ -202,21 +202,19 @@ pdf_checking: 34
   pdf_layer_info: "undefined" 31 255 255 255 0
 
 m_bom_colors: 0 0 0 155 155 155 0 0 0 166 166 166 255 255 111 0 0 255 255 193 193
-  merge: "Merge-1"
-  merge: "Merge-2"
 
 [graphics]
 
-rename_page: "OVO-78(v3.0) - схема"
-bmp_src: "D:\–азработки\Projects\duxahtech\OVO\OVO-78_old\related_files\pictures\00002.PIC"
-bmp_src: "D:\–азработки\Projects\duxahtech\OVO\OVO-78_old\related_files\pictures\00001.PIC"
-polyline: 4 1 10 100004 -1 -1 -1 0 9
-  corner: 1 -48250000 -9935552 0 1
-  corner: 2 -48250000 -11185552 0 0
-  corner: 3 -49500000 -11185552 0 0
-  corner: 4 -47000000 -11185552 0 0
-net_name: "GND" -48750000 -11915552 11 0 500000 60000 -1 -1 11 1
+rename_page: "Page 1"
+bmp_src: "d:\works\projects\Smart-Servo-1\version-01\related_files\pictures\00001.PIC"
+bmp_src: "d:\works\projects\Smart-Servo-1\version-01\related_files\pictures\00002.PIC"
+outline: 6 0 10 200003 -1 -1 -1 0 9
+  corner: 1 -60100000 27300000 0 0
+  corner: 2 -61000000 28200000 0 0
+  corner: 3 -64400000 28200000 0 0
+  corner: 4 -64400000 26400000 0 0
+  corner: 5 -61000000 26400000 0 0
+  corner: 6 -60500000 26900000 0 0
+net_name: "SCL" -63500000 26845000 11 0 1000000 110000 -1 -1 11 1
 
-add_new_page: "PCB-netlist"
-bmp_src: "D:\–азработки\Projects\duxahtech\OVO\OVO-78_old\related_files\pictures\00002.PIC"
 [end]

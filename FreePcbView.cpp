@@ -16324,6 +16324,17 @@ void CFreePcbView::RedrawLayers()
 						if( m_sel_id.i >= i )
 							m_sel_id.i++;
 				}
+				// correct favorites
+				for (int ipo=0; ipo<MAX_FAVORITES; ipo++)
+				{
+					if (m_favorite_page[ipo] != m_Doc->Pages.GetActiveNumber())
+						continue;
+					if (m_favorite_poly[ipo] == bFound)
+						m_favorite_poly[ipo] = i;
+					else if (m_favorite_poly[ipo] < bFound)
+						if (m_favorite_poly[ipo] >= i)
+							m_favorite_poly[ipo]++;
+				}
 				CPolyLine p = m_Doc->m_outline_poly->GetAt( bFound );
 				m_Doc->m_outline_poly->InsertAt( i, p );
 				m_Doc->m_outline_poly->RemoveAt( ++bFound );

@@ -260,6 +260,12 @@ void OnGroupGridMagnetize( CFreePcbDoc * doc )
 							ok = 1;
 							break;
 						}
+						if (abs(dx) < p->GetW() &&
+							abs(dy) < p->GetW())
+						{
+							ok = 1;
+							break;
+						}
 					}
 					if(ok)
 						break;

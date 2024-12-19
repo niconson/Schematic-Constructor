@@ -380,7 +380,10 @@ void CDlgImportPart::OnClickListButton()
 		this->GetWindowRect(&WR);
 	if( m_b[F_USE_LIST].GetCheck() )
 	{
-		mb_Ok.SetWindowTextA("IMPORT");
+		if( G_LANGUAGE == 0 )
+			mb_Ok.SetWindowTextA("IMPORT");
+		else
+			mb_Ok.SetWindowTextA("»ÃœŒ–“");
 		m_part_list.ShowWindow(1);
 		m_path_list.ShowWindow(1);
 		for( int i=0; i<F_USE_LIST; i++ )
@@ -409,7 +412,10 @@ void CDlgImportPart::OnClickListButton()
 	}
 	else
 	{
-		mb_Ok.SetWindowTextA("FIND");
+		if (G_LANGUAGE == 0)
+			mb_Ok.SetWindowTextA("FIND");
+		else
+			mb_Ok.SetWindowTextA("Õ¿…“»");
 		m_part_list.ShowWindow(0);
 		m_path_list.ShowWindow(0);
 		for( int i=0; i<F_USE_LIST; i++ )
