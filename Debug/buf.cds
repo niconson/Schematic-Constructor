@@ -1,13 +1,13 @@
 [options]
 
-version: 1.416
-file_version: 1.416
+version: 1.418
+file_version: 1.418
 project_name: "buf.cds"
-library_folder: "d:\works\fp_lib"
-full_library_folder: "d:\works\fp_lib\lib"
+library_folder: "D:\FreePCBDev\Schematic Constructor\.\Projects\lib"
+full_library_folder: "?\lib\footprints"
 CAM_folder: ""
 netlist_completed: "0"
-bom_options: "83886112"
+bom_options: "16777376"
 page_number: "0"
 parent_index: "2"
 alignment: 0.80
@@ -16,9 +16,9 @@ partlist_size_y: "391"
 partlist_pos_x: "1088"
 partlist_pos_y: "95"
 partlist_col_w: "960223292"
-netlist_file_path: "d:\works\projects\Smart-Servo-1\version-01\related_files\CDS_netlist\import.fpc"
-pcb_name: "Smart-Servo-1-01.fpc" 0
-pcb_name: "import.fpc" 1
+netlist_file_path: "D:\Works\Projects\Micronica\Smart-Servo-1\version-01\related_files\CDS_netlist\Smart-Servo-1-01.fpc"
+pcb_name: "Smart-Servo-1-01.fpc" 1
+pcb_name: "import.fpc" 0
 netlist_format: 0
 page_mirror_mask: 0
 default_font: 11
@@ -28,18 +28,18 @@ m_client_rect_left: 0
 m_client_rect_right: 1132
 m_client_rect_bottom: 713
 m_client_rect_top: 0
-m_org_x: 35755
-m_org_y: 7418
-m_scale_factor: 12415
+m_org_x: -16884
+m_org_y: -15265
+m_scale_factor: 267486
 m_attr_size: 1000000 110000 1000000 110000 1000000 110000 1000000 110000 1000000 110000 1000000 110000
 m_user_scale: 1.0000000000
 units: MM
 
 m_sel_mask: -1
 m_visible_layers: 524283
-m_top_layer: 10
+m_top_layer: 6
 m_grid_style: 0
-visible_grid_spacing: 2000000.000000
+visible_grid_spacing: 2500000.000000
   visible_grid_item: 20mil
   visible_grid_item: 50mil
   visible_grid_item: 100mil
@@ -65,7 +65,7 @@ visible_grid_spacing: 2000000.000000
   visible_grid_item: 50mm
   visible_grid_item: 100mm
 
-polyline_grid_spacing: 100000.000000
+polyline_grid_spacing: 200000.000000
   placement_grid_item: 5mil
   placement_grid_item: 10mil
   placement_grid_item: 20mil
@@ -149,7 +149,7 @@ m_pdf_font_i: 22
 m_pdf_margin: 0.01
 pdf_checking: 34
   layer_info: "ïåğåìåùåíèå" 0 130 130 130 1
-  layer_info: "ôîí äîñêè" 1 79 79 79 1
+  layer_info: "ôîí äîñêè" 1 177 177 177 1
   layer_info: "âèäèìàÿ ñåòêà" 2 22 22 22 0
   layer_info: "ïîäñâåòêà" 3 255 255 0 1
   layer_info: "ìåòêè" 4 0 255 128 1
@@ -202,19 +202,44 @@ pdf_checking: 34
   pdf_layer_info: "undefined" 31 255 255 255 0
 
 m_bom_colors: 0 0 0 155 155 155 0 0 0 166 166 166 255 255 111 0 0 255 255 193 193
+  merge: "ÄÀÒ×ÈÊ_ÒÎÊÀ"
+  merge: "ÒÅÌÏÅĞÀÒÓĞÀ"
+  merge: "Merge-1"
+  merge: "Merge-2"
+  ref_list: "RefList-1"
 
 [graphics]
 
-rename_page: "Page 1"
-bmp_src: "d:\works\projects\Smart-Servo-1\version-01\related_files\pictures\00001.PIC"
-bmp_src: "d:\works\projects\Smart-Servo-1\version-01\related_files\pictures\00002.PIC"
-outline: 6 0 10 200003 -1 -1 -1 0 9
-  corner: 1 -60100000 27300000 0 0
-  corner: 2 -61000000 28200000 0 0
-  corner: 3 -64400000 28200000 0 0
-  corner: 4 -64400000 26400000 0 0
-  corner: 5 -61000000 26400000 0 0
-  corner: 6 -60500000 26900000 0 0
-net_name: "SCL" -63500000 26845000 11 0 1000000 110000 -1 -1 11 1
+rename_page: "Smart-Servo-1-01"
+bmp_src: "D:\Works\Projects\Micronica\Smart-Servo-1\version-01\related_files\pictures\00001.PIC"
+bmp_src: "D:\Works\Projects\Micronica\Smart-Servo-1\version-01\related_files\pictures\00002.PIC"
+polyline: 2 0 10 200001 -1 -1 -1 0 0
+  corner: 1 154700000 58300000 0 0
+  corner: 2 156600000 58300000 0 1
+description: "2'|suffix: A'|LINK: ÊÎÌÌÓÒÀÒÎĞ'|pin_name: 2'|page_number: 2'|command: BLK_PTR" 155700000 58945000 14 0 1000000 110000 -1 -1 11 1
 
+polyline: 2 0 10 200001 -1 -1 -1 0 0
+  corner: 1 141500000 70000000 0 1
+  corner: 2 143400000 70000000 0 0
+description: "4'|suffix: A'|LINK: ÊÎÌÌÓÒÀÒÎĞ'|pin_name: 4'|page_number: 2'|command: BLK_PTR" 142100000 70645000 14 0 1000000 110000 -1 -1 11 1
+
+polyline: 2 0 10 200001 -1 -1 -1 0 0
+  corner: 1 141500000 58300000 0 1
+  corner: 2 143400000 58300000 0 0
+description: "1'|suffix: A'|LINK: ÊÎÌÌÓÒÀÒÎĞ'|pin_name: 1'|page_number: 2'|command: BLK_PTR" 142100000 58945000 14 0 1000000 110000 -1 -1 11 1
+
+outline: 4 0 15 200000 -1 -1 -1 0 0
+  corner: 1 143400000 53500000 0 0
+  corner: 2 143400000 74200000 0 0
+  corner: 3 154700000 74200000 0 0
+  corner: 4 154700000 53500000 0 0
+description: "ÊÎÌÌÓÒÀÒÎĞ (A)'|suffix: A'|LINK: ÊÎÌÌÓÒÀÒÎĞ'|page_number: 2'|command: BLK" 144200000 75600000 14 0 1000000 110000 -1 -1 11 1
+
+polyline: 2 0 10 200001 -1 -1 -1 0 0
+  corner: 1 154700000 70000000 0 0
+  corner: 2 156600000 70000000 0 1
+description: "3'|suffix: A'|LINK: ÊÎÌÌÓÒÀÒÎĞ'|pin_name: 3'|page_number: 2'|command: BLK_PTR" 155700000 70645000 14 0 1000000 110000 -1 -1 11 1
+
+add_new_page: "Êîììóòàòîğ"
+bmp_src: "D:\Works\Projects\Micronica\Smart-Servo-1\version-01\related_files\pictures\00001.PIC"
 [end]

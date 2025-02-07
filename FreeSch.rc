@@ -883,15 +883,15 @@ CAPTION "О программе"
 FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,11,12,20,20
-    LTEXT           "СхемАтор v1.4.17 для ПлатФорм v2.4",IDC_STATIC,42,12,119,8,SS_NOPREFIX
-    LTEXT           "© Duxahtech 2020-2024, Российская Федерация",IDC_STATIC,42,24,178,8
+    LTEXT           "СхемАтор v1.4.18 для ПлатФорм v2.4",IDC_STATIC,42,12,119,8,SS_NOPREFIX
+    LTEXT           "© Duxahtech 2020-2025, Россия г.Челябинск",IDC_STATIC,42,24,178,8
     DEFPUSHBUTTON   "Готово",IDOK,165,61,50,14,WS_GROUP
     LTEXT           "Source libraries:",IDC_STATIC,21,78,51,8
     LTEXT           "ClibPDF © FastIO Systems Inc.",IDC_STATIC,27,90,117,9
     LTEXT           "Generic Polygon Clipper © Advanced Interfaces Group, University of Manchester",IDC_STATIC,27,101,165,20
     LTEXT           "Additional Copyrights:",IDC_STATIC,12,54,68,8
     LTEXT           "CSVFileView v2.64 © Nir Sofer",IDC_STATIC,27,66,117,9
-    LTEXT           "Техническая поддержка: duxahtech@yandex.ru",IDC_STATIC,42,36,179,8
+    LTEXT           "Техническая поддержка: freepcb@niconson.com",IDC_STATIC,42,36,179,8
 END
 
 IDD_ADD_PART DIALOGEX 0, 0, 366, 348

@@ -9474,13 +9474,56 @@ void CFreePcbView::StartDraggingGroup( BOOL bAdd, int x, int y )
 	else
 	{
 		SetCursorMode( CUR_DRAG_GROUP_ADD );
-		m_last_mouse_point.x = x;
-		m_last_mouse_point.y = y;
-		m_last_cursor_point.x = x;
-		m_last_cursor_point.y = y;
+		//m_last_mouse_point.x = x;
+		//m_last_mouse_point.y = y;
+		//m_last_cursor_point.x = x;
+		//m_last_cursor_point.y = y;
 	}
+
+	int fx = 0;
+	int fy = 0;
+	int memx = m_last_cursor_point.x;
+	int memy = m_last_cursor_point.y;
+	int min = INT_MAX;
+	for (int isel = 0; isel < m_Doc->m_outline_poly->GetSize(); isel++)
+	{
+		CPolyLine* gp = &m_Doc->m_outline_poly->GetAt(isel);
+		if (gp->GetSideSel())
+		{
+			for (int sid = 0; sid < gp->GetNumSides(); sid++)
+			{
+				if (gp->GetSideSel(sid))
+				{
+					int gx = gp->GetX(sid);
+					int gy = gp->GetY(sid);
+					if (abs(gx - memx) + abs(gy - memy) < min)
+					{
+						fx = gx;
+						fy = gy;
+						min = abs(gx - memx) + abs(gy - memy);
+					}
+					if (gp->GetClosed() == 0)
+						if (sid == gp->GetNumSides() - 1)
+						{
+							gx = gp->GetX(gp->GetNextCornerIndex(sid));
+							gy = gp->GetY(gp->GetNextCornerIndex(sid));
+							if (abs(gx - memx) + abs(gy - memy) < min)
+							{
+								fx = gx;
+								fy = gy;
+								min = abs(gx - memx) + abs(gy - memy);
+							}
+						}
+				}
+			}
+		}
+	}
+	if (fx && fy)
+		m_last_mouse_point = CPoint(fx, fy);
+
 	// snap dragging point to placement grid
-	SnapCursorPoint( m_last_mouse_point, -1 );
+	// SnapCursorPoint( m_last_mouse_point, -1 );
+	m_last_cursor_point = m_last_mouse_point;
 	m_from_pt = m_last_cursor_point;
 
 	int n_lines = 4, n_rat_lines = 0;
