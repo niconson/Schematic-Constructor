@@ -247,7 +247,7 @@ CFreePcbDoc::CFreePcbDoc()
 	m_auto_elapsed = 0;
 	bNoFilesOpened = TRUE;
 	// VERSION (key)
-	m_version = 1.418;
+	m_version = 1.419;
 	m_file_version = m_version;
 	m_protection = 0;
 	m_current_page = 0;

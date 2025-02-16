@@ -820,7 +820,7 @@ float CDlgRFiles::PageInit( CPDFdoc * pdf )
 								clr_pdf*(float)m_doc->m_bom_rgb[eStroke][2] );
 	cpdf_setlinewidth( pdf, LineW );
 	cpdf_setTextRenderingMode(pdf, TEXT_FILL);
-	cpdf_setFont(pdf, cpdf_fontnamelist[24], "WinAnsiEncoding", TextHeightPts);
+	cpdf_setFont(pdf, cpdf_fontnamelist[24], "WinAnsiEncoding", TextHeightPts*2.0/3.0);
 	//
 	cpdf_newpath( pdf );
 	//
@@ -831,6 +831,17 @@ float CDlgRFiles::PageInit( CPDFdoc * pdf )
 	cpdf_lineto( pdf, m_pdf_margin, m_pdf_margin );
 	cpdf_fill( pdf );
 	//
+	int color_summ = m_doc->m_bom_rgb[eSource][0] + m_doc->m_bom_rgb[eSource][1] + m_doc->m_bom_rgb[eSource][2];
+	if (color_summ < 127 * 3)
+		cpdf_setrgbcolorFill(pdf, clr_pdf * 255.0,
+			clr_pdf * 255.0,
+			clr_pdf * 255.0);
+	else
+		cpdf_setrgbcolorFill(pdf, clr_pdf * 0.0,
+			clr_pdf * 0.0,
+			clr_pdf * 0.0);
+	cpdf_text(pdf, 0.1, 0.08, 0, "niconson.com");
+	cpdf_setActionURL(pdf, 0.1, 0.08, 1.0, 0.2, "https://niconson.com/freepcb2", NULL);
 	cpdf_setrgbcolorFill( pdf,	clr_pdf*(float)m_doc->m_bom_rgb[eFill][0], 
 								clr_pdf*(float)m_doc->m_bom_rgb[eFill][1], 
 								clr_pdf*(float)m_doc->m_bom_rgb[eFill][2] );
