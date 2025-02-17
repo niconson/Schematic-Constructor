@@ -820,7 +820,7 @@ float CDlgRFiles::PageInit( CPDFdoc * pdf )
 								clr_pdf*(float)m_doc->m_bom_rgb[eStroke][2] );
 	cpdf_setlinewidth( pdf, LineW );
 	cpdf_setTextRenderingMode(pdf, TEXT_FILL);
-	cpdf_setFont(pdf, cpdf_fontnamelist[24], "WinAnsiEncoding", TextHeightPts*2.0/3.0);
+	cpdf_setFont(pdf, cpdf_fontnamelist[24], "WinAnsiEncoding", TextHeightPts/2.0);
 	//
 	cpdf_newpath( pdf );
 	//
@@ -831,17 +831,33 @@ float CDlgRFiles::PageInit( CPDFdoc * pdf )
 	cpdf_lineto( pdf, m_pdf_margin, m_pdf_margin );
 	cpdf_fill( pdf );
 	//
-	int color_summ = m_doc->m_bom_rgb[eSource][0] + m_doc->m_bom_rgb[eSource][1] + m_doc->m_bom_rgb[eSource][2];
-	if (color_summ < 127 * 3)
-		cpdf_setrgbcolorFill(pdf, clr_pdf * 255.0,
-			clr_pdf * 255.0,
-			clr_pdf * 255.0);
-	else
-		cpdf_setrgbcolorFill(pdf, clr_pdf * 0.0,
-			clr_pdf * 0.0,
-			clr_pdf * 0.0);
-	cpdf_text(pdf, 0.1, 0.08, 0, "niconson.com");
-	cpdf_setActionURL(pdf, 0.1, 0.08, 1.0, 0.2, "https://niconson.com/freepcb2", NULL);
+	//int color_summ = m_doc->m_bom_rgb[eSource][0] + m_doc->m_bom_rgb[eSource][1] + m_doc->m_bom_rgb[eSource][2];
+	//if (color_summ < 127 * 3)
+	//{
+	//	cpdf_setrgbcolorFill(pdf,	clr_pdf * 255.0,
+	//								clr_pdf * 255.0,
+	//								clr_pdf * 255.0);
+	//}
+	//else
+	//{
+		cpdf_setrgbcolorFill(pdf,	clr_pdf * 90.0,
+									clr_pdf * 90.0,
+									clr_pdf * 90.0);
+	//}
+	//
+	cpdf_moveto(pdf, m_pdf_margin, m_pdf_margin);
+	cpdf_lineto(pdf, m_pdf_margin, 0.13 + m_pdf_margin);
+	cpdf_lineto(pdf, 1.6 - m_pdf_margin, 0.13 + m_pdf_margin);
+	cpdf_lineto(pdf, 1.6 - m_pdf_margin, m_pdf_margin);
+	cpdf_lineto(pdf, m_pdf_margin, m_pdf_margin);
+	cpdf_fill(pdf);
+	//
+	cpdf_setrgbcolorFill(pdf,	clr_pdf * 255.0,
+								clr_pdf * 255.0,
+								clr_pdf * 255.0);
+	//
+	cpdf_text(pdf, 0.1, 0.08, 0, "Made in Freepcb-2 from Niconson");
+	cpdf_setActionURL(pdf, 0.1, 0.08, 1.5, 0.2, "https://niconson.com/freepcb2", NULL);
 	cpdf_setrgbcolorFill( pdf,	clr_pdf*(float)m_doc->m_bom_rgb[eFill][0], 
 								clr_pdf*(float)m_doc->m_bom_rgb[eFill][1], 
 								clr_pdf*(float)m_doc->m_bom_rgb[eFill][2] );
@@ -871,16 +887,16 @@ float CDlgRFiles::PageInit( CPDFdoc * pdf )
 	float x = stLink;
 	float y = m_pdf_margin + (StringHeight/2.0);
 	DrawTextBox(pdf, x, y-(StringHeight/3.0), wLink, 1, TextW, 
-								(float)m_doc->m_bom_rgb[eText][0], 
-								(float)m_doc->m_bom_rgb[eText][1], 
-								(float)m_doc->m_bom_rgb[eText][2], &title, TRUE );
+		m_doc->m_bom_rgb[eText][0],
+		m_doc->m_bom_rgb[eText][1],
+		m_doc->m_bom_rgb[eText][2], &title, TRUE );
 	//
 	title = m_doc->m_pcb_full_path.Right( m_doc->m_pcb_full_path.GetLength() - m_doc->m_parent_folder.GetLength() );
 	x = stPicture;
 	DrawTextBox(pdf, x, y-(StringHeight/3.0), (wPicture+wValue+wCount), 1, TextW, 
-								(float)m_doc->m_bom_rgb[eText][0], 
-								(float)m_doc->m_bom_rgb[eText][1], 
-								(float)m_doc->m_bom_rgb[eText][2], &title, TRUE );
+		m_doc->m_bom_rgb[eText][0],
+		m_doc->m_bom_rgb[eText][1],
+		m_doc->m_bom_rgb[eText][2], &title, TRUE );
 	//
 	//
 	cpdf_closepath( pdf );
