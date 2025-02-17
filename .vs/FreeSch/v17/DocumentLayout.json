@@ -36,7 +36,7 @@
               "RelativeDocumentMoniker": "ReportFiles.cpp",
               "ToolTip": "D:\\FreePCBDev\\Schematic Constructor\\ReportFiles.cpp",
               "RelativeToolTip": "ReportFiles.cpp",
-              "ViewState": "AQIAAEEDAAAAAAAAAAAIwEwDAAAUAAAA",
+              "ViewState": "AQIAAFQDAAAAAAAAAAAIwE8DAAAYAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-02-16T13:33:22.782Z",
               "EditorCaption": ""
@@ -51,8 +51,7 @@
               "RelativeToolTip": "FreeSch.rc",
               "ViewState": "AQIAAGoDAAAAAAAAAAAYwHUDAAAlAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
-              "WhenOpened": "2024-12-19T17:54:13.724Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-19T17:54:13.724Z"
             },
             {
               "$type": "Document",
