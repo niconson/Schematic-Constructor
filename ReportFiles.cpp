@@ -852,16 +852,16 @@ float CDlgRFiles::PageInit( CPDFdoc * pdf )
 	}
 	//
 	cpdf_moveto(pdf, m_pdf_margin, m_pdf_margin);
-	cpdf_lineto(pdf, m_pdf_margin, 0.13 + m_pdf_margin);
-	cpdf_lineto(pdf, 1.6 - m_pdf_margin, 0.13 + m_pdf_margin);
-	cpdf_lineto(pdf, 1.6 - m_pdf_margin, m_pdf_margin);
+	cpdf_lineto(pdf, m_pdf_margin, 0.14 + m_pdf_margin);
+	cpdf_lineto(pdf, 0.94 - m_pdf_margin, 0.14 + m_pdf_margin);
+	cpdf_lineto(pdf, 0.94 - m_pdf_margin, m_pdf_margin);
 	cpdf_lineto(pdf, m_pdf_margin, m_pdf_margin);
 	cpdf_stroke(pdf);
 	//cpdf_fill(pdf);
 	//
 	//
-	cpdf_text(pdf, 0.1, 0.08, 0, "Made in Freepcb-2 from Niconson");
-	cpdf_setActionURL(pdf, 0.1, 0.08, 1.5, 0.2, "https://niconson.com/freepcb2", NULL);
+	cpdf_text(pdf, 0.1, 0.08, 0, "Made in Niconson");
+	cpdf_setActionURL(pdf, 0.1, 0.08, 0.85, 0.2, "https://niconson.com", NULL);
 	cpdf_setrgbcolorFill( pdf,	clr_pdf * (float)m_doc->m_bom_rgb[eFill][0], 
 								clr_pdf * (float)m_doc->m_bom_rgb[eFill][1], 
 								clr_pdf * (float)m_doc->m_bom_rgb[eFill][2] );
