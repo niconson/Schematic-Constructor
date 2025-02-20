@@ -1261,6 +1261,7 @@
 #define ID_SLIDING_ANGLE2				32884
 #define ID_PRINT_PDF                    32885
 #define ID_GROUP_LINE_UP				32886
+#define ID_GROUP_SAVETODXF				32887
 #define ID_EDIT_SAVEGROUPTOFILE         32889
 #define ID_PRINT                        32890
 #define ID_PRINT_BUTTON                 32890

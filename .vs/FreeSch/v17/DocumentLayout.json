@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "D:\\FreePCBDev\\Schematic Constructor\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{48B16142-FBCE-4203-996C-8DEC8AAE6546}|FreePcb.vcxproj|D:\\FreePCBDev\\Schematic Constructor\\ReportFiles.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{48B16142-FBCE-4203-996C-8DEC8AAE6546}|FreePcb.vcxproj|solutionrelative:ReportFiles.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{48B16142-FBCE-4203-996C-8DEC8AAE6546}|FreePcb.vcxproj|D:\\FreePCBDev\\Schematic Constructor\\FreeSch.rc||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{48B16142-FBCE-4203-996C-8DEC8AAE6546}|FreePcb.vcxproj|solutionrelative:FreeSch.rc||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{48B16142-FBCE-4203-996C-8DEC8AAE6546}|FreePcb.vcxproj|D:\\FreePCBDev\\Schematic Constructor\\FreePcbView.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{48B16142-FBCE-4203-996C-8DEC8AAE6546}|FreePcb.vcxproj|solutionrelative:FreePcbView.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{48B16142-FBCE-4203-996C-8DEC8AAE6546}|FreePcb.vcxproj|D:\\FreePCBDev\\Schematic Constructor\\Documents.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -26,32 +26,33 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ReportFiles.cpp",
-              "DocumentMoniker": "D:\\FreePCBDev\\Schematic Constructor\\ReportFiles.cpp",
-              "RelativeDocumentMoniker": "ReportFiles.cpp",
-              "ToolTip": "D:\\FreePCBDev\\Schematic Constructor\\ReportFiles.cpp",
-              "RelativeToolTip": "ReportFiles.cpp",
-              "ViewState": "AQIAAFQDAAAAAAAAAAAIwFgDAAATAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-02-16T13:33:22.782Z",
+              "DocumentIndex": 1,
+              "Title": "FreePcbView.h",
+              "DocumentMoniker": "D:\\FreePCBDev\\Schematic Constructor\\FreePcbView.h",
+              "RelativeDocumentMoniker": "FreePcbView.h",
+              "ToolTip": "D:\\FreePCBDev\\Schematic Constructor\\FreePcbView.h",
+              "RelativeToolTip": "FreePcbView.h",
+              "ViewState": "AQIAAHwDAAAAAAAAAAAYwIgDAAAlAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-02-20T19:35:50.121Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "FreeSch.rc",
               "DocumentMoniker": "D:\\FreePCBDev\\Schematic Constructor\\FreeSch.rc",
               "RelativeDocumentMoniker": "FreeSch.rc",
               "ToolTip": "D:\\FreePCBDev\\Schematic Constructor\\FreeSch.rc",
               "RelativeToolTip": "FreeSch.rc",
-              "ViewState": "AQIAAGoDAAAAAAAAAAAYwHUDAAAlAAAA",
+              "ViewState": "AQIAAD8CAAAAAAAAAAAkwEwCAAAoAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
-              "WhenOpened": "2024-12-19T17:54:13.724Z"
+              "WhenOpened": "2024-12-19T17:54:13.724Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -61,7 +62,7 @@
               "RelativeDocumentMoniker": "Documents.cpp",
               "ToolTip": "D:\\FreePCBDev\\Schematic Constructor\\Documents.cpp",
               "RelativeToolTip": "Documents.cpp",
-              "ViewState": "AQIAAO0AAAAAAAAAAAAYwPgAAAAEAAAA",
+              "ViewState": "AQIAAO0AAAAAAAAAAAAYwPgAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-12-18T14:20:56.081Z",
               "EditorCaption": ""
@@ -74,7 +75,7 @@
               "RelativeDocumentMoniker": "FreePcbView.cpp",
               "ToolTip": "D:\\FreePCBDev\\Schematic Constructor\\FreePcbView.cpp",
               "RelativeToolTip": "FreePcbView.cpp",
-              "ViewState": "AQIAAPMkAAAAAAAAAAAkwAElAAAFAAAA",
+              "ViewState": "AQIAAKY+AAAAAAAAAAAIwKw+AAAeAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-12-18T13:35:50.021Z",
               "EditorCaption": ""

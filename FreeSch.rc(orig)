@@ -567,7 +567,8 @@ BEGIN
         MENUITEM "Static highlight mode",       ID_STATIC_HIGHLIGHT
         MENUITEM SEPARATOR
         MENUITEM "Save to file...",             ID_GROUP_SAVETOFILE
-        MENUITEM "Save as Openscad© data...",   ID_GROUP_SAVETOOPENSCAD
+        MENUITEM "Save as Openscad data",   	ID_GROUP_SAVETOOPENSCAD
+		MENUITEM "Save as AutoCAD DXF",    		ID_GROUP_SAVETODXF
         MENUITEM SEPARATOR
         MENUITEM "Get Pin Map",                 ID_GET_PIN_MAP
         MENUITEM SEPARATOR

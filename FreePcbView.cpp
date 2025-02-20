@@ -153,6 +153,7 @@ ON_WM_LBUTTONUP()
 ON_COMMAND(ID_GROUP_MOVE, OnGroupMove)
 ON_COMMAND(ID_GROUP_SAVETOFILE, OnGroupSaveToFile)
 ON_COMMAND(ID_GROUP_SAVETOOPENSCAD, OnGroupSaveToOpenscadFile)
+ON_COMMAND(ID_GROUP_SAVETODXF, OnGroupSaveToDXFFile)
 ON_COMMAND(ID_ADD_G_ORIGIN, OnAddGroupOrigin)
 ON_COMMAND(ID_RECT_FROM_SEL, OnAddGroupRect)
 ON_COMMAND(ID_STATIC_HIGHLIGHT, OnGroupStaticHighlight)
@@ -15857,7 +15858,7 @@ void CFreePcbView::FootprintNameTest( CString * FP, CString * OLD_FP )
 void CFreePcbView::OnGroupSaveToOpenscadFile()
 {
 	CStdioFile f;
-	if( f.Open( m_Doc->m_app_dir+"\\openscad.txt", CFile::modeCreate | CFile::modeWrite, NULL ) )
+	if( f.Open( m_Doc->m_app_dir+"\\open.scad", CFile::modeCreate | CFile::modeWrite, NULL ) )
 	{
 		int sFont = 1;
 		if( getbit(m_sel_flags, FLAG_SEL_TEXT) )
@@ -15970,7 +15971,101 @@ void CFreePcbView::OnGroupSaveToOpenscadFile()
 		f.WriteString("}");
 		f.Close();
 	}
-	ShellExecute(	NULL, "open", "openscad.txt", NULL, m_Doc->m_app_dir, SW_SHOWNORMAL );
+	ShellExecute(	NULL, "open", "open.scad", NULL, m_Doc->m_app_dir, SW_SHOWNORMAL );
+}
+
+void CFreePcbView::OnGroupSaveToDXFFile()
+{
+	CStdioFile f;
+	if (f.Open(m_Doc->m_app_dir + "\\open.dxf", CFile::modeCreate | CFile::modeWrite, NULL))
+	{
+		//int sFont = 1;
+		//if (getbit(m_sel_flags, FLAG_SEL_TEXT))
+		//	if (AfxMessageBox(G_LANGUAGE == 0 ?
+		//		"Want to use Openscad font to reduce file size?" :
+		//		"Хотите использовать шрифт Openscad для оптимизации размера генерируемого файла?", MB_YESNO) == IDYES)
+		//		sFont = 0;
+		double h = (double)(m_Doc->m_units == MM ? NM_PER_MM : NM_PER_MIL);
+		CString s;
+		f.WriteString("0\n");
+		f.WriteString("SECTION\n");
+		f.WriteString("2\n");
+		f.WriteString("ENTITIES\n");
+		if (::RemoveColinearSegments(m_Doc->m_outline_poly))
+			AfxMessageBox(G_LANGUAGE == 0 ?
+				"Some segments were removed due to collinearity" :
+				"Некоторые сегменты были удалены из-за коллинеарности");
+		for (int i = 0; i < m_Doc->m_outline_poly->GetSize(); i++)
+		{
+			if (m_Doc->m_outline_poly->GetAt(i).GetSel() == 0)
+				continue;
+			for (int ii = 0; ii < m_Doc->m_outline_poly->GetAt(i).GetNumSides(); ii++)
+			{
+				double gx1 = m_Doc->m_outline_poly->GetAt(i).GetX(ii);
+				double gy1 = m_Doc->m_outline_poly->GetAt(i).GetY(ii);
+				int inx = m_Doc->m_outline_poly->GetAt(i).GetNextCornerIndex(ii);
+				double gx2 = m_Doc->m_outline_poly->GetAt(i).GetX(inx);
+				double gy2 = m_Doc->m_outline_poly->GetAt(i).GetY(inx);
+				int L = m_Doc->m_outline_poly->GetAt(i).GetLayer();
+				f.WriteString("0\n");
+				f.WriteString("LINE\n");
+				f.WriteString("8\n");
+				s = layer_str[L];
+				f.WriteString(s+"\n");
+				f.WriteString("10\n");
+				s.Format("%.3f\n", gx1 / h * m_user_scale);
+				f.WriteString(s);
+				f.WriteString("20\n");
+				s.Format("%.3f\n", gy1 / h * m_user_scale);
+				f.WriteString(s);
+				f.WriteString("11\n");
+				s.Format("%.3f\n", gx2 / h * m_user_scale);
+				f.WriteString(s);
+				f.WriteString("21\n");
+				s.Format("%.3f\n", gy2 / h * m_user_scale);
+				f.WriteString(s);
+			}
+		}
+		for (int i = 0; i < m_Doc->m_outline_poly->GetSize(); i++)
+		{
+			for (CText* t = m_Doc->ScanAttr(&m_Doc->m_outline_poly->GetAt(i)); t; t = m_Doc->ScanAttr(&m_Doc->m_outline_poly->GetAt(i)))
+			{
+				if (t->m_selected)
+				{
+					CArray<CPoint>* pts = t->m_dlist->Get_Points(t->dl_el, NULL, 0);
+					int npts = pts->GetSize();
+					CPoint* PTS = new CPoint[npts];
+					t->m_dlist->Get_Points(t->dl_el, PTS, &npts);
+					for (int ipt = 0; ipt < npts - 1; ipt += 2)
+					{
+						f.WriteString("0\n");
+						f.WriteString("LINE\n");
+						f.WriteString("8\n");
+						s = layer_str[t->m_layer];
+						f.WriteString(s + "\n");
+						f.WriteString("10\n");
+						s.Format("%.3f\n", PTS[ipt].x / h * m_user_scale);
+						f.WriteString(s);
+						f.WriteString("20\n");
+						s.Format("%.3f\n", PTS[ipt].y / h * m_user_scale);
+						f.WriteString(s);
+						f.WriteString("11\n");
+						s.Format("%.3f\n", PTS[ipt+1].x / h * m_user_scale);
+						f.WriteString(s);
+						f.WriteString("21\n");
+						s.Format("%.3f\n", PTS[ipt+1].y / h * m_user_scale);
+						f.WriteString(s);
+					}
+				}
+			}
+		}
+		f.WriteString("0\n");
+		f.WriteString("ENDSEC\n");
+		f.WriteString("0\n");
+		f.WriteString("EOF\n");
+		f.Close();
+	}
+	ShellExecute(NULL, "open", "open.dxf", NULL, m_Doc->m_app_dir, SW_SHOWNORMAL);
 }
 
 void CFreePcbView::OnAddGroupOrigin()
