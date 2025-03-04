@@ -439,7 +439,7 @@ public:
 	afx_msg void RenumberPartDesignations();
 	afx_msg void ClearPartDesignations();
 	afx_msg void RaisePartNumbers();
-	void PartRenumbering( CString * prefix, CString * suffix, int start, BOOL bClear, BOOL LR );
+	void PartRenumbering( CString * prefix, CString * suffix, int start, BOOL bClear, BOOL LR, BOOL bGroups);
 	afx_msg void TryToRemoveSuffix();
 	//
 	afx_msg void OnEditRedo();

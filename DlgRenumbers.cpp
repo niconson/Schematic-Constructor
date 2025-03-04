@@ -13,7 +13,7 @@ IMPLEMENT_DYNAMIC(DlgRenumbers, CDialog)
 DlgRenumbers::DlgRenumbers(CWnd* pParent /*=NULL*/)
 	: CDialog(DlgRenumbers::IDD, pParent)
 {
-
+	m_groups = 0;
 }
 
 DlgRenumbers::~DlgRenumbers()
@@ -39,6 +39,8 @@ void DlgRenumbers::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COMBO_RANGE, m_edit_shift);
 	DDX_Control(pDX, IDC_RADIO_LR, m_b_left);
 	DDX_Control(pDX, IDC_RADIO_TB, m_b_top);
+	DDX_Control(pDX, IDC_CHECK_STATS, m_b_groups);
+
 	if( !pDX->m_bSaveAndValidate )
 	{
 		// incoming
@@ -65,6 +67,7 @@ void DlgRenumbers::DoDataExchange(CDataExchange* pDX)
 			m_b_left.SetCheck( 0 );
 			m_b_top.EnableWindow(0);
 			m_b_left.EnableWindow(0);
+			m_b_groups.EnableWindow(0);
 		}
 		else if( m_mode == CLEAR )
 		{
@@ -85,6 +88,7 @@ void DlgRenumbers::DoDataExchange(CDataExchange* pDX)
 			m_b_left.SetCheck( 0 );
 			m_b_top.EnableWindow(0);
 			m_b_left.EnableWindow(0);
+			m_b_groups.EnableWindow(0);
 		}
 		CString key;
 		CArray<CString> Array;
@@ -113,6 +117,8 @@ void DlgRenumbers::DoDataExchange(CDataExchange* pDX)
 		//
 		m_left = m_b_left.GetCheck();
 		//
+		m_groups = m_b_groups.GetCheck();
+		//
 		if( m_start_num < 0 )
 		{
 			AfxMessageBox(G_LANGUAGE == 0 ? "Illegal start number":"Недопустимый стартовый номер");
@@ -121,3 +127,12 @@ void DlgRenumbers::DoDataExchange(CDataExchange* pDX)
 	}
 }
 
+BEGIN_MESSAGE_MAP(DlgRenumbers, CDialog)
+	ON_BN_CLICKED(IDC_RADIO_TB, &DlgRenumbers::OnBnClickedRadioTb)
+END_MESSAGE_MAP()
+
+
+void DlgRenumbers::OnBnClickedRadioTb()
+{
+	// TODO: добавьте свой код обработчика уведомлений
+}

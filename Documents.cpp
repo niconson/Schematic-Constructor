@@ -247,7 +247,7 @@ CFreePcbDoc::CFreePcbDoc()
 	m_auto_elapsed = 0;
 	bNoFilesOpened = TRUE;
 	// VERSION (key)
-	m_version = 1.420;
+	m_version = 1.421;
 	m_file_version = m_version;
 	m_protection = 0;
 	m_current_page = 0;
@@ -8862,7 +8862,7 @@ void CFreePcbDoc::RenumberPartDesignations()
 	if( dlg.DoModal() == IDOK )
 	{
 		m_renumber_left_to_right = dlg.m_left ;
-		PartRenumbering( &dlg.m_prefix_str, &dlg.m_suffix_str, dlg.m_start_num, 0, m_renumber_left_to_right );
+		PartRenumbering( &dlg.m_prefix_str, &dlg.m_suffix_str, dlg.m_start_num, 0, m_renumber_left_to_right, dlg.m_groups );
 	}
 }
 
@@ -8893,7 +8893,7 @@ void CFreePcbDoc::ClearPartDesignations()
 	dlg.Ini( &prefixes, dlg.CLEAR, m_renumber_left_to_right, max_i );
 	if( dlg.DoModal() == IDOK )
 	{
-		PartRenumbering( &dlg.m_prefix_str, &dlg.m_suffix_str, dlg.m_start_num, TRUE, m_renumber_left_to_right );
+		PartRenumbering( &dlg.m_prefix_str, &dlg.m_suffix_str, dlg.m_start_num, TRUE, m_renumber_left_to_right, 0 );
 	}
 }
 
@@ -9071,7 +9071,7 @@ void CFreePcbDoc::RaisePartNumbers()
 	m_view->Invalidate( FALSE );// (doubtful)
 }
 
-void CFreePcbDoc::PartRenumbering( CString * prefix, CString * suffix, int start, BOOL bClear, BOOL LR )
+void CFreePcbDoc::PartRenumbering( CString * prefix, CString * suffix, int start, BOOL bClear, BOOL LR, BOOL bGroups)
 {
 	// reset block indexes
 	Pages.m_get_suffixes = 0;
@@ -9079,17 +9079,22 @@ void CFreePcbDoc::PartRenumbering( CString * prefix, CString * suffix, int start
 	int current_page = Pages.GetActiveNumber();
 	BOOL INCLUDED_ON_NETLIST = Pages.IsThePageIncludedInNetlist( current_page );
 	int number = 0;
-	CText * Found;
+	
 	for( int i=0; i<Pages.GetNumPages(); i++ )
 	{
 		CTextList * tl = Pages.GetTextList( i, index_part_attr );
 		tl->MarkAllTexts(0);
 	}
 	BOOL WAR_1 = 0, WAR_2 = 0;
+	CText * Found, * Found2;
+	CString prevValue = "";
 	do{
 		Found = NULL;
+		Found2 = NULL;
 		int min_x = INT_MAX;
 		int max_y = INT_MIN;
+		int min_x2 = INT_MAX;
+		int max_y2 = INT_MIN;
 		int it = -1;
 		for( CText * part=Attr->m_Reflist->GetNextText(&it); part; part=Attr->m_Reflist->GetNextText(&it) )
 		{
@@ -9124,7 +9129,33 @@ void CFreePcbDoc::PartRenumbering( CString * prefix, CString * suffix, int start
 								else if( part->m_x == min_x && part->m_y > max_y )
 								{
 									Found = part;
-									max_y = part->m_y;
+									max_y = part->m_y;	
+								}
+								if (bGroups)
+								{
+									CText* gVal = m_outline_poly->GetAt(part->m_polyline_start).pAttr[index_value_attr];
+									BOOL OK = 0;
+									if (gVal)
+									{
+										if (prevValue.Compare(gVal->m_str) == 0)
+											OK = 1;
+									}
+									else if (prevValue.GetLength() == 0)
+										OK = 1;
+									if (OK)
+									{
+										if (part->m_x < min_x2)
+										{
+											Found2 = part;
+											min_x2 = part->m_x;
+											max_y2 = part->m_y;
+										}
+										else if (part->m_x == min_x2 && part->m_y > max_y2)
+										{
+											Found2 = part;
+											max_y2 = part->m_y;
+										}
+									}
 								}
 							}
 							else
@@ -9140,13 +9171,50 @@ void CFreePcbDoc::PartRenumbering( CString * prefix, CString * suffix, int start
 									Found = part;
 									min_x = part->m_x;
 								}
+								if (bGroups)
+								{
+									CText* gVal = m_outline_poly->GetAt(part->m_polyline_start).pAttr[index_value_attr];
+									BOOL OK = 0;
+									if (gVal)
+									{
+										if (prevValue.Compare(gVal->m_str) == 0)
+											OK = 1;
+									}
+									else if (prevValue.GetLength() == 0)
+										OK = 1;
+									if (OK)
+									{
+										if (part->m_y > max_y2)
+										{
+											Found2 = part;
+											min_x2 = part->m_x;
+											max_y2 = part->m_y;
+										}
+										else if (part->m_y == max_y2 && part->m_x < min_x2)
+										{
+											Found2 = part;
+											min_x2 = part->m_x;
+										}
+									}
+								}
 							}
 						}
 					}
 		}
 		number++;
-		if( Found )
+		if (Found2)
+		{
+			Found2->utility = number;
+		}
+		else if (Found)
+		{
 			Found->utility = number;
+			CText * gVal = m_outline_poly->GetAt(Found->m_polyline_start).pAttr[index_value_attr];
+			if (gVal)
+				prevValue = gVal->m_str;
+			else
+				prevValue = "";
+		}
 	}while( Found );
 	// 
 	if( WAR_1 )

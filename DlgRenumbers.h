@@ -21,12 +21,16 @@ public:
 	CEdit m_edit_start;
 	CButton m_b_left;
 	CButton m_b_top;
+	CButton m_b_groups;
+
 	// outputs
 	CString m_prefix_str;
 	CString m_suffix_str;
 	int m_shift;
 	int m_start_num;
 	int m_left;
+	int m_groups;
+
 	//
 	BOOL m_mode;
 	CStatic m_Static1;
@@ -39,4 +43,7 @@ public:
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+public:
+	DECLARE_MESSAGE_MAP()
+	afx_msg void OnBnClickedRadioTb();
 };

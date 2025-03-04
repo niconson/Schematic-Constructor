@@ -1019,7 +1019,7 @@ void TagTable::RemoveEmptyRows()
 							if( t->m_str.Find( MOVABLE ) > 0 )
 							{
 								topT = i2;
-								setbit( bHDelete, 0 );
+		 						setbit( bHDelete, 0 );
 							}
 						}
 						if( abs(t->m_y - data->m_y) < (shiftY/2) )
@@ -1030,7 +1030,7 @@ void TagTable::RemoveEmptyRows()
 							}
 						}
 					}	
-					if( bHDelete == 2 && page > 0 )
+					/*if (bHDelete == 2 && page > 0)
 					{
 						for( int i2=TextData[page-1].GetSize()-1; i2>=0; i2-- )
 						{
@@ -1046,7 +1046,7 @@ void TagTable::RemoveEmptyRows()
 								}
 							}
 						}
-					}
+					}*/
 					if( bHDelete == 3 )
 					{	
 						PushBack( TextData[page].GetAt(topT)->m_y-(shiftY/2), page );

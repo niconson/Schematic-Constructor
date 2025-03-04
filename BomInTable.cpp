@@ -764,7 +764,7 @@ void BomInTable::RemoveEmptyRows()
 							}
 						}
 					}	
-					if( bHDelete == 2 && page > 0 )
+					/*if (bHDelete == 2 && page > 0)
 					{
 						for( int i2=TextData[page-1].GetSize()-1; i2>=0; i2-- )
 						{
@@ -780,7 +780,7 @@ void BomInTable::RemoveEmptyRows()
 								}
 							}
 						}
-					}
+					}*/
 					if( bHDelete == 3 )
 					{
 						PushBack( TextData[page].GetAt(topT)->m_y-(shiftY/2), page );

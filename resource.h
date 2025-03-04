@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
-// Microsoft Visual C++ generated include file.
-// Used by FreeSch.rc
+// Включаемый файл, созданный в Microsoft Visual C++.
+// Используется FreeSch.rc
 //
 #define IDHPCB                          21
 #define ID_GO                           22
@@ -93,7 +93,7 @@
 #define ID_RATLINE_LOCKCONNECTION       162
 #define ID_NONE_ADDPART                 163
 #define ID_NONE_ADDTEXT                 164
-#define ID_SEL_ADJACENT					165
+#define ID_SEL_ADJACENT                 165
 #define ID_NONE_ADDBOARDOUTLINE         166
 #define ID_NONE_ADDCOPPERAREA           167
 #define ID_TEXT_MOVE                    168
@@ -1257,11 +1257,11 @@
 #define ID_GROUP_SAVETOOPENSCAD         32880
 #define ID_ADD_G_ORIGIN                 32881
 #define ID_RECT_FROM_SEL                32882
-#define ID_SLIDING_ANGLE				32883
-#define ID_SLIDING_ANGLE2				32884
+#define ID_SLIDING_ANGLE                32883
+#define ID_SLIDING_ANGLE2               32884
 #define ID_PRINT_PDF                    32885
-#define ID_GROUP_LINE_UP				32886
-#define ID_GROUP_SAVETODXF				32887
+#define ID_GROUP_LINE_UP                32886
+#define ID_GROUP_SAVETODXF              32887
 #define ID_EDIT_SAVEGROUPTOFILE         32889
 #define ID_PRINT                        32890
 #define ID_PRINT_BUTTON                 32890
