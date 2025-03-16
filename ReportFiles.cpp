@@ -131,8 +131,10 @@ void CDlgRFiles::DoDataExchange(CDataExchange* pDX)
 			double x = stPicture + (wPicture/2.0);
 			double Pic_Y = INT_MAX;
 			CString PrevPac = "";
+			BOOL bPicOnPart;
 			while( PACKAGES.GetSize() )
 			{
+				bPicOnPart = 0;
 				Cur_Y -= StringHeight;
 				if( Cur_Y+0.01 < (m_pdf_margin+StringHeight+(StringHeight/2.0)) )
 				{
@@ -267,16 +269,8 @@ Title:				title = GetT;
 				{
 					if( Pic_Y > Cur_Y+(StringHeight/2.0) )
 					{
-						if( isPART )
-						{
-							cpdf_moveto( pdf, stValue, Cur_Y+(StringHeight/2.0) );
-							cpdf_lineto( pdf, m_pdf_margin, Cur_Y+(StringHeight/2.0) );
-						}
-						else
-						{
-							cpdf_moveto( pdf, PageWidth-m_pdf_margin, Cur_Y+(StringHeight/2.0) );
-							cpdf_lineto( pdf, m_pdf_margin, Cur_Y+(StringHeight/2.0) );
-						}
+						cpdf_moveto( pdf, PageWidth-m_pdf_margin, Cur_Y+(StringHeight/2.0) );
+						cpdf_lineto( pdf, m_pdf_margin, Cur_Y+(StringHeight/2.0) );
 					}
 					else
 					{
@@ -316,10 +310,12 @@ Package:			// (footprint name)
 						if( file.Open( title, CFile::modeRead, NULL ) == 0 )
 						{
 							title = m_doc->Pages.GetPicture( &Vtext, &Ptext );
-							if( title.GetLength() == 0 )
+							if (title.GetLength() == 0)
 								ok_pic = 0;
-							else if( file.Open( title, CFile::modeRead, NULL ) == 0 )
+							else if (file.Open(title, CFile::modeRead, NULL) == 0)
 								ok_pic = 0;
+							else
+								bPicOnPart = 1;
 						}
 					}	
 					if( ok_pic )
@@ -399,9 +395,15 @@ Package:			// (footprint name)
 									(float)m_doc->m_bom_rgb[eText][2], &title, TRUE );
 					}
 				}
+				else
+				{
+					cpdf_moveto(pdf, stValue, Cur_Y  + (StringHeight / 2.0));
+					cpdf_lineto(pdf, PageWidth - m_pdf_margin, Cur_Y  + (StringHeight / 2.0));
+					cpdf_stroke(pdf);
+				}
 				// draw value
 				title = VALUES.GetAt(item);
-
+				title.Replace("'", " / ");
 				x = stValue;
 				y = Cur_Y;
 				DrawTextBox(pdf, x, y-(StringHeight/3.0), wValue, 1, TextW, 
@@ -491,7 +493,7 @@ Package:			// (footprint name)
 							//---------------------------------------------------
 							
 							float set2 = n_str1 + numStr - 1.0;
-							for( float step = max( set1, set2 ); step>0.5; step-- )
+							for( float step = set2; step>0.5; step-- )
 								Cur_Y -= StringHeight;
 							if( Cur_Y+0.01 < (m_pdf_margin+StringHeight+(StringHeight/2.0)) )
 							{
@@ -514,14 +516,10 @@ Package:			// (footprint name)
 				for( float step = set1; step>0.5; step-=1 )
 					Cur_Y -= StringHeight;
 				//
-				if( isPART )
-				{
-					cpdf_moveto( pdf, stValue, Cur_Y-(StringHeight/2.0) );
-					cpdf_lineto( pdf, PageWidth-m_pdf_margin, Cur_Y-(StringHeight/2.0) );
-					cpdf_stroke( pdf );
-				}
-				//
 				PrevPac = PACKAGES.GetAt(item);
+				if (bPicOnPart)
+					PrevPac = "RESET_PAC";
+				bPicOnPart = 0;
 				VALUES.RemoveAt(item);
 				PACKAGES.RemoveAt(item);
 				DETAILS.RemoveAt(item);
