@@ -475,6 +475,11 @@ public:
 	afx_msg void OnDetachBMP();
 	afx_msg void OnAttachBMP1();
 	afx_msg void OnAttachBMP2();
+	afx_msg void OnAttachGND1();
+	afx_msg void OnAttachGND2();
+	afx_msg void OnAttachGND3();
+	afx_msg void OnAttachGND4();
+	afx_msg void OnAttachGND5();
 	void AttributeSync();  
 	void AttachBMP( int Style, CString * fn = NULL );
 	afx_msg void AddRefList();

@@ -144,6 +144,11 @@ BEGIN_MESSAGE_MAP(CFreePcbDoc, CDocument)
 	ON_COMMAND(ID_DETACH_BMP, OnDetachBMP)
 	ON_COMMAND(ID_ATTACH_BMP1, OnAttachBMP1)
 	ON_COMMAND(ID_ATTACH_BMP2, OnAttachBMP2)
+	ON_COMMAND(ID_ATTACH_GND1, OnAttachGND1)
+	ON_COMMAND(ID_ATTACH_GND2, OnAttachGND2)
+	ON_COMMAND(ID_ATTACH_GND3, OnAttachGND3)
+	ON_COMMAND(ID_ATTACH_GND4, OnAttachGND4)
+	ON_COMMAND(ID_ATTACH_GND5, OnAttachGND5)
 	ON_COMMAND(ID_PROJECT_REFLIST, AddRefList)
 	ON_COMMAND(ID_PROJECT_DELREFLIST, DelRefList)
 	ON_COMMAND(ID_PLAY_REFLIST1, PlayRefList1)
@@ -247,7 +252,7 @@ CFreePcbDoc::CFreePcbDoc()
 	m_auto_elapsed = 0;
 	bNoFilesOpened = TRUE;
 	// VERSION (key)
-	m_version = 1.421;
+	m_version = 1.422;
 	m_file_version = m_version;
 	m_protection = 0;
 	m_current_page = 0;
@@ -11651,6 +11656,35 @@ void CFreePcbDoc::OnAttachBMP2()
 		OnRangeCmds(NULL);
 	}
 }
+void CFreePcbDoc::OnAttachGND1()
+{
+	CString path = m_app_dir + "\\Colors\\GND.bmp";
+	AttachBMP(0, &path);
+}
+void CFreePcbDoc::OnAttachGND2()
+{
+	CString path = m_app_dir + "\\Colors\\Y.jpg";
+	AttachBMP(1, &path);
+}
+void CFreePcbDoc::OnAttachGND3()
+{
+	CString path = m_app_dir + "\\Colors\\G.jpg";
+	AttachBMP(1, &path);
+}
+void CFreePcbDoc::OnAttachGND4()
+{
+	CString path = m_app_dir + "\\Colors\\B.jpg";
+	AttachBMP(1, &path);
+}
+void CFreePcbDoc::OnAttachGND5()
+{
+	CString path = m_app_dir + "\\Colors\\T.jpg";
+	AttachBMP(1, &path);
+}
+
+
+
+
 void CFreePcbDoc::OnDetachBMP()
 {
 	if( m_view->m_sel_id.type != ID_POLYLINE )
