@@ -3,19 +3,22 @@
 
 void CreateMultiPinPartTemplate( CFreePcbDoc * doc, UINT CMD, int n_pins, int polyline_w, int text_height, int grid_step )
 {
-	text_height = min( text_height, NM_PER_MM*100/n_pins );
+	text_height = min( text_height, NM_PER_MM*200/n_pins );
 	int old_s = doc->m_outline_poly->GetSize();
 	int new_s = old_s + n_pins + 1;
 	doc->m_outline_poly->SetSize( new_s );
-	int pin_step = text_height - text_height%grid_step + grid_step;
-	pin_step *= 2;
-	pin_step = max( pin_step, NM_PER_MM*2 );
+	int pin_step = grid_step;//text_height - text_height%grid_step + grid_step;
+	pin_step = max(pin_step, text_height * 2);
+	if (text_height != doc->m_view->m_attr_size.H_pin)
+		pin_step = text_height * 2;
+	//pin_step *= 2;
+	//pin_step = max( pin_step, NM_PER_MM*2 );
 	RECT outline = rect(0,0,0,0);
 	outline.right = max( NM_PER_MM*10, abs(polyline_w)*n_pins*2 );
 	outline.right = min( outline.right, NM_PER_MM*30 );
 	outline.top = pin_step*(n_pins/2);
-	text_height = max( text_height, NM_PER_MM );
-	float text_w = (float)doc->m_view->m_attr_size.H_pin/(float)text_height;
+	//text_height = max( text_height, NM_PER_MM );
+	float text_w = (float)doc->m_view->m_attr_size.H_pin / (float)text_height;
 	text_w = (float)doc->m_view->m_attr_size.W_pin/text_w;
 	id p_id( ID_POLYLINE, ID_GRAPHIC, old_s );
 	CPolyLine * p = &doc->m_outline_poly->GetAt( old_s );
