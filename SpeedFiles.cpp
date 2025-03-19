@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "SpeedFiles.h"
 #define MxPOS 8
+#define _USE_MATH_DEFINES
+#include <math.h>
+
 extern CFreeasyApp theApp;
 
 void ClearSpeedFiles( CFreePcbDoc * doc )
@@ -272,6 +275,64 @@ void OnGroupGridMagnetize( CFreePcbDoc * doc )
 				}
 				if(ok)
 					break;
+			}
+		}
+		if (ok == 0)
+		{
+			dx = 0, dy = 0;
+			int grid_sp = doc->m_part_grid_spacing / doc->m_view->m_user_scale;
+			for (int i = 0; i < doc->m_outline_poly->GetSize(); i++)
+			{
+				CPolyLine* p = &doc->m_outline_poly->GetAt(i);
+				if (p->m_visible == 0)
+					continue;
+				if (p->GetSideSel() == 0)
+				{
+					for (int i1 = 0; i1 < p->GetNumCorners(); i1++)
+					{
+						int in = p->GetNextCornerIndex(i1);
+						CPoint P1(p->GetX(i1), p->GetY(i1));
+						CPoint P2(p->GetX(in), p->GetY(in));
+						int style = p->GetSideStyle(i1);
+						for (int i2 = 0; i2 < pts.GetSize(); i2++)
+						{
+							double X0 = 0, Y0 = 0;
+							int dst = GetClearanceBetweenSegments(P1.x, P1.y, P2.x, P2.y, style, 0,
+								pts.GetAt(i2).x, pts.GetAt(i2).y,
+								pts.GetAt(i2).x, pts.GetAt(i2).y, 0, 0, grid_sp * 2, &dx, &dy);
+
+							if (dst < grid_sp && style == 0)
+							{
+								float a = Angle(P1.x, P1.y, P2.x, P2.y);
+								CPoint P3(pts.GetAt(i2).x, pts.GetAt(i2).y);
+								if (a < 1.0 || a > 359.0)
+									P3.y += 100;
+								else if (a < 181.0 && a > 179.0)
+									P3.y += 100;
+								else if (a < 91.0 && a > 89.0)
+									P3.x += 100;
+								else if (a < 271.0 && a > 269.0)
+									P3.x += 100;
+								else
+								{
+									P3.x += 100 * cos((a - 90.0) * M_PI / 180.0);
+									P3.y += 100 * sin((a - 90.0) * M_PI / 180.0);
+								}
+								FindLineIntersection((double)P1.x, (double)P1.y, (double)P2.x, (double)P2.y,
+									(double)pts.GetAt(i2).x, (double)pts.GetAt(i2).y,
+									(double)P3.x, (double)P3.y, &X0, &Y0);
+								dx = X0 - pts.GetAt(i2).x;
+								dy = Y0 - pts.GetAt(i2).y;
+								ok = 1;
+								break;
+							}
+						}
+						if (ok)
+							break;
+					}
+					if (ok)
+						break;
+				}
 			}
 		}
 		if(ok)
