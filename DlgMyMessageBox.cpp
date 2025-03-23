@@ -49,7 +49,7 @@ void CDlgMyMessageBox::DoDataExchange(CDataExchange* pDX)
 					GetWindowRect(R);
 					//W->SetWindowPos( NULL, R.left, R.top, R.Width(), R.Height()-50, 0 );
 					//SetWindowPos( W, R.left, R.top, R.Width(), R.Height()-4, 0 );
-					MoveWindow(R.left, R.top, R.Width(), R.Height()-50 );
+					MoveWindow(R.left, R.top, R.Width(), R.Height()-78 );
 				}
 			}
 		}
