@@ -16012,24 +16012,53 @@ void CFreePcbView::OnGroupSaveToDXFFile()
 				int inx = m_Doc->m_outline_poly->GetAt(i).GetNextCornerIndex(ii);
 				double gx2 = m_Doc->m_outline_poly->GetAt(i).GetX(inx);
 				double gy2 = m_Doc->m_outline_poly->GetAt(i).GetY(inx);
+				int stl = m_Doc->m_outline_poly->GetAt(i).GetSideStyle(ii);
 				int L = m_Doc->m_outline_poly->GetAt(i).GetLayer();
-				f.WriteString("0\n");
-				f.WriteString("LINE\n");
-				f.WriteString("8\n");
-				s = layer_str[L];
-				f.WriteString(s+"\n");
-				f.WriteString("10\n");
-				s.Format("%.3f\n", gx1 / h * m_user_scale);
-				f.WriteString(s);
-				f.WriteString("20\n");
-				s.Format("%.3f\n", gy1 / h * m_user_scale);
-				f.WriteString(s);
-				f.WriteString("11\n");
-				s.Format("%.3f\n", gx2 / h * m_user_scale);
-				f.WriteString(s);
-				f.WriteString("21\n");
-				s.Format("%.3f\n", gy2 / h * m_user_scale);
-				f.WriteString(s);
+				if (stl == 0)
+				{
+					f.WriteString("0\n");
+					f.WriteString("LINE\n");
+					f.WriteString("8\n");
+					s = layer_str[L];
+					f.WriteString(s + "\n");
+					f.WriteString("10\n");
+					s.Format("%.3f\n", gx1 / h * m_user_scale);
+					f.WriteString(s);
+					f.WriteString("20\n");
+					s.Format("%.3f\n", gy1 / h * m_user_scale);
+					f.WriteString(s);
+					f.WriteString("11\n");
+					s.Format("%.3f\n", gx2 / h * m_user_scale);
+					f.WriteString(s);
+					f.WriteString("21\n");
+					s.Format("%.3f\n", gy2 / h * m_user_scale);
+					f.WriteString(s);
+				}
+				else
+				{
+					CPoint P[10];
+					int np = Generate_Arc(gx1, gy1, gx2, gy2, stl, P, 9);
+					for (int ip = 0; ip < np-1; ip++)
+					{
+						f.WriteString("0\n");
+						f.WriteString("LINE\n");
+						f.WriteString("8\n");
+						s = layer_str[L];
+						f.WriteString(s + "\n");
+						f.WriteString("10\n");
+						s.Format("%.3f\n", P[ip].x / h * m_user_scale);
+						f.WriteString(s);
+						f.WriteString("20\n");
+						s.Format("%.3f\n", P[ip].y / h * m_user_scale);
+						f.WriteString(s);
+						f.WriteString("11\n");
+						s.Format("%.3f\n", P[ip+1].x / h * m_user_scale);
+						f.WriteString(s);
+						f.WriteString("21\n");
+						s.Format("%.3f\n", P[ip+1].y / h * m_user_scale);
+						f.WriteString(s);
+					}
+				}
 			}
 		}
 		for (int i = 0; i < m_Doc->m_outline_poly->GetSize(); i++)
