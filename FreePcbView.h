@@ -592,7 +592,8 @@ public:
 		FLAG_SEL_DRE,
 		FLAG_SEL_VTX,
 		FLAG_SEL_PIN,
-		FLAG_SEL_SIDE
+		FLAG_SEL_SIDE,
+		NUM_SEL_FLAGS
 	};
 #define PART_SEL		1
 #define TEXT_SEL		2

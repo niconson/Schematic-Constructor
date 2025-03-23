@@ -224,7 +224,9 @@ void LoadSpeedFiles( CFreePcbDoc * doc )
 void OnGroupGridMagnetize( CFreePcbDoc * doc )
 {
 	CArray<CPoint> pts;
-	for(int i=0; i<doc->m_outline_poly->GetSize(); i++)
+	CPoint P1(doc->m_view->m_last_cursor_point.x, doc->m_view->m_last_cursor_point.y);
+	pts.Add(P1);
+	/*for (int i = 0; i<doc->m_outline_poly->GetSize(); i++)
 	{
 		CPolyLine * p = &doc->m_outline_poly->GetAt(i);
 		if( p->m_visible == 0 )
@@ -239,7 +241,7 @@ void OnGroupGridMagnetize( CFreePcbDoc * doc )
 				pts.Add(P2);
 			}
 		}
-	}
+	}*/
 	if( pts.GetSize() )
 	{
 		int dx=0, dy=0, ok=0;

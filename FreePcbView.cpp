@@ -1613,8 +1613,11 @@ void CFreePcbView::OnLButtonUp(UINT nFlags, CPoint point)
 				int dx = m_last_cursor_point.x - m_from_pt.x;
 				int dy = m_last_cursor_point.y - m_from_pt.y;
 				//
-				if( an )
-					RotateGroup( -an, m_from_pt.x, m_from_pt.y );
+				if (an)
+				{
+					setbit(m_sel_flags, NUM_SEL_FLAGS); // for enable free rotate texts
+					RotateGroup(-an, m_from_pt.x, m_from_pt.y);
+				}
 				//
 				CText * BOM_PATH = NULL;
 				if( m_sel_id.type == ID_POLYLINE )
@@ -11970,14 +11973,17 @@ void CFreePcbView::RotateGroup( int angle, int cx, int cy, double accurate )
 				{
 					int x = t->m_x;
 					int y = t->m_y;
-					Rotate_i_Vertex( &x,&y,angle,groupAverageX,groupAverageY );
-					if( ACC )
+					if (m_sel_flags != TEXT_ONLY && m_dragging_mode == 0)
 					{
-						double dbx = x;
-						double dby = y;
-						Rotate_Vertex( &dbx, &dby, accurate );
-						x = dbx;
-						y = dby;
+						Rotate_i_Vertex(&x, &y, angle, groupAverageX, groupAverageY);
+						if (ACC)
+						{
+							double dbx = x;
+							double dby = y;
+							Rotate_Vertex(&dbx, &dby, accurate);
+							x = dbx;
+							y = dby;
+						}
 					}
 					tl->MoveText(t,x,y,t->m_angle-angle,t->m_layer);
 					BOOL ROTATE = 0;
