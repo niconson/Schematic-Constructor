@@ -300,6 +300,7 @@ public:
 
 	// default 
 	double m_letter_spacing;
+	int m_unconnected_pin_layer;
 	int m_magnetize_value;
 	int m_seg_clearance;
 	int m_polyline_w;		// default trace width

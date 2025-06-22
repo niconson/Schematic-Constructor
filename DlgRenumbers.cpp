@@ -46,11 +46,21 @@ void DlgRenumbers::DoDataExchange(CDataExchange* pDX)
 		// incoming
 		if( m_mode == RENUMB )
 		{
-			m_combo_prefix.AddString( " all prefixes" );
+			if (G_LANGUAGE == 0)
+			{
+				m_combo_prefix.AddString(" all prefixes");
+				m_Static1.SetWindowTextA("Apply to prefix");
+				m_Static2.SetWindowTextA("Start number");
+				m_Static3.SetWindowTextA("Add suffix");
+			}
+			else
+			{
+				m_combo_prefix.AddString("всех префиксов");
+				m_Static1.SetWindowTextA("Применить для");
+				m_Static2.SetWindowTextA("Начать с номера");
+				m_Static3.SetWindowTextA("Доб. суффикс");
+			}
 			m_combo_prefix.SetCurSel(0);
-			m_Static1.SetWindowTextA( "Apply to prefix" );
-			m_Static2.SetWindowTextA( "Start number" );
-			m_Static3.SetWindowTextA( "Add suffix" );
 			m_edit_start.SetWindowTextA( "1" );
 			m_edit_shift.SetWindowTextA( "" );
 			m_b_top.SetCheck( !m_left );
@@ -58,9 +68,18 @@ void DlgRenumbers::DoDataExchange(CDataExchange* pDX)
 		}
 		else if( m_mode == RAISE )
 		{
-			m_Static1.SetWindowTextA( "Apply to prefix" );
-			m_Static2.SetWindowTextA( "Raise starting" );
-			m_Static3.SetWindowTextA( "Raise by..." );
+			if (G_LANGUAGE == 0)
+			{
+				m_Static1.SetWindowTextA("Apply to prefix");
+				m_Static2.SetWindowTextA("Raise starting");
+				m_Static3.SetWindowTextA("Raise by...");
+			}
+			else
+			{
+				m_Static1.SetWindowTextA("Применить для");
+				m_Static2.SetWindowTextA("Начать с номера");
+				m_Static3.SetWindowTextA("Сместить на...");
+			}
 			m_edit_start.SetWindowTextA( "1" );
 			m_edit_shift.SetWindowTextA( "1" );
 			m_b_top.SetCheck( 0 );
@@ -71,11 +90,21 @@ void DlgRenumbers::DoDataExchange(CDataExchange* pDX)
 		}
 		else if( m_mode == CLEAR )
 		{
-			m_combo_prefix.AddString( " all prefixes" );
+			if (G_LANGUAGE == 0)
+			{
+				m_combo_prefix.AddString(" all prefixes");
+				m_Static1.SetWindowTextA("Apply to prefix");
+				m_Static2.SetWindowTextA("Start number");
+				m_Static3.SetWindowTextA("Add suffix");
+			}
+			else
+			{
+				m_combo_prefix.AddString("всех префиксов");
+				m_Static1.SetWindowTextA("Применить для");
+				m_Static2.SetWindowTextA("Начать с номера");
+				m_Static3.SetWindowTextA("Доб. суффикс");
+			}
 			m_combo_prefix.SetCurSel(0);
-			m_Static1.SetWindowTextA( "Apply to prefix" );
-			m_Static2.SetWindowTextA( "Start number" );
-			m_Static3.SetWindowTextA( "Add suffix" );
 			CString winT;
 			winT.Format("%.5d", m_start_num );
 			m_edit_start.SetWindowTextA( winT );
@@ -112,7 +141,7 @@ void DlgRenumbers::DoDataExchange(CDataExchange* pDX)
 		m_start_num = my_atoi( &m_start_str );
 		//
 		m_combo_prefix.GetWindowTextA( m_prefix_str );
-		if( m_prefix_str.Left(1) == " " )
+		if (m_prefix_str.Find(" ") >= 0)
 			m_prefix_str = "";
 		//
 		m_left = m_b_left.GetCheck();

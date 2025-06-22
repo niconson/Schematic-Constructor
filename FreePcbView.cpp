@@ -648,10 +648,10 @@ void CFreePcbView::OnDraw(CDC* pDC)
 		}
 		else
 		{
-			pDC->DrawText( "Use 1 - 8 keys to", -1, &r, DT_TOP );
+			pDC->DrawText( "Исп 1 - 8 кнопки", -1, &r, DT_TOP );
 			r.bottom += VSTEP;
 			r.top += VSTEP;
-			pDC->DrawText( "change active page", -1, &r, DT_TOP );
+			pDC->DrawText( "для смены страниц", -1, &r, DT_TOP );
 		}
 		MAXIMUM_Y = r.bottom;
 		// draw function keys on bottom pane
@@ -11973,7 +11973,7 @@ void CFreePcbView::RotateGroup( int angle, int cx, int cy, double accurate )
 				{
 					int x = t->m_x;
 					int y = t->m_y;
-					if (m_sel_flags != TEXT_ONLY && m_dragging_mode == 0)
+					if (m_sel_flags != TEXT_ONLY || m_dragging_mode )
 					{
 						Rotate_i_Vertex(&x, &y, angle, groupAverageX, groupAverageY);
 						if (ACC)

@@ -226,12 +226,12 @@ BEGIN
             MENUITEM "Прикрепить",                  ID_ATTACH_BMP1
             POPUP "Цветной фон"
             BEGIN
-                MENUITEM "Прозрачность",            ID_ATTACH_GND1
+                MENUITEM "Прозрачность",                ID_ATTACH_GND1
                 MENUITEM SEPARATOR
-                MENUITEM "Желтый",                  ID_ATTACH_GND2
-                MENUITEM "Зелёный",                 ID_ATTACH_GND3
-                MENUITEM "Голубой",                 ID_ATTACH_GND4
-                MENUITEM "Бирюзовый",               ID_ATTACH_GND5
+                MENUITEM "Желтый",                      ID_ATTACH_GND2
+                MENUITEM "Зелёный",                     ID_ATTACH_GND3
+                MENUITEM "Голубой",                     ID_ATTACH_GND4
+                MENUITEM "Бирюзовый",                   ID_ATTACH_GND5
             END
             MENUITEM "Убрать",                      ID_DETACH_BMP
             MENUITEM SEPARATOR
@@ -893,7 +893,7 @@ CAPTION "О программе"
 FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,11,12,20,20
-    LTEXT           "СхемАтор v1.4.23 для ПлатФорм v2.4",IDC_STATIC,42,12,119,8,SS_NOPREFIX
+    LTEXT           "СхемАтор v1.4.25 для ПлатФорм v2.4",IDC_STATIC,42,12,119,8,SS_NOPREFIX
     LTEXT           "© Duxahtech 2020-2025, Россия г.Челябинск",IDC_STATIC,42,24,178,8
     DEFPUSHBUTTON   "Готово",IDOK,165,61,50,14,WS_GROUP
     LTEXT           "Source libraries:",IDC_STATIC,21,78,51,8
@@ -2032,18 +2032,18 @@ END
 
 IDD_ATTR DIALOGEX 0, 0, 472, 262
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "PolyLine Attributes"
+CAPTION "Атрибуты полилинии"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    COMBOBOX        IDC_REFDES,68,10,141,150,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_REFDES,68,10,141,150,CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
     COMBOBOX        IDC_PINNAME,68,82,141,150,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
     DEFPUSHBUTTON   "Готово",IDOK,338,237,61,20
     LTEXT           "Обозначение",IDC_STATIC,11,12,46,8
     CONTROL         "Имя пина",IDC_STATIC,"Static",SS_LEFTNOWORDWRAP | WS_GROUP,11,84,38,8
-    COMBOBOX        IDC_NETNAME,68,106,141,150,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_NETNAME,68,106,141,150,CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
     CONTROL         "Имя эл.цепи",IDC_STATIC,"Static",SS_LEFTNOWORDWRAP | WS_GROUP,11,108,49,8
-    COMBOBOX        IDC_FNAME,68,58,128,150,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    COMBOBOX        IDC_PARTVALUE,68,34,141,150,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_FNAME,68,58,128,150,CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_PARTVALUE,68,34,141,150,CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_SORT | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Название",IDC_STATIC,11,36,34,8
     EDITTEXT        IDC_ATTR_HEIGHT_REF,321,10,41,12,ES_AUTOHSCROLL
     EDITTEXT        IDC_ATTR_WIDTH_REF,420,10,41,12,ES_AUTOHSCROLL

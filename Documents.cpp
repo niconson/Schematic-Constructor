@@ -252,7 +252,7 @@ CFreePcbDoc::CFreePcbDoc()
 	m_auto_elapsed = 0;
 	bNoFilesOpened = TRUE;
 	// VERSION (key)
-	m_version = 1.423;
+	m_version = 1.425;
 	m_file_version = m_version;
 	m_protection = 0;
 	m_current_page = 0;
@@ -273,6 +273,7 @@ CFreePcbDoc::CFreePcbDoc()
 	m_partlist_pos.cy = 0;
 	m_partlist_col_w = ~0;
 	//
+	m_unconnected_pin_layer = LAY_ADD_1 + 2; // background layer
 	m_magnetize_value = 100;
 	m_letter_spacing = 1.0;
 	ClearFootprintNames(this);
@@ -2810,6 +2811,10 @@ int CFreePcbDoc::ReadOptions( CStdioFile * pcb_file, BOOL rColors )
 			{
 				m_magnetize_value = my_atoi( &p[0] );
 			}
+			else if (np && key_str == "unconnected_pin_layer")
+			{
+				m_unconnected_pin_layer = my_atoi(&p[0]);
+			}
 			else if( np && key_str == "letter_spacing" )
 			{
 				m_letter_spacing = my_atof( &p[0] );
@@ -3229,6 +3234,8 @@ void CFreePcbDoc::WriteOptions( CStdioFile * file, BOOL bConfig, CString * pr_na
 		file->WriteString( line );
 		if( bConfig )
 		{
+			line.Format( "unconnected_pin_layer: %d\n", m_unconnected_pin_layer );
+			file->WriteString(line);
 			line.Format( "magnetize_value: %d\n", m_magnetize_value );
 			file->WriteString( line );
 			line.Format( "letter_spacing: %5.3f\n", m_letter_spacing );
@@ -7600,7 +7607,20 @@ int CFreePcbDoc::CreatePCBNets( int ITERATOR )
 			}
 			else if( m_outline_poly->GetAt(iFree).GetLayer() < LAY_ADD_1 )
 			{
-				m_outline_poly->GetAt(iFree).SetLayer( LAY_ADD_1 );
+				//int newlayer = LAY_ADD_1 + 2;
+				m_outline_poly->GetAt(iFree).SetLayer( m_unconnected_pin_layer );
+				CText * tpin = m_outline_poly->GetAt(iFree).Check(index_pin_attr);
+				if (tpin)
+				{
+					tpin->m_layer = m_unconnected_pin_layer;
+					tpin->MakeVisible();
+					CText* dpin = m_outline_poly->GetAt(iFree).Check(index_desc_attr);
+					if (dpin)
+					{
+						dpin->m_layer = m_unconnected_pin_layer;
+						dpin->MakeVisible();
+					}
+				}
 				m_outline_poly->GetAt(iFree).Draw();
 			}
 		}
@@ -8112,6 +8132,8 @@ int CFreePcbDoc::FindNodeLine(	int ic,
 	}
 
 	// check node count
+	CText* pintext = m_outline_poly->GetAt(ic).Check(index_pin_attr);
+	CText* dtext = m_outline_poly->GetAt(ic).Check(index_desc_attr);
 	if( NodeFound == 0  )
 	{// empty
 	}// empty
@@ -8127,12 +8149,36 @@ int CFreePcbDoc::FindNodeLine(	int ic,
 					m_outline_poly->GetAt(ic).SetLayer( LAY_CONNECTION );
 		}
 		else
-			m_outline_poly->GetAt(ic).SetLayer( LAY_PIN_LINE ); // set pin
+		{
+			m_outline_poly->GetAt(ic).SetLayer(LAY_PIN_LINE); // set pin
+			if (pintext)
+			{
+				pintext->m_layer = LAY_PIN_NAME;
+				pintext->MakeVisible();
+				if (dtext)
+				{
+					dtext->m_layer = LAY_PIN_DESC;
+					dtext->MakeVisible();
+				}
+			}
+		}
 	}
 	else if( L == LAY_FREE_LINE )
 		m_outline_poly->GetAt(ic).SetLayer( LAY_CONNECTION ); // set connect
-	else if( m_outline_poly->GetAt(ic).Check( index_pin_attr ) )
-		m_outline_poly->GetAt(ic).SetLayer( LAY_PIN_LINE ); // set pin
+	else if (m_outline_poly->GetAt(ic).Check(index_pin_attr))
+	{
+		m_outline_poly->GetAt(ic).SetLayer(LAY_PIN_LINE); // set pin
+		if (pintext)
+		{
+			pintext->m_layer = LAY_PIN_NAME;
+			pintext->MakeVisible();
+			if (dtext)
+			{
+				dtext->m_layer = LAY_PIN_DESC;
+				dtext->MakeVisible();
+			}
+		}
+	}
 	// now draw
 	m_outline_poly->GetAt(ic).Draw( m_dlist );
 	return RET;
