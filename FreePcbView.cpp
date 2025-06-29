@@ -1132,7 +1132,7 @@ void CFreePcbView::OnLButtonUp(UINT nFlags, CPoint point)
 				m_Doc->OnProjectAdaptGrid(); //OnProjectAdaptGrid before SetCursorMode!
 			SetCursorMode( CUR_GROUP_SELECTED );
 			HighlightGroup();
-			
+			m_object = 0;
 		}
 		m_bDraggingRect = FALSE;
 		CView::OnLButtonUp(nFlags, point);
@@ -1526,6 +1526,7 @@ void CFreePcbView::OnLButtonUp(UINT nFlags, CPoint point)
 		else 
 		{
 			// magnetize
+			int abort = 0;
 			if( m_cursor_mode == CUR_ADD_OP ||
 				m_cursor_mode == CUR_DRAG_OP_1 ||
 				m_cursor_mode == CUR_DRAG_OP ||
@@ -1559,6 +1560,7 @@ void CFreePcbView::OnLButtonUp(UINT nFlags, CPoint point)
 										EN = 0;
 						if( EN )
 						{
+							abort = 1;
 							m_last_cursor_point = p;
 							CPoint psc = m_Doc->m_dlist->PCBToScreen( p );
 							SetCursorPos( psc.x, psc.y );
@@ -1593,6 +1595,7 @@ void CFreePcbView::OnLButtonUp(UINT nFlags, CPoint point)
 												EN = 0;
 								if( EN && (intersectX || intersectY) )
 								{
+									abort = 1;
 									p.SetPoint( intersectX, intersectY );
 									m_last_cursor_point = p;
 									CPoint psc = m_Doc->m_dlist->PCBToScreen( p );
@@ -1708,12 +1711,23 @@ void CFreePcbView::OnLButtonUp(UINT nFlags, CPoint point)
 				CPoint p;
 				p = m_last_cursor_point;
 				m_sel_op.AppendCorner( p.x, p.y, m_polyline_style, TRUE );
-				m_Doc->m_dlist->HighLight( m_sel_op.dl_side[m_sel_id.ii] );
-				m_Doc->m_dlist->StartDraggingArc( pDC, m_polyline_style, p.x, p.y, p.x, p.y, LAY_SELECTION, m_sel_op.GetW(), 2 );
-				m_sel_id.ii++;
-				SetCursorMode( CUR_DRAG_OP );
-				m_Doc->ProjectModified( TRUE );
-				m_snap_angle_ref = m_last_cursor_point;
+				if (abort)
+				{
+					m_Doc->m_dlist->StopDragging();
+					m_Doc->FindNodeLine(m_sel_id.i);
+					m_Doc->m_outline_poly->GetAt(m_sel_id.i).MakeVisible();
+					CancelSelection();
+					OnRangeCmds(NULL);
+				}
+				else
+				{
+					m_Doc->m_dlist->HighLight(m_sel_op.dl_side[m_sel_id.ii]);
+					m_Doc->m_dlist->StartDraggingArc(pDC, m_polyline_style, p.x, p.y, p.x, p.y, LAY_SELECTION, m_sel_op.GetW(), 2);
+					m_sel_id.ii++;
+					SetCursorMode(CUR_DRAG_OP);
+					m_Doc->ProjectModified(TRUE);
+					m_snap_angle_ref = m_last_cursor_point;
+				}
 			}
 			else if( m_cursor_mode == CUR_DRAG_OP )
 			{
@@ -1742,10 +1756,21 @@ void CFreePcbView::OnLButtonUp(UINT nFlags, CPoint point)
 							if( m_polyline_layer < LAY_ADD_1 )
 								if( m_Doc->m_snap_angle == 45 || m_Doc->m_snap_angle == 90 )
 									AlignSides( ID_POLYLINE, m_sel_id.i, m_sel_id.ii );
-					m_Doc->m_dlist->HighLight( m_sel_op.dl_side[m_sel_id.ii] );
-					m_Doc->m_dlist->StartDraggingArc( pDC, m_polyline_style, p.x, p.y, p.x, p.y, LAY_SELECTION, m_sel_op.GetW(), 2 );
-					m_sel_id.ii++;
-					m_snap_angle_ref = m_last_cursor_point;
+					if (abort)
+					{
+						m_Doc->m_dlist->StopDragging();
+						m_Doc->FindNodeLine(m_sel_id.i);
+						m_Doc->m_outline_poly->GetAt(m_sel_id.i).MakeVisible();
+						CancelSelection();
+						OnRangeCmds(NULL);
+					}
+					else
+					{
+						m_Doc->m_dlist->HighLight(m_sel_op.dl_side[m_sel_id.ii]);
+						m_Doc->m_dlist->StartDraggingArc(pDC, m_polyline_style, p.x, p.y, p.x, p.y, LAY_SELECTION, m_sel_op.GetW(), 2);
+						m_sel_id.ii++;
+						m_snap_angle_ref = m_last_cursor_point;
+					}
 				}
 				if( m_polyline_style && m_sel_op.GetNumSides() > 0 )
 				{
@@ -2543,6 +2568,33 @@ void CFreePcbView::HandleKeyPress(UINT nChar, UINT nRepCnt, UINT nFlags)
 		}
 		else if( fk == FK_SET_POSITION )
 			OnOPCornerEdit();
+		else if (fk == FK_MAKE_FIRST)
+		{
+			int answ = IDYES;
+			if (m_Doc->m_outline_poly->GetAt(m_sel_ic).GetClosed() == 0)
+			{
+				if (G_LANGUAGE)
+					answ = AfxMessageBox("Эта функция сделает выбранную вершину полилинии первой, "\
+									"а для этого нужно чтобы полилиния была замкнутой.Хотите замкнуть "\
+									"данную полилинию и затем выполнить эту функцию?", MB_YESNO);
+				else
+					answ = AfxMessageBox("This function will make the selected vertex of the polyline "\
+									"the first one, and for this to happen, the polyline must be closed. "\
+									"Do you want to close this polyline and then execute this function ? ", MB_YESNO);
+			}
+			if (answ == IDYES)
+			{
+				SaveUndoInfoForOutlinePoly(m_sel_ic, TRUE, m_Doc->m_undo_list);
+				m_Doc->m_outline_poly->GetAt(m_sel_ic).Close();
+				m_Doc->m_outline_poly->GetAt(m_sel_ic).MakeFirst(m_sel_is);
+				//m_Doc->m_outline_poly->GetAt(m_sel_ic).MakeVisible();
+				m_sel_is = 0;
+				m_Doc->m_dlist->CancelHighLight();
+				HighlightGroup();
+				m_Doc->ProjectModified(TRUE);
+				OnRangeCmds(NULL);
+			}
+		}
 		else if( fk == FK_ALIGN_SIDES )
 		{
 			AlignSides(m_sel_id.type, m_sel_id.i, m_sel_id.ii);
@@ -3688,6 +3740,7 @@ void CFreePcbView::SetFKText( int mode )
 				prevy = m_sel_op.GetY(m_sel_id.ii);
 				//
 				m_fkey_option[0] = FK_SET_POSITION;
+				m_fkey_option[1] = FK_MAKE_FIRST;
 				m_fkey_option[2] = FK_ALIGN_SIDES;
 				m_fkey_option[3] = FK_MOVE_CORNER;
 				m_fkey_option[4] = FK_ALIGN_MIDDLE;

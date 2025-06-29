@@ -125,6 +125,8 @@ enum {
 	FK_SWITCH_TO_PCB,
 	FK_OPEN_FOLDER,
 	FK_COMPONENT_NOTES,
+	FK_MAKE_FIRST,
+	//
 	FK_DRAW_SQUARE,
 	FK_DRAW_RECT,
 	FK_DRAW_ROUND,
@@ -336,6 +338,7 @@ const char fk_str[FK_NUM_OPTIONS * 2 + 2][32] =
 " Показ",  " на плате",
 " Папка",    " проекта",
 " Откр.",    " заметки",
+" Сделать",  " первой",
 //
 " Квадрат",		" ",
 " Прямо-",		" угольник",

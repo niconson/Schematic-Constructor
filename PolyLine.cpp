@@ -2825,3 +2825,24 @@ CString CPolyLine::GetOpenscadPolyPts( int units, int Fn, int tab, CString * h, 
 	delete PTS;
 	return S;
 }
+
+void CPolyLine::MakeFirst(int ic)
+{
+	if (ic > 0)
+	{
+		int cl = 0, st = 0;
+		if (GetClosed())
+		{
+			UnClose();
+			cl = 1;
+			st = side_style[ic - 1];
+		}
+		
+		for (int i = 0; i < ic; i++)
+			AppendCorner(corner[i].x, corner[i].y, side_style[i ? i - 1 : m_ncorners - 1], 0);
+		for (int i = ic - 1; i >= 0; i--)
+			DeleteCorner(i);
+		if (cl)
+			Close(st);
+	}
+}

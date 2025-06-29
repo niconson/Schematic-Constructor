@@ -79,7 +79,7 @@ IDI_ICON2               ICON                    "res\\icon2.ico"
 // Bitmap
 //
 
-IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
+//IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
 
 IDR_MYTOOLBAR           BITMAP                  "res\\Toolbar.bmp"
 
@@ -125,29 +125,6 @@ IDB_BITMAP_URL          BITMAP                  "res\\URL.bmp"
 // Toolbar
 //
 
-IDR_MAINFRAME TOOLBAR 16, 15
-BEGIN
-    BUTTON      ID_FILE_NEW
-    BUTTON      ID_FILE_OPEN
-    BUTTON      ID_FILE_SAVE
-    SEPARATOR
-    BUTTON      ID_EDIT_CUT
-    BUTTON      ID_EDIT_COPY
-    BUTTON      ID_EDIT_PASTE
-    SEPARATOR
-    BUTTON      ID_FILE_PRINT
-    SEPARATOR
-    BUTTON      ID_APP_ABOUT
-    SEPARATOR
-    SEPARATOR
-    SEPARATOR
-    SEPARATOR
-    SEPARATOR
-    SEPARATOR
-    SEPARATOR
-    SEPARATOR
-    SEPARATOR
-END
 
 IDR_MYTOOLBAR TOOLBAR 16, 15
 BEGIN
@@ -160,6 +137,7 @@ BEGIN
     BUTTON      ID_EDIT_PASTE
     SEPARATOR
     BUTTON      ID_FILE_PRINT
+    BUTTON      ID_VIEW_SWITCH_PCB
     SEPARATOR
     BUTTON      ID_APP_ABOUT
     SEPARATOR
@@ -185,7 +163,7 @@ IDR_MAINFRAME MENU
 BEGIN
     POPUP "&File"
     BEGIN
-        MENUITEM "Ќова€ схема\tCtrl+N",         ID_FILE_NEW
+        MENUITEM "Ќовый\tCtrl+N",         ID_FILE_NEW
         MENUITEM "ќткрыть\tCtrl+O",             ID_FILE_OPEN
         POPUP "ѕапка проектов"
         BEGIN
@@ -893,7 +871,7 @@ CAPTION "ќ программе"
 FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,11,12,20,20
-    LTEXT           "—хемјтор v1.4.25 дл€ ѕлат‘орм v2.4",IDC_STATIC,42,12,119,8,SS_NOPREFIX
+    LTEXT           "—хемјтор v1.4.26 дл€ ѕлат‘орм v2.4",IDC_STATIC,42,12,119,8,SS_NOPREFIX
     LTEXT           "© Duxahtech 2020-2025, –осси€ г.„ел€бинск",IDC_STATIC,42,24,178,8
     DEFPUSHBUTTON   "√отово",IDOK,165,61,50,14,WS_GROUP
     LTEXT           "Source libraries:",IDC_STATIC,21,78,51,8
@@ -2980,10 +2958,10 @@ BEGIN
         BLOCK "040904b0"
         BEGIN
             VALUE "Comments", "alpha"
-            VALUE "FileDescription", "–едактор схем с генератором списка эл.цепей"
+            VALUE "FileDescription", "—хематор"
             VALUE "FileVersion", "1,0,0,0"
             VALUE "InternalName", "—хемјтор"
-            VALUE "LegalCopyright", "Copyright (C) 2020-2024"
+            VALUE "LegalCopyright", "Copyright (C) 2020-2025"
             VALUE "OriginalFilename", "—хемјтор.EXE"
             VALUE "ProductName", "—хемјтор"
             VALUE "ProductVersion", "1,4,x,x"

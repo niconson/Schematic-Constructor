@@ -252,7 +252,7 @@ CFreePcbDoc::CFreePcbDoc()
 	m_auto_elapsed = 0;
 	bNoFilesOpened = TRUE;
 	// VERSION (key)
-	m_version = 1.425;
+	m_version = 1.426;
 	m_file_version = m_version;
 	m_protection = 0;
 	m_current_page = 0;
@@ -12553,6 +12553,17 @@ void CFreePcbDoc::SwitchToPCB()
 
 void CFreePcbDoc::SwitchToPCB( BOOL duty, BOOL bGRAB, BOOL bIronScale )
 {
+	if (bNoFilesOpened)
+	{
+		CString FreePcb2 = m_app_dir + "\\FreePcb.exe";
+		if (G_LANGUAGE)
+			FreePcb2 = m_app_dir + "\\ПлатФорм.exe";
+		if ((UINT)ShellExecute(NULL, "open", "\"" + FreePcb2 + "\"", "", "\"" + m_app_dir + "\"", SW_SHOWNORMAL) > 32)
+		{
+
+		}
+		return;
+	}
 	CString PcbName = "";
 	if( Pages.IsThePageIncludedInNetlist( Pages.GetActiveNumber() ) == 0 )
 	{

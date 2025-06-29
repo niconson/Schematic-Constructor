@@ -219,6 +219,7 @@ public:
 	void SetMerge(int merge, BOOL bSUB=0);
 	void SetSideSel(int i, BOOL sel);
 	void SetSel(int i, BOOL sel);
+	void MakeFirst(int ic);
 
 	// GPC functions
 	int MakeGpcPoly( int icontour=0, CArray<CArc> * arc_array=NULL );

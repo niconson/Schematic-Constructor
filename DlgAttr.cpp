@@ -635,7 +635,7 @@ void CDlgAttr::OnChange()
 
 void CDlgAttr::OnOpenLib()
 {
-	m_open_lib.EnableWindow(0);
+	//m_open_lib.EnableWindow(0);
 	CString Mess, foot;
 	m_edit_fname.GetWindowTextA(foot);
 	CWnd * win = FindWindow(NULL, "FreePcb Footprints Library");
