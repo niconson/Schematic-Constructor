@@ -4952,6 +4952,7 @@ void CFreePcbView::TextAlignRVF( BOOL RFV, BOOL RV, BOOL RF )
 				int an1 = m_sel_text->m_angle;
 				m_sel_text->m_angle = 0;
 				m_sel_text->MakeVisible();
+				int RIGHT_ALIGN = getbit(part->m_pdf_options, PDF_ALIGN);
 				RECT R;
 				m_sel_text->m_tl->GetTextRectOnPCB( m_sel_text, &R );
 				for( int iattr=((RFV||RF)?index_foot_attr:index_value_attr); 
@@ -4979,7 +4980,7 @@ void CFreePcbView::TextAlignRVF( BOOL RFV, BOOL RV, BOOL RF )
 						V->MakeVisible();
 						if( V->m_tl->GetTextRectOnPCB( V, &VR ) )
 						{
-							if( getbit( V->m_pdf_options, PDF_ALIGN ) )
+							if( RIGHT_ALIGN )
 								V->m_x -= (VR.right - VR.left - R.right + R.left);
 						}
 						if( an1 )

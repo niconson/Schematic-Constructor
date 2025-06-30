@@ -172,6 +172,7 @@ BEGIN_MESSAGE_MAP(CFreePcbDoc, CDocument)
 	ON_COMMAND(ID_PLAY_REFLIST19, PlayRefList19)
 	ON_COMMAND(ID_PLAY_REFLIST20, PlayRefList20)
 	ON_COMMAND(ID_VIEW_SWITCH_PCB, SwitchToPCB)
+	ON_COMMAND(ID_SWITCH_PCB_BUTTON, SwitchToPcbOnButton)
 	ON_COMMAND(ID_EDIT_SELECT_ALL, OnEditSelectAll)
 	ON_COMMAND(ID_SEL_ADJACENT, SelectAdj)
 	ON_COMMAND(ID_SEL_SIMILAR_POLY, OnSimilarPoly)
@@ -252,7 +253,7 @@ CFreePcbDoc::CFreePcbDoc()
 	m_auto_elapsed = 0;
 	bNoFilesOpened = TRUE;
 	// VERSION (key)
-	m_version = 1.426;
+	m_version = 1.427;
 	m_file_version = m_version;
 	m_protection = 0;
 	m_current_page = 0;
@@ -898,7 +899,7 @@ BOOL CFreePcbDoc::FileOpen( LPCTSTR fn )
 
 		m_view->InvalidateLeftPane();		
 		GetGerberPathes(fn);
-		bNoFilesOpened = FALSE;
+		
 
 		// fix pcb names
 		Pages.CheckPCBNames( &m_path_to_folder );
@@ -978,10 +979,10 @@ BOOL CFreePcbDoc::FileOpen( LPCTSTR fn )
 					"загрузить список соединений %s.net в редактор ПлатФорм. Вы можете продолжить "\
 					"работу и загрузить его позже, но лучше всегда обновлять список соединений "\
 					"сразу после любых изменений в файле схемы."), pg, Pages.m_pcb_names[RENUMB]);
-				AfxMessageBox(	s, MB_ICONERROR );
+				AfxMessageBox(	s, MB_ICONWARNING );
 			}
 		}
-
+		
 		// copy datasheets
 		CComponentNoteExt dlg;
 		dlg.Sync( this );
@@ -989,6 +990,7 @@ BOOL CFreePcbDoc::FileOpen( LPCTSTR fn )
 		/// At the very end we will install the title
 		m_window_title = CDS_HEADER + m_pcb_filename;
 		EnableMenuItems();
+		bNoFilesOpened = FALSE;
 		return TRUE;
 	}
 	catch( CString * err_str )
@@ -1036,6 +1038,7 @@ int CFreePcbDoc::FileClose()
 		// copy datasheets
 		CComponentNoteExt dlg;
 		dlg.Sync( this );
+		bNoFilesOpened = TRUE;
 	}
 	m_view->CancelSelection();	
 
@@ -1303,6 +1306,7 @@ int CFreePcbDoc::FileSave( CString * folder, CString * filename,
 			// write message
 			CString messg = m_netlist_full_path + ".txt";
 			CString instr="";
+			//
 			if( Check_Txt_Msg( &messg, &instr ) )
 			{	
 				if( instr.Left(instr.GetLength()) == NETLIST_WARNING )
@@ -1313,7 +1317,7 @@ int CFreePcbDoc::FileSave( CString * folder, CString * filename,
 					m_view->OnRangeCmds(NULL);
 					return 2;
 				}
-				else if( instr.Left(instr.GetLength()) != FILE_PROTECTED )
+				else //if( instr.Left(instr.GetLength()) != FILE_PROTECTED )
 				{
 					CStdioFile m_file;
 					err = m_file.Open( LPCSTR(messg), CFile::modeCreate | CFile::modeWrite, NULL );
@@ -3781,10 +3785,8 @@ BOOL CFreePcbDoc::Check_Txt_Msg( CString * TXT, CString * MSG )
 				fMess.Close();
 			}
 		}
-		return TRUE;
 	}
-	else
-		return FALSE;
+	return TRUE;
 }
 
 void CFreePcbDoc::FileExport( CString str, int type )
@@ -3822,8 +3824,11 @@ void CFreePcbDoc::FileExport( CString str, int type )
 	m_view->m_draw_layer = 0;
 	m_view->Invalidate( FALSE );
 }
-
 void CFreePcbDoc::OnFileExport1()
+{
+	OnFileExport(TRUE);
+}
+void CFreePcbDoc::OnFileExport(BOOL DLG)
 {
 	if( Pages.IsThePageIncludedInNetlist( Pages.GetActiveNumber() ) == 0 )
 	{
@@ -3913,7 +3918,7 @@ void CFreePcbDoc::OnFileExport1()
 	s.Format("Netlist created in the project folder. Full path to file: \n%s\n", ch_file );
 	CDlgMyMessageBox Dlg;
 	Dlg.Initialize( s, IDB_BITMAP_NL );
-	ok = Dlg.DoModal();
+	ok = DLG ? Dlg.DoModal() : IDOK;
 	if( ok == IDOK )
 	{
 		m_view->CancelSelection();
@@ -12550,7 +12555,15 @@ void CFreePcbDoc::SwitchToPCB()
 {
 	SwitchToPCB( FALSE, FALSE );
 }
-
+void CFreePcbDoc::SwitchToPcbOnButton()
+{
+	CString MSG;
+	Check_Txt_Msg(NULL, &MSG);
+	if( MSG.GetLength() > 10)
+		OnFileExport( FALSE );
+	else
+		SwitchToPCB();
+}
 void CFreePcbDoc::SwitchToPCB( BOOL duty, BOOL bGRAB, BOOL bIronScale )
 {
 	if (bNoFilesOpened)

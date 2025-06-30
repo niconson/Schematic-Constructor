@@ -374,7 +374,7 @@ void CDlgPartlist::Size( int cx, int cy, int save )
 	m_flt.SetWindowPos(NULL,0,cy-21,cx-100,18,0);
 	Butt[0].GetWindowRect(&R);
 	for( int i=0; i<7; i++ )
-		Butt[i].SetWindowPos(NULL,(i==6?(cx-92):(cx-90)),(i*25)+10,(i==6?(R.right-R.left+10):(R.right-R.left)),R.bottom-R.top,0);
+		Butt[i].SetWindowPos(NULL,(i==6?(cx-89):(cx-90)),(i*18)+2,(i==6?(R.right-R.left+10):(R.right-R.left)),R.bottom-R.top,0);
 	GetColWidths();
 }
 

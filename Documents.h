@@ -374,6 +374,7 @@ public:
 	afx_msg void OnFileExport1();
 	afx_msg void OnFileSetNetlist();
 
+	void OnFileExport(BOOL DLG = TRUE);
 	void FileExport( CString str, int type );
 	afx_msg void OnToolsDrc();
 	afx_msg void OnToolsClearDrc();
@@ -510,6 +511,7 @@ public:
 	afx_msg void PlayRefList20();
 	//
 	afx_msg void SwitchToPCB();
+	void SwitchToPcbOnButton();
 	void SwitchToPCB( BOOL duty, BOOL bGRAB, BOOL bIronScale = 0 );
 	void SwitchToCDS( CString * CdsFile=NULL, CString * PartRef=NULL, BOOL bMERGE=FALSE );
 	void EnsureNotMinimized( HWND hWnd, BOOL bGRAB, BOOL bIronScale );

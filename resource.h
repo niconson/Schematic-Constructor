@@ -197,6 +197,7 @@
 #define ID_TOOLS                        273
 #define ID_VIEW_MERGES                  274
 #define ID_VIEW_SWITCH_PCB              275
+#define ID_SWITCH_PCB_BUTTON            276
 #define IDB_BITMAP_DIP                  277
 #define IDB_BITMAP_SIP                  285
 #define IDD_SAVE_FOOTPRINT              286

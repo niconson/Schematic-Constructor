@@ -79,8 +79,6 @@ IDI_ICON2               ICON                    "res\\icon2.ico"
 // Bitmap
 //
 
-//IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
-
 IDR_MYTOOLBAR           BITMAP                  "res\\Toolbar.bmp"
 
 IDB_BITMAP_QUAD         BITMAP                  "res\\quad.bmp"
@@ -125,7 +123,6 @@ IDB_BITMAP_URL          BITMAP                  "res\\URL.bmp"
 // Toolbar
 //
 
-
 IDR_MYTOOLBAR TOOLBAR 16, 15
 BEGIN
     BUTTON      ID_FILE_NEW
@@ -137,7 +134,7 @@ BEGIN
     BUTTON      ID_EDIT_PASTE
     SEPARATOR
     BUTTON      ID_FILE_PRINT
-    BUTTON      ID_VIEW_SWITCH_PCB
+    BUTTON      ID_SWITCH_PCB_BUTTON
     SEPARATOR
     BUTTON      ID_APP_ABOUT
     SEPARATOR
@@ -163,7 +160,7 @@ IDR_MAINFRAME MENU
 BEGIN
     POPUP "&File"
     BEGIN
-        MENUITEM "Новый\tCtrl+N",         ID_FILE_NEW
+        MENUITEM "Новый\tCtrl+N",               ID_FILE_NEW
         MENUITEM "Открыть\tCtrl+O",             ID_FILE_OPEN
         POPUP "Папка проектов"
         BEGIN
@@ -871,7 +868,7 @@ CAPTION "О программе"
 FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,11,12,20,20
-    LTEXT           "СхемАтор v1.4.26 для ПлатФорм v2.4",IDC_STATIC,42,12,119,8,SS_NOPREFIX
+    LTEXT           "СхемАтор v1.4.27 для ПлатФорм v2.4",IDC_STATIC,42,12,119,8,SS_NOPREFIX
     LTEXT           "© Duxahtech 2020-2025, Россия г.Челябинск",IDC_STATIC,42,24,178,8
     DEFPUSHBUTTON   "Готово",IDOK,165,61,50,14,WS_GROUP
     LTEXT           "Source libraries:",IDC_STATIC,21,78,51,8
@@ -1363,14 +1360,14 @@ CAPTION " Список деталей"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     CONTROL         "",IDC_LIST1,"SysListView32",LVS_REPORT | LVS_SHOWSELALWAYS | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,0,0,364,118
-    DEFPUSHBUTTON   "Подсветить",IDOK,376,6,50,14
-    PUSHBUTTON      "Прыгнуть в..",IDJUMP,376,33,50,13
-    PUSHBUTTON      "Инверт.выб.",IDBOM,376,59,50,13
-    PUSHBUTTON      "Выдать TXT",IDPARTLIST,376,72,50,13
+    DEFPUSHBUTTON   "Подсветить",IDOK,372,3,50,10
+    PUSHBUTTON      "Прыгнуть в..",IDJUMP,372,23,50,10
+    PUSHBUTTON      "Инверт.выб.",IDBOM,372,43,50,10
+    PUSHBUTTON      "Выдать TXT",IDPARTLIST,372,53,50,10
     EDITTEXT        IDC_FILTER,0,122,364,13,ES_AUTOHSCROLL
-    CONTROL         "Текущая плата",IDC_CHECK_CURRENT_PCB,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,378,90,67,8
-    PUSHBUTTON      "Показ платы",IDHPCB,376,20,50,13
-    PUSHBUTTON      "Выбрать всё",IDSALL,376,46,50,13
+    CONTROL         "Эта плата",IDC_CHECK_CURRENT_PCB,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,373,66,71,8
+    PUSHBUTTON      "Показ платы",IDHPCB,372,13,50,10
+    PUSHBUTTON      "Выбрать всё",IDSALL,372,33,50,10
 END
 
 IDD_REF_TEXT DIALOGEX 0, 0, 370, 125
