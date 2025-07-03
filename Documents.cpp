@@ -39,8 +39,8 @@
 #include "TagTable.h"
 #include "math.h"
 //
-#include <fstream>
-using namespace std;
+//#include <fstream>
+//using namespace std;
 //
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -11848,9 +11848,6 @@ int CFreePcbDoc::AddSource( CString * new_name )
 	// first check
 	// is there a file
 	// in cache
-	char ch1, ch2;
-	ifstream f1;
-	ifstream f2;
 	CString search_str = folder + first_f;
 	BOOL bWorking = finder.FindFile( search_str );
 	while (bWorking)
@@ -11859,28 +11856,12 @@ int CFreePcbDoc::AddSource( CString * new_name )
 		CString fn = finder.GetFilePath();
 		if( !finder.IsDots() && !finder.IsDirectory() )
 		{
-			f1.open(SRC,ios::binary);
-			f2.open(fn,ios::binary);
-			while(1)
+			if ( SameFiles( &SRC, &fn ) ) // сравнение файлов 
 			{
-				BOOL b1 = f1.eof();
-				BOOL b2 = f2.eof();
-				if( b1 != b2 )
-					break;// different file lengths
-				if( b1 && b2 )
-				{
-					// OK
-					// Same files
-					*new_name = fn;
-					return m_dlist->AddSource( &fn );
-				}
-				f1.read(&ch1,1);
-				f2.read(&ch2,1);
-				if( ch1 != ch2 )
-					break;// different bits
+				// same
+				*new_name = fn;
+				return m_dlist->AddSource(&fn);
 			}
-			f1.close();
-			f2.close();
 		}
 	}
 	//
@@ -12557,6 +12538,11 @@ void CFreePcbDoc::SwitchToPCB()
 }
 void CFreePcbDoc::SwitchToPcbOnButton()
 {
+	if (bNoFilesOpened)
+	{
+		SwitchToPCB();
+		return;
+	}
 	CString MSG;
 	Check_Txt_Msg(NULL, &MSG);
 	if( MSG.GetLength() > 10)

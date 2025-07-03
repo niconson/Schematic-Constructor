@@ -4980,8 +4980,11 @@ void CFreePcbView::TextAlignRVF( BOOL RFV, BOOL RV, BOOL RF )
 						V->MakeVisible();
 						if( V->m_tl->GetTextRectOnPCB( V, &VR ) )
 						{
-							if( RIGHT_ALIGN )
+							if (RIGHT_ALIGN)
+							{
 								V->m_x -= (VR.right - VR.left - R.right + R.left);
+								setbit( V->m_pdf_options, PDF_ALIGN );
+							}
 						}
 						if( an1 )
 							Rotate_i_Vertex( &V->m_x, &V->m_y, -an1, m_sel_text->m_x, m_sel_text->m_y );
@@ -7638,8 +7641,10 @@ int CFreePcbView::FindStrInFile( CString * file,
 		int cur_np = 0;
 		RECT cur_rect = rect(0,0,0,0);
 		BOOL add = 0, v_ok = 0, f_ok = 0;
+		int iterator = 0;
 		while( File.ReadString( instr ) )
 		{
+			iterator++;
 			instr.Trim();	
 			if( instr.Left(7) == "n_pins:" )
 			{
@@ -7707,7 +7712,8 @@ int CFreePcbView::FindStrInFile( CString * file,
 						if( ret_v == 1 )
 						{
 							m_Doc->m_dlg_log->AddLine( "added merge index: "+ss.GetAt(0)+"\r\n" );
-							m_Doc->m_dlg_log->UpdateWindow();
+							if(iterator%32==0)
+								m_Doc->m_dlg_log->UpdateWindow();
 						}
 					}
 				}
@@ -7723,7 +7729,8 @@ int CFreePcbView::FindStrInFile( CString * file,
 							if( ret_v == 1 )
 							{
 								m_Doc->m_dlg_log->AddLine( add_s+"\r\n" );
-								m_Doc->m_dlg_log->UpdateWindow();
+								if (iterator % 32 == 0)
+									m_Doc->m_dlg_log->UpdateWindow();
 							}
 						}
 				}

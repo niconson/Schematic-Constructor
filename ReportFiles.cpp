@@ -318,6 +318,30 @@ Package:			// (footprint name)
 								bPicOnPart = 1;
 						}
 					}	
+					// Исключение стандартных файлов в папке Colors
+					if( bPicOnPart )
+					{
+						file.Close();
+						CFileFind finder;
+						CString search_str = m_doc->m_app_dir + "\\Colors\\*";
+						BOOL bWorking = finder.FindFile(search_str);
+						while (bWorking)
+						{
+							bWorking = finder.FindNextFile();
+							CString fn = finder.GetFilePath();
+							if (!finder.IsDots() && !finder.IsDirectory())
+							{
+								if (SameFiles(&title, &fn)) // сравнение файлов 
+								{
+									// same
+									bPicOnPart = 0;
+									ok_pic = 0;
+								}
+							}
+						}
+						if (file.Open(title, CFile::modeRead, NULL) == 0)
+							ok_pic = 0;
+					}
 					if( ok_pic )
 					{
 						CArchive ar( &file, CArchive::load | CArchive::bNoFlushOnDelete );
@@ -343,6 +367,7 @@ Package:			// (footprint name)
 							Width *= 70.0;
 							if( bottom < (m_pdf_margin+StringHeight+(StringHeight/10.0)) )
 							{
+								static int prevItem = -1;
 								y = Cur_Y;
 								if( bTITLE )
 									y += (StringHeight*2.0);
@@ -367,17 +392,24 @@ Package:			// (footprint name)
 								Cur_Y = PageInit(pdf);
 								Pic_Y = INT_MAX;
 
-									
-								if( bTITLE )
+								if (item != prevItem)
 								{
-									bTITLE = 0;
-									PrevPac = "";
-									goto Title;
+									prevItem = item;
+									if (bTITLE)
+									{
+										bTITLE = 0;
+										PrevPac = "";
+										goto Title;
+									}
+									else
+									{
+										goto Package;
+									}
 								}
+								else if (G_LANGUAGE)
+									AfxMessageBox("Деталь содержит слишком длинное изображение", MB_ICONINFORMATION);
 								else
-								{
-									goto Package;
-								}
+									AfxMessageBox("The part contains an image that is too long.", MB_ICONINFORMATION);
 							}
 							float scx = 1.0;
 							float scy = 1.0;

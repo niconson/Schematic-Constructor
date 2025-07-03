@@ -46,6 +46,9 @@ void CDlgImportMerge::DoDataExchange(CDataExchange* pDX)
 		{
 			m_part_list.GetText( cur_sel, m_merger );
 		}
+		//HICON pIcon = GetIcon(1);
+		//if (pIcon)
+		//	DestroyIcon(pIcon);
 	}
 }
 

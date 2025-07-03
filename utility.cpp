@@ -5,7 +5,9 @@
 #include <math.h>
 #include <time.h>
 #include "DisplayList.h" 
- 
+#include <fstream>
+using namespace std;
+
 // globals for timer functions
 LARGE_INTEGER PerfFreq, tStart, tStop; 
 int PerfFreqAdjust;
@@ -3470,4 +3472,42 @@ int SelectAdjacent ( CArray<CPolyLine>* arr )
 		}
 	} while (mnc != nc);
 	return nc;
+}
+
+BOOL SameFiles( CString * SRC, CString * fn )
+{
+	char ch1, ch2;
+	ifstream f1;
+	ifstream f2;
+	f1.open( *SRC, ios::binary );
+	if(!f1)
+		return FALSE;
+	f2.open( *fn, ios::binary );
+	if (!f2)
+	{
+		f1.close();
+		return FALSE;
+	}
+	while (1)
+	{
+		BOOL b1 = f1.eof();
+		BOOL b2 = f2.eof();
+		if (b1 != b2)
+			break;// different file lengths
+		if (b1 && b2)
+		{
+			// OK
+			// Same files
+			f1.close();
+			f2.close();
+			return TRUE;
+		}
+		f1.read(&ch1, 1);
+		f2.read(&ch2, 1);
+		if (ch1 != ch2)
+			break;// different bits
+	}
+	f1.close();
+	f2.close();
+	return FALSE;
 }

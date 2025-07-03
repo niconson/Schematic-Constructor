@@ -1,42 +1,43 @@
 [options]
 
-version: 1.426
-file_version: 1.426
+app_folder: "D:\FreePCBDev\Schematic Constructor\.\Debug"
+version: 1.427
+file_version: 1.427
 project_name: "buf.cds"
-library_folder: "d:\works\projects\micronics\lib"
-full_library_folder: "?\micronics\lib\footprints"
+library_folder: "c:\users\duxah\desktop\duxah\freepcbdoc\freepcbdev\upload_latest_version\fp_lib"
+full_library_folder: "c:\users\duxah\desktop\duxah\freepcbdoc\freepcbdev\upload_latest_version\fp_lib\my_lib"
 CAM_folder: ""
 netlist_completed: "0"
-bom_options: "1074462880"
-page_number: "1"
+bom_options: "721056"
+page_number: "0"
 parent_index: "2"
 alignment: 0.70
-partlist_size_x: "636"
-partlist_size_y: "226"
-partlist_pos_x: "115"
-partlist_pos_y: "80"
+partlist_size_x: "534"
+partlist_size_y: "391"
+partlist_pos_x: "105"
+partlist_pos_y: "69"
 partlist_col_w: "960223292"
-netlist_file_path: "D:\works\projects\Micronics\Grainger\version-03\related_files\CDS_netlist\Led-03.fpc"
-pcb_name: "Grainger-03.fpc" 1
-pcb_name: "Led-03.fpc" 2
+netlist_file_path: "d:\works\projects\duxahtech\Grainger\version-01\related_files\CDS_netlist\Grainger-01A.fpc"
+pcb_name: "Grainger-01A.fpc" 1
+pcb_name: "Grainger-01B.fpc" 2
 netlist_format: 0
 page_mirror_mask: 0
-default_font: 11
-default_node_width: -800000
+default_font: 2
+default_node_width: -1500000
 autosave_interval: 60
 m_client_rect_left: 0
 m_client_rect_right: 1132
 m_client_rect_bottom: 712
 m_client_rect_top: 0
-m_org_x: 38337
-m_org_y: 15230
-m_scale_factor: 56271
-m_attr_size: 1000000 100000 1000000 100000 1000000 100000 1000000 100000 1000000 100000 1000000 100000
+m_org_x: 104240
+m_org_y: -69607
+m_scale_factor: 122487
+m_attr_size: 2200000 300000 2200000 300000 2200000 300000 2200000 300000 2200000 300000 2200000 300000
 m_user_scale: 1.0000000000
 units: MM
 
-m_sel_mask: -1
-m_visible_layers: -5
+m_sel_mask: -2
+m_visible_layers: 524283
 m_top_layer: 6
 m_grid_style: 0
 visible_grid_spacing: 2000000.000000
@@ -65,7 +66,7 @@ visible_grid_spacing: 2000000.000000
   visible_grid_item: 50mm
   visible_grid_item: 100mm
 
-polyline_grid_spacing: 500000.000000
+polyline_grid_spacing: 250000.000000
   placement_grid_item: 5mil
   placement_grid_item: 10mil
   placement_grid_item: 20mil
@@ -95,7 +96,7 @@ polyline_grid_spacing: 500000.000000
   placement_grid_item: 5mm
   placement_grid_item: 10mm
 
-text_grid_spacing: 100000.000000
+text_grid_spacing: 200000.000000
   text_grid_item: 0.1mil
   text_grid_item: 0.5mil
   text_grid_item: 1mil
@@ -143,7 +144,7 @@ drc_part_attr_to_poly: 100000
 drc_pin_attr_to_attr: 254000
 drc_pin_attr_to_poly: 254000
 
-default_polyline_width:0.2mm
+default_polyline_width:0.3mm
 n_additional_layers: 4
 m_pdf_font_i: 22
 m_pdf_margin: 0.01
@@ -178,19 +179,19 @@ pdf_checking: 34
   pdf_layer_info: "обозначения" 7 0 0 166 1
   pdf_layer_info: "линни пинов" 8 0 0 0 1
   pdf_layer_info: "имена пинов" 9 0 0 0 1
-  pdf_layer_info: "линни цепей" 10 0 0 64 1
+  pdf_layer_info: "линни цепей" 10 34 66 66 1
   pdf_layer_info: "имена цепей" 11 0 0 0 1
   pdf_layer_info: "футпринты" 12 166 0 0 1
   pdf_layer_info: "названия" 13 0 0 0 1
   pdf_layer_info: "описания" 14 0 0 0 1
   pdf_layer_info: "верхний 1" 15 0 0 0 1
-  pdf_layer_info: "верхний 2" 16 127 127 127 1
-  pdf_layer_info: "нижний 1" 17 254 254 254 1
-  pdf_layer_info: "нижний 2" 18 164 164 164 1
-  pdf_layer_info: "нижний 3" 19 255 255 0 1
-  pdf_layer_info: "нижний 4" 20 0 0 0 1
-  pdf_layer_info: "нижний 5" 21 255 255 255 1
-  pdf_layer_info: "нижний 6" 22 64 128 128 1
+  pdf_layer_info: "верхний 2" 16 200 200 200 1
+  pdf_layer_info: "нижний 1" 17 255 255 255 1
+  pdf_layer_info: "нижний 2" 18 200 200 200 1
+  pdf_layer_info: "нижний 3" 19 255 255 255 0
+  pdf_layer_info: "нижний 4" 20 255 255 255 0
+  pdf_layer_info: "нижний 5" 21 255 255 255 0
+  pdf_layer_info: "нижний 6" 22 255 255 255 0
   pdf_layer_info: "нижний 7" 23 255 255 255 0
   pdf_layer_info: "нижний 8" 24 255 255 255 0
   pdf_layer_info: "нижний 9" 25 255 255 255 0
@@ -202,81 +203,40 @@ pdf_checking: 34
   pdf_layer_info: "undefined" 31 255 255 255 0
 
 m_bom_colors: 0 0 0 155 155 155 0 0 0 166 166 166 255 255 111 0 0 255 140 140 140
-  ref_list: "RefList-1"
+  merge: "TITLE"
+  merge: "Merge-1"
 
 [graphics]
 
-rename_page: "Схема осн."
-bmp_src: "D:\works\projects\Micronics\Grainger\version-03\related_files\pictures\00002.PIC"
-add_new_page: "Схема доп."
-bmp_src: "D:\works\projects\Micronics\Grainger\version-03\related_files\pictures\00002.PIC"
-bmp_src: "D:\works\projects\Micronics\Grainger\version-03\related_files\pictures\00001.PIC"
-bmp_src: "D:\works\projects\Micronics\Grainger\version-03\related_files\pictures\00004.PIC"
-bmp_src: "D:\works\projects\Micronics\Grainger\version-03\related_files\pictures\00009.PIC"
-n_pins: 2
-rectangle: 72169784 38074585 100820584 50483785
-ref_des: "X3" 78205000 50986000 7 0 1000001 100001 -1 -1 11 129
-footprint_name: "5mm" 78155903 49535609 12 0 0 0 -1 -1 11 1
-part_value: "1218GE-N20" 78205433 49535609 13 0 1000000 100000 -1 -1 11 1
-outline: 4 0 6 200000 -1 -1 -1 0
-  corner: 1 86045184 40749985 0 0
-  corner: 2 86045184 48249985 0 0
-  corner: 3 74795184 48249985 0 0
-  corner: 4 74795184 40749986 0 0
-description: "Цепь" 80984614 46584985 14 0 1000000 100000 -1 -1 11 258
+rename_page: "Board A"
+bmp_src: "d:\works\projects\duxahtech\Grainger\version-01\related_files\pictures\00009.PIC"
+bmp_src: "d:\works\projects\duxahtech\Grainger\version-01\related_files\pictures\00004.PIC"
+bmp_src: "d:\works\projects\duxahtech\Grainger\version-01\related_files\pictures\00008.PIC"
+polyline: 16 0 10 300000 -1 -1 -1 0 9
+  corner: 1 197900000 -134249999 0 1
+  corner: 2 197900000 -136749999 0 0
+  corner: 3 195900000 -136749999 0 0
+  corner: 4 197900000 -136749999 0 0
+  corner: 5 197900000 -137249999 0 0
+  corner: 6 196900000 -137249999 0 0
+  corner: 7 197900000 -137249999 0 0
+  corner: 8 197900000 -137749999 0 0
+  corner: 9 197400000 -137749999 0 0
+  corner: 10 198400000 -137749999 0 0
+  corner: 11 197900000 -137749999 0 0
+  corner: 12 197900000 -137249999 0 0
+  corner: 13 198900000 -137249999 0 0
+  corner: 14 197900000 -137249999 0 0
+  corner: 15 197900000 -136749999 0 0
+  corner: 16 199900000 -136749999 0 0
+net_name: "GND" 194800000 -140699999 11 0 0 0 -1 -1 2 1
 
-polyline: 2 0 6 200000 -1 -1 -1 0
-  corner: 1 86045184 45749985 0 0
-  corner: 2 74795184 45749985 0 0
-description: "М+" 80984627 44009985 14 0 1000000 100000 -1 -1 11 258
-
-polyline: 2 0 6 200000 -1 -1 -1 0
-  corner: 1 86045184 43249985 0 0
-  corner: 2 74795184 43249985 0 0
-description: "М-" 80985247 41529985 14 0 1000000 100000 -1 -1 11 258
-
-polyline: 2 0 6 200000 -1 -1 -1 0
-  corner: 1 78545184 48249985 0 0
-  corner: 2 78545184 40749985 0 0
-
-polyline: 2 0 8 200000 -1 -1 -1 0
-  corner: 1 74795184 44499985 0 0
-  corner: 2 72295184 44499985 0 1
-pin_name: "1" 76516074 44009985 9 0 1000000 100000 -1 -1 11 258
-
-polyline: 2 0 8 200000 -1 -1 -1 0
-  corner: 1 74795184 41999985 0 0
-  corner: 2 72295184 41999985 0 1
-pin_name: "2" 76331444 41529985 9 0 1000000 100000 -1 -1 11 258
-
-polyline: 3 0 6 200000 -1 -1 -1 0
-  corner: 1 77545184 47499985 0 0
-  corner: 2 76795184 46999985 0 0
-  corner: 3 77545184 46499985 0 0
-
-polyline: 2 0 6 200000 -1 -1 -1 0
-  corner: 1 76795184 46999985 0 0
-  corner: 2 76045184 46999985 0 0
-
-outline: 4 0 17 1 -1 -1 2 1
-  corner: 1 88436789 38099985 0 0
-  corner: 2 88436789 50458385 0 0
-  corner: 3 100795184 50458385 0 0
-  corner: 4 100795184 38099985 0 0
-
-part_end
-
-add_new_page: "Тачпад"
-bmp_src: "D:\works\projects\Micronics\Grainger\version-03\related_files\pictures\00002.PIC"
-bmp_src: "D:\works\projects\Micronics\Grainger\version-03\related_files\pictures\00009.PIC"
-add_new_page: "Резерв"
-bmp_src: "D:\works\projects\Micronics\Grainger\version-03\related_files\pictures\00003.PIC"
-bmp_src: "D:\works\projects\Micronics\Grainger\version-03\related_files\pictures\00007.PIC"
-bmp_src: "D:\works\projects\Micronics\Grainger\version-03\related_files\pictures\00009.PIC"
-bmp_src: "D:\works\projects\Micronics\Grainger\version-03\related_files\pictures\00008.PIC"
-add_new_page: "Предыдущ"
-bmp_src: "D:\works\projects\Micronics\Grainger\version-03\related_files\pictures\00002.PIC"
-bmp_src: "D:\works\projects\Micronics\Grainger\version-03\related_files\pictures\00001.PIC"
-bmp_src: "D:\works\projects\Micronics\Grainger\version-03\related_files\pictures\00004.PIC"
-bmp_src: "D:\works\projects\Micronics\Grainger\version-03\related_files\pictures\00009.PIC"
+add_new_page: "Board B"
+bmp_src: "d:\works\projects\duxahtech\Grainger\version-01\related_files\pictures\00002.PIC"
+bmp_src: "d:\works\projects\duxahtech\Grainger\version-01\related_files\pictures\00008.PIC"
+bmp_src: "d:\works\projects\duxahtech\Grainger\version-01\related_files\pictures\00001.PIC"
+bmp_src: "d:\works\projects\duxahtech\Grainger\version-01\related_files\pictures\00003.PIC"
+bmp_src: "d:\works\projects\duxahtech\Grainger\version-01\related_files\pictures\00005.PIC"
+bmp_src: "d:\works\projects\duxahtech\Grainger\version-01\related_files\pictures\00006.PIC"
+bmp_src: "d:\works\projects\duxahtech\Grainger\version-01\related_files\pictures\00007.PIC"
 [end]

@@ -1261,18 +1261,23 @@ void CDlgImportPart::CheckDocuments( CString * name, CString * file )
 		}
 		if( _stat( path, &buf ) == 0 ) // file exists
 		{
-		    WORD bt1=1, bt2=2;
-			CString DLL = path; 
-			LPSTR lpStr = new char[MAX_PATH];//new015
-			strcpy( lpStr, DLL.GetBufferSetLength(MAX_PATH-1) );
-			HICON icon = ExtractAssociatedIcon( GetModuleHandle(NULL), lpStr, &bt1 );
-			delete lpStr;//new015
+			WORD bt1 = 0, bt2 = 0;
+			//CString DLL = path; 
+			//LPSTR lpStr = new char[MAX_PATH];//new015
+			//strcpy( lpStr, DLL.GetBufferSetLength(MAX_PATH-1) );
+			CString buff = path;
+			LPSTR Wstr = buff.GetBuffer();
+			HICON icon = ExtractAssociatedIconEx( AfxGetInstanceHandle(), Wstr, &bt1, &bt2);
+			//delete lpStr;//new015
 			if( icon )
 			{
 				if( pstep == 1 && step == 2 )
 					shiftX += 40;// cancel shifting
 				Cdoc->SetWindowPos( NULL, (260+shiftX), (361+shiftY), 38, 44, 0 );
-				DestroyIcon( Cdoc->SetIcon( icon ) );
+				HICON pIcon = Cdoc->SetIcon(icon);
+				if(pIcon)
+					DestroyIcon(pIcon);
+				//DestroyIcon(icon); удалит текущую иконку на кнопке
 				Cdoc->ShowWindow(1);
 				Cdoc->BringWindowToTop();
 				m_doc_path[step] = path;
@@ -1324,7 +1329,7 @@ void CDlgImportPart::OnBnClickedDoc1()
 
 void CDlgImportPart::OnBnClickedDoc2()
 {
-	// TODO: ???????? ???? ??? ??????????? ???????????
+	// 
 	if( m_doc_path[1].GetLength() )
 	{
 		CString P = "";
