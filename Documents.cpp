@@ -5238,7 +5238,7 @@ void CFreePcbDoc::OnEditPasteFromFile()
 				PasteFromFile( filename, FALSE, dlg.m_box_index );
 			return;
 		}
-		PasteFromFile(filename, FALSE );
+		//PasteFromFile(filename, FALSE );
 	}
 }
 

@@ -1570,6 +1570,8 @@ void CFreePcbView::OnLButtonUp(UINT nFlags, CPoint point)
 					else
 					{
 						incl.sst = ID_SIDE;
+						excl.sst = ID_SIDE;
+						lay = m_sel_op.GetLayer();
 						sid.Set( -1,-1,-1,-1,-1 );
 						m_Doc->m_dlist->TestSelect( p.x, p.y, &sid, &lay, &excl, NULL, &incl, 1, max_d );
 						if( sid.type == ID_POLYLINE )

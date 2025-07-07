@@ -254,26 +254,34 @@ void OnGroupGridMagnetize( CFreePcbDoc * doc )
 			{
 				for(int i1=0; i1<p->GetNumCorners(); i1++)
 				{
+					if (p->GetSel(i1))
+						continue;
 					CPoint P( p->GetX(i1), p->GetY(i1) );
+					int dx2 = 0;
+					int dy2 = 0;
 					for(int i2=0; i2<pts.GetSize(); i2++)
 					{
-						dx = P.x-pts.GetAt(i2).x;
-						dy = P.y-pts.GetAt(i2).y;
-						if( abs( dx ) < doc->m_part_grid_spacing/doc->m_view->m_user_scale &&
-							abs( dy ) < doc->m_part_grid_spacing/doc->m_view->m_user_scale )
+						dx2 = P.x-pts.GetAt(i2).x;
+						dy2 = P.y-pts.GetAt(i2).y;
+						if( abs( dx2 ) < doc->m_part_grid_spacing/doc->m_view->m_user_scale &&
+							abs( dy2 ) < doc->m_part_grid_spacing/doc->m_view->m_user_scale )
 						{
 							ok = 1;
 							break;
 						}
-						if (abs(dx) < p->GetW() &&
-							abs(dy) < p->GetW())
+						if (abs(dx2) < p->GetW() &&
+							abs(dy2) < p->GetW())
 						{
 							ok = 1;
 							break;
 						}
 					}
-					if(ok)
+					if (ok)
+					{
+						dx = dx2;
+						dy = dy2;
 						break;
+					}
 				}
 				if(ok)
 					break;
@@ -281,7 +289,6 @@ void OnGroupGridMagnetize( CFreePcbDoc * doc )
 		}
 		if (ok == 0)
 		{
-			dx = 0, dy = 0;
 			int grid_sp = doc->m_part_grid_spacing / doc->m_view->m_user_scale;
 			for (int i = 0; i < doc->m_outline_poly->GetSize(); i++)
 			{
@@ -290,9 +297,13 @@ void OnGroupGridMagnetize( CFreePcbDoc * doc )
 					continue;
 				if (p->GetSideSel() == 0)
 				{
-					for (int i1 = 0; i1 < p->GetNumCorners(); i1++)
+					for (int i1 = 0; i1 < p->GetNumSides(); i1++)
 					{
+						if (p->GetSel(i1))
+							continue;
 						int in = p->GetNextCornerIndex(i1);
+						if (p->GetSel(in))
+							continue;
 						CPoint P1(p->GetX(i1), p->GetY(i1));
 						CPoint P2(p->GetX(in), p->GetY(in));
 						int style = p->GetSideStyle(i1);
@@ -328,12 +339,61 @@ void OnGroupGridMagnetize( CFreePcbDoc * doc )
 								ok = 1;
 								break;
 							}
+							else
+							{
+								dx = 0;
+								dy = 0;
+							}
 						}
 						if (ok)
 							break;
 					}
 					if (ok)
 						break;
+				}
+			}
+		}
+		if (!dx || !dy)
+		{
+			int grid_sp = doc->m_part_grid_spacing / doc->m_view->m_user_scale;
+			for (int i = 0; i < doc->m_outline_poly->GetSize(); i++)
+			{
+				CPolyLine* p = &doc->m_outline_poly->GetAt(i);
+				if (p->m_visible == 0)
+					continue;
+				if (p->GetSel())
+				{
+					for (int i1 = 0; i1 < p->GetNumSides(); i1++)
+					{
+						if (p->GetSideSel(i1))
+							continue;
+						int in = p->GetNextCornerIndex(i1);
+						int ip = p->GetPrevCornerIndex(i1);
+						int next_side_sel = 0;
+						int prev_side_sel = 0;
+						if (in < p->GetNumSides())
+							next_side_sel = p->GetSideSel(in);
+						if (ip < p->GetNumSides())
+							prev_side_sel = p->GetSideSel(ip);
+						BOOL ok1 = ((p->GetSel(i1) || prev_side_sel) && p->GetSel(in) == 0);
+						BOOL ok2 = (p->GetSel(i1) == 0 && (p->GetSel(in) || next_side_sel));
+						if (ok1 || ok2)
+						{
+							int ch_x = p->GetX(i1) - p->GetX(in);
+							int ch_y = p->GetY(i1) - p->GetY(in);
+							if ((abs(ch_x) < grid_sp) && !dx )
+								if (ok1)
+									dx = -ch_x;
+								else
+									dx = ch_x;
+							if ((abs(ch_y) < grid_sp) && !dy )
+								if (ok1)
+									dy = -ch_y;
+								else
+									dy = ch_y;
+							ok = 1;
+						}
+					}
 				}
 			}
 		}
