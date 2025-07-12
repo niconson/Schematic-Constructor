@@ -11876,6 +11876,7 @@ int CFreePcbDoc::AddSource( CString * new_name )
 	*new_name = folder + *new_name;
 	
 	// replace file
+	SetFileAttributes(*new_name, FILE_ATTRIBUTE_NORMAL);
 	remove( *new_name );
 	BOOL OK = CopyFile( SRC, *new_name, 0 );
 	if( OK == 0 )

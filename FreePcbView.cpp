@@ -11756,6 +11756,7 @@ void CFreePcbView::SaveToFile( CString * fileS )
 				sourcename += rel_f_pictures;
 				if( sourcename.CompareNoCase(pathname) )
 				{
+					BOOL PICOK = 1;
 					CFileFind finder;
 					BOOL bWorking = finder.FindFile( sourcename + "*" );
 					while (bWorking)
@@ -11765,9 +11766,20 @@ void CFreePcbView::SaveToFile( CString * fileS )
 						CString pic_name = finder.GetFileName();
 						if( !finder.IsDirectory() && !finder.IsDots() )
 						{
-							if( m_Doc->m_dlist->FindSource( &fn ) >= 0 )
-								CopyFile( fn, pathname+pic_name, PicFail );
+							if (m_Doc->m_dlist->FindSource(&fn) >= 0)
+							{
+								SetFileAttributes(pathname + pic_name, FILE_ATTRIBUTE_NORMAL);
+								PICOK &= CopyFile(fn, pathname + pic_name, PicFail);
+							}
 						}
+					}
+					if (!PICOK)
+					{
+						CString ps;
+						ps.Format(G_LANGUAGE == 0 ?
+							"Unable to copy picture.\nsource: %s\ndestination: %s" :
+							"Невозможно скопировать изображение.\nисточник: %s\nназначение: %s", sourcename, pathname);
+						AfxMessageBox(ps, MB_ICONINFORMATION);
 					}
 				}
 			}
