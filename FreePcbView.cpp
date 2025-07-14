@@ -11279,6 +11279,8 @@ void CFreePcbView::OnGroupPaste( BOOL bwDialog, BOOL bSaveMerges, int m_apply_de
 					{	
 						CText * t = g_p->pAttr[ia];
 						CTextList * tl = m_Doc->GetTextListbyLayer( t->m_layer );
+						if (ia == index_pin_attr)
+							tl = m_Doc->Attr->m_Pinlist;
 						if( tl && m_Doc->Pages.IsAttr(t) >= 0 )
 						{
 							CString new_str = t->m_str;
@@ -11380,7 +11382,7 @@ void CFreePcbView::OnGroupPaste( BOOL bwDialog, BOOL bSaveMerges, int m_apply_de
 							}
 							else
 							{
-								for( m_sel_text = tl->GetNextInvisibleText( &idx[ia] ); 
+								for( m_sel_text = tl->GetNextInvisibleText( &idx[ia] );
 									 m_sel_text;
 									 m_sel_text = tl->GetNextInvisibleText( &idx[ia] ))
 								{
@@ -11769,6 +11771,7 @@ void CFreePcbView::SaveToFile( CString * fileS )
 							if (m_Doc->m_dlist->FindSource(&fn) >= 0)
 							{
 								SetFileAttributes(pathname + pic_name, FILE_ATTRIBUTE_NORMAL);
+								remove(pathname + pic_name);
 								PICOK &= CopyFile(fn, pathname + pic_name, PicFail);
 							}
 						}
@@ -11777,8 +11780,8 @@ void CFreePcbView::SaveToFile( CString * fileS )
 					{
 						CString ps;
 						ps.Format(G_LANGUAGE == 0 ?
-							"Unable to copy picture.\nsource: %s\ndestination: %s" :
-							"Невозможно скопировать изображение.\nисточник: %s\nназначение: %s", sourcename, pathname);
+							"Unable to copy pictures.\nsource: %s\ndestination: %s" :
+							"Невозможно скопировать некоторые изображения.\nисточник: %s\nназначение: %s", sourcename, pathname);
 						AfxMessageBox(ps, MB_ICONINFORMATION);
 					}
 				}

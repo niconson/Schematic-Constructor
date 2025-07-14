@@ -2837,7 +2837,8 @@ void CPolyLine::MakeFirst(int ic)
 			cl = 1;
 			st = side_style[ic - 1];
 		}
-		
+		Node[0] = 0;
+		Node[m_ncorners - 1] = 0;
 		for (int i = 0; i < ic; i++)
 			AppendCorner(corner[i].x, corner[i].y, side_style[i ? i - 1 : m_ncorners - 1], 0);
 		for (int i = ic - 1; i >= 0; i--)
