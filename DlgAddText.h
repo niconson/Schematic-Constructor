@@ -85,5 +85,4 @@ public:
 	afx_msg void OnBnClickedCheckUnclenched();
 	afx_msg void OnEnSetfocusEditText();
 	afx_msg void OnCbnSelchangeEditHeight();
-//	afx_msg void OnCbnSelendokEditHeight();
 };

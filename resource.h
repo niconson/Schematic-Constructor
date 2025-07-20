@@ -1415,11 +1415,11 @@
 #define ID_SCALE4                       33290
 #define ID_SCALE5                       33291
 #define ID_SCALE6                       33292
-#define ID_ATTACH_GND1					33293
-#define ID_ATTACH_GND2					33294
-#define ID_ATTACH_GND3					33295
-#define ID_ATTACH_GND4					33296
-#define ID_ATTACH_GND5					33297
+#define ID_ATTACH_GND1                  33293
+#define ID_ATTACH_GND2                  33294
+#define ID_ATTACH_GND3                  33295
+#define ID_ATTACH_GND4                  33296
+#define ID_ATTACH_GND5                  33297
 #define ID_0_PINS                       33300
 #define ID_6_PINS                       33306
 #define ID_8_PINS                       33308

@@ -3,8 +3,20 @@
   "WorkspaceRootPath": "D:\\FreePCBDev\\Schematic Constructor\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{48B16142-FBCE-4203-996C-8DEC8AAE6546}|FreePcb.vcxproj|D:\\FreePCBDev\\Schematic Constructor\\DlgImportPart.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{48B16142-FBCE-4203-996C-8DEC8AAE6546}|FreePcb.vcxproj|solutionrelative:DlgImportPart.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{48B16142-FBCE-4203-996C-8DEC8AAE6546}|FreePcb.vcxproj|D:\\FreePCBDev\\Schematic Constructor\\FreePcbView.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{48B16142-FBCE-4203-996C-8DEC8AAE6546}|FreePcb.vcxproj|solutionrelative:FreePcbView.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{48B16142-FBCE-4203-996C-8DEC8AAE6546}|FreePcb.vcxproj|D:\\FreePCBDev\\Schematic Constructor\\DlgAddText.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{48B16142-FBCE-4203-996C-8DEC8AAE6546}|FreePcb.vcxproj|solutionrelative:DlgAddText.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{48B16142-FBCE-4203-996C-8DEC8AAE6546}|FreePcb.vcxproj|D:\\FreePCBDev\\Schematic Constructor\\FreeSch.rc||{177559E0-D141-11D0-92DF-00A0C9138C45}|,   b e g i n       % \u00DE 9$  \u0022     ",
+      "RelativeMoniker": "D:0:0:{48B16142-FBCE-4203-996C-8DEC8AAE6546}|FreePcb.vcxproj|solutionrelative:FreeSch.rc||{177559E0-D141-11D0-92DF-00A0C9138C45}|,   b e g i n       % \u00DE 9$  \u0022     "
     },
     {
       "AbsoluteMoniker": "D:0:0:{48B16142-FBCE-4203-996C-8DEC8AAE6546}|FreePcb.vcxproj|D:\\FreePCBDev\\Schematic Constructor\\Documents.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -22,11 +34,48 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
+              "Title": "DlgImportPart.cpp",
+              "DocumentMoniker": "D:\\FreePCBDev\\Schematic Constructor\\DlgImportPart.cpp",
+              "RelativeDocumentMoniker": "DlgImportPart.cpp",
+              "ToolTip": "D:\\FreePCBDev\\Schematic Constructor\\DlgImportPart.cpp",
+              "RelativeToolTip": "DlgImportPart.cpp",
+              "ViewState": "AQIAAO0EAAAAAAAAAAAAAPQEAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-07-20T18:05:41.046Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DlgAddText.cpp",
+              "DocumentMoniker": "D:\\FreePCBDev\\Schematic Constructor\\DlgAddText.cpp",
+              "RelativeDocumentMoniker": "DlgAddText.cpp",
+              "ToolTip": "D:\\FreePCBDev\\Schematic Constructor\\DlgAddText.cpp",
+              "RelativeToolTip": "DlgAddText.cpp",
+              "ViewState": "AQIAABgAAAAAAAAAAAAkwBwAAAAQAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-07-15T13:38:29.885Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "FreeSch.rc - IDD_ADD_TEXT - Dialog",
+              "DocumentMoniker": "D:\\FreePCBDev\\Schematic Constructor\\FreeSch.rc",
+              "RelativeDocumentMoniker": "FreeSch.rc",
+              "ToolTip": "D:\\FreePCBDev\\Schematic Constructor\\FreeSch.rc - IDD_ADD_TEXT - Dialog",
+              "RelativeToolTip": "FreeSch.rc - IDD_ADD_TEXT - Dialog",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
+              "WhenOpened": "2025-07-15T13:38:22.085Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "Documents.cpp",
               "DocumentMoniker": "D:\\FreePCBDev\\Schematic Constructor\\Documents.cpp",
               "RelativeDocumentMoniker": "Documents.cpp",
@@ -39,7 +88,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "TextList.cpp",
               "DocumentMoniker": "D:\\FreePCBDev\\Schematic Constructor\\TextList.cpp",
               "RelativeDocumentMoniker": "TextList.cpp",
@@ -52,13 +101,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "FreePcbView.cpp",
               "DocumentMoniker": "D:\\FreePCBDev\\Schematic Constructor\\FreePcbView.cpp",
               "RelativeDocumentMoniker": "FreePcbView.cpp",
               "ToolTip": "D:\\FreePCBDev\\Schematic Constructor\\FreePcbView.cpp",
               "RelativeToolTip": "FreePcbView.cpp",
-              "ViewState": "AQIAADAlAAAAAAAAAAAkwFYlAAADAAAA",
+              "ViewState": "AQIAAMoTAAAAAAAAAAAIwN0TAAAVAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-07-08T13:24:28.83Z",
               "EditorCaption": ""

@@ -1261,23 +1261,31 @@ void CDlgImportPart::CheckDocuments( CString * name, CString * file )
 		}
 		if( _stat( path, &buf ) == 0 ) // file exists
 		{
-			WORD bt1 = 0, bt2 = 0;
+			//WORD bt1 = 0, bt2 = 0;
 			//CString DLL = path; 
 			//LPSTR lpStr = new char[MAX_PATH];//new015
 			//strcpy( lpStr, DLL.GetBufferSetLength(MAX_PATH-1) );
+				
+			//CoInitialize(0);
 			CString buff = path;
-			LPSTR Wstr = buff.GetBuffer();
-			HICON icon = ExtractAssociatedIconEx( AfxGetInstanceHandle(), Wstr, &bt1, &bt2);
+			int idot = buff.ReverseFind('.');
+			if (idot > 0)
+				buff = buff.Right(buff.GetLength() - idot);
+			LPSTR extension = buff.GetBuffer();
+			SHFILEINFO info = { 0 };
+			SHGetFileInfo(extension, 0, &info, sizeof(info), SHGFI_ICON | SHGFI_USEFILEATTRIBUTES);
+			
+			//HICON icon = ExtractAssociatedIconEx( AfxGetInstanceHandle(), Wstr, &bt1, &bt2);
 			//delete lpStr;//new015
-			if( icon )
+			if( info.hIcon )
 			{
 				if( pstep == 1 && step == 2 )
 					shiftX += 40;// cancel shifting
 				Cdoc->SetWindowPos( NULL, (260+shiftX), (361+shiftY), 38, 44, 0 );
-				HICON pIcon = Cdoc->SetIcon(icon);
+				HICON pIcon = Cdoc->SetIcon( info.hIcon );
 				if(pIcon)
 					DestroyIcon(pIcon);
-				//DestroyIcon(icon); удалит текущую иконку на кнопке
+				//DestroyIcon(icon); удалит текущую иконку на кнопке, проверено
 				Cdoc->ShowWindow(1);
 				Cdoc->BringWindowToTop();
 				m_doc_path[step] = path;

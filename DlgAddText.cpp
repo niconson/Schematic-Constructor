@@ -224,7 +224,6 @@ BEGIN_MESSAGE_MAP(CDlgAddText, CDialog)
 	ON_BN_CLICKED(IDC_CHECK_UNCLENCHED, &CDlgAddText::OnBnClickedCheckUnclenched)
 	ON_CBN_SETFOCUS(IDC_EDIT_TEXT, &CDlgAddText::OnEnSetfocusEditText)
 	ON_CBN_SELCHANGE(IDC_EDIT_HEIGHT, &CDlgAddText::OnCbnSelchangeEditHeight)
-//	ON_CBN_SELENDOK(IDC_EDIT_HEIGHT, &CDlgAddText::OnCbnSelendokEditHeight)
 END_MESSAGE_MAP()
 
 // Initialize dialog
@@ -619,8 +618,4 @@ void CDlgAddText::OnCbnSelchangeEditHeight()
 }
 
 
-//void CDlgAddText::OnCbnSelendokEditHeight()
-//{
-//	// TODO: добавьте свой код обработчика уведомлений
-//	
-//}
+
