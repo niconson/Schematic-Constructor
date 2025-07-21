@@ -56,6 +56,16 @@ void CDlgAddText::DoDataExchange(CDataExchange* pDX)
 		else if( m_str.GetLength() == 0 )
 			m_str = m_old_str;
 		//
+		if (m_old_str.Find("'|") > 0)
+		{
+			if (m_old_str.Find(m_str) > 0)
+			{
+				m_old_str.Replace("'|" + m_str + "'|", "'|");
+				if (m_old_str.Right(m_str.GetLength() + 2) == ("'|" + m_str))
+					m_old_str.Truncate(m_old_str.GetLength() - (m_str.GetLength() + 2));
+				m_str += "'|" + m_old_str;
+			}
+		}
 		m_str = m_str.Trim();
 		BOOL itsRef = FALSE;
 		if( m_text_ptr )
@@ -200,7 +210,21 @@ void CDlgAddText::DoDataExchange(CDataExchange* pDX)
 				m_edit_height.AddString( s );
 			}
 		}
-		if( m_text_arr )
+		if (m_str.Find("'|") > 0)
+		{
+			m_str.Replace("'|", "\" \"");
+			m_str = "key: \"" + m_str + "\"";
+			CArray<CString> arr;
+			CString key;
+			int np = ParseKeyString(&m_str, &key, &arr);
+			for (int i = 0; i < np - 1; i++)
+			{
+				m_text.AddString(arr.GetAt(i));
+			}
+			m_str = arr.GetAt(0);
+			m_text.SetWindowTextA(m_str.GetBuffer());
+		}
+		else if( m_text_arr )
 		{
 			for(int i=0; i<m_text_arr->GetSize(); i++)
 			{

@@ -40,6 +40,14 @@ void CCompare::Compare( CFreePcbDoc * doc, BOOL bNetlist )
 
 int CDlgCompare::ComparePartlist( int Pg1, int Pg2 )
 {
+	int old_page = m_doc->Pages.GetActiveNumber();
+	for (int i = 0; i < m_doc->Pages.GetNumPages(); i++)
+	{
+		m_doc->SwitchToPage(i);
+		m_doc->CreatePCBNets();
+	}
+	if (m_doc->Pages.GetActiveNumber() != old_page)
+		m_doc->SwitchToPage(old_page);
 	//
 	//
 	while( report1.GetCount() )
@@ -167,7 +175,12 @@ int CDlgCompare::CompareNetlist( int Pg1, int Pg2 )
 	m_doc->m_netlist_created[Pg1] = 0;
 	m_doc->m_netlist_created[Pg2] = 0;
 	int old_page = m_doc->Pages.GetActiveNumber();
-	if( m_doc->m_netlist_created[Pg1] == 0 )
+	//for (int i=0; i<m_doc->Pages.GetNumPages(); i++)
+	//{
+	//	m_doc->SwitchToPage(i);
+	//	m_doc->CreatePCBNets();
+	//}
+	if (m_doc->m_netlist_created[Pg1] == 0)
 	{
 		m_doc->SwitchToPage(Pg1);
 		m_doc->CreatePCBNets();
@@ -962,9 +975,9 @@ void CDlgCompare::OnPinsNetsDblClick() // (pins & nest)
 				it = -1;
 				int pg = Page;
 				CText * ff = NULL;
-				for( pg = m_doc->Pages.FindPart(&Part,&t,1,1,it,pg);
-					 (P==NULL && t && pg>=0);
-					 pg = m_doc->Pages.FindPart(&Part,&t,0,1) )
+				for( pg = m_doc->Pages.FindPart(&Part,&t,1,0,it,pg);
+					 (P==NULL && t && pg==Page);
+					 pg = m_doc->Pages.FindPart(&Part,&t,0,0) )
 				{
 					if( t && pg != Page )
 						m_doc->SwitchToPage( pg );
