@@ -40,14 +40,14 @@ void CCompare::Compare( CFreePcbDoc * doc, BOOL bNetlist )
 
 int CDlgCompare::ComparePartlist( int Pg1, int Pg2 )
 {
-	int old_page = m_doc->Pages.GetActiveNumber();
-	for (int i = 0; i < m_doc->Pages.GetNumPages(); i++)
-	{
-		m_doc->SwitchToPage(i);
-		m_doc->CreatePCBNets();
-	}
-	if (m_doc->Pages.GetActiveNumber() != old_page)
-		m_doc->SwitchToPage(old_page);
+	//int old_page = m_doc->Pages.GetActiveNumber();
+	//for (int i = 0; i < m_doc->Pages.GetNumPages(); i++)
+	//{
+	//	m_doc->SwitchToPage(i);
+	//	m_doc->CreatePCBNets();
+	//}
+	//if (m_doc->Pages.GetActiveNumber() != old_page)
+	//	m_doc->SwitchToPage(old_page);
 	//
 	//
 	while( report1.GetCount() )
@@ -175,11 +175,7 @@ int CDlgCompare::CompareNetlist( int Pg1, int Pg2 )
 	m_doc->m_netlist_created[Pg1] = 0;
 	m_doc->m_netlist_created[Pg2] = 0;
 	int old_page = m_doc->Pages.GetActiveNumber();
-	//for (int i=0; i<m_doc->Pages.GetNumPages(); i++)
-	//{
-	//	m_doc->SwitchToPage(i);
-	//	m_doc->CreatePCBNets();
-	//}
+
 	if (m_doc->m_netlist_created[Pg1] == 0)
 	{
 		m_doc->SwitchToPage(Pg1);
@@ -241,6 +237,9 @@ int CDlgCompare::CompareNetlist( int Pg1, int Pg2 )
 					net1 = NET1->m_str;
 				//
 				m_doc->Pages.GetNetPins( &net1, &pins1, NL_PADS_PCB, &new_net1, &NControl1, Pg1 );
+				pins1 = "pins1: " + pins1;
+				pins1.Replace("\n", " ");
+				//
 				CArray<CString> arrPIN1;
 				if( PIN1->m_str.FindOneOf( MULTIPIN_TEST ) > 0 )
 					ParseMultiPin( &PIN1->m_str, &arrPIN1 );
@@ -280,9 +279,7 @@ int CDlgCompare::CompareNetlist( int Pg1, int Pg2 )
 					//
 					if( net1.Compare( "no_net" ) == 0 && net2.Compare( "no_net" ) == 0 )
 						continue;
-					pins1 = "pins1: " + pins1;
 					pins2 = "pins2: " + pins2;
-					pins1.Replace("\n", " ");
 					pins2.Replace("\n", " ");
 					CArray<CString> arr1;
 					CArray<CString> arr2;
@@ -346,7 +343,7 @@ int CDlgCompare::CompareNetlist( int Pg1, int Pg2 )
 							break;
 					}
 					// check swapping
-					BOOL swappingWorked = (OK - LIM1 + LIM1prev >= OKprev);// && LIM1-OK <= LIM1prev-OKprev+1); 
+					BOOL swappingWorked = (OK - LIM1 + LIM1prev > OKprev);// && (LIM1 - OK <= LIM1prev - OKprev + 1);
 					if( swappingWorked )
 					{
 						SWAP_WORKED++;

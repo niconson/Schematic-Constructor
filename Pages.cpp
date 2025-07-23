@@ -1402,11 +1402,12 @@ int CPageList::GetNetPins(	CString * NetName,
 										else
 											POSTSUFF = *ASUFF;
 									}
+									///CString Control = "";
 									int err = GetNetPins( &BlockNet->m_str, Pins, i_format, &SUFF, NetControl, BlockPage, ASUFF?&POSTSUFF:NULL, &partR );
 									if( err )
 										return ERR;
-									if( i_page >= 0 )
-										return 0;
+									//if( i_page >= 0 )
+									//	return 0;
 
 									theApp.m_Doc->SwitchToPage( old_pg );
 
@@ -1491,6 +1492,8 @@ int CPageList::GetNetPins(	CString * NetName,
 			}
 		}
 		if( CP_inside_CP )
+			break;
+		if( i_page >= 0 )
 			break;
 	}
 	return 0;
@@ -2048,7 +2051,7 @@ int CPageList::GetBlockNets(	CString * destination,
 	}
 	{
 		// Complex part inside a Complex part
-		// тестируем нет ли внутри комплекной 
+		// тестируем нет ли внутри комплексной 
 		// детали другой комплексной детали 
 		// и также маркируем сети которые контачат 
 		// с пинами субдетали чтобы считать
@@ -2063,10 +2066,8 @@ int CPageList::GetBlockNets(	CString * destination,
 			if( CText * net_ptr = pgs[ip].PolyLines->GetAt( ptr->m_polyline_start ).Check( index_net_attr ) )
 			{
 				net_ptr->utility = NetIncludedBlkPtr;
-
 				CPolyLine * ref_p = NULL;
-				//if( CP_inside_CP )
-				for( int i=ref->m_polyline_start; i>=0; i=ref_p->Next[index_part_attr] )
+				for (int i = ref->m_polyline_start; i >= 0; i = ref_p->Next[index_part_attr])
 				{
 					ref_p = &pgs[iBlkPage].PolyLines->GetAt( i );
 					if( CText * n = ref_p->Check( index_net_attr ) )
@@ -2287,7 +2288,7 @@ int CPageList::GetBlockNets(	CString * destination,
 			{
 				// Get Net Pins
 				CString gPins, Rename="";
-
+				// CString Control = "";
 				int err = GetNetPins( &net->m_str, &gPins, iFormat, &Rename, NetControl, -1, &SUFF, &BlkRect );
 				if( err )
 				{
