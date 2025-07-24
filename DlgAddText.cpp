@@ -58,13 +58,27 @@ void CDlgAddText::DoDataExchange(CDataExchange* pDX)
 		//
 		if (m_old_str.Find("'|") > 0)
 		{
-			if (m_old_str.Find(m_str) > 0)
+			CString old = m_old_str;
+			int iend = old.Find("'|");
+			if (iend >= 0)
+				old.Truncate(iend);
+			if (m_old_str.Find(m_str) >= 0)
 			{
 				m_old_str.Replace("'|" + m_str + "'|", "'|");
 				if (m_old_str.Right(m_str.GetLength() + 2) == ("'|" + m_str))
 					m_old_str.Truncate(m_old_str.GetLength() - (m_str.GetLength() + 2));
-				m_str += "'|" + m_old_str;
+				if (m_old_str.Left(m_str.GetLength()) == m_str)
+				{
+					if (m_str.GetLength() > old.GetLength() / 2)
+						m_old_str = m_old_str.Right(m_old_str.GetLength() - iend - 2);
+				}
 			}
+			else if (m_str.Find(old) == 0)
+			{
+				if (old.GetLength() > m_str.GetLength() / 2)
+					m_old_str = m_old_str.Right(m_old_str.GetLength() - iend - 2);
+			}
+			m_str += "'|" + m_old_str;
 		}
 		m_str = m_str.Trim();
 		BOOL itsRef = FALSE;
