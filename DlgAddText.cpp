@@ -237,6 +237,7 @@ void CDlgAddText::DoDataExchange(CDataExchange* pDX)
 			}
 			m_str = arr.GetAt(0);
 			m_text.SetWindowTextA(m_str.GetBuffer());
+			SetWindowTextA("Опции текста со скрытыми полями");
 		}
 		else if( m_text_arr )
 		{
