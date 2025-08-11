@@ -7773,7 +7773,7 @@ int CFreePcbDoc::CreatePCBNets( int ITERATOR )
 							cnt_connect++;
 				}
 			}
-			if( cnt_connect > 2 || (cnt_connect==2 && cnt_pin) )
+			if( cnt_connect > 2 || (cnt_connect==2 && cnt_pin) || (cnt_connect && cnt_pin == 2) || cnt_pin > 2 )
 			{
 				m_outline_poly->GetAt(i).Node[0] = abs(m_node_w);
 				m_outline_poly->GetAt(i).Draw();
@@ -7813,7 +7813,7 @@ int CFreePcbDoc::CreatePCBNets( int ITERATOR )
 							cnt_connect++;
 				}
 			}
-			if( cnt_connect > 2 || (cnt_connect==2 && cnt_pin) )
+			if( cnt_connect > 2 || (cnt_connect==2 && cnt_pin) || (cnt_connect && cnt_pin == 2) || cnt_pin > 2 )
 			{
 				m_outline_poly->GetAt(i).Node[m_outline_poly->GetAt(i).GetNumCorners()-1] = abs(m_node_w);
 				m_outline_poly->GetAt(i).Draw();
