@@ -6473,7 +6473,7 @@ CString CFreePcbView::OPSetAttributes( CString * bDialog )
 		}
 		if( m_sel_count > 1 )
 		{
-			//if there are these 
+			// if there are these 
 			// attributes then we 
 			// leave selected only them
 			if( m_sel_op.Check( index_pin_attr ) || m_sel_op.Check( index_net_attr ) || m_sel_op.Check( index_desc_attr ) )
@@ -6533,6 +6533,11 @@ CString CFreePcbView::OPSetAttributes( CString * bDialog )
 									}
 								}
 							}
+						}
+						else if (desc->m_str.Right(7) == "PCBVIEW")
+						{
+							OnPolylineUpdatePcbView(m_Doc, m_sel_id.i);
+							return complex_part_err;
 						}
 						else
 						{
@@ -10649,7 +10654,7 @@ void CFreePcbView::DeleteGroup( BOOL wMerge )
 	m_Doc->ProjectModified( TRUE );
 }
 //===============================================================================================
-void CFreePcbView::OnGroupPaste( BOOL bwDialog, BOOL bSaveMerges, int m_apply_def_w )
+void CFreePcbView::OnGroupPaste( BOOL bwDialog, BOOL bSaveMerges, int m_apply_def_w, BOOL bDrag)
 {
 	if( m_dragging_mode )
 		return;
@@ -10714,7 +10719,6 @@ void CFreePcbView::OnGroupPaste( BOOL bwDialog, BOOL bSaveMerges, int m_apply_de
 	//
 	m_sel_id.type = ID_MULTI;
 	m_Doc->m_undo_list->NewEvent();
-	BOOL bDragGroup = TRUE;
 	double min_d = (double)INT_MAX*(double)INT_MAX;
 	int min_x = INT_MAX;	// lowest-left point for dragging group
 	int min_y = INT_MAX;
@@ -11494,7 +11498,7 @@ void CFreePcbView::OnGroupPaste( BOOL bwDialog, BOOL bSaveMerges, int m_apply_de
 		if( t->m_selected || t->utility )
 			m_Doc->AttributeIndexing( t, index_part_attr );
 	// 
-	if( bDragGroup )
+	if( bDrag )
 	{
 		if( min_x == INT_MAX || min_y == INT_MAX )
 			AfxMessageBox(G_LANGUAGE == 0 ? "No items to drag":"Нет элементов для перетаскивания");

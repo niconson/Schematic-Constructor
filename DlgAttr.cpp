@@ -538,6 +538,8 @@ BEGIN_MESSAGE_MAP(CDlgAttr, CDialog)
 	ON_BN_CLICKED(ID_Q8, OnQ8)
 	ON_BN_CLICKED(ID_Q9, OnQ9)
 	ON_BN_CLICKED(ID_Q10, OnQ10)
+	ON_BN_CLICKED(ID_Q13, OnQ11)
+	ON_BN_CLICKED(ID_Q14, OnQ12)
 	//
 	ON_BN_CLICKED(ID_CMD1, OnCmd1)
 	ON_BN_CLICKED(ID_CMD2, OnCmd2)
@@ -546,6 +548,8 @@ BEGIN_MESSAGE_MAP(CDlgAttr, CDialog)
 	ON_BN_CLICKED(ID_CMD5, OnCmd5)
 	ON_BN_CLICKED(ID_CMD6, OnCmd6)
 	ON_BN_CLICKED(ID_CMD7, OnCmd7)
+	ON_BN_CLICKED(ID_CMD8, OnCmd8)
+	ON_BN_CLICKED(ID_CMD9, OnCmd9)
 	//
 	ON_WM_COPYDATA()
 	ON_CBN_EDITCHANGE(IDC_FNAME, &CDlgAttr::OnCbnSelchangeFname)
@@ -1110,4 +1114,73 @@ void CDlgAttr::OnCbnCloseupRefdes()
 void CDlgAttr::OnCbnEditupdateRefdes()
 {
 	// TODO: ???????? ???? ??? ??????????? ???????????
+}
+
+
+void CDlgAttr::OnCmd8()
+{
+	// TODO: добавьте свой код обработчика уведомлений
+	id iD;
+	int num_pg = m_doc->Pages.FindPrintableArea(&iD).ii + 1;
+	CString name;
+	m_doc->Pages.GetPageName(m_doc->Pages.GetActiveNumber(), &name);
+	ExtractComponentName(&name, NULL);
+	CString cmd;
+	cmd.Format("Page%d\r\n|name: %s.%d.pdf\r\n%s PrintableArea", num_pg, name, num_pg, COMMAND);
+	m_edit_pindesc.SetWindowTextA(cmd);
+}
+
+
+void CDlgAttr::OnCmd9()
+{
+	// TODO: добавьте свой код обработчика уведомлений
+	CString str;
+	m_edit_pindesc.GetWindowTextA(str);
+	if (str.GetLength() == 0)
+		str = "PCB ";
+	int f = str.Find("|");
+	if (f > 0)
+	{
+		AfxMessageBox(G_LANGUAGE == 0 ?
+			"The description text already contains the command" :
+			"Текст описания уже содержит код команды");
+		return;
+	}
+	CString pname = "PCB.fpc";
+	if (m_pl->m_pcb_names.GetSize())
+	{
+		pname = m_pl->GetCurrentPCBName(m_pl->GetActiveNumber());
+		if (pname.GetLength() == 0)
+			pname = m_pl->m_pcb_names.GetAt(0);
+	}
+	CString str2;
+	str2.Format("\r\n|UID: 0\r\n|text_height: 1mm\r\n|font_width: 0.1mm\r\n|fill_board: 1\r\n|fill_mask: 1\r\n|flipped: 0\r\n|pcb: %s\r\n"COMMAND" PCBVIEW", pname);
+	m_edit_pindesc.SetWindowTextA(str + str2);
+}
+
+
+void CDlgAttr::OnQ11()
+{
+	// TODO: добавьте свой код обработчика уведомлений
+	AfxMessageBox(G_LANGUAGE ? "В Схематоре можно делать областью печати любую полилинию. "\
+		"Каждая новая область печати будет напечатана либо на отдельной "\
+		"странице PDF, либо в отдельном файле PDF, если вы выберете в "
+		"настройках PDF опцию сепарированной печати." :
+		"In the Schemator you can make any polyline a print area. "\
+		"Each new print area will be printed either on a separate PDF "\
+		"page or in a separate PDF file if you select the separated print option in the PDF settings.", MB_ICONINFORMATION);
+}
+
+
+void CDlgAttr::OnQ12()
+{
+	// TODO: добавьте свой код обработчика уведомлений
+	AfxMessageBox(G_LANGUAGE ? "В Схематоре можно отобразить вид печатной "\
+		"платы с верхней и нижней стороны.Введите название печатной платы, "\
+		"файл которой находится в том же проекте что и файл схемы.Таким образом "\
+		"можно создавать интерактивные монтажные схемы прямо в Схематоре " :
+		"In the Schemator, you can display the view of printed circuit board "\
+		"(top and bottom side).Enter the name of the printed circuit board, "\
+		"the file of which is in the same project as the scheme file.Thus, "\
+		"you can create interactive assembly schemes directly in the schemator", MB_ICONINFORMATION);
 }

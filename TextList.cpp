@@ -257,6 +257,26 @@ void CText::Draw( CDisplayList * dlist, SMFontUtil * smfontutil, int tab, CArray
 				RotateRect( &sel, m_angle, c );
 				RotatePOINTS( &pts[0], 4, -m_angle, c );
 			}
+			if (m_str.Right(2) == "|C")
+			{
+				int nx = (sel.left + sel.right) / 2;
+				int ny = (sel.top + sel.bottom) / 2;
+				MoveRect(&sel, m_x-nx, m_y-ny);
+				for (int i = 0; i < m_stroke->GetSize(); i++)
+				{
+					int modX = m_stroke->GetAt(i).x + m_x - nx;
+					int modY = m_stroke->GetAt(i).y + m_y - ny;
+					m_stroke->GetAt(i).SetPoint(modX, modY);
+				}
+				pts[0].x += m_x - nx;
+				pts[0].y += m_y - ny;
+				pts[1].x += m_x - nx;
+				pts[1].y += m_y - ny;
+				pts[2].x += m_x - nx;
+				pts[2].y += m_y - ny;
+				pts[3].x += m_x - nx;
+				pts[3].y += m_y - ny;
+			}
 			// draw it
 			static int index = 0;
 			id.st = ID_TXT;

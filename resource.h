@@ -36,6 +36,8 @@
 #define ID_CMD5                         61
 #define ID_CMD6                         62
 #define ID_CMD7                         63
+#define ID_CMD8                         64
+#define ID_CMD9                         65
 #define ID_Q1                           75
 #define ID_Q2                           76
 #define ID_Q3                           77
@@ -48,6 +50,8 @@
 #define ID_Q10                          84
 #define ID_Q11                          85
 #define ID_Q12                          86
+#define ID_Q13                          87
+#define ID_Q14                          88
 #define IDD_ABOUTBOX                    100
 #define IDR_HTML_DLGPARTLIST            103
 #define IDR_HTML_CDlgSetAreaHatch       104

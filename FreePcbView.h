@@ -786,7 +786,7 @@ public:
 	int  ArcApp( CPolyLine * po, int forArcOnly, int m_i );												//will remain
 	void TracesRadiusUpDown(BOOL UP);																	//will remain							
 	void AlignSides( int type, int ic, int iv);															//will remain
-	void OnGroupPaste( BOOL bwDialog, BOOL bSaveMerges=0, int m_apply_def_w=0 );						//will remain
+	void OnGroupPaste( BOOL bwDialog, BOOL bSaveMerges=0, int m_apply_def_w=0, BOOL bDrag=1 );						//will remain
 	void CheckMessages();
 	void OnMess( int command, int n_str, CArray<CString> *str, BOOL IronScale );						//will remain
 	CWnd * OnInfoBoxSendMess( CString mess );	

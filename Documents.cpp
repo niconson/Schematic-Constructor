@@ -866,6 +866,12 @@ BOOL CFreePcbDoc::FileOpen( LPCTSTR fn )
 		
 		// force redraw of function key text
 		CheckBOM();
+		int it = -1;
+		for (CText * t = Attr->m_pDesclist->GetNextText(&it); t; t = Attr->m_pDesclist->GetNextText(&it))
+		{
+			if (t->m_str.Right(7) == "PCBVIEW")
+				OnPolylineUpdatePcbView(this, t->m_polyline_start);
+		}
 		m_view->m_cursor_mode = 999;
 		m_view->SetCursorMode( CUR_NONE_SELECTED );
 		m_view->ShowActiveLayer(m_num_additional_layers);	
@@ -2443,8 +2449,8 @@ CString CFreePcbDoc::ReadGraphics( CStdioFile * pcb_file, CArray<CPolyLine> * ss
 int CFreePcbDoc::ReadOptions( CStdioFile * pcb_file, BOOL rColors )
 {
 	int err, pos, np;
-	int layer_info_number = 0;
-	int pdf_layer_info_number = 0;
+	int layer_info_number = -1;
+	int pdf_layer_info_number = -1;
 	CArray<CString> p;
 	CString in_str, key_str;
 	BOOL m_org_changed = FALSE;
@@ -5244,11 +5250,16 @@ void CFreePcbDoc::OnEditPasteFromFile()
 
 void CFreePcbDoc::PasteFromFile( CString pathname, BOOL bwDialog, int i_page )
 {
-	if( m_project_modified )
+	BOOL bDrag = 1;
+	if (pathname.Right(7) == "PCBVIEW")
+		bDrag = 0;
+	else if( m_project_modified )
 	{
 		int ret = AfxMessageBox(G_LANGUAGE == 0 ?
-			"Project modified, save it?" :
-			"Проект изменен, сохранить его?", MB_OKCANCEL );
+			"Inserting data from external resources occurs when the file is saved, "\
+			"since there is no way to cancel the action.Project modified, save it ? " :
+			"Вставка данных из внешних ресурсов происходит при сохранённом файле, "\
+			"т.к.не имеет возможности отмены действия. Проект изменен, сохранить его ? ", MB_OKCANCEL );
 		if( ret == IDCANCEL )
 			return;
 		else
@@ -5259,7 +5270,7 @@ void CFreePcbDoc::PasteFromFile( CString pathname, BOOL bwDialog, int i_page )
 	BOOL FRS = 1;
 	if( pathname.GetLength() < 4 )
 		FRS = 0;
-	else if( pathname.Right(4).MakeLower() != ".cds" )
+	else if( pathname.Right(4).MakeLower() != ".cds" && pathname.Right(8).MakeLower() != ".pcbview")
 		FRS = 0;
 	//
 	if( !FRS )
@@ -5321,7 +5332,7 @@ void CFreePcbDoc::PasteFromFile( CString pathname, BOOL bwDialog, int i_page )
 		return;
 	}
 	m_view->m_paste_flags = ~0; // paste from file
-	m_view->OnGroupPaste(bwDialog, TRUE);
+	m_view->OnGroupPaste(bwDialog, TRUE, 0, bDrag);
 }
 
 void CFreePcbDoc::OnFileGerbV(CString G, CString app)

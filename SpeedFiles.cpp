@@ -524,3 +524,159 @@ void OnGroupVtxMagnetize( CFreePcbDoc * doc )
 		}
 	}
 }
+
+void OnPolylineUpdatePcbView(CFreePcbDoc* doc, int m_sel_i)
+{
+	CText* desc = doc->m_outline_poly->GetAt(m_sel_i).Check(index_desc_attr);
+	if (desc == NULL)
+		return;
+	RECT oprect = doc->m_outline_poly->GetAt(m_sel_i).GetCornerBounds();
+	int centX = (oprect.left + oprect.right) / 2;
+	int centY = (oprect.top + oprect.bottom) / 2;
+	CString cmd = "";
+	int iof = desc->m_str.Find("|pcb:");
+	if (iof > 0)
+	{
+		cmd = desc->m_str.Right(desc->m_str.GetLength() - iof - 5);
+		iof = cmd.Find("'");
+		if (iof > 0)
+			cmd = cmd.Left(iof);
+	}
+	cmd = cmd.Trim();
+	CString name = cmd + ".PCBVIEW";
+	CString pcb_view = doc->m_path_to_folder + freeasy_netlist + name;
+	if (PathFileExists(pcb_view) == 0)
+	{
+		cmd.Format(G_LANGUAGE?"”казанный путь к файлу печатной платы не существует:\n\n%s":"PCB file not found:\n\n%s", pcb_view);
+		AfxMessageBox(cmd);
+		return;
+	}
+	int flipped = 0;
+	iof = desc->m_str.Find("|flipped:");
+	if (iof > 0)
+	{
+		cmd = desc->m_str.Right(desc->m_str.GetLength() - iof - 9);
+		iof = cmd.Find("'");
+		if (iof > 0)
+			cmd = cmd.Left(iof);
+		cmd = cmd.Trim();
+		flipped = my_atoi(&cmd);
+	}
+	CString mergeName;
+	mergeName.Format("%s%d", name, flipped + 1);
+	int id_m = doc->m_mlist->GetIndex(mergeName);
+	if (id_m >= 0)
+	{
+		doc->m_view->NewSelectM(id_m);
+		doc->m_view->DeleteGroup(1);
+	}
+	doc->PasteFromFile(pcb_view, FALSE, flipped);
+	id_m = doc->m_mlist->AddNew(mergeName);
+	doc->m_view->MergeGroup(id_m);
+	RECT hiliteRect = doc->m_dlist->GetHighlightedBounds(NULL);
+	int AverageX = (hiliteRect.right + hiliteRect.left) / 2;
+	int AverageY = (hiliteRect.top + hiliteRect.bottom) / 2;
+	doc->m_view->MoveGroup(centX - AverageX, centY - AverageY);
+	double scale = (double)(oprect.right - oprect.left) / (double)(hiliteRect.right - hiliteRect.left);
+	double scale2 = (double)(oprect.top - oprect.bottom) / (double)(hiliteRect.top - hiliteRect.bottom);
+	scale = min(scale, scale2);
+	doc->m_view->ScaleFactor(scale, 1);
+	int TH = 0;
+	iof = desc->m_str.Find("|text_height:");
+	if (iof > 0)
+	{
+		cmd = desc->m_str.Right(desc->m_str.GetLength() - iof - 13);
+		iof = cmd.Find("'");
+		if (iof > 0)
+			cmd = cmd.Left(iof);
+		cmd = cmd.Trim();
+		TH = my_atof(&cmd) / doc->m_view->m_user_scale;
+	}
+	int TW = 0;
+	iof = desc->m_str.Find("|font_width:");
+	if (iof > 0)
+	{
+		cmd = desc->m_str.Right(desc->m_str.GetLength() - iof - 12);
+		iof = cmd.Find("'");
+		if (iof > 0)
+			cmd = cmd.Left(iof);
+		cmd = cmd.Trim();
+		TW = my_atof(&cmd) / doc->m_view->m_user_scale;
+	}
+	int UID = 0;
+	iof = desc->m_str.Find("|UID:");
+	if (iof > 0)
+	{
+		cmd = desc->m_str.Right(desc->m_str.GetLength() - iof - 5);
+		iof = cmd.Find("'");
+		if (iof > 0)
+			cmd = cmd.Left(iof);
+		cmd = cmd.Trim();
+		UID = my_atoi(&cmd);
+	}
+	int it = -1;
+	for (CText* gt = doc->Attr->m_pDesclist->GetNextText(&it); gt; gt = doc->Attr->m_pDesclist->GetNextText(&it))
+	{
+		if (gt->m_selected == 0)
+			continue;
+		if (gt->m_str.Find("VIA") == 0 ||
+			gt->m_str.Find("BOARD") == 0)
+		{
+			gt->m_font_size = 0;
+			gt->m_stroke_width = 0;
+		}
+		else
+		{
+			gt->m_font_size = TH;
+			gt->m_stroke_width = TW;
+			if (UID)
+			{
+				gt->Undraw();
+				iof = gt->m_str.Find("|");
+				gt->m_str = gt->m_str.Right(gt->m_str.GetLength() - iof - 1);
+				gt->m_nchars = gt->m_str.GetLength();
+			}
+		}
+		gt->MakeVisible();
+	}
+	int fill_board = 0;
+	iof = desc->m_str.Find("|fill_board:");
+	if (iof > 0)
+	{
+		cmd = desc->m_str.Right(desc->m_str.GetLength() - iof - 12);
+		iof = cmd.Find("'");
+		if (iof > 0)
+			cmd = cmd.Left(iof);
+		cmd = cmd.Trim();
+		fill_board = my_atoi(&cmd);
+	}
+	int fill_mask = 0;
+	iof = desc->m_str.Find("|fill_mask:");
+	if (iof > 0)
+	{
+		cmd = desc->m_str.Right(desc->m_str.GetLength() - iof - 11);
+		iof = cmd.Find("'");
+		if (iof > 0)
+			cmd = cmd.Left(iof);
+		cmd = cmd.Trim();
+		fill_mask = my_atoi(&cmd);
+	}
+	for (int i = 0; i < doc->m_outline_poly->GetSize(); i++)
+	{
+		CPolyLine* poly = &doc->m_outline_poly->GetAt(i);
+		if (poly->m_visible == 0)
+			continue;
+		if (poly->GetSel() == 0)
+			continue;
+		if (poly->GetLayer() == LAY_PCB_BOARD)
+			poly->SetHatch(fill_board);
+		else if (poly->GetLayer() == LAY_PCB_MASK)
+			poly->SetHatch(fill_mask);
+	}
+	desc->m_font_size = 0;
+	desc->m_stroke_width = 0;
+	desc->MakeVisible();
+	doc->ProjectModified(TRUE);
+	doc->m_view->m_draw_layer = 0;
+	doc->OnRangeCmds(NULL);
+}

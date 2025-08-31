@@ -95,6 +95,8 @@ public:
 	afx_msg void OnQ8();
 	afx_msg void OnQ9();
 	afx_msg void OnQ10();
+	afx_msg void OnQ11();
+	afx_msg void OnQ12();
 	//
 	afx_msg void OnCmd1();
 	afx_msg void OnCmd2();
@@ -103,6 +105,8 @@ public:
 	afx_msg void OnCmd5();
 	afx_msg void OnCmd6();
 	afx_msg void OnCmd7();
+	afx_msg void OnCmd8();
+	afx_msg void OnCmd9();
 	//
 	afx_msg int OnCopyData(CWnd* pWnd, COPYDATASTRUCT* Msg);
 	// Show Hint
