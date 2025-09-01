@@ -6536,7 +6536,13 @@ CString CFreePcbView::OPSetAttributes( CString * bDialog )
 						}
 						else if (desc->m_str.Right(7) == "PCBVIEW")
 						{
-							OnPolylineUpdatePcbView(m_Doc, m_sel_id.i);
+							if (OLD_STR.Right(7) != "PCBVIEW" &&
+								m_Doc->m_num_additional_layers < 12)
+							{
+								m_Doc->m_num_additional_layers = 12;
+								m_Doc->m_num_layers = m_Doc->m_num_additional_layers + LAY_ADD_1;
+							}
+							OnPolylineUpdatePcbView(m_Doc, m_sel_id.i, &OLD_STR);
 							return complex_part_err;
 						}
 						else
@@ -14917,19 +14923,17 @@ BOOL CFreePcbView::DrawBOM( CPolyLine * p,
 				list2 = m_Doc->m_ref_lists->GetStr( ex_list - REF_LIST_INDEX );
 			CString cmd;
 			// insert comment
-			if( list1.Find("not_used") == -1 )
-			{
-				cmd.Format( "Included list: %s'%s", list1, TXT );
-				TXT = cmd;
-				n_str_details++;
-			}
+			//if( list1.Find("not_used") == -1 )
+			//{
+			//	cmd.Format( "(%s)%s", list1, TXT);
+			//	TXT = cmd;
+			//}
 			// insert comment
-			if( list2.Find("not_used") == -1 )
-			{
-				cmd.Format( "Excluded list: %s'%s", list2, TXT );
-				TXT = cmd;
-				n_str_details++;
-			}
+			//if( list2.Find("not_used") == -1 )
+			//{
+			//	cmd.Format("(%s)%s", list2, TXT);
+			//	TXT = cmd;
+			//}
 			cmd.Format( "|start_number: %d'|end_number: %d'|sorting_column: %d'|detail_column_width: %d'|ignore_those_without_value: %d'|include_ref_list: %s'|exclude_ref_list: %s'|column_order: %s'|pcb_name: %s'"COMMAND" BOM", iStart, iEnd, sortStyle, Extended, ignore_without_value, list1, list2, *order, *pcb );
 			TXT += cmd;
 			//
@@ -15336,6 +15340,8 @@ void CFreePcbView::SelectPolylineLayer( int Layer, BOOL SEL )
 {
 	for( int i=0; i<m_Doc->m_outline_poly->GetSize(); i++ )
 	{
+		if (m_Doc->m_outline_poly->GetAt(i).m_visible == 0)
+			continue;
 		if( m_Doc->m_outline_poly->GetAt(i).GetLayer() == Layer || Layer == 0 )
 			for( int ii=0; ii<m_Doc->m_outline_poly->GetAt(i).GetNumSides(); ii++ )
 			{

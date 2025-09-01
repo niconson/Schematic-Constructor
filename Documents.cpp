@@ -870,7 +870,10 @@ BOOL CFreePcbDoc::FileOpen( LPCTSTR fn )
 		for (CText * t = Attr->m_pDesclist->GetNextText(&it); t; t = Attr->m_pDesclist->GetNextText(&it))
 		{
 			if (t->m_str.Right(7) == "PCBVIEW")
-				OnPolylineUpdatePcbView(this, t->m_polyline_start);
+			{
+				OnPolylineUpdatePcbView(this, t->m_polyline_start, &t->m_str);
+				m_view->CancelSelection(0);
+			}
 		}
 		m_view->m_cursor_mode = 999;
 		m_view->SetCursorMode( CUR_NONE_SELECTED );
@@ -1112,7 +1115,6 @@ int CFreePcbDoc::FileClose()
 
 void CFreePcbDoc::OnFileSave() 
 {
-	CheckBOM();
 	Pages.RemoveEmptyMergers( m_mlist );
 	m_view->m_seg_clearance = m_seg_clearance + _2540*2;
 	int err = FileSave( &m_path_to_folder, &m_pcb_filename, &m_path_to_folder, &m_pcb_filename );
@@ -1126,6 +1128,7 @@ void CFreePcbDoc::OnFileSave()
 		ProjectModified( FALSE );
 		// now redraw polylines
 		m_view->RedrawLayers(); // OnFileSave
+		CheckBOM();
 		ResetUndoState();
 		clip_outline_poly.RemoveAll();
 		Pages.InvalidatePcbIndexes();
@@ -5002,7 +5005,7 @@ void CFreePcbDoc::OnProjectOptions()
 		else if( m_num_additional_layers < dlg.GetNumALayers() )
 		{
 			// increasing number of layers, don't reassign
-			for( int il=m_num_additional_layers; il<dlg.GetNumALayers(); il++ )
+			/*for (int il = m_num_additional_layers; il<dlg.GetNumALayers(); il++)
 			{
 				m_rgb[LAY_ADD_1+il][0] = (8376*il)%255;
 				m_rgb[LAY_ADD_1+il][1] = (6295*il)%255;
@@ -5015,7 +5018,7 @@ void CFreePcbDoc::OnProjectOptions()
 													m_rgb[LAY_ADD_1+il][2] );
 				m_dlist->SetLayerVisible(LAY_ADD_1+il, 1);
 				m_vis[LAY_ADD_1+il] = 1;
-			}
+			}*/
 			m_num_additional_layers = dlg.GetNumALayers();
 			m_num_layers = m_num_additional_layers + LAY_ADD_1;
 			m_view->ShowActiveLayer(m_num_additional_layers);

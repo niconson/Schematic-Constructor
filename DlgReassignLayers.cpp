@@ -51,7 +51,10 @@ void CDlgReassignLayers::DoDataExchange(CDataExchange* pDX)
 					m_combo[il].InsertString( inew, layer_str[LAY_ADD_1+inew] );
 				////m_combo[il].InsertString( m_new_layers, "delete" );
 				// initialize combo box to old layer, or delete if old layer > new layers
-				m_combo[il].SetCurSel(0);
+				if(il < m_new_layers)
+					m_combo[il].SetCurSel(il);
+				else
+					m_combo[il].SetCurSel(0);
 			}
 			else
 				// this isn't an old layer, disable combo box

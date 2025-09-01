@@ -1154,7 +1154,7 @@ void CDlgAttr::OnCmd9()
 			pname = m_pl->m_pcb_names.GetAt(0);
 	}
 	CString str2;
-	str2.Format("\r\n|UID: 0\r\n|text_height: 1mm\r\n|font_width: 0.1mm\r\n|fill_board: 1\r\n|fill_mask: 1\r\n|flipped: 0\r\n|pcb: %s\r\n"COMMAND" PCBVIEW", pname);
+	str2.Format("\r\n|UID: 0\r\n|text_height: 1mm\r\n|font_width: 0.1mm\r\n|line_width: 0\r\n|fill_board: 20\r\n|fill_mask: 1\r\n|scale_factor: 0\r\n|rotation: 0\r\n|flipped: 0\r\n|pcb: %s\r\n"COMMAND" PCBVIEW", pname);
 	m_edit_pindesc.SetWindowTextA(str + str2);
 }
 

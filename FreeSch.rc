@@ -248,22 +248,22 @@ BEGIN
             MENUITEM "Контур деталей",              ID_SEL_PARTOUTLINE
             MENUITEM "Линии пинов",                 ID_SEL_PINLINE
             MENUITEM "Линии эл.цепей",              ID_SEL_NETPOLYLINE
-            MENUITEM "Верхний слой 1",              ID_SEL_FRONTLAYER1
-            MENUITEM "Верхний слой 2",              ID_SEL_FRONTLAYER2
-            MENUITEM "Нижний слой 1",               ID_SEL_BACKLAYER1
-            MENUITEM "Нижний слой 2",               ID_SEL_BACKLAYER2
-            MENUITEM "Нижний слой 3",               ID_SEL_BACKLAYER3
-            MENUITEM "Нижний слой 4",               ID_SEL_BACKLAYER4
-            MENUITEM "Нижний слой 5",               ID_SEL_BACKLAYER5
-            MENUITEM "Нижний слой 6",               ID_SEL_BACKLAYER6
-            MENUITEM "Нижний слой 7",               ID_SEL_BACKLAYER7
-            MENUITEM "Нижний слой 8",               ID_SEL_BACKLAYER8
-            MENUITEM "Нижний слой 9",               ID_SEL_BACKLAYER9
-            MENUITEM "Нижний слой 10",              ID_SEL_BACKLAYER10
-            MENUITEM "Нижний слой 11",              ID_SEL_BACKLAYER11
-            MENUITEM "Нижний слой 12",              ID_SEL_BACKLAYER12
-            MENUITEM "Нижний слой 13",              ID_SEL_BACKLAYER13
-            MENUITEM "Нижний слой 14",              ID_SEL_BACKLAYER14
+            MENUITEM "Фронтальный",                 ID_SEL_FRONTLAYER1
+            MENUITEM "Поверхностный",               ID_SEL_FRONTLAYER2
+            MENUITEM "Невидимый",                   ID_SEL_BACKLAYER1
+            MENUITEM "Фоновый",                     ID_SEL_BACKLAYER2
+            MENUITEM "Контурный",                   ID_SEL_BACKLAYER3
+            MENUITEM "Медный",                      ID_SEL_BACKLAYER4
+            MENUITEM "Защитный",                    ID_SEL_BACKLAYER5
+            MENUITEM "Фрезерный",                   ID_SEL_BACKLAYER6
+            MENUITEM "Шёлковый",                    ID_SEL_BACKLAYER7
+            MENUITEM "Чертёжный",                   ID_SEL_BACKLAYER8
+            MENUITEM "Запасной",                    ID_SEL_BACKLAYER9
+            MENUITEM "Вёрсточный",                  ID_SEL_BACKLAYER10
+            MENUITEM "Механический",                ID_SEL_BACKLAYER11
+            MENUITEM "Линейный",                    ID_SEL_BACKLAYER12
+            MENUITEM "Резервный 1",                 ID_SEL_BACKLAYER13
+            MENUITEM "Резервный 2",                 ID_SEL_BACKLAYER14
         END
         POPUP "Снять выделение"
         BEGIN
@@ -283,22 +283,22 @@ BEGIN
             MENUITEM "Контур деталей",              ID_UNSEL_PARTOUTLINE
             MENUITEM "Линии пинов",                 ID_UNSEL_PINLINE
             MENUITEM "Линии эл.цепей",              ID_UNSEL_NETPOLYLINE
-            MENUITEM "Верхний слой 1",              ID_UNSEL_FRONTLAYER1
-            MENUITEM "Верхний слой 2",              ID_UNSEL_FRONTLAYER2
-            MENUITEM "Нижний слой 1",               ID_UNSEL_BACKLAYER1
-            MENUITEM "Нижний слой 2",               ID_UNSEL_BACKLAYER2
-            MENUITEM "Нижний слой 3",               ID_UNSEL_BACKLAYER3
-            MENUITEM "Нижний слой 4",               ID_UNSEL_BACKLAYER4
-            MENUITEM "Нижний слой 5",               ID_UNSEL_BACKLAYER5
-            MENUITEM "Нижний слой 6",               ID_UNSEL_BACKLAYER6
-            MENUITEM "Нижний слой 7",               ID_UNSEL_BACKLAYER7
-            MENUITEM "Нижний слой 8",               ID_UNSEL_BACKLAYER8
-            MENUITEM "Нижний слой 9",               ID_UNSEL_BACKLAYER9
-            MENUITEM "Нижний слой 10",              ID_UNSEL_BACKLAYER10
-            MENUITEM "Нижний слой 11",              ID_UNSEL_BACKLAYER11
-            MENUITEM "Нижний слой 12",              ID_UNSEL_BACKLAYER12
-            MENUITEM "Нижний слой 13",              ID_UNSEL_BACKLAYER13
-            MENUITEM "Нижний слой 14",              ID_UNSEL_BACKLAYER14
+            MENUITEM "Фронтальный",                 ID_UNSEL_FRONTLAYER1
+            MENUITEM "Поверхностный",               ID_UNSEL_FRONTLAYER2
+            MENUITEM "Невидимый",                   ID_UNSEL_BACKLAYER1
+            MENUITEM "Фоновый",                     ID_UNSEL_BACKLAYER2
+            MENUITEM "Контурный",                   ID_UNSEL_BACKLAYER3
+            MENUITEM "Медный",                      ID_UNSEL_BACKLAYER4
+            MENUITEM "Защитный",                    ID_UNSEL_BACKLAYER5
+            MENUITEM "Фрезерный",                   ID_UNSEL_BACKLAYER6
+            MENUITEM "Шёлковый",                    ID_UNSEL_BACKLAYER7
+            MENUITEM "Чертёжный",                   ID_UNSEL_BACKLAYER8
+            MENUITEM "Запасной",                    ID_UNSEL_BACKLAYER9
+            MENUITEM "Вёрсточный",                  ID_UNSEL_BACKLAYER10
+            MENUITEM "Механический",                ID_UNSEL_BACKLAYER11
+            MENUITEM "Линейный",                    ID_UNSEL_BACKLAYER12
+            MENUITEM "Резервный 1",                 ID_UNSEL_BACKLAYER13
+            MENUITEM "Резервный 2",                 ID_UNSEL_BACKLAYER14
         END
         MENUITEM "Выделить всё",                ID_SELECTALL
     END
@@ -1321,12 +1321,12 @@ BEGIN
     LTEXT           "Названия",IDC_STATIC,44,172,48,8
     LTEXT           "Шёлковый",IDC_STATIC,251,117,54,8
     LTEXT           "Чертёжный",IDC_STATIC,251,128,52,8
-    LTEXT           "Резервный 1",IDC_STATIC,251,139,55,8
-    LTEXT           "Резервный 2",IDC_STATIC,251,150,56,8
-    LTEXT           "Резервный 3",IDC_STATIC,251,162,58,8
-    LTEXT           "Резервный 4",IDC_STATIC,251,174,65,8
-    LTEXT           "Резервный 5",IDC_STATIC,251,185,64,8
-    LTEXT           "Резервный 6",IDC_STATIC,251,196,60,8
+    LTEXT           "Запасной",IDC_STATIC,251,139,55,8
+    LTEXT           "Вёрсточный",IDC_STATIC,251,150,56,8
+    LTEXT           "Механический",IDC_STATIC,251,162,58,8
+    LTEXT           "Линейный",IDC_STATIC,251,174,65,8
+    LTEXT           "Резервный 1",IDC_STATIC,251,185,64,8
+    LTEXT           "Резервный 2",IDC_STATIC,251,196,60,8
     GROUPBOX        "",IDC_STATIC,214,9,30,16
     GROUPBOX        "",IDC_STATIC,243,9,110,16
     GROUPBOX        "",IDC_STATIC,352,9,29,16
@@ -2154,45 +2154,45 @@ END
 
 IDD_REASSIGN_LAYERS DIALOGEX 0, 0, 184, 346
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Reassign Layers"
+CAPTION "Реассоциация слоёв"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    LTEXT           "Front layer 1",IDC_STATIC_1,18,26,47,8,WS_DISABLED
+    LTEXT           "Фронтальный",IDC_STATIC_1,18,26,47,8,WS_DISABLED
     COMBOBOX        IDC_COMBO1,78,24,90,150,CBS_DROPDOWNLIST | CBS_SORT | WS_DISABLED | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Front layer 2",IDC_STATIC_2,18,44,48,8,WS_DISABLED
+    LTEXT           "Поверхностный",IDC_STATIC_2,18,44,48,8,WS_DISABLED
     COMBOBOX        IDC_COMBO2,78,42,90,150,CBS_DROPDOWNLIST | CBS_SORT | WS_DISABLED | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Back layer 1",IDC_STATIC_3,18,62,46,8,WS_DISABLED
+    LTEXT           "Невидимый",IDC_STATIC_3,18,62,46,8,WS_DISABLED
     COMBOBOX        IDC_COMBO3,78,60,90,150,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Back layer 2",IDC_STATIC_4,18,81,44,8,WS_DISABLED
+    LTEXT           "Фоновый",IDC_STATIC_4,18,81,44,8,WS_DISABLED
     COMBOBOX        IDC_COMBO4,78,78,90,150,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Back layer 3",IDC_STATIC_5,18,98,48,8
+    LTEXT           "Контурный",IDC_STATIC_5,18,98,48,8
     COMBOBOX        IDC_COMBO5,78,96,90,150,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Back layer 4",IDC_STATIC_6,18,116,48,8
+    LTEXT           "Медный",IDC_STATIC_6,18,116,48,8
     COMBOBOX        IDC_COMBO6,78,114,90,150,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Back layer 5",IDC_STATIC_7,18,135,46,8
+    LTEXT           "Защитный",IDC_STATIC_7,18,135,46,8
     COMBOBOX        IDC_COMBO7,78,132,90,150,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Back layer 6",IDC_STATIC_8,18,152,47,8
+    LTEXT           "Фрезерный",IDC_STATIC_8,18,152,47,8
     COMBOBOX        IDC_COMBO8,78,150,90,150,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Back layer 7",IDC_STATIC_9,18,170,46,8
+    LTEXT           "Шёлковый",IDC_STATIC_9,18,170,46,8
     COMBOBOX        IDC_COMBO9,78,168,90,150,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Back layer 8",IDC_STATIC_10,18,188,48,8
+    LTEXT           "Чертёжный",IDC_STATIC_10,18,188,48,8
     COMBOBOX        IDC_COMBO10,78,186,90,150,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Back layer 9",IDC_STATIC_11,18,206,48,8
+    LTEXT           "Запасной",IDC_STATIC_11,18,206,48,8
     COMBOBOX        IDC_COMBO11,78,204,90,150,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Back layer 10",IDC_STATIC_12,18,225,47,8
+    LTEXT           "Вёрсточный",IDC_STATIC_12,18,225,47,8
     COMBOBOX        IDC_COMBO12,78,222,90,150,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Back layer 11",IDC_STATIC_13,18,242,46,8
+    LTEXT           "Механический",IDC_STATIC_13,18,242,46,8
     COMBOBOX        IDC_COMBO13,78,240,90,150,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Back layer 12",IDC_STATIC_14,18,260,47,8
+    LTEXT           "Линейный",IDC_STATIC_14,18,260,47,8
     COMBOBOX        IDC_COMBO14,78,258,90,150,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Back layer 13",IDC_STATIC_16,18,279,46,8
+    LTEXT           "Резервный 1",IDC_STATIC_16,18,279,46,8
     COMBOBOX        IDC_COMBO15,78,276,90,150,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Back layer 14",IDC_STATIC_15,18,296,48,8
+    LTEXT           "Резервный 2",IDC_STATIC_15,18,296,48,8
     COMBOBOX        IDC_COMBO16,78,294,90,150,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
     DEFPUSHBUTTON   "Готово",IDOK,36,324,50,14
     PUSHBUTTON      "Отмена",IDCANCEL,102,324,50,14
-    GROUPBOX        "Old layers",IDC_STATIC,12,12,61,300
-    GROUPBOX        "New layers",IDC_STATIC,72,12,102,300
+    GROUPBOX        "Старые слои",IDC_STATIC,12,12,61,300
+    GROUPBOX        "Новые слои",IDC_STATIC,72,12,102,300
 END
 
 IDD_EXPORT_DSN DIALOGEX 0, 0, 286, 221
@@ -2653,12 +2653,12 @@ BEGIN
     LTEXT           "Фрезерный",IDC_STATIC,251,105,58,8
     LTEXT           "Шёлковый",IDC_STATIC,251,117,54,8
     LTEXT           "Чертёжный",IDC_STATIC,251,128,52,8
-    LTEXT           "Резервный 1",IDC_STATIC,251,139,55,8
-    LTEXT           "Резервный 2",IDC_STATIC,251,150,56,8
-    LTEXT           "Резервный 3",IDC_STATIC,251,162,58,8
-    LTEXT           "Резервный 4",IDC_STATIC,251,174,65,8
-    LTEXT           "Резервный 5",IDC_STATIC,251,185,64,8
-    LTEXT           "Резервный 6",IDC_STATIC,251,196,60,8
+    LTEXT           "Запасной",IDC_STATIC,251,139,55,8
+    LTEXT           "Вёрсточный",IDC_STATIC,251,150,56,8
+    LTEXT           "Механический",IDC_STATIC,251,162,58,8
+    LTEXT           "Линейный",IDC_STATIC,251,174,65,8
+    LTEXT           "Резервный 1",IDC_STATIC,251,185,64,8
+    LTEXT           "Резервный 2",IDC_STATIC,251,196,60,8
 END
 
 IDD_NETLIST_SETTINGS DIALOGEX 0, 0, 335, 145

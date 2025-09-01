@@ -525,7 +525,7 @@ void OnGroupVtxMagnetize( CFreePcbDoc * doc )
 	}
 }
 
-void OnPolylineUpdatePcbView(CFreePcbDoc* doc, int m_sel_i)
+void OnPolylineUpdatePcbView(CFreePcbDoc* doc, int m_sel_i, CString* old_board)
 {
 	CText* desc = doc->m_outline_poly->GetAt(m_sel_i).Check(index_desc_attr);
 	if (desc == NULL)
@@ -551,27 +551,75 @@ void OnPolylineUpdatePcbView(CFreePcbDoc* doc, int m_sel_i)
 		AfxMessageBox(cmd);
 		return;
 	}
-	int flipped = 0;
-	iof = desc->m_str.Find("|flipped:");
-	if (iof > 0)
+	if (old_board)
+		if(old_board->GetLength())
+		{
+			iof = old_board->Find("|pcb:");
+			if (iof > 0)
+			{
+				cmd = old_board->Right(old_board->GetLength() - iof - 5);
+				iof = cmd.Find("'");
+				if (iof > 0)
+					cmd = cmd.Left(iof);
+			}
+			cmd = cmd.Trim();
+			CString old_name = cmd + ".PCBVIEW";
+			int old_flipped = 0;
+			iof = old_board->Find("|flipped:");
+			if (iof > 0)
+			{
+				cmd = old_board->Right(old_board->GetLength() - iof - 9);
+				iof = cmd.Find("'");
+				if (iof > 0)
+					cmd = cmd.Left(iof);
+				cmd = cmd.Trim();
+				old_flipped = my_atoi(&cmd);
+			}
+			CString old_mergeName;
+			old_mergeName.Format("%s%d", old_name, old_flipped + 1);
+			int idm = doc->m_mlist->GetIndex(old_mergeName);
+			if (idm >= 0)
+			{
+				doc->m_view->NewSelectM(idm);
+				doc->m_view->DeleteGroup(1);
+			}
+		}
+	//======================  flipped  ========================================
+	CString mergeName="";
 	{
-		cmd = desc->m_str.Right(desc->m_str.GetLength() - iof - 9);
-		iof = cmd.Find("'");
+		int flipped = 0;
+		iof = desc->m_str.Find("|flipped:");
 		if (iof > 0)
-			cmd = cmd.Left(iof);
-		cmd = cmd.Trim();
-		flipped = my_atoi(&cmd);
+		{
+			cmd = desc->m_str.Right(desc->m_str.GetLength() - iof - 9);
+			iof = cmd.Find("'");
+			if (iof > 0)
+				cmd = cmd.Left(iof);
+			cmd = cmd.Trim();
+			flipped = my_atoi(&cmd);
+		}
+		mergeName.Format("%s%d", name, flipped + 1);
+		//------------------------------------------
+		doc->PasteFromFile(pcb_view, FALSE, flipped);
+		//------------------------------------------
 	}
-	CString mergeName;
-	mergeName.Format("%s%d", name, flipped + 1);
-	int id_m = doc->m_mlist->GetIndex(mergeName);
-	if (id_m >= 0)
+	//===========  rotation  =============  scale_factor  ===============
 	{
-		doc->m_view->NewSelectM(id_m);
-		doc->m_view->DeleteGroup(1);
+		int rotation = 0;
+		iof = desc->m_str.Find("|rotation:");
+		if (iof > 0)
+		{
+			cmd = desc->m_str.Right(desc->m_str.GetLength() - iof - 10);
+			iof = cmd.Find("'");
+			if (iof > 0)
+				cmd = cmd.Left(iof);
+			cmd = cmd.Trim();
+			rotation = my_atof(&cmd);
+		}
+		if (rotation)
+			doc->m_view->RotateGroup(rotation);
 	}
-	doc->PasteFromFile(pcb_view, FALSE, flipped);
-	id_m = doc->m_mlist->AddNew(mergeName);
+	int id_m = doc->m_mlist->AddNew(mergeName);
 	doc->m_view->MergeGroup(id_m);
 	RECT hiliteRect = doc->m_dlist->GetHighlightedBounds(NULL);
 	int AverageX = (hiliteRect.right + hiliteRect.left) / 2;
@@ -580,99 +628,144 @@ void OnPolylineUpdatePcbView(CFreePcbDoc* doc, int m_sel_i)
 	double scale = (double)(oprect.right - oprect.left) / (double)(hiliteRect.right - hiliteRect.left);
 	double scale2 = (double)(oprect.top - oprect.bottom) / (double)(hiliteRect.top - hiliteRect.bottom);
 	scale = min(scale, scale2);
+	double scale_factor = 0;
+	iof = desc->m_str.Find("|scale_factor:");
+	if (iof > 0)
+	{
+		cmd = desc->m_str.Right(desc->m_str.GetLength() - iof - 14);
+		iof = cmd.Find("'");
+		if (iof > 0)
+			cmd = cmd.Left(iof);
+		cmd = cmd.Trim();
+		scale_factor = my_atof(&cmd) / doc->m_view->m_user_scale;
+		if (abs(scale_factor) > 0.09 && abs(scale_factor) < 11)
+			scale = scale_factor;
+	}
 	doc->m_view->ScaleFactor(scale, 1);
-	int TH = 0;
-	iof = desc->m_str.Find("|text_height:");
-	if (iof > 0)
+	//==========  text_height  ============  font_width  ============  UID  ==========
 	{
-		cmd = desc->m_str.Right(desc->m_str.GetLength() - iof - 13);
-		iof = cmd.Find("'");
+		int TH = 0;
+		iof = desc->m_str.Find("|text_height:");
 		if (iof > 0)
-			cmd = cmd.Left(iof);
-		cmd = cmd.Trim();
-		TH = my_atof(&cmd) / doc->m_view->m_user_scale;
-	}
-	int TW = 0;
-	iof = desc->m_str.Find("|font_width:");
-	if (iof > 0)
-	{
-		cmd = desc->m_str.Right(desc->m_str.GetLength() - iof - 12);
-		iof = cmd.Find("'");
-		if (iof > 0)
-			cmd = cmd.Left(iof);
-		cmd = cmd.Trim();
-		TW = my_atof(&cmd) / doc->m_view->m_user_scale;
-	}
-	int UID = 0;
-	iof = desc->m_str.Find("|UID:");
-	if (iof > 0)
-	{
-		cmd = desc->m_str.Right(desc->m_str.GetLength() - iof - 5);
-		iof = cmd.Find("'");
-		if (iof > 0)
-			cmd = cmd.Left(iof);
-		cmd = cmd.Trim();
-		UID = my_atoi(&cmd);
-	}
-	int it = -1;
-	for (CText* gt = doc->Attr->m_pDesclist->GetNextText(&it); gt; gt = doc->Attr->m_pDesclist->GetNextText(&it))
-	{
-		if (gt->m_selected == 0)
-			continue;
-		if (gt->m_str.Find("VIA") == 0 ||
-			gt->m_str.Find("BOARD") == 0)
 		{
-			gt->m_font_size = 0;
-			gt->m_stroke_width = 0;
+			cmd = desc->m_str.Right(desc->m_str.GetLength() - iof - 13);
+			iof = cmd.Find("'");
+			if (iof > 0)
+				cmd = cmd.Left(iof);
+			cmd = cmd.Trim();
+			TH = my_atof(&cmd) / doc->m_view->m_user_scale;
 		}
-		else
+		int TW = 0;
+		iof = desc->m_str.Find("|font_width:");
+		if (iof > 0)
 		{
-			gt->m_font_size = TH;
-			gt->m_stroke_width = TW;
-			if (UID)
+			cmd = desc->m_str.Right(desc->m_str.GetLength() - iof - 12);
+			iof = cmd.Find("'");
+			if (iof > 0)
+				cmd = cmd.Left(iof);
+			cmd = cmd.Trim();
+			TW = my_atof(&cmd) / doc->m_view->m_user_scale;
+		}
+		int UID = 0;
+		iof = desc->m_str.Find("|UID:");
+		if (iof > 0)
+		{
+			cmd = desc->m_str.Right(desc->m_str.GetLength() - iof - 5);
+			iof = cmd.Find("'");
+			if (iof > 0)
+				cmd = cmd.Left(iof);
+			cmd = cmd.Trim();
+			UID = my_atoi(&cmd);
+		}
+		int it = -1;
+		for (CText* gt = doc->Attr->m_pDesclist->GetNextText(&it); gt; gt = doc->Attr->m_pDesclist->GetNextText(&it))
+		{
+			if (gt->m_selected == 0)
+				continue;
+			if (gt->m_str.Find("VIA") == 0 ||
+				gt->m_str.Find("BOARD") == 0)
 			{
-				gt->Undraw();
-				iof = gt->m_str.Find("|");
-				gt->m_str = gt->m_str.Right(gt->m_str.GetLength() - iof - 1);
-				gt->m_nchars = gt->m_str.GetLength();
+				gt->m_font_size = 0;
+				gt->m_stroke_width = 0;
 			}
+			else
+			{   //-------------------
+				if (gt->m_angle%180 == 0)
+					gt->m_angle = 0;
+				else if (gt->m_angle%90 == 0)
+					gt->m_angle = -90;
+				//-------------------
+				gt->m_font_size = TH;
+				gt->m_stroke_width = TW;
+				if (UID)
+				{
+					gt->Undraw();
+					iof = gt->m_str.Find("|");
+					gt->m_str = gt->m_str.Right(gt->m_str.GetLength() - iof - 1);
+					gt->m_nchars = gt->m_str.GetLength();
+				}
+			}
+			gt->MakeVisible();
 		}
-		gt->MakeVisible();
 	}
-	int fill_board = 0;
-	iof = desc->m_str.Find("|fill_board:");
-	if (iof > 0)
+	//===========  fill_board  ==========  fill_mask  ===========  line_width  =============
 	{
-		cmd = desc->m_str.Right(desc->m_str.GetLength() - iof - 12);
-		iof = cmd.Find("'");
+		int fill_board = 0;
+		iof = desc->m_str.Find("|fill_board:");
 		if (iof > 0)
-			cmd = cmd.Left(iof);
-		cmd = cmd.Trim();
-		fill_board = my_atoi(&cmd);
-	}
-	int fill_mask = 0;
-	iof = desc->m_str.Find("|fill_mask:");
-	if (iof > 0)
-	{
-		cmd = desc->m_str.Right(desc->m_str.GetLength() - iof - 11);
-		iof = cmd.Find("'");
+		{
+			cmd = desc->m_str.Right(desc->m_str.GetLength() - iof - 12);
+			iof = cmd.Find("'");
+			if (iof > 0)
+				cmd = cmd.Left(iof);
+			cmd = cmd.Trim();
+			fill_board = my_atof(&cmd);
+		}
+		int fill_mask = 0;
+		iof = desc->m_str.Find("|fill_mask:");
 		if (iof > 0)
-			cmd = cmd.Left(iof);
-		cmd = cmd.Trim();
-		fill_mask = my_atoi(&cmd);
+		{
+			cmd = desc->m_str.Right(desc->m_str.GetLength() - iof - 11);
+			iof = cmd.Find("'");
+			if (iof > 0)
+				cmd = cmd.Left(iof);
+			cmd = cmd.Trim();
+			fill_mask = my_atof(&cmd);
+		}
+		int line_width = 0;
+		iof = desc->m_str.Find("|line_width:");
+		if (iof > 0)
+		{
+			cmd = desc->m_str.Right(desc->m_str.GetLength() - iof - 12);
+			iof = cmd.Find("'");
+			if (iof > 0)
+				cmd = cmd.Left(iof);
+			cmd = cmd.Trim();
+			line_width = my_atof(&cmd);
+		}
+		for (int i = 0; i < doc->m_outline_poly->GetSize(); i++)
+		{
+			CPolyLine* poly = &doc->m_outline_poly->GetAt(i);
+			if (poly->m_visible == 0)
+				continue;
+			if (poly->GetSel() == 0)
+				continue;
+			if (poly->GetLayer() == LAY_PCB_BOARD)
+				poly->SetHatch(fill_board);
+			else if (poly->GetLayer() == LAY_PCB_MASK)
+				poly->SetHatch(fill_mask);
+			else if (line_width)
+			{
+				if (poly->GetLayer() == LAY_PCB_SILK || poly->GetLayer() == LAY_PCB_NOTES)
+				{
+					poly->SetW(line_width);
+					poly->Draw();
+				}	
+			}
+			
+		}
 	}
-	for (int i = 0; i < doc->m_outline_poly->GetSize(); i++)
-	{
-		CPolyLine* poly = &doc->m_outline_poly->GetAt(i);
-		if (poly->m_visible == 0)
-			continue;
-		if (poly->GetSel() == 0)
-			continue;
-		if (poly->GetLayer() == LAY_PCB_BOARD)
-			poly->SetHatch(fill_board);
-		else if (poly->GetLayer() == LAY_PCB_MASK)
-			poly->SetHatch(fill_mask);
-	}
+	//==============================================================
 	desc->m_font_size = 0;
 	desc->m_stroke_width = 0;
 	desc->MakeVisible();
