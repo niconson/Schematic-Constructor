@@ -6539,8 +6539,14 @@ CString CFreePcbView::OPSetAttributes( CString * bDialog )
 							if (OLD_STR.Right(7) != "PCBVIEW" &&
 								m_Doc->m_num_additional_layers < 12)
 							{
+								int ind = m_Doc->m_num_layers;
 								m_Doc->m_num_additional_layers = 12;
 								m_Doc->m_num_layers = m_Doc->m_num_additional_layers + LAY_ADD_1;
+								for (int iL = ind; iL < m_Doc->m_num_layers; iL++)
+								{
+									m_Doc->m_vis[iL] = TRUE;
+									m_Doc->m_dlist->m_vis[iL] = TRUE;
+								}
 							}
 							OnPolylineUpdatePcbView(m_Doc, m_sel_id.i, &OLD_STR);
 							return complex_part_err;
