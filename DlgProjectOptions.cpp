@@ -138,9 +138,9 @@ void CDlgProjectOptions::DoDataExchange(CDataExchange* pDX)
 		m_font.InsertString( 0, "SMALL_SIMPLEX" );
 		m_font.SetCurSel( m_font_nmb );
 		CString s;
-		::MakeCStringFromDimension( m_scale, &s, abs(m_node_w), (m_node_w>=0?MIL:MM), TRUE, TRUE, FALSE, (m_node_w>=0?0:2) );
+		::MakeCStringFromDimension( m_scale, &s, abs(m_node_w), (m_node_w>=0?MIL:MM), TRUE, TRUE, FALSE, (m_node_w>=0?0:3) );
 		DDX_Text(pDX,IDC_EDIT_NODE_W,s);
-		::MakeCStringFromDimension( m_scale, &s, abs(m_trace_w), (m_trace_w>=0?MIL:MM), TRUE, TRUE, FALSE, (m_trace_w>=0?0:2) );
+		::MakeCStringFromDimension( m_scale, &s, abs(m_trace_w), (m_trace_w>=0?MIL:MM), TRUE, TRUE, FALSE, (m_trace_w>=0?0:3) );
 		DDX_Text(pDX,IDC_EDIT_DEF_TRACE_W,s);
 		::MakeCStringFromDimension( 1.0, &s, m_parent, 0, 0, 0 );
 		DDX_Text(pDX,IDC_EDIT_PARENT_I,s);

@@ -181,7 +181,7 @@ ON_COMMAND(ID_MERGE_PASTEFROMFILE, OnImportMerges)
 ON_COMMAND_EX_RANGE(ID_6_PINS,ID_256_PINS, OnCreateMultiPinPartTemplate)
 ON_COMMAND_EX_RANGE(ID_SEL_POLYLINES, ID_UNSEL_BACKLAYER14, OnEditSelectLayer)
 ON_COMMAND_EX_RANGE(ID_HIDE_BMP, ID_SHOW_BMP, OnHidePictures)
-ON_COMMAND_EX_RANGE(ID_SCALE1,ID_SCALE6, OnApplyScale)
+ON_COMMAND_EX_RANGE(ID_SCALE12,ID_SCALE54, OnApplyScale)
 ON_COMMAND_EX_RANGE(ID_SLIDING_ANGLE,ID_SLIDING_ANGLE2, OnSetSlidingAngle)
 END_MESSAGE_MAP()
 
@@ -15866,18 +15866,43 @@ BOOL CFreePcbView::OnApplyScale( UINT CMD )
 		return 0;
 	}
 	double sc = 1.0;
-	if( CMD == ID_SCALE1 )
-		sc = 5.0;
-	else if( CMD == ID_SCALE2 )
-		sc = 3.0;
-	else if( CMD == ID_SCALE3 )
-		sc = 2.0;
-	else if( CMD == ID_SCALE4 )
+	if( CMD == ID_SCALE12 )
 		sc = 1.0/2.0;
-	else if( CMD == ID_SCALE5 )
+	else if( CMD == ID_SCALE13 )
 		sc = 1.0/3.0;
-	else if( CMD == ID_SCALE6 )
+	else if( CMD == ID_SCALE14 )
+		sc = 1.0/4.0;
+	else if( CMD == ID_SCALE15 )
 		sc = 1.0/5.0;
+	else if( CMD == ID_SCALE21 )
+		sc = 2.0/1.0;
+	else if( CMD == ID_SCALE23 )
+		sc = 2.0/3.0;
+	else if (CMD == ID_SCALE25)
+		sc = 2.0/5.0;
+	else if (CMD == ID_SCALE31)
+		sc = 3.0 / 1.0;
+	else if (CMD == ID_SCALE32)
+		sc = 3.0 / 2.0;
+	else if (CMD == ID_SCALE34)
+		sc = 3.0 / 4.0;
+	else if (CMD == ID_SCALE35)
+		sc = 3.0 / 5.0;
+	else if (CMD == ID_SCALE41)
+		sc = 4.0 / 1.0;
+	else if (CMD == ID_SCALE43)
+		sc = 4.0 / 3.0;
+	else if (CMD == ID_SCALE45)
+		sc = 4.0 / 5.0;
+	else if (CMD == ID_SCALE51)
+		sc = 5.0 / 1.0;
+	else if (CMD == ID_SCALE52)
+		sc = 5.0 / 2.0;
+	else if (CMD == ID_SCALE53)
+		sc = 5.0 / 3.0;
+	else if (CMD == ID_SCALE54)
+		sc = 5.0 / 4.0;
+
 	RECT R = m_Doc->m_dlist->GetHighlightedBounds(NULL);
 	if( R.right-R.left > DEFAULT/sc/2 || R.top-R.bottom > DEFAULT/sc/2 )
 		return 0;

@@ -258,12 +258,12 @@ BEGIN
             MENUITEM "Фрезерный",                   ID_SEL_BACKLAYER6
             MENUITEM "Шёлковый",                    ID_SEL_BACKLAYER7
             MENUITEM "Чертёжный",                   ID_SEL_BACKLAYER8
-            MENUITEM "Запасной",                    ID_SEL_BACKLAYER9
+            MENUITEM "Текстовый",                   ID_SEL_BACKLAYER9
             MENUITEM "Вёрсточный",                  ID_SEL_BACKLAYER10
             MENUITEM "Механический",                ID_SEL_BACKLAYER11
             MENUITEM "Линейный",                    ID_SEL_BACKLAYER12
-            MENUITEM "Резервный 1",                 ID_SEL_BACKLAYER13
-            MENUITEM "Резервный 2",                 ID_SEL_BACKLAYER14
+            MENUITEM "Резервный",                   ID_SEL_BACKLAYER13
+            MENUITEM "Запасной",                    ID_SEL_BACKLAYER14
         END
         POPUP "Снять выделение"
         BEGIN
@@ -293,12 +293,12 @@ BEGIN
             MENUITEM "Фрезерный",                   ID_UNSEL_BACKLAYER6
             MENUITEM "Шёлковый",                    ID_UNSEL_BACKLAYER7
             MENUITEM "Чертёжный",                   ID_UNSEL_BACKLAYER8
-            MENUITEM "Запасной",                    ID_UNSEL_BACKLAYER9
+            MENUITEM "Текстовый",                   ID_UNSEL_BACKLAYER9
             MENUITEM "Вёрсточный",                  ID_UNSEL_BACKLAYER10
             MENUITEM "Механический",                ID_UNSEL_BACKLAYER11
             MENUITEM "Линейный",                    ID_UNSEL_BACKLAYER12
-            MENUITEM "Резервный 1",                 ID_UNSEL_BACKLAYER13
-            MENUITEM "Резервный 2",                 ID_UNSEL_BACKLAYER14
+            MENUITEM "Резервный",                   ID_UNSEL_BACKLAYER13
+            MENUITEM "Запасной",                    ID_UNSEL_BACKLAYER14
         END
         MENUITEM "Выделить всё",                ID_SELECTALL
     END
@@ -402,12 +402,39 @@ BEGIN
         END
         POPUP "Масштабировать"
         BEGIN
-            MENUITEM "5/1",                         ID_SCALE1
-            MENUITEM "3/1",                         ID_SCALE2
-            MENUITEM "2/1",                         ID_SCALE3
-            MENUITEM "1/2",                         ID_SCALE4
-            MENUITEM "1/3",                         ID_SCALE5
-            MENUITEM "1/5",                         ID_SCALE6
+            POPUP "1:"
+            BEGIN
+                MENUITEM ":2",                      ID_SCALE12
+                MENUITEM ":3",                      ID_SCALE13
+                MENUITEM ":4",                      ID_SCALE14
+                MENUITEM ":5",                      ID_SCALE15
+            END
+            POPUP "2:"
+            BEGIN
+                MENUITEM ":1",                      ID_SCALE21
+                MENUITEM ":3",                      ID_SCALE23
+                MENUITEM ":5",                      ID_SCALE25
+            END
+            POPUP "3:"
+            BEGIN
+                MENUITEM ":1",                      ID_SCALE31
+                MENUITEM ":2",                      ID_SCALE32
+                MENUITEM ":4",                      ID_SCALE34
+                MENUITEM ":5",                      ID_SCALE35
+            END
+            POPUP "4:"
+            BEGIN
+                MENUITEM ":1",                      ID_SCALE41
+                MENUITEM ":3",                      ID_SCALE43
+                MENUITEM ":5",                      ID_SCALE45
+            END
+            POPUP "5:"
+            BEGIN
+                MENUITEM ":1",                      ID_SCALE51
+                MENUITEM ":2",                      ID_SCALE52
+                MENUITEM ":3",                      ID_SCALE53
+                MENUITEM ":4",                      ID_SCALE54
+            END
         END
         MENUITEM "Заменить фрагмент текста",    ID_REPLACE_TEXT
         MENUITEM SEPARATOR
@@ -1131,8 +1158,8 @@ BEGIN
     EDITTEXT        IDC_EDIT_LIBRARY_FOLDER,145,47,307,12,ES_AUTOHSCROLL
     PUSHBUTTON      "...",IDC_BUTTON_LIB,470,47,17,12
     EDITTEXT        IDC_EDIT_NUM_LAYERS,391,108,23,12,ES_AUTOHSCROLL
-    EDITTEXT        IDC_EDIT_NODE_W,91,128,37,12,ES_AUTOHSCROLL
-    EDITTEXT        IDC_EDIT_DEF_TRACE_W,91,109,37,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_NODE_W,82,128,46,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_DEF_TRACE_W,82,109,46,12,ES_AUTOHSCROLL
     DEFPUSHBUTTON   "Готово",IDOK,437,106,50,14
     PUSHBUTTON      "Отмена",IDCANCEL,437,126,50,14
     LTEXT           "Название проекта",IDC_STATIC,70,33,62,8
@@ -1141,7 +1168,7 @@ BEGIN
     CONTROL         "Папка библиотеки футпринтов",IDC_STATIC,"Static",SS_LEFTNOWORDWRAP | WS_GROUP,28,49,112,8
     LTEXT           "Размер узлов",IDC_STATIC,13,130,56,8
     PUSHBUTTON      "...",IDC_BUTTON_PRF,470,15,17,12
-    LTEXT           "Толщина пера",IDC_STATIC,13,112,70,8
+    LTEXT           "Толщина пера",IDC_STATIC,13,112,63,8
     GROUPBOX        "По умолчанию для текстов",IDC_STATIC,145,96,123,52
     COMBOBOX        IDC_DEFAULT_TEXT_FONT,155,108,103,60,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Родительский индекс",IDC_STATIC,286,129,100,8,WS_DISABLED
@@ -1153,10 +1180,10 @@ BEGIN
     GROUPBOX        "Дополнительно",IDC_STATIC,276,96,147,52
     CONTROL         "По умолчанию:    Папка проекта",IDC_DEFAULT_FOLDER,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,12,16,126,10
-    EDITTEXT        IDC_EDIT_SCALE,182,75,103,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_SCALE,221,75,76,12,ES_AUTOHSCROLL
     LTEXT           "",IDC_STATIC,20,89,8,8
-    CONTROL         "Отображать координаты с масштабированием",IDC_STATIC,
-                    "Static",SS_LEFTNOWORDWRAP | WS_GROUP,13,77,163,8
+    CONTROL         "Отображать координаты и размеры с масштабированием:",IDC_STATIC,
+                    "Static",SS_LEFTNOWORDWRAP | WS_GROUP,13,77,203,8
 END
 
 IDD_ADD_WIDTH_MENU_ITEM DIALOGEX 0, 0, 267, 95
@@ -1321,12 +1348,12 @@ BEGIN
     LTEXT           "Названия",IDC_STATIC,44,172,48,8
     LTEXT           "Шёлковый",IDC_STATIC,251,117,54,8
     LTEXT           "Чертёжный",IDC_STATIC,251,128,52,8
-    LTEXT           "Запасной",IDC_STATIC,251,139,55,8
+    LTEXT           "Текстовый",IDC_STATIC,251,139,55,8
     LTEXT           "Вёрсточный",IDC_STATIC,251,150,56,8
     LTEXT           "Механический",IDC_STATIC,251,162,58,8
     LTEXT           "Линейный",IDC_STATIC,251,174,65,8
-    LTEXT           "Резервный 1",IDC_STATIC,251,185,64,8
-    LTEXT           "Резервный 2",IDC_STATIC,251,196,60,8
+    LTEXT           "Резервный",IDC_STATIC,251,185,64,8
+    LTEXT           "Запасной",IDC_STATIC,251,196,60,8
     GROUPBOX        "",IDC_STATIC,214,9,30,16
     GROUPBOX        "",IDC_STATIC,243,9,110,16
     GROUPBOX        "",IDC_STATIC,352,9,29,16
@@ -2177,7 +2204,7 @@ BEGIN
     COMBOBOX        IDC_COMBO9,78,168,90,150,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Чертёжный",IDC_STATIC_10,18,188,48,8
     COMBOBOX        IDC_COMBO10,78,186,90,150,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Запасной",IDC_STATIC_11,18,206,48,8
+    LTEXT           "Текстовый",IDC_STATIC_11,18,206,48,8
     COMBOBOX        IDC_COMBO11,78,204,90,150,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Вёрсточный",IDC_STATIC_12,18,225,47,8
     COMBOBOX        IDC_COMBO12,78,222,90,150,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
@@ -2185,9 +2212,9 @@ BEGIN
     COMBOBOX        IDC_COMBO13,78,240,90,150,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Линейный",IDC_STATIC_14,18,260,47,8
     COMBOBOX        IDC_COMBO14,78,258,90,150,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Резервный 1",IDC_STATIC_16,18,279,46,8
+    LTEXT           "Резервный",IDC_STATIC_16,18,279,46,8
     COMBOBOX        IDC_COMBO15,78,276,90,150,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Резервный 2",IDC_STATIC_15,18,296,48,8
+    LTEXT           "Запасной",IDC_STATIC_15,18,296,48,8
     COMBOBOX        IDC_COMBO16,78,294,90,150,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
     DEFPUSHBUTTON   "Готово",IDOK,36,324,50,14
     PUSHBUTTON      "Отмена",IDCANCEL,102,324,50,14
@@ -2653,12 +2680,12 @@ BEGIN
     LTEXT           "Фрезерный",IDC_STATIC,251,105,58,8
     LTEXT           "Шёлковый",IDC_STATIC,251,117,54,8
     LTEXT           "Чертёжный",IDC_STATIC,251,128,52,8
-    LTEXT           "Запасной",IDC_STATIC,251,139,55,8
+    LTEXT           "Текстовый",IDC_STATIC,251,139,55,8
     LTEXT           "Вёрсточный",IDC_STATIC,251,150,56,8
     LTEXT           "Механический",IDC_STATIC,251,162,58,8
     LTEXT           "Линейный",IDC_STATIC,251,174,65,8
-    LTEXT           "Резервный 1",IDC_STATIC,251,185,64,8
-    LTEXT           "Резервный 2",IDC_STATIC,251,196,60,8
+    LTEXT           "Резервный",IDC_STATIC,251,185,64,8
+    LTEXT           "Запасной",IDC_STATIC,251,196,60,8
 END
 
 IDD_NETLIST_SETTINGS DIALOGEX 0, 0, 335, 145

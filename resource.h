@@ -1413,12 +1413,6 @@
 #define ID_COMPONENT_NOTE               33284
 #define ID_COMPONENT_URL                33285
 #define ID_COMPONENT_IMAGE              33286
-#define ID_SCALE1                       33287
-#define ID_SCALE2                       33288
-#define ID_SCALE3                       33289
-#define ID_SCALE4                       33290
-#define ID_SCALE5                       33291
-#define ID_SCALE6                       33292
 #define ID_ATTACH_GND1                  33293
 #define ID_ATTACH_GND2                  33294
 #define ID_ATTACH_GND3                  33295
@@ -1462,6 +1456,24 @@
 #define ID_PLAY_REFLIST19               34019
 #define ID_PLAY_REFLIST20               34020
 #define ID_MAX_NUM_COMMANDS             34021
+#define ID_SCALE12                      34100
+#define ID_SCALE13                      34101
+#define ID_SCALE14                      34102
+#define ID_SCALE15                      34103
+#define ID_SCALE21                      34104
+#define ID_SCALE23                      34105
+#define ID_SCALE25                      34106
+#define ID_SCALE31                      34107
+#define ID_SCALE32                      34108
+#define ID_SCALE34                      34109
+#define ID_SCALE35                      34110
+#define ID_SCALE41                      34111
+#define ID_SCALE43                      34112
+#define ID_SCALE45                      34113
+#define ID_SCALE51                      34114
+#define ID_SCALE52                      34115
+#define ID_SCALE53                      34116
+#define ID_SCALE54                      34117
 
 // Next default values for new objects
 // 

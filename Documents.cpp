@@ -4975,7 +4975,9 @@ void CFreePcbDoc::OnProjectOptions()
 		m_merge_library.Clear();
 		m_parent_index = dlg.m_parent;
 		m_alignment = dlg.m_alignment;
+		double old_user_scale = m_view->m_user_scale;
 		m_view->m_user_scale = dlg.GetScale();
+		double k = m_view->m_user_scale / old_user_scale;
 		m_dlist->SetVisibleGrid( TRUE, m_visual_grid_spacing/m_view->m_user_scale );
 		// deal with decreased number of layers
 		if( m_num_additional_layers > dlg.GetNumALayers() )
@@ -5051,7 +5053,7 @@ void CFreePcbDoc::OnProjectOptions()
 		if( m_node_w != dlg.GetNodeWidth() )
 		{
 			int pgmem = Pages.GetActiveNumber();
-			m_node_w = dlg.GetNodeWidth();
+			m_node_w = dlg.GetNodeWidth() * k;
 			for( int ipg=0; ipg<Pages.GetNumPages(); ipg++ )
 			{
 				SwitchToPage( ipg, 0 );
@@ -5075,7 +5077,7 @@ void CFreePcbDoc::OnProjectOptions()
 			SwitchToPage( pgmem, TRUE );
 		}
 		//
-		m_polyline_w = dlg.GetPolyWidth();
+		m_polyline_w = dlg.GetPolyWidth() * k;
 		m_view->m_polyline_width = abs(m_polyline_w);
 		m_default_font = dlg.GetFont();
 		//
@@ -5541,36 +5543,18 @@ int CFreePcbDoc::CombineBoardOutlines( int ib1, int ib2 )
 					m_outline_poly->GetAt(sz+cnt-1).SetMerge( m_b_merge );
 					m_outline_poly->GetAt(sz+cnt-1).SetUtility(1);
 					//
-					// part attr
-					if( m_outline_poly->GetAt(ib1).pAttr[index_part_attr] )
-						m_outline_poly->GetAt(sz+cnt-1).pAttr[index_part_attr] = m_outline_poly->GetAt(ib1).pAttr[index_part_attr];
-					else
-						m_outline_poly->GetAt(sz+cnt-1).pAttr[index_part_attr] = m_outline_poly->GetAt(ib2).pAttr[index_part_attr];
-					// value attr
-					if( m_outline_poly->GetAt(ib1).pAttr[index_value_attr] )
-						m_outline_poly->GetAt(sz+cnt-1).pAttr[index_value_attr] = m_outline_poly->GetAt(ib1).pAttr[index_value_attr];
-					else
-						m_outline_poly->GetAt(sz+cnt-1).pAttr[index_value_attr] = m_outline_poly->GetAt(ib2).pAttr[index_value_attr];
-					// foot attr
-					if( m_outline_poly->GetAt(ib1).pAttr[index_foot_attr] )
-						m_outline_poly->GetAt(sz+cnt-1).pAttr[index_foot_attr] = m_outline_poly->GetAt(ib1).pAttr[index_foot_attr];
-					else
-						m_outline_poly->GetAt(sz+cnt-1).pAttr[index_foot_attr] = m_outline_poly->GetAt(ib2).pAttr[index_foot_attr];
-					// pin attr
-					if( m_outline_poly->GetAt(ib1).pAttr[index_pin_attr] )
-						m_outline_poly->GetAt(sz+cnt-1).pAttr[index_pin_attr] = m_outline_poly->GetAt(ib1).pAttr[index_pin_attr];
-					else
-						m_outline_poly->GetAt(sz+cnt-1).pAttr[index_pin_attr] = m_outline_poly->GetAt(ib2).pAttr[index_pin_attr];
-					// net attr
-					if( m_outline_poly->GetAt(ib1).pAttr[index_net_attr] )
-						m_outline_poly->GetAt(sz+cnt-1).pAttr[index_net_attr] = m_outline_poly->GetAt(ib1).pAttr[index_net_attr];
-					else
-						m_outline_poly->GetAt(sz+cnt-1).pAttr[index_net_attr] = m_outline_poly->GetAt(ib2).pAttr[index_net_attr];
-					// desc attr
-					if( m_outline_poly->GetAt(ib1).pAttr[index_desc_attr] )
-						m_outline_poly->GetAt(sz+cnt-1).pAttr[index_desc_attr] = m_outline_poly->GetAt(ib1).pAttr[index_desc_attr];
-					else
-						m_outline_poly->GetAt(sz+cnt-1).pAttr[index_desc_attr] = m_outline_poly->GetAt(ib2).pAttr[index_desc_attr];
+					// copy attrs
+					for(int iatt=0; iatt<num_attributes; iatt++)
+						if (m_outline_poly->GetAt(ib1).pAttr[iatt])
+						{
+							m_outline_poly->GetAt(sz + cnt - 1).pAttr[iatt] = m_outline_poly->GetAt(ib1).pAttr[iatt];
+							m_outline_poly->GetAt(ib1).pAttr[iatt]->m_polyline_start = (sz + cnt - 1);
+						}
+						else if(m_outline_poly->GetAt(ib2).pAttr[iatt])
+						{
+							m_outline_poly->GetAt(sz + cnt - 1).pAttr[iatt] = m_outline_poly->GetAt(ib2).pAttr[iatt];
+							m_outline_poly->GetAt(ib2).pAttr[iatt]->m_polyline_start = (sz + cnt - 1);
+						}
 				}
 				else
 					m_outline_poly->GetAt(sz+cnt-1).AppendCorner( x, y, CPolyLine::STRAIGHT, FALSE );
@@ -5634,9 +5618,21 @@ void CFreePcbDoc::ClipOP ( int i )
 	m_view->CancelSelection();
 	int mer = m_outline_poly->GetAt(i).GetMerge();
 	int lay = m_outline_poly->GetAt(i).GetLayer();
+
+	// save attributes
+	CText* saveDesc[num_attributes];
+	for (int att = 0; att < num_attributes; att++)
+		saveDesc[att] = m_outline_poly->GetAt(i).pAttr[att];
+
+	// combine
 	CArray<CPolyLine*> * pa = new CArray<CPolyLine*>;//new017
 	int n_poly = m_outline_poly->GetAt(i).NormalizeWithGpc( pa, 1 );
 	m_outline_poly->GetAt(i).SetMerge(mer);
+
+	// restore attributes
+	for (int att = 0; att < num_attributes; att++)
+		m_outline_poly->GetAt(i).pAttr[att] = saveDesc[att];
+
 	int old_size = m_outline_poly->GetSize();
 	if( n_poly > 1 )
 	{

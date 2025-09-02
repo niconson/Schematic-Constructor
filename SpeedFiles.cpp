@@ -628,7 +628,7 @@ void OnPolylineUpdatePcbView(CFreePcbDoc* doc, int m_sel_i, CString* old_board)
 	double scale = (double)(oprect.right - oprect.left) / (double)(hiliteRect.right - hiliteRect.left);
 	double scale2 = (double)(oprect.top - oprect.bottom) / (double)(hiliteRect.top - hiliteRect.bottom);
 	scale = min(scale, scale2);
-	double scale_factor = 0;
+	double scale_factor = 1.0;
 	iof = desc->m_str.Find("|scale_factor:");
 	if (iof > 0)
 	{
@@ -637,9 +637,11 @@ void OnPolylineUpdatePcbView(CFreePcbDoc* doc, int m_sel_i, CString* old_board)
 		if (iof > 0)
 			cmd = cmd.Left(iof);
 		cmd = cmd.Trim();
-		scale_factor = my_atof(&cmd) / doc->m_view->m_user_scale;
+		scale_factor = my_atof(&cmd);
 		if (abs(scale_factor) > 0.09 && abs(scale_factor) < 11)
 			scale = scale_factor;
+		else
+			scale_factor = scale;
 	}
 	doc->m_view->ScaleFactor(scale, 1);
 	//==========  text_height  ============  font_width  ============  UID  ==========
@@ -653,7 +655,7 @@ void OnPolylineUpdatePcbView(CFreePcbDoc* doc, int m_sel_i, CString* old_board)
 			if (iof > 0)
 				cmd = cmd.Left(iof);
 			cmd = cmd.Trim();
-			TH = my_atof(&cmd) / doc->m_view->m_user_scale;
+			TH = my_atof(&cmd) * scale_factor;// / doc->m_view->m_user_scale;
 		}
 		int TW = 0;
 		iof = desc->m_str.Find("|font_width:");
@@ -664,7 +666,7 @@ void OnPolylineUpdatePcbView(CFreePcbDoc* doc, int m_sel_i, CString* old_board)
 			if (iof > 0)
 				cmd = cmd.Left(iof);
 			cmd = cmd.Trim();
-			TW = my_atof(&cmd) / doc->m_view->m_user_scale;
+			TW = my_atof(&cmd) * scale_factor;// / doc->m_view->m_user_scale;
 		}
 		int UID = 0;
 		iof = desc->m_str.Find("|UID:");
@@ -741,7 +743,7 @@ void OnPolylineUpdatePcbView(CFreePcbDoc* doc, int m_sel_i, CString* old_board)
 			if (iof > 0)
 				cmd = cmd.Left(iof);
 			cmd = cmd.Trim();
-			line_width = my_atof(&cmd);
+			line_width = my_atof(&cmd) * scale_factor;// / doc->m_view->m_user_scale;
 		}
 		for (int i = 0; i < doc->m_outline_poly->GetSize(); i++)
 		{
