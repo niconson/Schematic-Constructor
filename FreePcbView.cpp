@@ -6536,8 +6536,7 @@ CString CFreePcbView::OPSetAttributes( CString * bDialog )
 						}
 						else if (desc->m_str.Right(7) == "PCBVIEW")
 						{
-							if (OLD_STR.Right(7) != "PCBVIEW" &&
-								m_Doc->m_num_additional_layers < 12)
+							if (m_Doc->m_num_additional_layers < 12)
 							{
 								int ind = m_Doc->m_num_layers;
 								m_Doc->m_num_additional_layers = 12;
@@ -6545,8 +6544,9 @@ CString CFreePcbView::OPSetAttributes( CString * bDialog )
 								for (int iL = ind; iL < m_Doc->m_num_layers; iL++)
 								{
 									m_Doc->m_vis[iL] = TRUE;
-									m_Doc->m_dlist->m_vis[iL] = TRUE;
+									m_Doc->m_dlist->SetLayerVisible(iL, 1);
 								}
+								ShowActiveLayer(m_Doc->m_num_additional_layers);
 							}
 							OnPolylineUpdatePcbView(m_Doc, m_sel_id.i, &OLD_STR);
 							return complex_part_err;
@@ -14776,61 +14776,22 @@ BOOL CFreePcbView::DrawBOM( CPolyLine * p,
 								max_i = i;
 							else if( sort1 == sort2 )
 							{
-								if( prev_i >= 0 )
+								CString pref1, pref2, suff;
+								int in1 = ParseRef(&DETAILS[max_i], &pref1, &suff);
+								int in2 = ParseRef(&DETAILS[i], &pref2, &suff);
+								if(pref2.GetLength() == 1 && pref1.GetLength() > 1)
+									max_i = i;
+								else if (pref2.Compare(pref1) == 0 && in1 > in2)
+									max_i = i;
+								else if (pref2.GetLength() >= 2 && pref1.GetLength() >= 2)
 								{
-									if( VALUES[prev_i].Left(1)[0] < '0' || VALUES[prev_i].Left(1)[0] > '9' )
-									{
-										sort1 = SORT.Find( VALUES[max_i].Left(1) );
-										sort2 = SORT.Find( VALUES[i].Left(1) );
-										if( sort1 > sort2 )
-											max_i = i;
-										else if( sort1 == sort2 )
-										{
-											if( VALUES[max_i].Left(2).CompareNoCase(VALUES[prev_i].Left(2)) && VALUES[i].Left(2).CompareNoCase(VALUES[prev_i].Left(2)) == 0 )
-												max_i = i;
-
-										}
-										else if( SORT.Find( VALUES[max_i].Right(1) ) >= SORT.Find( VALUES[i].Right(1) ) )
-											max_i = i;
-									}
-									else if( VALUES[prev_i].Right(1)[0] < '0' || VALUES[prev_i].Right(1)[0] > '9' ||
-											 VALUES[max_i].Right(1)[0] < '0' || VALUES[max_i].Right(1)[0] > '9')
-									{
-										sort1 = SORT.Find( VALUES[max_i].Right(1) );
-										sort2 = SORT.Find( VALUES[i].Right(1) );
-										if( sort1 > sort2 )
-											max_i = i;
-										else if( sort1 == sort2 )
-										{
-											float f1 = ex_float( &VALUES[i] );
-											float f2 = ex_float( &VALUES[max_i] );
-											if( f1 < f2 )
-											{
-												max_i = i;
-												stat_f = f1;
-											}
-										}
-									}
-									else if( VALUES[i].Right(1)[0] >= '0' && VALUES[i].Right(1)[0] <= '9' )
-									{
-										float f1 = ex_float( &VALUES[i] );
-										float f2 = ex_float( &VALUES[max_i] );
-										if( f1 < f2 )
-										{
-											max_i = i;
-											stat_f = f1;
-										}
-									}
-								}
-								else
-								{	
-									float f1 = ex_float( &VALUES[i] );
-									float f2 = ex_float( &VALUES[max_i] );
-									if( f1 < f2 )
-									{
+									sort1 = SORT.Find(pref1.GetAt(1));
+									sort2 = SORT.Find(pref2.GetAt(1));
+									if (sort1 > sort2)
 										max_i = i;
-										stat_f = f1;
-									}
+									else if (sort1 == sort2)
+										if (in1 > in2)
+											max_i = i;
 								}
 							}
 						}

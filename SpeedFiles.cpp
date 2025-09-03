@@ -269,12 +269,6 @@ void OnGroupGridMagnetize( CFreePcbDoc * doc )
 							ok = 1;
 							break;
 						}
-						if (abs(dx2) < p->GetW() &&
-							abs(dy2) < p->GetW())
-						{
-							ok = 1;
-							break;
-						}
 					}
 					if (ok)
 					{
@@ -543,7 +537,7 @@ void OnPolylineUpdatePcbView(CFreePcbDoc* doc, int m_sel_i, CString* old_board)
 			cmd = cmd.Left(iof);
 	}
 	cmd = cmd.Trim();
-	CString name = cmd + ".PCBVIEW";
+	CString name = cmd + PCBV;
 	CString pcb_view = doc->m_path_to_folder + freeasy_netlist + name;
 	if (PathFileExists(pcb_view) == 0)
 	{
@@ -563,7 +557,7 @@ void OnPolylineUpdatePcbView(CFreePcbDoc* doc, int m_sel_i, CString* old_board)
 					cmd = cmd.Left(iof);
 			}
 			cmd = cmd.Trim();
-			CString old_name = cmd + ".PCBVIEW";
+			CString old_name = cmd + PCBV;
 			int old_flipped = 0;
 			iof = old_board->Find("|flipped:");
 			if (iof > 0)

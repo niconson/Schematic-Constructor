@@ -1,6 +1,5 @@
 [options]
 
-app_folder: "D:\FreePCBDev\Schematic Constructor\.\Debug"
 version: 1.427
 file_version: 1.427
 project_name: "buf.cds"
@@ -8,39 +7,40 @@ library_folder: "d:\works\projects\micronics\lib"
 full_library_folder: "?\micronics\lib\footprints"
 CAM_folder: ""
 netlist_completed: "0"
-bom_options: "160"
+bom_options: "16777376"
 page_number: "2"
 parent_index: "2"
-alignment: 0.70
+alignment: 0.80
 partlist_size_x: "534"
 partlist_size_y: "391"
 partlist_pos_x: "1088"
 partlist_pos_y: "95"
 partlist_col_w: "960223292"
-netlist_file_path: "D:\Works\Projects\duxahtech\W-CAN\version-01\related_files\CDS_netlist\W-CAN-02.fpc"
-pcb_name: "W-CAN-01.fpc" 1
-pcb_name: "W-CAN-02.fpc" 2
+netlist_file_path: "D:\Works\Projects\Micronics\Smart-Servo-1\version-01\related_files\CDS_netlist\AS5600_BOARD.fpc"
+pcb_name: "Smart-Servo-1-01.fpc" 1
+pcb_name: "import.fpc" 0
+pcb_name: "AS5600_BOARD.fpc" 4
 netlist_format: 0
 page_mirror_mask: 0
 default_font: 11
-default_node_width: -733333
+default_node_width: -1100000
 autosave_interval: 60
 m_client_rect_left: 0
 m_client_rect_right: 1131
 m_client_rect_bottom: 712
 m_client_rect_top: 0
-m_org_x: 91904
-m_org_y: -24332
-m_scale_factor: 113953
-m_attr_size: 500000 53333 500000 53333 500000 53333 500000 53333 1000000 113333 500000 53333
-m_user_scale: 1.5000000000
+m_org_x: -36484
+m_org_y: -10937
+m_scale_factor: 79738
+m_attr_size: 1000000 110000 1000000 110000 1000000 110000 1000000 110000 1000000 110000 1000000 110000
+m_user_scale: 1.0000000000
 units: MM
 
 m_sel_mask: -65
 m_visible_layers: -5
-m_top_layer: 6
+m_top_layer: 8
 m_grid_style: 0
-visible_grid_spacing: 500000.000000
+visible_grid_spacing: 2500000.000000
   visible_grid_item: 20mil
   visible_grid_item: 50mil
   visible_grid_item: 100mil
@@ -66,7 +66,7 @@ visible_grid_spacing: 500000.000000
   visible_grid_item: 50mm
   visible_grid_item: 100mm
 
-polyline_grid_spacing: 500000.000000
+polyline_grid_spacing: 400000.000000
   placement_grid_item: 5mil
   placement_grid_item: 10mil
   placement_grid_item: 20mil
@@ -96,7 +96,7 @@ polyline_grid_spacing: 500000.000000
   placement_grid_item: 5mm
   placement_grid_item: 10mm
 
-text_grid_spacing: 250000.000000
+text_grid_spacing: 100000.000000
   text_grid_item: 0.1mil
   text_grid_item: 0.5mil
   text_grid_item: 1mil
@@ -144,8 +144,8 @@ drc_part_attr_to_poly: 100000
 drc_pin_attr_to_attr: 254000
 drc_pin_attr_to_poly: 254000
 
-default_polyline_width:0.133mm
-n_additional_layers: 12
+default_polyline_width:0.2mm
+n_additional_layers: 4
 m_pdf_font_i: 22
 m_pdf_margin: 0.01
 pdf_checking: 40
@@ -168,14 +168,6 @@ pdf_checking: 40
   layer_info: "поверхностный" 16 0 255 0 1
   layer_info: "невидимый" 17 0 0 0 1
   layer_info: "фоновый" 18 128 128 255 1
-  layer_info: "контурный" 19 0 115 60 1
-  layer_info: "медный" 20 40 165 90 1
-  layer_info: "защитный" 21 196 196 196 1
-  layer_info: "фрезерный" 22 237 205 178 1
-  layer_info: "шёлковый" 23 253 251 252 1
-  layer_info: "чертёжный" 24 159 45 156 1
-  layer_info: "текстовый" 25 250 250 250 1
-  layer_info: "вёрсточный" 26 250 250 250 1
 
   pdf_layer_info: "перемещение" 0 255 255 255 0
   pdf_layer_info: "фон доски" 1 255 255 255 0
@@ -211,30 +203,78 @@ pdf_checking: 40
   pdf_layer_info: "undefined" 31 255 255 255 0
 
 m_bom_colors: 0 0 0 155 155 155 0 0 0 166 166 166 255 255 111 0 0 255 140 140 140
-  merge: "W-CAN-02.fpc.PCBVIEW1"
-  merge: "W-CAN-02.fpc.PCBVIEW2"
+  merge: "ДАТЧИК_ТОКА"
+  merge: "ТЕМПЕРАТУРА"
   ref_list: "RefList-1"
 
 [graphics]
 
-rename_page: "Схема"
-bmp_src: "D:\Works\Projects\duxahtech\W-CAN\version-01\related_files\pictures\00001.PIC"
-add_new_page: "Схема с изм."
-bmp_src: "D:\Works\Projects\duxahtech\W-CAN\version-01\related_files\pictures\00001.PIC"
-add_new_page: "Page 1"
-bmp_src: "D:\Works\Projects\duxahtech\W-CAN\version-01\related_files\pictures\00001.PIC"
-bmp_src: "D:\Works\Projects\duxahtech\W-CAN\version-01\related_files\pictures\00002.PIC"
-bmp_src: "D:\Works\Projects\duxahtech\W-CAN\version-01\related_files\pictures\00003.PIC"
-bmp_src: "D:\Works\Projects\duxahtech\W-CAN\version-01\related_files\pictures\00004.PIC"
-bmp_src: "D:\Works\Projects\duxahtech\W-CAN\version-01\related_files\pictures\00005.PIC"
-bmp_src: "D:\Works\Projects\duxahtech\W-CAN\version-01\related_files\pictures\00006.PIC"
-bmp_src: "D:\Works\Projects\duxahtech\W-CAN\version-01\related_files\pictures\00007.PIC"
-outline: 4 0 17 12 -1 -1 -1 0 0
-  corner: 1 124333334 -11500000 0 0
-  corner: 2 124333334 27000000 0 0
-  corner: 3 167833334 27000000 0 0
-  corner: 4 167833334 -11500000 0 0
-description: "PCB:  W-CAN-01.fpc'ITEM`VALUE``FOOTPRINT``CNT`DETAILS``'````````#'1`0.1``C0603``10`C1...C9, C14``'2`1uF``C1206``1`C10``'3`1uF``C0603``1`C11``'4`130pF``C0603``2`C12, C13``'````````#'5`LM293``SO-8``1`DA1``'6`74HC74``SO-14``1`DD1``'7`LM317M``D2-PAK``1`DA2``'8`TJA1040T/VM``SO-8``1`DD2``'````````#'9`A4(2)``PART``1`Frame1``'10`JK60-030``JK60``1`FU1``'````````#'11`White``LED0805``2`HL1, HL2``'````````#'12`?``R0603``2`R13, R14``'13`1M``R0603``4`R5...R8``'14`1R``R0603``1`R12``'15`120R``R1206``1`R11``'16`240R``R0805``1`R1``'17`270R``R0603``2`R9, R10``'18`698R``R0805``1`R2``'19`1k``R0603``3`R3, R4, R15``'````````#'20`LL4148``4148``1`VD1``'|start_number: 1'|end_number: 100'|sorting_column: 5'|detail_column_width: 15'|ignore_those_without_value: 1'|include_ref_list: not_used'|exclude_ref_list: not_used'|column_order: 12345'|pcb_name: W-CAN-01.fpc'|command: BOM" 126168886 25280757 14 0 930479 53333 -1 -1 11 1
+rename_page: "Smart-Servo-1-01"
+bmp_src: "D:\Works\Projects\Micronics\Smart-Servo-1\version-01\related_files\pictures\00001.PIC"
+bmp_src: "D:\Works\Projects\Micronics\Smart-Servo-1\version-01\related_files\pictures\00003.PIC"
+bmp_src: "D:\Works\Projects\Micronics\Smart-Servo-1\version-01\related_files\pictures\00002.PIC"
+add_new_page: "Коммутатор"
+bmp_src: "D:\Works\Projects\Micronics\Smart-Servo-1\version-01\related_files\pictures\00001.PIC"
+add_new_page: "Датчик угла"
+bmp_src: "D:\Works\Projects\Micronics\Smart-Servo-1\version-01\related_files\pictures\00001.PIC"
+n_pins: 3
+rectangle: -28025400 15074600 -14024600 22825400
+ref_des: "X2" -26000000 25400000 7 0 1000000 110000 -1 -1 11 129
+footprint_name: "PLS-2L" -26000000 23745000 12 0 1000000 110000 -1 -1 11 1
+part_value: "PLS-2L" -26054610 22090000 13 0 0 0 -1 -1 11 1
+outline: 4 0 6 200000 -1 -1 -1 0
+  corner: 1 -27900000 15200000 0 0
+  corner: 2 -27900000 22700000 0 0
+  corner: 3 -16650000 22700000 0 0
+  corner: 4 -16650000 15200001 0 0
+description: "Цепь" -25996650 21035000 14 0 1000000 110000 -1 -1 11 266
 
-add_new_page: "Page 2"
+polyline: 2 0 6 200000 -1 -1 -1 0
+  corner: 1 -27900000 20200000 0 0
+  corner: 2 -16650000 20200000 0 0
+
+polyline: 2 0 6 200000 -1 -1 -1 0
+  corner: 1 -27900000 17700000 0 0
+  corner: 2 -16650000 17700000 0 0
+
+polyline: 2 0 6 200000 -1 -1 -1 0
+  corner: 1 -20400000 22700000 0 0
+  corner: 2 -20400000 15200000 0 0
+
+polyline: 2 0 8 200000 -1 -1 -1 0
+  corner: 1 -16650000 18950000 0 0
+  corner: 2 -14150000 18950000 0 1
+pin_name: "1" -18741730 18460000 9 0 1000000 110000 -1 -1 11 266
+net_name: "+3V3" -25997000 18460000 11 0 1000001 110001 -1 -1 11 1
+
+polyline: 2 0 8 200000 -1 -1 -1 0
+  corner: 1 -16650000 16450000 0 0
+  corner: 2 -14150000 16450000 0 1
+pin_name: "2" -18818720 15980000 9 0 1000000 110000 -1 -1 11 266
+
+polyline: 3 0 6 200000 -1 -1 -1 0
+  corner: 1 -19400000 21950000 0 0
+  corner: 2 -18650000 21450000 0 0
+  corner: 3 -19400000 20950000 0 0
+
+polyline: 2 0 6 200000 -1 -1 -1 0
+  corner: 1 -18650000 21450000 0 0
+  corner: 2 -17900000 21450000 0 0
+
+polyline: 2 0 17 200000 -1 -1 -1 0
+  corner: 1 -16650000 15200001 0 0
+  corner: 2 -14150000 15200001 0 0
+pin_name: "3" -15642183 13550000 17 0 1000000 110000 -1 -1 11 266
+
+part_end
+
+polyline: 2 0 10 200003 -1 -1 -1 0 0
+  corner: 1 -14150000 18950000 0 1
+  corner: 2 -1037471 18950000 0 1
+
+polyline: 3 0 10 200005 -1 -1 -1 0 0
+  corner: 1 -14150000 16450000 0 1
+  corner: 2 -8000000 16450000 0 0
+  corner: 3 -8000000 13950000 0 1100007
+
 [end]

@@ -1473,6 +1473,15 @@ void CFreePcbDoc::WriteOutlinesPoly( CStdioFile * file, BOOL SEL_ONLY )
 	CString line;
 	try
 	{
+		int LEGAL_MERGE = 0;
+		for (int i = 0; i < m_mlist->GetSize(); i++)
+		{
+			if (i >= 32)
+				break;
+			CString s = m_mlist->GetStr(i);
+			if (s.Find(PCBV) == -1)
+				setbit(LEGAL_MERGE, i);
+		}
 		// save num current page
 		int curP = Pages.GetActiveNumber();
 		// outlines
@@ -1721,6 +1730,9 @@ void CFreePcbDoc::WriteOutlinesPoly( CStdioFile * file, BOOL SEL_ONLY )
 					AfxMessageBox(G_LANGUAGE == 0 ? "Invalid number of corners":"Неверное количество вершин");
 					continue;
 				}
+				if (po->GetMerge() >= 0)
+					if (getbit(LEGAL_MERGE, po->GetMerge()) == 0)
+						continue;
 				if( SEL_ONLY && po->GetSel() == 0 )
 					continue;
 				int l = po->GetLayer();
@@ -5256,7 +5268,7 @@ void CFreePcbDoc::OnEditPasteFromFile()
 void CFreePcbDoc::PasteFromFile( CString pathname, BOOL bwDialog, int i_page )
 {
 	BOOL bDrag = 1;
-	if (pathname.Right(7) == "PCBVIEW")
+	if (pathname.Right(8) == PCBV)
 		bDrag = 0;
 	else if( m_project_modified )
 	{

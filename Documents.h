@@ -32,7 +32,7 @@
 #define invbit(reg,bit) reg^=(1<<bit)              //инвертировать в регистре бит       
 #define getbit(reg,bit) ((reg & (1<<bit)) ? 1 : 0) //проверить состояние бита в регистре
 ///#define getbit(reg,bit) (__asm{ BT reg, bit })
-
+#define PCBV ".PCBVIEW"
 #define RENUMBERING_PATTERN "%s --> %s"
 #if G_LANGUAGE==0
 #define PROGRAM_NAME "Schematic Constructor"
