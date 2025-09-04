@@ -244,7 +244,7 @@ void OnGroupGridMagnetize( CFreePcbDoc * doc )
 	}*/
 	if( pts.GetSize() )
 	{
-		int dx=0, dy=0, ok=0;
+		int dx=INT_MAX, dy=INT_MAX, ok=0;
 		for(int i=0; i<doc->m_outline_poly->GetSize(); i++)
 		{
 			CPolyLine * p = &doc->m_outline_poly->GetAt(i);
@@ -259,12 +259,13 @@ void OnGroupGridMagnetize( CFreePcbDoc * doc )
 					CPoint P( p->GetX(i1), p->GetY(i1) );
 					int dx2 = 0;
 					int dy2 = 0;
+					ok = 0;
 					for(int i2=0; i2<pts.GetSize(); i2++)
 					{
 						dx2 = P.x-pts.GetAt(i2).x;
 						dy2 = P.y-pts.GetAt(i2).y;
-						if( abs( dx2 ) < doc->m_part_grid_spacing/doc->m_view->m_user_scale &&
-							abs( dy2 ) < doc->m_part_grid_spacing/doc->m_view->m_user_scale )
+						if( abs( dx2 ) < abs(dx) && // doc->m_part_grid_spacing/doc->m_view->m_user_scale &&
+							abs( dy2 ) < abs(dy) )  // doc->m_part_grid_spacing/doc->m_view->m_user_scale )
 						{
 							ok = 1;
 							break;
@@ -274,13 +275,15 @@ void OnGroupGridMagnetize( CFreePcbDoc * doc )
 					{
 						dx = dx2;
 						dy = dy2;
-						break;
 					}
 				}
-				if(ok)
-					break;
 			}
 		}
+		if (abs(dx) < doc->m_part_grid_spacing / doc->m_view->m_user_scale &&
+			abs(dy) < doc->m_part_grid_spacing / doc->m_view->m_user_scale)
+			ok = 1;
+		else
+			ok = 0;
 		if (ok == 0)
 		{
 			int grid_sp = doc->m_part_grid_spacing / doc->m_view->m_user_scale;
@@ -519,11 +522,11 @@ void OnGroupVtxMagnetize( CFreePcbDoc * doc )
 	}
 }
 
-void OnPolylineUpdatePcbView(CFreePcbDoc* doc, int m_sel_i, CString* old_board)
+int OnPolylineUpdatePcbView(CFreePcbDoc* doc, int m_sel_i, CString* old_board, BOOL bCheckMergeOnly)
 {
 	CText* desc = doc->m_outline_poly->GetAt(m_sel_i).Check(index_desc_attr);
 	if (desc == NULL)
-		return;
+		return 0;
 	RECT oprect = doc->m_outline_poly->GetAt(m_sel_i).GetCornerBounds();
 	int centX = (oprect.left + oprect.right) / 2;
 	int centY = (oprect.top + oprect.bottom) / 2;
@@ -543,7 +546,7 @@ void OnPolylineUpdatePcbView(CFreePcbDoc* doc, int m_sel_i, CString* old_board)
 	{
 		cmd.Format(G_LANGUAGE?"”казанный путь к файлу печатной платы не существует:\n\n%s":"PCB file not found:\n\n%s", pcb_view);
 		AfxMessageBox(cmd);
-		return;
+		return 0;
 	}
 	if (old_board)
 		if(old_board->GetLength())
@@ -575,6 +578,8 @@ void OnPolylineUpdatePcbView(CFreePcbDoc* doc, int m_sel_i, CString* old_board)
 			if (idm >= 0)
 			{
 				doc->m_view->NewSelectM(idm);
+				if (bCheckMergeOnly && doc->m_view->m_sel_count > 0)
+					return 0;
 				doc->m_view->DeleteGroup(1);
 			}
 		}
@@ -768,4 +773,5 @@ void OnPolylineUpdatePcbView(CFreePcbDoc* doc, int m_sel_i, CString* old_board)
 	doc->ProjectModified(TRUE);
 	doc->m_view->m_draw_layer = 0;
 	doc->OnRangeCmds(NULL);
+	return TRUE;
 }

@@ -790,6 +790,27 @@ BOOL CFreePcbDoc::FileOpen( LPCTSTR fn )
 		pMainFr->DrawStatus( 3, &str );
 		ReadFootprintFolder(this);
 
+		// make path to library folder and index libraries
+		if (m_full_lib_dir.GetLength() == 0)
+		{
+			CString fullpath;
+			char full[MAX_PATH];
+			fullpath = _fullpath(full, (LPCSTR)m_lib_dir, MAX_PATH);
+			if (fullpath[fullpath.GetLength() - 1] == '\\')
+				fullpath = fullpath.Left(fullpath.GetLength() - 1);
+			//m_full_lib_dir = fullpath; ??
+		}
+		//
+		int fpl = m_pcb_full_path.GetLength();
+		int isep = m_pcb_full_path.ReverseFind('\\');
+		if (isep == -1)
+			isep = m_pcb_full_path.ReverseFind(':');
+		if (isep == -1)
+			ASSERT(0);		// unable to parse filename
+		m_pcb_filename = m_pcb_full_path.Right(fpl - isep - 1);
+		int fnl = m_pcb_filename.GetLength();
+		m_path_to_folder = m_pcb_full_path.Left(m_pcb_full_path.GetLength() - fnl - 1);
+
 		// read graphics
 		str.Format( "Reading graphics");
 		pMainFr->DrawStatus( 3, &str );
@@ -799,27 +820,6 @@ BOOL CFreePcbDoc::FileOpen( LPCTSTR fn )
 		str.Format( "Complete");
 		pMainFr->DrawStatus( 3, &str );
 		pcb_file.Close();
-
-		// make path to library folder and index libraries
-		if( m_full_lib_dir.GetLength() == 0 )
-		{
-			CString fullpath;
-			char full[MAX_PATH];
-			fullpath = _fullpath( full, (LPCSTR)m_lib_dir, MAX_PATH );
-			if( fullpath[fullpath.GetLength()-1] == '\\' )	
-				fullpath = fullpath.Left(fullpath.GetLength()-1);
-			//m_full_lib_dir = fullpath; ??
-		}
-		//
-		int fpl = m_pcb_full_path.GetLength();
-		int isep = m_pcb_full_path.ReverseFind( '\\' );
-		if( isep == -1 )
-			isep = m_pcb_full_path.ReverseFind( ':' );
-		if( isep == -1 )
-			ASSERT(0);		// unable to parse filename
-		m_pcb_filename = m_pcb_full_path.Right( fpl - isep - 1);
-		int fnl = m_pcb_filename.GetLength();
-		m_path_to_folder = m_pcb_full_path.Left( m_pcb_full_path.GetLength() - fnl - 1 );
 		//
 		if( m_name.GetLength() == 0 )   
 		{
@@ -866,15 +866,6 @@ BOOL CFreePcbDoc::FileOpen( LPCTSTR fn )
 		
 		// force redraw of function key text
 		CheckBOM();
-		int it = -1;
-		for (CText * t = Attr->m_pDesclist->GetNextText(&it); t; t = Attr->m_pDesclist->GetNextText(&it))
-		{
-			if (t->m_str.Right(7) == "PCBVIEW")
-			{
-				OnPolylineUpdatePcbView(this, t->m_polyline_start, &t->m_str);
-				m_view->CancelSelection(0);
-			}
-		}
 		m_view->m_cursor_mode = 999;
 		m_view->SetCursorMode( CUR_NONE_SELECTED );
 		m_view->ShowActiveLayer(m_num_additional_layers);	
@@ -11371,6 +11362,18 @@ int CFreePcbDoc::SwitchToPage( int number, BOOL Invalidate, BOOL UpdPartlist )
 					m_view->m_cursor_mode = CUR_GROUP_SELECTED;
 				m_view->HighlightGroup();
 			}
+			else 
+			{
+				int it = -1;
+				for (CText* t = Attr->m_pDesclist->GetNextText(&it); t; t = Attr->m_pDesclist->GetNextText(&it))
+				{
+					if (t->m_str.Right(7) == "PCBVIEW")
+					{
+						OnPolylineUpdatePcbView(this, t->m_polyline_start, &t->m_str, TRUE);
+						m_view->CancelSelection(0);
+					}
+				}
+			}
 			int curm = m_view->m_cursor_mode;
 			m_view->m_cursor_mode = INT_MAX;
 			m_view->SetCursorMode( curm );
@@ -12575,19 +12578,13 @@ void CFreePcbDoc::SwitchToPcbOnButton()
 }
 void CFreePcbDoc::SwitchToPCB( BOOL duty, BOOL bGRAB, BOOL bIronScale )
 {
+	CString PcbName = "";
+	BOOL noPcbFile = 0;
 	if (bNoFilesOpened)
 	{
-		CString FreePcb2 = m_app_dir + "\\FreePcb.exe";
-		if (G_LANGUAGE)
-			FreePcb2 = m_app_dir + "\\ПлатФорм.exe";
-		if ((UINT)ShellExecute(NULL, "open", "\"" + FreePcb2 + "\"", "", "\"" + m_app_dir + "\"", SW_SHOWNORMAL) > 32)
-		{
-
-		}
-		return;
+		noPcbFile = TRUE;
 	}
-	CString PcbName = "";
-	if( Pages.IsThePageIncludedInNetlist( Pages.GetActiveNumber() ) == 0 )
+	else if( Pages.IsThePageIncludedInNetlist(Pages.GetActiveNumber()) == 0 )
 	{
 		int gip = Pages.IsThePageIncludesCP();
 		if( gip >= 0 )
@@ -12598,10 +12595,21 @@ void CFreePcbDoc::SwitchToPCB( BOOL duty, BOOL bGRAB, BOOL bIronScale )
 				AfxMessageBox(G_LANGUAGE == 0 ?
 					"The current page is not included in the netlist. You can connect the pages in the Netlist Settings dialog box (the File menu)" :
 					"Текущая страница не включена в список эл.цепей. Вы можете подключить страницы в диалоговом окне Настройки списка (меню Файл)");
-			return;
+			noPcbFile = TRUE;
 		}
 	}
-	else
+	if (noPcbFile)
+	{
+		CString FreePcb2 = m_app_dir + "\\FreePcb.exe";
+		if (G_LANGUAGE)
+			FreePcb2 = m_app_dir + "\\ПлатФорм.exe";
+		if ((UINT)ShellExecute(NULL, "open", "\"" + FreePcb2 + "\"", "", "\"" + m_app_dir + "\"", SW_SHOWNORMAL) > 32)
+		{
+
+		}
+		return;
+	}
+	else if(PcbName.GetLength() == 0)
 		PcbName = Pages.GetCurrentPCBName();
 	if( bIronScale == 0 )
 		if( m_view->m_sel_count )
