@@ -800,7 +800,7 @@ int OnPolylineUpdatePcbView(CFreePcbDoc* doc, int m_sel_i, CString* old_board, B
 		int sz = doc->m_outline_poly->GetSize();
 		doc->m_outline_poly->GetAt(sz - 1).SetMerge(id_m);
 		doc->m_outline_poly->GetAt(sz - 1).SetW(boardW);
-		doc->m_outline_poly->GetAt(sz - 1).SetLayer(LAY_ADD_2);
+		doc->m_outline_poly->GetAt(sz - 1).SetLayer(LAY_ADD_2 + 2);
 		doc->m_outline_poly->GetAt(sz - 1).SetHatch(2);
 		for (int item = 0; item < 4; item++)
 		{
