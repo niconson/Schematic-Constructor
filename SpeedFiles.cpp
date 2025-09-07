@@ -783,19 +783,25 @@ int OnPolylineUpdatePcbView(CFreePcbDoc* doc, int m_sel_i, CString* old_board, B
 	if (DrawSize.FindOneOf("LRTB") >= 0)
 	{
 		doc->m_view->CancelSelection(0);
+		int boardW = NM_PER_MIL * 4;
 		for (int i = 0; i < doc->m_outline_poly->GetSize(); i++)
 		{
 			if (doc->m_outline_poly->GetAt(i).GetLayer() != LAY_PCB_BOARD)
 				continue;
 			if (doc->m_outline_poly->GetAt(i).GetMerge() != id_m)
 				continue;
+			boardW = doc->m_outline_poly->GetAt(i).GetW();
 			id ID(ID_POLYLINE, ID_GRAPHIC, i, ID_SIDE, 0);
 			doc->m_view->NewSelect(NULL, &ID, 0, 0);
 		}
+		boardW /= 2;
 		doc->m_view->SelectContour();
 		doc->m_view->OnAddGroupRect();
 		int sz = doc->m_outline_poly->GetSize();
 		doc->m_outline_poly->GetAt(sz - 1).SetMerge(id_m);
+		doc->m_outline_poly->GetAt(sz - 1).SetW(boardW);
+		doc->m_outline_poly->GetAt(sz - 1).SetLayer(LAY_ADD_2);
+		doc->m_outline_poly->GetAt(sz - 1).SetHatch(2);
 		for (int item = 0; item < 4; item++)
 		{
 			switch (item)
