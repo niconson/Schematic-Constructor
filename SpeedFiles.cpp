@@ -639,22 +639,6 @@ int OnPolylineUpdatePcbView(CFreePcbDoc* doc, int m_sel_i, CString* old_board, B
 			scale_factor = scale;
 	}
 	doc->m_view->ScaleFactor(scale, 1);
-	//========================  draw_size  ==========================
-	CString DrawSize = "";
-	{
-		iof = desc->m_str.Find("|draw_size:");
-		if (iof > 0)
-		{
-			cmd = desc->m_str.Right(desc->m_str.GetLength() - iof - 11);
-			iof = cmd.Find("'");
-			if (iof >= 0)
-				cmd = cmd.Left(iof);
-			cmd = cmd.Trim();
-			DrawSize = cmd;
-			if(DrawSize.FindOneOf("LRTB") >= 0)
-				doc->m_view->OnAddGroupRect();
-		}
-	}
 	//==========  text_height  ============  font_width  ============  UID  ==========
 	{
 		int TH = 0;
@@ -782,8 +766,34 @@ int OnPolylineUpdatePcbView(CFreePcbDoc* doc, int m_sel_i, CString* old_board, B
 	desc->m_font_size = 0;
 	desc->m_stroke_width = 0;
 	desc->MakeVisible();
+	//========================  draw_size  ==========================
+	CString DrawSize = "";
+	{
+		iof = desc->m_str.Find("|draw_size:");
+		if (iof > 0)
+		{
+			cmd = desc->m_str.Right(desc->m_str.GetLength() - iof - 11);
+			iof = cmd.Find("'");
+			if (iof >= 0)
+				cmd = cmd.Left(iof);
+			cmd = cmd.Trim();
+			DrawSize = cmd;
+		}
+	}
 	if (DrawSize.FindOneOf("LRTB") >= 0)
 	{
+		doc->m_view->CancelSelection(0);
+		for (int i = 0; i < doc->m_outline_poly->GetSize(); i++)
+		{
+			if (doc->m_outline_poly->GetAt(i).GetLayer() != LAY_PCB_BOARD)
+				continue;
+			if (doc->m_outline_poly->GetAt(i).GetMerge() != id_m)
+				continue;
+			id ID(ID_POLYLINE, ID_GRAPHIC, i, ID_SIDE, 0);
+			doc->m_view->NewSelect(NULL, &ID, 0, 0);
+		}
+		doc->m_view->SelectContour();
+		doc->m_view->OnAddGroupRect();
 		int sz = doc->m_outline_poly->GetSize();
 		doc->m_outline_poly->GetAt(sz - 1).SetMerge(id_m);
 		for (int item = 0; item < 4; item++)
