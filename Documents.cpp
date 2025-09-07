@@ -12594,6 +12594,8 @@ void CFreePcbDoc::SwitchToPCB( BOOL duty, BOOL bGRAB, BOOL bIronScale )
 				AfxMessageBox(G_LANGUAGE == 0 ?
 					"The current page is not included in the netlist. You can connect the pages in the Netlist Settings dialog box (the File menu)" :
 					"Текущая страница не включена в список эл.цепей. Вы можете подключить страницы в диалоговом окне Настройки списка (меню Файл)");
+			else
+				return;
 			noPcbFile = TRUE;
 		}
 	}
