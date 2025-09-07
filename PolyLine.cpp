@@ -1034,6 +1034,8 @@ void CPolyLine::Draw(  CDisplayList * dl )
 		{
 			dl_side.SetSize( m_ncorners );
 			dl_side_sel.SetSize( m_ncorners );
+			Node[0] = 0;
+			Node[m_ncorners - 1] = 0;
 		}
 		dl_corner_sel.SetSize( m_ncorners );
 

@@ -244,7 +244,7 @@ void OnGroupGridMagnetize( CFreePcbDoc * doc )
 	}*/
 	if( pts.GetSize() )
 	{
-		int dx=INT_MAX, dy=INT_MAX, ok=0;
+		int dx=0, dy=0, ok=0, min_d=INT_MAX;
 		for(int i=0; i<doc->m_outline_poly->GetSize(); i++)
 		{
 			CPolyLine * p = &doc->m_outline_poly->GetAt(i);
@@ -259,31 +259,27 @@ void OnGroupGridMagnetize( CFreePcbDoc * doc )
 					CPoint P( p->GetX(i1), p->GetY(i1) );
 					int dx2 = 0;
 					int dy2 = 0;
-					ok = 0;
 					for(int i2=0; i2<pts.GetSize(); i2++)
 					{
 						dx2 = P.x-pts.GetAt(i2).x;
 						dy2 = P.y-pts.GetAt(i2).y;
-						if( abs( dx2 ) < abs(dx) && // doc->m_part_grid_spacing/doc->m_view->m_user_scale &&
-							abs( dy2 ) < abs(dy) )  // doc->m_part_grid_spacing/doc->m_view->m_user_scale )
+						if( abs( dx2 ) < doc->m_part_grid_spacing/doc->m_view->m_user_scale &&
+							abs( dy2 ) < doc->m_part_grid_spacing/doc->m_view->m_user_scale )
 						{
-							ok = 1;
-							break;
+							int d = Distance(P.x, P.y, pts.GetAt(i2).x, pts.GetAt(i2).y);
+							if (d < min_d)
+							{
+								min_d = d;
+								dx = dx2;
+								dy = dy2;
+								ok = 1;
+								break;
+							}
 						}
-					}
-					if (ok)
-					{
-						dx = dx2;
-						dy = dy2;
 					}
 				}
 			}
 		}
-		if (abs(dx) < doc->m_part_grid_spacing / doc->m_view->m_user_scale &&
-			abs(dy) < doc->m_part_grid_spacing / doc->m_view->m_user_scale)
-			ok = 1;
-		else
-			ok = 0;
 		if (ok == 0)
 		{
 			int grid_sp = doc->m_part_grid_spacing / doc->m_view->m_user_scale;
@@ -536,7 +532,7 @@ int OnPolylineUpdatePcbView(CFreePcbDoc* doc, int m_sel_i, CString* old_board, B
 	{
 		cmd = desc->m_str.Right(desc->m_str.GetLength() - iof - 5);
 		iof = cmd.Find("'");
-		if (iof > 0)
+		if (iof >= 0)
 			cmd = cmd.Left(iof);
 	}
 	cmd = cmd.Trim();
@@ -556,7 +552,7 @@ int OnPolylineUpdatePcbView(CFreePcbDoc* doc, int m_sel_i, CString* old_board, B
 			{
 				cmd = old_board->Right(old_board->GetLength() - iof - 5);
 				iof = cmd.Find("'");
-				if (iof > 0)
+				if (iof >= 0)
 					cmd = cmd.Left(iof);
 			}
 			cmd = cmd.Trim();
@@ -567,7 +563,7 @@ int OnPolylineUpdatePcbView(CFreePcbDoc* doc, int m_sel_i, CString* old_board, B
 			{
 				cmd = old_board->Right(old_board->GetLength() - iof - 9);
 				iof = cmd.Find("'");
-				if (iof > 0)
+				if (iof >= 0)
 					cmd = cmd.Left(iof);
 				cmd = cmd.Trim();
 				old_flipped = my_atoi(&cmd);
@@ -592,7 +588,7 @@ int OnPolylineUpdatePcbView(CFreePcbDoc* doc, int m_sel_i, CString* old_board, B
 		{
 			cmd = desc->m_str.Right(desc->m_str.GetLength() - iof - 9);
 			iof = cmd.Find("'");
-			if (iof > 0)
+			if (iof >= 0)
 				cmd = cmd.Left(iof);
 			cmd = cmd.Trim();
 			flipped = my_atoi(&cmd);
@@ -610,7 +606,7 @@ int OnPolylineUpdatePcbView(CFreePcbDoc* doc, int m_sel_i, CString* old_board, B
 		{
 			cmd = desc->m_str.Right(desc->m_str.GetLength() - iof - 10);
 			iof = cmd.Find("'");
-			if (iof > 0)
+			if (iof >= 0)
 				cmd = cmd.Left(iof);
 			cmd = cmd.Trim();
 			rotation = my_atof(&cmd);
@@ -633,7 +629,7 @@ int OnPolylineUpdatePcbView(CFreePcbDoc* doc, int m_sel_i, CString* old_board, B
 	{
 		cmd = desc->m_str.Right(desc->m_str.GetLength() - iof - 14);
 		iof = cmd.Find("'");
-		if (iof > 0)
+		if (iof >= 0)
 			cmd = cmd.Left(iof);
 		cmd = cmd.Trim();
 		scale_factor = my_atof(&cmd);
@@ -643,6 +639,22 @@ int OnPolylineUpdatePcbView(CFreePcbDoc* doc, int m_sel_i, CString* old_board, B
 			scale_factor = scale;
 	}
 	doc->m_view->ScaleFactor(scale, 1);
+	//========================  draw_size  ==========================
+	CString DrawSize = "";
+	{
+		iof = desc->m_str.Find("|draw_size:");
+		if (iof > 0)
+		{
+			cmd = desc->m_str.Right(desc->m_str.GetLength() - iof - 11);
+			iof = cmd.Find("'");
+			if (iof >= 0)
+				cmd = cmd.Left(iof);
+			cmd = cmd.Trim();
+			DrawSize = cmd;
+			if(DrawSize.FindOneOf("LRTB") >= 0)
+				doc->m_view->OnAddGroupRect();
+		}
+	}
 	//==========  text_height  ============  font_width  ============  UID  ==========
 	{
 		int TH = 0;
@@ -651,7 +663,7 @@ int OnPolylineUpdatePcbView(CFreePcbDoc* doc, int m_sel_i, CString* old_board, B
 		{
 			cmd = desc->m_str.Right(desc->m_str.GetLength() - iof - 13);
 			iof = cmd.Find("'");
-			if (iof > 0)
+			if (iof >= 0)
 				cmd = cmd.Left(iof);
 			cmd = cmd.Trim();
 			TH = my_atof(&cmd) * scale_factor;// / doc->m_view->m_user_scale;
@@ -662,7 +674,7 @@ int OnPolylineUpdatePcbView(CFreePcbDoc* doc, int m_sel_i, CString* old_board, B
 		{
 			cmd = desc->m_str.Right(desc->m_str.GetLength() - iof - 12);
 			iof = cmd.Find("'");
-			if (iof > 0)
+			if (iof >= 0)
 				cmd = cmd.Left(iof);
 			cmd = cmd.Trim();
 			TW = my_atof(&cmd) * scale_factor;// / doc->m_view->m_user_scale;
@@ -673,7 +685,7 @@ int OnPolylineUpdatePcbView(CFreePcbDoc* doc, int m_sel_i, CString* old_board, B
 		{
 			cmd = desc->m_str.Right(desc->m_str.GetLength() - iof - 5);
 			iof = cmd.Find("'");
-			if (iof > 0)
+			if (iof >= 0)
 				cmd = cmd.Left(iof);
 			cmd = cmd.Trim();
 			UID = my_atoi(&cmd);
@@ -717,7 +729,7 @@ int OnPolylineUpdatePcbView(CFreePcbDoc* doc, int m_sel_i, CString* old_board, B
 		{
 			cmd = desc->m_str.Right(desc->m_str.GetLength() - iof - 12);
 			iof = cmd.Find("'");
-			if (iof > 0)
+			if (iof >= 0)
 				cmd = cmd.Left(iof);
 			cmd = cmd.Trim();
 			fill_board = my_atof(&cmd);
@@ -728,7 +740,7 @@ int OnPolylineUpdatePcbView(CFreePcbDoc* doc, int m_sel_i, CString* old_board, B
 		{
 			cmd = desc->m_str.Right(desc->m_str.GetLength() - iof - 11);
 			iof = cmd.Find("'");
-			if (iof > 0)
+			if (iof >= 0)
 				cmd = cmd.Left(iof);
 			cmd = cmd.Trim();
 			fill_mask = my_atof(&cmd);
@@ -739,7 +751,7 @@ int OnPolylineUpdatePcbView(CFreePcbDoc* doc, int m_sel_i, CString* old_board, B
 		{
 			cmd = desc->m_str.Right(desc->m_str.GetLength() - iof - 12);
 			iof = cmd.Find("'");
-			if (iof > 0)
+			if (iof >= 0)
 				cmd = cmd.Left(iof);
 			cmd = cmd.Trim();
 			line_width = my_atof(&cmd) * scale_factor;// / doc->m_view->m_user_scale;
@@ -770,8 +782,241 @@ int OnPolylineUpdatePcbView(CFreePcbDoc* doc, int m_sel_i, CString* old_board, B
 	desc->m_font_size = 0;
 	desc->m_stroke_width = 0;
 	desc->MakeVisible();
+	if (DrawSize.FindOneOf("LRTB") >= 0)
+	{
+		int sz = doc->m_outline_poly->GetSize();
+		doc->m_outline_poly->GetAt(sz - 1).SetMerge(id_m);
+		for (int item = 0; item < 4; item++)
+		{
+			switch (item)
+			{
+			case 0:
+				if (DrawSize.Find("L") == -1)
+					continue;
+				break;
+			case 1:
+				if (DrawSize.Find("T") == -1)
+					continue;
+				break;
+			case 2:
+				if (DrawSize.Find("R") == -1)
+					continue;
+				break;
+			case 3:
+				if (DrawSize.Find("B") == -1)
+					continue;
+				break;
+			default:
+				break;
+			}
+			id ID(ID_POLYLINE, ID_GRAPHIC, sz - 1, ID_SIDE, item);
+			doc->m_view->CancelSelection(0);
+			doc->m_view->NewSelect(NULL, &ID, 0, 0);
+			AddGraphicSize(doc);
+			doc->m_outline_poly->GetAt(doc->m_outline_poly->GetSize() - 1).SetMerge(id_m);
+		}
+	}
 	doc->ProjectModified(TRUE);
 	doc->m_view->m_draw_layer = 0;
 	doc->OnRangeCmds(NULL);
 	return TRUE;
+}
+
+void AddGraphicSize(CFreePcbDoc* doc)
+{
+	if (doc->m_view->m_sel_count == 0)
+		return;
+
+	// test
+	if (doc->m_view->m_sel_id.i < 0 || 
+		doc->m_view->m_sel_id.i >= doc->m_outline_poly->GetSize())
+		return;
+	if (doc->m_view->m_sel_id.ii < 0 ||
+		doc->m_view->m_sel_id.ii >= doc->m_outline_poly->GetAt(doc->m_view->m_sel_id.i).GetNumSides())
+		return;
+#define sel_op doc->m_outline_poly->GetAt(doc->m_view->m_sel_id.i)
+	//
+	int n = sel_op.GetNextCornerIndex(doc->m_view->m_sel_id.ii);
+	double x1 = sel_op.GetX(doc->m_view->m_sel_id.ii);
+	double y1 = sel_op.GetY(doc->m_view->m_sel_id.ii);
+	double x2 = sel_op.GetX(n);
+	double y2 = sel_op.GetY(n);
+	double dx = x2 - x1;
+	double dy = y2 - y1;
+	int len = Distance(x1, y1, x2, y2);
+	RECT R;
+	doc->GetPolylineBounds(&R);
+	double shift = (R.right - R.left) / doc->m_view->m_measure_scale;
+	double arrow = (R.right - R.left) / doc->m_view->m_arrow_scale;
+	shift = max(shift, 3 * NM_PER_MM);
+	double an = Angle(x2, y2, x1, y1);
+	double acc = an - (int)an;
+	double dir = 90.0;
+	doc->m_view->SelectContour();
+	CPoint Center = doc->m_view->FindGroupCenter(0);
+	doc->m_view->SaveUndoInfoForGroup(doc->m_undo_list);
+	doc->m_view->RotateGroup(-(int)an, Center.x, Center.y, -acc);
+	doc->ProjectModified(TRUE);
+	double y1m = sel_op.GetY(doc->m_view->m_sel_id.ii);
+	R = sel_op.GetCornerBounds();
+	if (y1m < (R.top + R.bottom) / 2)
+		dir = -90.0;
+	doc->OnEditUndo();
+	double cur_x = x1, cur_y = y1;
+	cur_x = x1 + shift * cos((an + dir) * M_PI / 180.0);
+	cur_y = y1 + shift * sin((an + dir) * M_PI / 180.0);
+	int sz = doc->m_outline_poly->GetSize();
+	doc->m_outline_poly->SetSize(sz + 1);
+	doc->m_outline_poly->GetAt(sz).SetDisplayList(doc->m_dlist);
+	id sel_id(ID_POLYLINE, ID_GRAPHIC, sz);
+	doc->m_outline_poly->GetAt(sz).Start(LAY_ADD_1, NM_PER_MIL, NM_PER_MIL, x1, y1, CPolyLine::DIAGONAL_FULL, &sel_id, NULL);
+	doc->m_outline_poly->GetAt(sz).AppendCorner(cur_x, cur_y);
+	cur_x = x1 + 0.9 * shift * cos((an + dir) * M_PI / 180.0);
+	cur_y = y1 + 0.9 * shift * sin((an + dir) * M_PI / 180.0);
+	doc->m_outline_poly->GetAt(sz).AppendCorner(cur_x, cur_y);
+	if (len > arrow / 2)
+	{
+		double cur_x2 = cur_x + 0.17 * arrow * cos((an + 0.1 * dir) * M_PI / 180.0);
+		double cur_y2 = cur_y + 0.17 * arrow * sin((an + 0.1 * dir) * M_PI / 180.0);
+		doc->m_outline_poly->GetAt(sz).AppendCorner(cur_x2, cur_y2);
+		cur_x2 = cur_x + 0.14 * arrow * cos((an)*M_PI / 180.0);
+		cur_y2 = cur_y + 0.14 * arrow * sin((an)*M_PI / 180.0);
+		doc->m_outline_poly->GetAt(sz).AppendCorner(cur_x2, cur_y2);
+		cur_x = x2 + 0.9 * shift * cos((an + dir) * M_PI / 180.0);
+		cur_y = y2 + 0.9 * shift * sin((an + dir) * M_PI / 180.0);
+		cur_x2 = cur_x + 0.14 * arrow * cos((an + 2.0 * dir) * M_PI / 180.0);
+		cur_y2 = cur_y + 0.14 * arrow * sin((an + 2.0 * dir) * M_PI / 180.0);
+		doc->m_outline_poly->GetAt(sz).AppendCorner(cur_x2, cur_y2);
+		cur_x2 = cur_x + 0.17 * arrow * cos((an + 1.9 * dir) * M_PI / 180.0);
+		cur_y2 = cur_y + 0.17 * arrow * sin((an + 1.9 * dir) * M_PI / 180.0);
+		doc->m_outline_poly->GetAt(sz).AppendCorner(cur_x2, cur_y2);
+	}
+	else
+	{
+		double cur_x2 = cur_x + 0.17 * arrow * cos((an + 1.9 * dir) * M_PI / 180.0);
+		double cur_y2 = cur_y + 0.17 * arrow * sin((an + 1.9 * dir) * M_PI / 180.0);
+		doc->m_outline_poly->GetAt(sz).AppendCorner(cur_x2, cur_y2);
+		cur_x2 = cur_x + 0.14 * arrow * cos((an + 2.0 * dir) * M_PI / 180.0);
+		cur_y2 = cur_y + 0.14 * arrow * sin((an + 2.0 * dir) * M_PI / 180.0);
+		doc->m_outline_poly->GetAt(sz).AppendCorner(cur_x2, cur_y2);
+		double cur_x3 = cur_x + 0.25 * arrow * cos((an + 2.0 * dir) * M_PI / 180.0);
+		double cur_y3 = cur_y + 0.25 * arrow * sin((an + 2.0 * dir) * M_PI / 180.0);
+		doc->m_outline_poly->GetAt(sz).AppendCorner(cur_x3, cur_y3);
+		doc->m_outline_poly->GetAt(sz).AppendCorner(cur_x2, cur_y2);
+		cur_x2 = cur_x + 0.17 * arrow * cos((an + 0.1 * dir + 180.0) * M_PI / 180.0);
+		cur_y2 = cur_y + 0.17 * arrow * sin((an + 0.1 * dir + 180.0) * M_PI / 180.0);
+		doc->m_outline_poly->GetAt(sz).AppendCorner(cur_x2, cur_y2);
+		doc->m_outline_poly->GetAt(sz).AppendCorner(cur_x, cur_y);
+		cur_x = x2 + 0.9 * shift * cos((an + dir) * M_PI / 180.0);
+		cur_y = y2 + 0.9 * shift * sin((an + dir) * M_PI / 180.0);
+	}
+	doc->m_outline_poly->GetAt(sz).AppendCorner(cur_x, cur_y);
+	cur_x = x2 + shift * cos((an + dir) * M_PI / 180.0);
+	cur_y = y2 + shift * sin((an + dir) * M_PI / 180.0);
+	doc->m_outline_poly->GetAt(sz).AppendCorner(cur_x, cur_y);
+	doc->m_outline_poly->GetAt(sz).AppendCorner(x2, y2);
+	cur_x = x2 + 0.9 * shift * cos((an + dir) * M_PI / 180.0);
+	cur_y = y2 + 0.9 * shift * sin((an + dir) * M_PI / 180.0);
+	doc->m_outline_poly->GetAt(sz).AppendCorner(cur_x, cur_y);
+	if (len > arrow / 2)
+	{
+		double cur_x2 = cur_x + 0.17 * arrow * cos((an + 0.1 * dir + 180.0) * M_PI / 180.0);
+		double cur_y2 = cur_y + 0.17 * arrow * sin((an + 0.1 * dir + 180.0) * M_PI / 180.0);
+		doc->m_outline_poly->GetAt(sz).AppendCorner(cur_x2, cur_y2);
+		cur_x2 = cur_x + 0.14 * arrow * cos((an + 180.0) * M_PI / 180.0);
+		cur_y2 = cur_y + 0.14 * arrow * sin((an + 180.0) * M_PI / 180.0);
+		doc->m_outline_poly->GetAt(sz).AppendCorner(cur_x2, cur_y2);
+		cur_x = x1 + 0.9 * shift * cos((an + dir) * M_PI / 180.0);
+		cur_y = y1 + 0.9 * shift * sin((an + dir) * M_PI / 180.0);
+		cur_x2 = cur_x + 0.14 * arrow * cos((an)*M_PI / 180.0);
+		cur_y2 = cur_y + 0.14 * arrow * sin((an)*M_PI / 180.0);
+		doc->m_outline_poly->GetAt(sz).AppendCorner(cur_x2, cur_y2);
+		cur_x2 = cur_x + 0.17 * arrow * cos((an + 1.9 * dir + 180.0) * M_PI / 180.0);
+		cur_y2 = cur_y + 0.17 * arrow * sin((an + 1.9 * dir + 180.0) * M_PI / 180.0);
+		doc->m_outline_poly->GetAt(sz).AppendCorner(cur_x2, cur_y2);
+	}
+	else
+	{
+		double cur_x2 = cur_x + 0.17 * arrow * cos((an + 0.1 * dir) * M_PI / 180.0);
+		double cur_y2 = cur_y + 0.17 * arrow * sin((an + 0.1 * dir) * M_PI / 180.0);
+		doc->m_outline_poly->GetAt(sz).AppendCorner(cur_x2, cur_y2);
+		cur_x2 = cur_x + 0.14 * arrow * cos((an)*M_PI / 180.0);
+		cur_y2 = cur_y + 0.14 * arrow * sin((an)*M_PI / 180.0);
+		doc->m_outline_poly->GetAt(sz).AppendCorner(cur_x2, cur_y2);
+		double cur_x3 = cur_x + 0.25 * arrow * cos((an)*M_PI / 180.0);
+		double cur_y3 = cur_y + 0.25 * arrow * sin((an)*M_PI / 180.0);
+		doc->m_outline_poly->GetAt(sz).AppendCorner(cur_x3, cur_y3);
+		doc->m_outline_poly->GetAt(sz).AppendCorner(cur_x2, cur_y2);
+		cur_x2 = cur_x + 0.17 * arrow * cos((an + 1.9 * dir + 180.0) * M_PI / 180.0);
+		cur_y2 = cur_y + 0.17 * arrow * sin((an + 1.9 * dir + 180.0) * M_PI / 180.0);
+		doc->m_outline_poly->GetAt(sz).AppendCorner(cur_x2, cur_y2);
+		doc->m_outline_poly->GetAt(sz).AppendCorner(cur_x, cur_y);
+	}
+	cur_x = x1 + 0.9 * shift * cos((an + dir) * M_PI / 180.0);
+	cur_y = y1 + 0.9 * shift * sin((an + dir) * M_PI / 180.0);
+	doc->m_outline_poly->GetAt(sz).AppendCorner(cur_x, cur_y);
+	doc->m_outline_poly->GetAt(sz).Close();
+
+	// info text
+	double xc = (x1 + x2) / 2;
+	double yc = (y1 + y2) / 2;
+	if (len < arrow / 2)
+		shift *= 1.1;
+	cur_x = xc + (0.92 * shift + doc->m_view->m_attr_size.H_pindesc) * cos((an + dir) * M_PI / 180.0);
+	cur_y = yc + (0.92 * shift + doc->m_view->m_attr_size.H_pindesc) * sin((an + dir) * M_PI / 180.0);
+	CString info;
+	MakeCStringFromDimension(doc->m_view->m_user_scale, &info, len, doc->m_units, 1, 1, 1, doc->m_units == MIL ? 1 : 2);
+	int t_an = -an;
+	if (t_an < -270)
+		t_an += 360;
+	else if (t_an < -90)
+		t_an += 180;
+	CText* newTxt = doc->Attr->m_pDesclist->AddText(cur_x,
+		cur_y,
+		t_an,
+		LAY_PIN_DESC,
+		doc->m_view->m_attr_size.H_pindesc,
+		doc->m_view->m_attr_size.W_pindesc,
+		doc->m_default_font,
+		&info);
+
+	doc->m_outline_poly->GetAt(sz).pAttr[index_desc_attr] = newTxt;
+	newTxt->m_polyline_start = sz;
+	doc->Attr->m_pDesclist->GetTextRectOnPCB(newTxt, &R);
+	xc = (R.right + R.left) / 2;
+	yc = (R.top + R.bottom) / 2;
+	doc->Attr->m_pDesclist->MoveText(newTxt,
+		2 * cur_x - xc,
+		2 * cur_y - yc,
+		t_an, LAY_PIN_DESC);
+	doc->m_outline_poly->GetAt(sz).Hide();
+	newTxt->isVISIBLE = 0;
+	doc->m_view->SaveUndoInfoForOutlinePoly(sz, TRUE, doc->m_undo_list);
+	doc->m_view->SaveUndoInfoForText(newTxt, 1, doc->m_undo_list);
+	doc->m_outline_poly->GetAt(sz).Show();
+	newTxt->MakeVisible();
+	doc->ProjectModified(TRUE);
+
+	// set selection
+	id idt(ID_TEXT_DEF);
+	doc->m_view->NewSelect(newTxt, &idt, 0, 0);
+	for (int i = 1; i < doc->m_outline_poly->GetAt(sz).GetNumCorners(); i++)
+	{
+		if (len > arrow / 2)
+		{
+			if (i == 9)
+				continue;
+		}
+		else if (i == 11)
+			continue;
+		id ID(ID_POLYLINE, ID_GRAPHIC, sz, ID_CORNER, i);
+		doc->m_view->NewSelect(NULL, &ID, 0, 0);
+	}
+#undef sel_op
+}
+
+int GetStandartNode(CFreePcbDoc* doc, int ipoly)
+{
+	float dw = doc->m_outline_poly->GetAt(ipoly).GetW() - abs(doc->m_polyline_w);
+	return abs(doc->m_node_w) + (dw * 1.5);
 }

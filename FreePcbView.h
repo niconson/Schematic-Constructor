@@ -137,6 +137,7 @@ enum {
 	FK_CIRC_ALIGN,
 	FK_SET_LENGTH,
 	FK_ADD_SIZE,
+	FK_ADD_NODE,
 	//									
 	FK_NUM_OPTIONS,						
 	FK_ARROW							
@@ -350,6 +351,7 @@ const char fk_str[FK_NUM_OPTIONS * 2 + 2][32] =
 " Ровнять",	"повернув",
 " Задать",		" длину",
 " Замер", " длины",
+" Ввести", " концевик",
 //
 "",	        ""
 };
@@ -759,7 +761,7 @@ public:
 	void TurnGroup ();												//
 	void MoveOrigin( int x_off, int y_off );						//
 	void DeleteGroup( BOOL wMerge );								//
-	void FindGroupCenter( BOOL bFLOOR=TRUE );											//
+	CPoint FindGroupCenter( BOOL bFLOOR=TRUE );											//
 	void HighlightGroup(BOOL bPins=TRUE);							//
 	void StartDraggingGroup( BOOL bAdd=FALSE, int x=0, int y=0 );	//
 	void CancelDraggingGroup();										//

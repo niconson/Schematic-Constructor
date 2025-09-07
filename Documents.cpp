@@ -5051,8 +5051,13 @@ void CFreePcbDoc::OnProjectOptions()
 			m_full_lib_dir = dlg.GetLibFolder();
 			ReadFootprintFolder(this);
 		}
-		//
-		//
+
+		// m_polyline_w
+		m_polyline_w = dlg.GetPolyWidth() * k;
+		m_view->m_polyline_width = abs(m_polyline_w);
+		m_default_font = dlg.GetFont();
+
+		// m_node_w (after upd m_polyline_w)
 		if( m_node_w != dlg.GetNodeWidth() )
 		{
 			int pgmem = Pages.GetActiveNumber();
@@ -5065,12 +5070,12 @@ void CFreePcbDoc::OnProjectOptions()
 					BOOL bD = 0;
 					if( m_outline_poly->GetAt(ipo).Node[0] > 1 )
 					{
-						m_outline_poly->GetAt(ipo).Node[0] = abs(m_node_w);
+						m_outline_poly->GetAt(ipo).Node[0] = GetStandartNode(this, ipo);
 						bD = 1;
 					}
 					if( m_outline_poly->GetAt(ipo).Node[m_outline_poly->GetAt(ipo).GetNumCorners()-1] > 1 )
 					{
-						m_outline_poly->GetAt(ipo).Node[m_outline_poly->GetAt(ipo).GetNumCorners()-1] = abs(m_node_w);
+						m_outline_poly->GetAt(ipo).Node[m_outline_poly->GetAt(ipo).GetNumCorners()-1] = GetStandartNode(this, ipo);
 						bD = 1;
 					}
 					if( bD )
@@ -5079,10 +5084,6 @@ void CFreePcbDoc::OnProjectOptions()
 			}
 			SwitchToPage( pgmem, TRUE );
 		}
-		//
-		m_polyline_w = dlg.GetPolyWidth() * k;
-		m_view->m_polyline_width = abs(m_polyline_w);
-		m_default_font = dlg.GetFont();
 		//
 		m_view->InvalidateLeftPane();
 		m_project_open = TRUE;
@@ -7449,6 +7450,9 @@ int CFreePcbDoc::CreatePCBNets( int ITERATOR )
 		t->InVisible();
 	for( int i=m_outline_poly->GetSize()-1; i>=0; i-- )
 	{ 
+		if (m_outline_poly->GetAt(i).GetLayer() >= LAY_ADD_1)
+			continue; // experimental
+
 		// delete old net pointer
 		if( m_outline_poly->GetAt(i).pAttr[index_net_attr] == NULL )
 		{
@@ -8039,12 +8043,7 @@ int CFreePcbDoc::FindNodeLine(	int ic,
 				else
 				{
 					// point node
-					m_outline_poly->GetAt(ic).Node[iv] = abs(m_node_w);
-					if( m_outline_poly->GetAt(ic).GetW() != abs(m_polyline_w) )
-					{
-						float dw = m_outline_poly->GetAt(ic).GetW() - abs(m_polyline_w);
-						m_outline_poly->GetAt(ic).Node[iv] += (dw*1.5);
-					}
+					m_outline_poly->GetAt(ic).Node[iv] = GetStandartNode(this, ic);
 				}
 
 				// find And Abort

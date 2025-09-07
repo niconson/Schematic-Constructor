@@ -2805,6 +2805,15 @@ void CFreePcbView::HandleKeyPress(UINT nChar, UINT nRepCnt, UINT nFlags)
 			m_Doc->ProjectModified( TRUE );
 			m_draw_layer = 0;
 		}
+		else if (fk == FK_ADD_NODE)
+		{
+			if (m_sel_op.Node[m_sel_id.ii])
+				m_sel_op.Node[m_sel_id.ii] = 0;
+			else
+				m_sel_op.Node[m_sel_id.ii] = GetStandartNode(m_Doc, m_sel_id.i);
+			m_sel_op.Draw();
+			m_draw_layer = 0;
+		}
 		break;
 
 	case CUR_OP_SIDE_SELECTED:
@@ -2874,186 +2883,18 @@ void CFreePcbView::HandleKeyPress(UINT nChar, UINT nRepCnt, UINT nFlags)
 			double y1 = m_sel_op.GetY(m_sel_id.ii);
 			double x2 = m_sel_op.GetX(n);
 			double y2 = m_sel_op.GetY(n);
-			double dx = x2 - x1;
-			double dy = y2 - y1;
-			int len = Distance( x1, y1, x2, y2 );
+			double ddx = x2 - x1;
+			double ddy = y2 - y1;
+			//int len = Distance( x1, y1, x2, y2 );
 			if( fk == FK_ADD_SIZE )
 			{
-				RECT R;
-				m_Doc->GetPolylineBounds( &R );
-				double shift = (R.right - R.left)/m_measure_scale;
-				double arrow = (R.right - R.left)/m_arrow_scale;
-				shift = max( shift, 3*NM_PER_MM );
-				double an = Angle( x2, y2, x1, y1 );
-				double acc = an - (int)an;
-				double dir = 90.0;
-				SelectContour();
-				FindGroupCenter(0);
-				SaveUndoInfoForGroup( m_Doc->m_undo_list );
-				RotateGroup( -(int)an, groupAverageX, groupAverageY, -acc );
-				m_Doc->ProjectModified(TRUE);
-				double y1m = m_sel_op.GetY( m_sel_id.ii );
-				R = m_sel_op.GetCornerBounds();
-				if( y1m < (R.top+R.bottom)/2 )
-					dir = -90.0;
-				m_Doc->OnEditUndo();
-				double cur_x=x1, cur_y=y1;
-				cur_x = x1 + shift*cos( (an+dir)*M_PI/180.0 );
-				cur_y = y1 + shift*sin( (an+dir)*M_PI/180.0 );
-				int sz = m_Doc->m_outline_poly->GetSize();
-				m_Doc->m_outline_poly->SetSize(sz+1);
-				m_Doc->m_outline_poly->GetAt(sz).SetDisplayList( m_Doc->m_dlist );
-				id sel_id( ID_POLYLINE, ID_GRAPHIC, sz );
-				m_Doc->m_outline_poly->GetAt(sz).Start( LAY_ADD_1, NM_PER_MIL, NM_PER_MIL, x1, y1, CPolyLine::DIAGONAL_FULL, &sel_id, NULL );
-				m_Doc->m_outline_poly->GetAt(sz).AppendCorner( cur_x, cur_y );
-				cur_x = x1 + 0.9*shift*cos( (an+dir)*M_PI/180.0 );
-				cur_y = y1 + 0.9*shift*sin( (an+dir)*M_PI/180.0 );
-				m_Doc->m_outline_poly->GetAt(sz).AppendCorner( cur_x, cur_y );
-				if( len > arrow/2 )
-				{
-					double cur_x2 = cur_x + 0.17*arrow*cos( (an+0.1*dir)*M_PI/180.0 );
-					double cur_y2 = cur_y + 0.17*arrow*sin( (an+0.1*dir)*M_PI/180.0 );
-					m_Doc->m_outline_poly->GetAt(sz).AppendCorner( cur_x2, cur_y2 );
-					cur_x2 = cur_x + 0.14*arrow*cos( (an)*M_PI/180.0 );
-					cur_y2 = cur_y + 0.14*arrow*sin( (an)*M_PI/180.0 );
-					m_Doc->m_outline_poly->GetAt(sz).AppendCorner( cur_x2, cur_y2 );
-					cur_x = x2 + 0.9*shift*cos( (an+dir)*M_PI/180.0 );
-					cur_y = y2 + 0.9*shift*sin( (an+dir)*M_PI/180.0 );
-					cur_x2 = cur_x + 0.14*arrow*cos( (an+2.0*dir)*M_PI/180.0 );
-					cur_y2 = cur_y + 0.14*arrow*sin( (an+2.0*dir)*M_PI/180.0 );
-					m_Doc->m_outline_poly->GetAt(sz).AppendCorner( cur_x2, cur_y2 );
-					cur_x2 = cur_x + 0.17*arrow*cos( (an+1.9*dir)*M_PI/180.0 );
-					cur_y2 = cur_y + 0.17*arrow*sin( (an+1.9*dir)*M_PI/180.0 );
-					m_Doc->m_outline_poly->GetAt(sz).AppendCorner( cur_x2, cur_y2 );
-				}
-				else
-				{
-					double cur_x2 = cur_x + 0.17*arrow*cos( (an+1.9*dir)*M_PI/180.0 );
-					double cur_y2 = cur_y + 0.17*arrow*sin( (an+1.9*dir)*M_PI/180.0 );
-					m_Doc->m_outline_poly->GetAt(sz).AppendCorner( cur_x2, cur_y2 );
-					cur_x2 = cur_x + 0.14*arrow*cos( (an+2.0*dir)*M_PI/180.0 );
-					cur_y2 = cur_y + 0.14*arrow*sin( (an+2.0*dir)*M_PI/180.0 );
-					m_Doc->m_outline_poly->GetAt(sz).AppendCorner( cur_x2, cur_y2 );
-					double cur_x3 = cur_x + 0.25*arrow*cos( (an+2.0*dir)*M_PI/180.0 );
-					double cur_y3 = cur_y + 0.25*arrow*sin( (an+2.0*dir)*M_PI/180.0 );
-					m_Doc->m_outline_poly->GetAt(sz).AppendCorner( cur_x3, cur_y3 );
-					m_Doc->m_outline_poly->GetAt(sz).AppendCorner( cur_x2, cur_y2 );
-					cur_x2 = cur_x + 0.17*arrow*cos( (an+0.1*dir+180.0)*M_PI/180.0 );
-					cur_y2 = cur_y + 0.17*arrow*sin( (an+0.1*dir+180.0)*M_PI/180.0 );
-					m_Doc->m_outline_poly->GetAt(sz).AppendCorner( cur_x2, cur_y2 );
-					m_Doc->m_outline_poly->GetAt(sz).AppendCorner( cur_x, cur_y );
-					cur_x = x2 + 0.9*shift*cos( (an+dir)*M_PI/180.0 );
-					cur_y = y2 + 0.9*shift*sin( (an+dir)*M_PI/180.0 );
-				}
-				m_Doc->m_outline_poly->GetAt(sz).AppendCorner( cur_x, cur_y );
-				cur_x = x2 + shift*cos( (an+dir)*M_PI/180.0 );
-				cur_y = y2 + shift*sin( (an+dir)*M_PI/180.0 );
-				m_Doc->m_outline_poly->GetAt(sz).AppendCorner( cur_x, cur_y );
-				m_Doc->m_outline_poly->GetAt(sz).AppendCorner( x2, y2 );
-				cur_x = x2 + 0.9*shift*cos( (an+dir)*M_PI/180.0 );
-				cur_y = y2 + 0.9*shift*sin( (an+dir)*M_PI/180.0 );
-				m_Doc->m_outline_poly->GetAt(sz).AppendCorner( cur_x, cur_y );
-				if( len > arrow/2 )
-				{
-					double cur_x2 = cur_x + 0.17*arrow*cos( (an+0.1*dir+180.0)*M_PI/180.0 );
-					double cur_y2 = cur_y + 0.17*arrow*sin( (an+0.1*dir+180.0)*M_PI/180.0 );
-					m_Doc->m_outline_poly->GetAt(sz).AppendCorner( cur_x2, cur_y2 );
-					cur_x2 = cur_x + 0.14*arrow*cos( (an+180.0)*M_PI/180.0 );
-					cur_y2 = cur_y + 0.14*arrow*sin( (an+180.0)*M_PI/180.0 );
-					m_Doc->m_outline_poly->GetAt(sz).AppendCorner( cur_x2, cur_y2 );
-					cur_x = x1 + 0.9*shift*cos( (an+dir)*M_PI/180.0 );
-					cur_y = y1 + 0.9*shift*sin( (an+dir)*M_PI/180.0 );
-					cur_x2 = cur_x + 0.14*arrow*cos( (an)*M_PI/180.0 );
-					cur_y2 = cur_y + 0.14*arrow*sin( (an)*M_PI/180.0 );
-					m_Doc->m_outline_poly->GetAt(sz).AppendCorner( cur_x2, cur_y2 );
-					cur_x2 = cur_x + 0.17*arrow*cos( (an+1.9*dir+180.0)*M_PI/180.0 );
-					cur_y2 = cur_y + 0.17*arrow*sin( (an+1.9*dir+180.0)*M_PI/180.0 );
-					m_Doc->m_outline_poly->GetAt(sz).AppendCorner( cur_x2, cur_y2 );
-				}
-				else
-				{
-					double cur_x2 = cur_x + 0.17*arrow*cos( (an+0.1*dir)*M_PI/180.0 );
-					double cur_y2 = cur_y + 0.17*arrow*sin( (an+0.1*dir)*M_PI/180.0 );
-					m_Doc->m_outline_poly->GetAt(sz).AppendCorner( cur_x2, cur_y2 );
-					cur_x2 = cur_x + 0.14*arrow*cos( (an)*M_PI/180.0 );
-					cur_y2 = cur_y + 0.14*arrow*sin( (an)*M_PI/180.0 );
-					m_Doc->m_outline_poly->GetAt(sz).AppendCorner( cur_x2, cur_y2 );
-					double cur_x3 = cur_x + 0.25*arrow*cos( (an)*M_PI/180.0 );
-					double cur_y3 = cur_y + 0.25*arrow*sin( (an)*M_PI/180.0 );
-					m_Doc->m_outline_poly->GetAt(sz).AppendCorner( cur_x3, cur_y3 );
-					m_Doc->m_outline_poly->GetAt(sz).AppendCorner( cur_x2, cur_y2 );
-					cur_x2 = cur_x + 0.17*arrow*cos( (an+1.9*dir+180.0)*M_PI/180.0 );
-					cur_y2 = cur_y + 0.17*arrow*sin( (an+1.9*dir+180.0)*M_PI/180.0 );
-					m_Doc->m_outline_poly->GetAt(sz).AppendCorner( cur_x2, cur_y2 );
-					m_Doc->m_outline_poly->GetAt(sz).AppendCorner( cur_x, cur_y );
-				}
-				cur_x = x1 + 0.9*shift*cos( (an+dir)*M_PI/180.0 );
-				cur_y = y1 + 0.9*shift*sin( (an+dir)*M_PI/180.0 );
-				m_Doc->m_outline_poly->GetAt(sz).AppendCorner( cur_x, cur_y );
-				m_Doc->m_outline_poly->GetAt(sz).Close();
-
-				// info text
-				double xc = (x1+x2)/2;
-				double yc = (y1+y2)/2;
-				if( len < arrow/2 )
-					shift *= 1.1;
-				cur_x = xc + (0.92*shift+m_attr_size.H_pindesc)*cos( (an+dir)*M_PI/180.0 );
-				cur_y = yc + (0.92*shift+m_attr_size.H_pindesc)*sin( (an+dir)*M_PI/180.0 );
-				CString info;
-				MakeCStringFromDimension( m_user_scale, &info, len, m_Doc->m_units, 1, 1, 1, m_Doc->m_units==MIL?1:2 );
-				int t_an = -an;
-				if( t_an < -270 )
-					t_an += 360;
-				else if( t_an < -90 )
-					t_an += 180;
-				CText * newTxt = m_Doc->Attr->m_pDesclist->AddText(	cur_x,
-																	cur_y,
-																	t_an,
-																	LAY_PIN_DESC,
-																	m_attr_size.H_pindesc,
-																	m_attr_size.W_pindesc,
-																	m_Doc->m_default_font,
-																	&info );
-				
-				m_Doc->m_outline_poly->GetAt(sz).pAttr[index_desc_attr] = newTxt;
-				newTxt->m_polyline_start = sz;
-				m_Doc->Attr->m_pDesclist->GetTextRectOnPCB( newTxt, &R );
-				xc = (R.right+R.left)/2;
-				yc = (R.top+R.bottom)/2;
-				m_Doc->Attr->m_pDesclist->MoveText( newTxt,
-													2*cur_x-xc,
-													2*cur_y-yc,
-													t_an, LAY_PIN_DESC );
-				m_Doc->m_outline_poly->GetAt(sz).Hide();
-				newTxt->isVISIBLE = 0; 
-				SaveUndoInfoForOutlinePoly( sz, TRUE, m_Doc->m_undo_list );
-				SaveUndoInfoForText( newTxt, 1, m_Doc->m_undo_list );
-				m_Doc->m_outline_poly->GetAt(sz).Show();
-				newTxt->MakeVisible();
-				m_Doc->ProjectModified(TRUE);
-
-				// set selection
-				id idt( ID_TEXT_DEF );
-				NewSelect( newTxt, &idt, 0, 0 );
-				for( int i=1; i<m_Doc->m_outline_poly->GetAt(sz).GetNumCorners(); i++ )
-				{
-					if( len > arrow/2 )
-					{
-						if( i == 9 )
-							continue;
-					}
-					else if( i == 11 )
-						continue;
-					id ID( ID_POLYLINE, ID_GRAPHIC, sz, ID_CORNER, i );
-					NewSelect( NULL, &ID, 0, 0 );
-				}
+				AddGraphicSize(m_Doc);
 				SetCursorMode( CUR_GROUP_SELECTED );
 				HighlightGroup();
 			}
-			else if( dx == 0 || dy == 0 )
-			{
-
-			}
+			//else if( abs(ddx) < _2540 || abs(ddy) < _2540)
+			//{
+			//}
 			else if( fk == FK_SET_LENGTH )
 			{	
 				CDlgAddMerge dlg;
@@ -3078,7 +2919,7 @@ void CFreePcbView::HandleKeyPress(UINT nChar, UINT nRepCnt, UINT nFlags)
 					if( ret == IDYES )
 					{
 						// keep the seg angle
-						float quad = Angle( dx, dy, 0, 0 );
+						float quad = Angle( ddx, ddy, 0, 0 );
 						x2 = x1 + val*cos( quad*M_PI/180.0 );
 						y2 = y1 + val*sin( quad*M_PI/180.0 );
 						m_sel_op.SetX(n,x2);
@@ -3104,18 +2945,18 @@ void CFreePcbView::HandleKeyPress(UINT nChar, UINT nRepCnt, UINT nFlags)
 						{
 							// keep the X coord
 							SaveUndoInfoForOutlinePoly( m_sel_id.i, TRUE, m_Doc->m_undo_list );
-							double quad = pow(val,2) - pow(dx,2);
+							double quad = pow(val,2) - pow(ddx,2);
 							if( quad < 0.0 )
 							{
 								y2 = y1;
-								if( dx > 0.0 )
+								if( ddx > 0.0 )
 									x2 = x1 + val;
 								else
 									x2 = x1 - val;
 							}
 							else
 							{
-								if( dy > 0.0 )
+								if( ddy > 0.0 )
 									y2 = y1 + sqrt(quad);
 								else
 									y2 = y1 - sqrt(quad);
@@ -3128,18 +2969,18 @@ void CFreePcbView::HandleKeyPress(UINT nChar, UINT nRepCnt, UINT nFlags)
 						{
 							// keep the Y coord
 							SaveUndoInfoForOutlinePoly( m_sel_id.i, TRUE, m_Doc->m_undo_list );
-							double quad = pow(val,2) - pow(dy,2);
+							double quad = pow(val,2) - pow(ddy,2);
 							if( quad < 0.0 )
 							{
 								x2 = x1;
-								if( dy > 0.0 )
+								if( ddy > 0.0 )
 									y2 = y1 + val;
 								else
 									y2 = y1 - val;
 							}
 							else
 							{
-								if( dx > 0.0 )
+								if( ddx > 0.0 )
 									x2 = x1 + sqrt(quad);
 								else
 									x2 = x1 - sqrt(quad);
@@ -3749,7 +3590,10 @@ void CFreePcbView::SetFKText( int mode )
 				m_fkey_option[5] = FK_CIRC_ALIGN;
 				m_fkey_option[6] = FK_ALIGN_X;
 				m_fkey_option[7] = FK_ALIGN_Y;
-				m_fkey_option[8] = FK_DELETE_CORNER;
+				if (m_sel_op.GetClosed() == 0)
+					if(m_sel_op.GetLayer() >= LAY_ADD_1)
+						if(m_sel_id.ii == 0 || m_sel_id.ii == m_sel_op.GetNumCorners()-1)
+							m_fkey_option[8] = FK_ADD_NODE;
 			}
 			else if ( m_page == 2 )
 			{
@@ -9015,8 +8859,14 @@ void CFreePcbView::AddOutlinePoly( BOOL bREPEAT_OR_ADD_CUTOUT )
 					}
 				}
 
+				// correct NODES
+				if (m_sel_op.Node[0] > 1)
+					m_sel_op.Node[0] = GetStandartNode(m_Doc, m_sel_id.i);
+				if (m_sel_op.Node[m_sel_op.GetNumCorners() - 1] > 1)
+					m_sel_op.Node[m_sel_op.GetNumCorners() - 1] = GetStandartNode(m_Doc, m_sel_id.i);
+
 				// SET HATCH PATTERN
-				m_sel_op.SetHatch( m_polyline_hatch ); 
+				m_sel_op.SetHatch( m_polyline_hatch ); // inc draw()
 
 				// description text layer
 				if( desc )
@@ -9109,6 +8959,13 @@ void CFreePcbView::AddOutlinePoly( BOOL bREPEAT_OR_ADD_CUTOUT )
 						}
 					}
 				}
+
+				// correct NODES
+				if (m_sel_op.Node[0] > 1)
+					m_sel_op.Node[0] = GetStandartNode(m_Doc, m_sel_id.i);
+				if (m_sel_op.Node[m_sel_op.GetNumCorners() - 1] > 1)
+					m_sel_op.Node[m_sel_op.GetNumCorners() - 1] = GetStandartNode(m_Doc, m_sel_id.i);
+
 				// SET HATCH PATTERN
 				if( dlg.m_hatch_off_flag == 0 )
 					m_sel_op.SetHatch( m_polyline_hatch );
@@ -10810,11 +10667,7 @@ void CFreePcbView::OnGroupPaste( BOOL bwDialog, BOOL bSaveMerges, int m_apply_de
 			
 			if( p->GetLayer() >= m_Doc->m_num_layers )
 				p->SetLayer( m_Doc->m_num_layers-1 );
-			if(p->GetNumCorners())
-			{
-				p->Node[0] = 0;
-				p->Node[p->GetNumCorners()-1] = 0;
-			}
+
 			// reset pointers
 			p->pAttr[index_part_attr]  = NULL;
 			p->pAttr[index_value_attr]  = NULL;
@@ -12121,7 +11974,7 @@ void CFreePcbView::RotateGroup( int angle, int cx, int cy, double accurate )
 
 
 //===============================================================================================
-void CFreePcbView::FindGroupCenter( BOOL bFLOOR )
+CPoint CFreePcbView::FindGroupCenter( BOOL bFLOOR )
 {
 	groupAverageX=groupAverageY=0;
 
@@ -12192,6 +12045,7 @@ void CFreePcbView::FindGroupCenter( BOOL bFLOOR )
 			groupAverageY=(long long)(m_Doc->m_part_grid_spacing*x);
 		}
 	}
+	return CPoint((int)groupAverageX, (int)groupAverageY);
 }
 
 //===============================================================================================
