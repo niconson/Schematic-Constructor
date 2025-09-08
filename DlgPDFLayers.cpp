@@ -225,14 +225,14 @@ void CDlgPDFLayers::Initialize( int nlayers,
 
 	// get options
 	m_use_font =		getbit(	m_pdf_checking, 0 );
-	m_print_1 =		getbit(	m_pdf_checking, 1 );
-	m_print_2 =		getbit(	m_pdf_checking, 2 );
-	m_print_3 =		getbit(	m_pdf_checking, 3 );
-	m_print_4 =		getbit(	m_pdf_checking, 4 );
-	m_print_5 =		getbit(	m_pdf_checking, 5 );
-	m_print_6 =		getbit(	m_pdf_checking, 6 );
-	m_print_7 =		getbit(	m_pdf_checking, 7 );
-	m_print_8 =		getbit(	m_pdf_checking, 8 );
+	m_print_1 =			getbit(	m_pdf_checking, 1 );
+	m_print_2 =			getbit(	m_pdf_checking, 2 );
+	m_print_3 =			getbit(	m_pdf_checking, 3 );
+	m_print_4 =			getbit(	m_pdf_checking, 4 );
+	m_print_5 =			getbit(	m_pdf_checking, 5 );
+	m_print_6 =			getbit(	m_pdf_checking, 6 );
+	m_print_7 =			getbit(	m_pdf_checking, 7 );
+	m_print_8 =			getbit(	m_pdf_checking, 8 );
 	m_apply_invert =	getbit(	m_pdf_checking, 9 );
 	m_sys_colors =		getbit(	m_pdf_checking,	10 );
 	m_print_separate =	getbit(	m_pdf_checking, 11 );

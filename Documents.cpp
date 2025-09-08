@@ -10357,6 +10357,10 @@ void CFreePcbDoc::OnFilePrint()
 		print_area_check = -1;
 		clrbit( m_pdf_checking, 11 );
 	}
+	if(m_system_colors)
+		setbit(m_pdf_checking, 10);
+	else
+		clrbit(m_pdf_checking, 10);
 	CDlgPDFLayers dlg;
 	dlg.Initialize( m_num_layers, 
 					m_pdf_vis, 
@@ -10377,7 +10381,7 @@ void CFreePcbDoc::OnFilePrint()
 	//
 	int m_pdf_use_font =		getbit( dlg.m_pdf_checking, 0 );
 	int m_apply_invert_for_pdf =getbit( dlg.m_pdf_checking, 9 );
-	int m_system_colors =		getbit( dlg.m_pdf_checking, 10 );
+		m_system_colors =		getbit( dlg.m_pdf_checking, 10 );
 	int m_print_separate =		getbit( dlg.m_pdf_checking, 11 );
 	SaveOptions();
 

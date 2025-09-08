@@ -2888,7 +2888,7 @@ void CFreePcbView::HandleKeyPress(UINT nChar, UINT nRepCnt, UINT nFlags)
 			//int len = Distance( x1, y1, x2, y2 );
 			if( fk == FK_ADD_SIZE )
 			{
-				AddGraphicSize(m_Doc);
+				AddGraphicSize(m_Doc, "");
 				SetCursorMode( CUR_GROUP_SELECTED );
 				HighlightGroup();
 			}
@@ -11820,7 +11820,7 @@ void CFreePcbView::RotateGroup( int angle, int cx, int cy, double accurate )
 								break;
 							}
 			}
-		if( bTEST )
+		if( bTEST && abs(accurate) > BY_ZERO)
 		{
 			//Google translate
 			//Ýòà ãðóïïà ñîäåðæèò â ñåáå àðê ýëåìåíòû. 

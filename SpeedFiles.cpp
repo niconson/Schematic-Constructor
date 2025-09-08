@@ -790,6 +790,7 @@ int OnPolylineUpdatePcbView(CFreePcbDoc* doc, int m_sel_i, CString* old_board, B
 				continue;
 			if (doc->m_outline_poly->GetAt(i).GetMerge() != id_m)
 				continue;
+			doc->m_outline_poly->GetAt(i).RecalcRectC(0);
 			boardW = doc->m_outline_poly->GetAt(i).GetW();
 			id ID(ID_POLYLINE, ID_GRAPHIC, i, ID_SIDE, 0);
 			doc->m_view->NewSelect(NULL, &ID, 0, 0);
@@ -828,7 +829,11 @@ int OnPolylineUpdatePcbView(CFreePcbDoc* doc, int m_sel_i, CString* old_board, B
 			id ID(ID_POLYLINE, ID_GRAPHIC, sz - 1, ID_SIDE, item);
 			doc->m_view->CancelSelection(0);
 			doc->m_view->NewSelect(NULL, &ID, 0, 0);
-			AddGraphicSize(doc);
+			CString str = "";
+			int ispace = DrawSize.Find(" ");
+			if (ispace > 0)
+				str = DrawSize.Right(DrawSize.GetLength() - ispace);
+			AddGraphicSize(doc, str);
 			doc->m_outline_poly->GetAt(doc->m_outline_poly->GetSize() - 1).SetMerge(id_m);
 		}
 	}
@@ -838,7 +843,7 @@ int OnPolylineUpdatePcbView(CFreePcbDoc* doc, int m_sel_i, CString* old_board, B
 	return TRUE;
 }
 
-void AddGraphicSize(CFreePcbDoc* doc)
+void AddGraphicSize(CFreePcbDoc* doc, CString strA)
 {
 	if (doc->m_view->m_sel_count == 0)
 		return;
@@ -851,6 +856,40 @@ void AddGraphicSize(CFreePcbDoc* doc)
 		doc->m_view->m_sel_id.ii >= doc->m_outline_poly->GetAt(doc->m_view->m_sel_id.i).GetNumSides())
 		return;
 #define sel_op doc->m_outline_poly->GetAt(doc->m_view->m_sel_id.i)
+	//
+	// test
+	double cur_scale = doc->m_view->m_user_scale;
+	int testX = doc->m_outline_poly->GetAt(doc->m_view->m_sel_id.i).GetX(doc->m_view->m_sel_id.ii);
+	int testY = doc->m_outline_poly->GetAt(doc->m_view->m_sel_id.i).GetY(doc->m_view->m_sel_id.ii);
+	for (int i = 0; i < doc->m_outline_poly->GetSize(); i++)
+	{
+		if (i == doc->m_view->m_sel_id.i)
+			continue;
+		CText* att = doc->m_outline_poly->GetAt(i).Check(index_desc_attr);
+		if (att)
+		{
+			if (att->m_str.Right(7) == "PCBVIEW")
+			{
+				if (doc->m_outline_poly->GetAt(i).TestPointInside(testX, testY))
+				{
+					double scale = 1.0;
+					int iof = att->m_str.Find("|scale_factor:");
+					if (iof > 0)
+					{
+						CString cmd = att->m_str.Right(att->m_str.GetLength() - iof - 14);
+						iof = cmd.Find("'");
+						if (iof >= 0)
+							cmd = cmd.Left(iof);
+						cmd = cmd.Trim();
+						scale = my_atof(&cmd);
+						if (abs(scale) > 0.09 && abs(scale) < 11)
+							cur_scale = 1.0 / scale;
+						break;
+					}
+				}
+			}
+		}
+	}
 	//
 	int n = sel_op.GetNextCornerIndex(doc->m_view->m_sel_id.ii);
 	double x1 = sel_op.GetX(doc->m_view->m_sel_id.ii);
@@ -981,7 +1020,8 @@ void AddGraphicSize(CFreePcbDoc* doc)
 	cur_x = xc + (0.92 * shift + doc->m_view->m_attr_size.H_pindesc) * cos((an + dir) * M_PI / 180.0);
 	cur_y = yc + (0.92 * shift + doc->m_view->m_attr_size.H_pindesc) * sin((an + dir) * M_PI / 180.0);
 	CString info;
-	MakeCStringFromDimension(doc->m_view->m_user_scale, &info, len, doc->m_units, 1, 1, 1, doc->m_units == MIL ? 1 : 2);
+	MakeCStringFromDimension(cur_scale, &info, len, doc->m_units, 1, 1, 1, doc->m_units == MIL ? 1 : 2);
+	info += strA;
 	int t_an = -an;
 	if (t_an < -270)
 		t_an += 360;
