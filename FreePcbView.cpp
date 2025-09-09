@@ -10301,7 +10301,7 @@ void CFreePcbView::GroupCopy( int clearBuf )
 	// see if anything copied
 	if( !g_op->GetSize() )
 	{
-		AfxMessageBox(G_LANGUAGE == 0 ? "Nothing copied!":"Ничего не скопировано!");
+		AfxMessageBox(G_LANGUAGE == 0 ? "There are no objects to insert!":"Нет объектов для вставки!");
 		CWnd* pMain = AfxGetMainWnd();
 		if (pMain != NULL)
 		{
