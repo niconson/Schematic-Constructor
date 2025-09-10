@@ -795,49 +795,54 @@ int OnPolylineUpdatePcbView(CFreePcbDoc* doc, int m_sel_i, CString* old_board, B
 			id ID(ID_POLYLINE, ID_GRAPHIC, i, ID_SIDE, 0);
 			doc->m_view->NewSelect(NULL, &ID, 0, 0);
 		}
-		boardW /= 2;
-		doc->m_view->SelectContour();
-		doc->m_view->OnAddGroupRect();
-		int sz = doc->m_outline_poly->GetSize();
-		doc->m_outline_poly->GetAt(sz - 1).SetMerge(id_m);
-		doc->m_outline_poly->GetAt(sz - 1).SetW(boardW);
-		doc->m_outline_poly->GetAt(sz - 1).SetLayer(LAY_ADD_2 + 2);
-		doc->m_outline_poly->GetAt(sz - 1).SetHatch(2);
-		for (int item = 0; item < 4; item++)
+		if (doc->m_view->m_sel_count)
 		{
-			switch (item)
+			boardW /= 2;
+			doc->m_view->SelectContour();
+			doc->m_view->OnAddGroupRect();
+			int sz = doc->m_outline_poly->GetSize();
+			doc->m_outline_poly->GetAt(sz - 1).SetMerge(id_m);
+			doc->m_outline_poly->GetAt(sz - 1).SetW(boardW);
+			doc->m_outline_poly->GetAt(sz - 1).SetLayer(LAY_ADD_2 + 2);
+			doc->m_outline_poly->GetAt(sz - 1).SetHatch(2);
+			for (int item = 0; item < 4; item++)
 			{
-			case 0:
-				if (DrawSize.Find("L") == -1)
-					continue;
-				break;
-			case 1:
-				if (DrawSize.Find("T") == -1)
-					continue;
-				break;
-			case 2:
-				if (DrawSize.Find("R") == -1)
-					continue;
-				break;
-			case 3:
-				if (DrawSize.Find("B") == -1)
-					continue;
-				break;
-			default:
-				break;
+				switch (item)
+				{
+				case 0:
+					if (DrawSize.Find("L") == -1)
+						continue;
+					break;
+				case 1:
+					if (DrawSize.Find("T") == -1)
+						continue;
+					break;
+				case 2:
+					if (DrawSize.Find("R") == -1)
+						continue;
+					break;
+				case 3:
+					if (DrawSize.Find("B") == -1)
+						continue;
+					break;
+				default:
+					break;
+				}
+				id ID(ID_POLYLINE, ID_GRAPHIC, sz - 1, ID_SIDE, item);
+				doc->m_view->CancelSelection(0);
+				doc->m_view->NewSelect(NULL, &ID, 0, 0);
+				CString str = "";
+				int ispace = DrawSize.Find(" ");
+				if (ispace > 0)
+					str = DrawSize.Right(DrawSize.GetLength() - ispace);
+				AddGraphicSize(doc, str);
+				doc->m_outline_poly->GetAt(doc->m_outline_poly->GetSize() - 1).SetMerge(id_m);
 			}
-			id ID(ID_POLYLINE, ID_GRAPHIC, sz - 1, ID_SIDE, item);
-			doc->m_view->CancelSelection(0);
-			doc->m_view->NewSelect(NULL, &ID, 0, 0);
-			CString str = "";
-			int ispace = DrawSize.Find(" ");
-			if (ispace > 0)
-				str = DrawSize.Right(DrawSize.GetLength() - ispace);
-			AddGraphicSize(doc, str);
-			doc->m_outline_poly->GetAt(doc->m_outline_poly->GetSize() - 1).SetMerge(id_m);
 		}
 	}
+	doc->m_view->CancelSelection();
 	doc->ProjectModified(TRUE);
+	doc->clip_outline_poly.RemoveAll();
 	doc->m_view->m_draw_layer = 0;
 	doc->OnRangeCmds(NULL);
 	return TRUE;

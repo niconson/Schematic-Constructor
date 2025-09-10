@@ -883,14 +883,19 @@ float CDlgRFiles::PageInit( CPDFdoc * pdf )
 	//
 	cpdf_moveto(pdf, m_pdf_margin, m_pdf_margin);
 	cpdf_lineto(pdf, m_pdf_margin, 0.14 + m_pdf_margin);
-	cpdf_lineto(pdf, 0.94 - m_pdf_margin, 0.14 + m_pdf_margin);
-	cpdf_lineto(pdf, 0.94 - m_pdf_margin, m_pdf_margin);
+	cpdf_lineto(pdf, 1.2 - m_pdf_margin, 0.14 + m_pdf_margin);
+	cpdf_lineto(pdf, 1.2 - m_pdf_margin, m_pdf_margin);
 	cpdf_lineto(pdf, m_pdf_margin, m_pdf_margin);
 	cpdf_stroke(pdf);
 	//cpdf_fill(pdf);
 	//
 	//
-	cpdf_text(pdf, 0.1, 0.08, 0, "Made in Niconson");
+	CString s = "Made in Niconson";
+	//cpdf_text(pdf, 0.1, 0.08, 0, s);
+	DrawTextBox(pdf, 0.0, 0.01, 1.2, 1, TextW/2,
+		(color_summ < 150 * 3) ? 255 : 0,
+		(color_summ < 150 * 3) ? 255 : 0,
+		(color_summ < 150 * 3) ? 255 : 0, &s, TRUE, NM_PER_MM/2);
 	cpdf_setActionURL(pdf, 0.1, 0.08, 0.85, 0.2, "https://niconson.com", NULL);
 	cpdf_setrgbcolorFill( pdf,	clr_pdf * (float)m_doc->m_bom_rgb[eFill][0], 
 								clr_pdf * (float)m_doc->m_bom_rgb[eFill][1], 
@@ -988,14 +993,15 @@ float CDlgRFiles::DrawTextBox(	CPDFdoc * pdf,
 								float G, 
 								float B,
 								CString * text,
-								BOOL bDRAW )
+								BOOL bDRAW,
+								int textH	)
 {
 	if( text->GetLength() == 0 )
 		return 0.0;
 
 	const double clr_pdf = 1.0/255.0;
 	float k = textW*4.0;
-	CText * n = m_doc->GetFreeNet( text, 0, 0, NM_PER_MM, NM_PER_MIL*k );
+	CText * n = m_doc->GetFreeNet( text, 0, 0, textH ? textH : NM_PER_MM, NM_PER_MIL*k );
 	n->m_font_number = m_doc->m_default_font;
 	n->MakeVisible();
 	cpdf_setrgbcolorStroke( pdf,clr_pdf*R, 
@@ -1004,7 +1010,7 @@ float CDlgRFiles::DrawTextBox(	CPDFdoc * pdf,
 	cpdf_setlinewidth( pdf, textW );
 	float dy= StringHeight*str_cnt;
 	float nstr = 0.0;
-	while( CText * nnew = ParseString( n, w ) )
+	while( CText * nnew = ParseString( n, w, textH ) )
 	{
 		dy -= 0.38;
 		nstr += 1.0;
@@ -1048,7 +1054,7 @@ float CDlgRFiles::DrawTextBox(	CPDFdoc * pdf,
 
 
 //-------------------------------------------------------------------------
-CText * CDlgRFiles::ParseString( CText * T, float W )
+CText * CDlgRFiles::ParseString( CText * T, float W, int textH)
 {
 	static int cur = 0;
 	if( T->m_dlist == NULL )
@@ -1084,7 +1090,7 @@ CText * CDlgRFiles::ParseString( CText * T, float W )
 				}
 			}
 			cur += iadd;
-			return m_doc->GetFreeNet(&str_out, 0, 0, NM_PER_MM, NM_PER_MIL );
+			return m_doc->GetFreeNet(&str_out, 0, 0, textH ? textH : NM_PER_MM, NM_PER_MIL );
 		}
 	}
 	cur = 0;

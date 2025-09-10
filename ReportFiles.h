@@ -29,8 +29,9 @@ protected:
 						float G, 
 						float B,
 						CString * text,
-						BOOL bDRAW = 0);
-	CText * ParseString( CText * T, float W );
+						BOOL bDRAW = 0,
+						int textH = 0);
+	CText * ParseString( CText * T, float W, int textH = 0);
 	CBrush m_brush;
 	CColorDialog * m_cdlg;
 	DECLARE_MESSAGE_MAP()
