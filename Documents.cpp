@@ -10450,6 +10450,8 @@ void CFreePcbDoc::OnFilePrint()
 			mode = LANDSCAPE;
 		else
 			mode = PORTRAIT;
+		if(pagenum > 1)
+			cpdf_finalizePage(pdf, pagenum - 1);
 		cpdf_pageInit(pdf, pagenum, mode, format, format);		/* page orientation */
 		pagenum++;
 		cpdf_setlinecap( pdf, 1 );	// round end-caps
@@ -11098,18 +11100,45 @@ void CFreePcbDoc::OnFilePrint()
 				int i2 = cmd->m_str.Find( COMMAND );
 				if( i1>0 && i2>0 )
 				{
+					BOOL bFinalize = TRUE;
 					pdf_file = cmd->m_str.Mid( i1, i2-i1-1 );
 					pdf_file = pdf_file.Right( pdf_file.GetLength()-6 );
 					pdf_file = pdf_file.Trim();
 					::ExtractComponentName( &pdf_file, NULL );
 					pdf_file = m_path_to_folder+"\\related_files\\" + pdf_file;
-					cpdf_finalizeAll(pdf);
-					cpdf_savePDFmemoryStreamToFile(pdf, pdf_file );
-					cpdf_close(pdf);
-					pdf = cpdf_open(0, NULL);
-					cpdf_init(pdf);
-					cpdf_setTitle(pdf,m_name.GetBuffer());
-					pagenum = 1;
+					id next_pg = Pages.FindPrintableArea(&ipoly);
+					if (next_pg.i >= 0)
+					{
+						CPolyLine* p2 = &m_outline_poly->GetAt(next_pg.i);
+						if (CText* cmd2 = p2->Check(index_desc_attr))
+						{
+							CString next_pdf_file;;
+							int ni1 = cmd2->m_str.Find("|name:");
+							int ni2 = cmd2->m_str.Find(COMMAND);
+							if (ni1 > 0 && ni2 > 0)
+							{
+								next_pdf_file = cmd2->m_str.Mid(ni1, ni2 - ni1 - 1);
+								next_pdf_file = next_pdf_file.Right(next_pdf_file.GetLength() - 6);
+								next_pdf_file = next_pdf_file.Trim();
+								::ExtractComponentName(&next_pdf_file, NULL);
+								next_pdf_file = m_path_to_folder + "\\related_files\\" + next_pdf_file;
+								if (next_pdf_file.CompareNoCase(pdf_file) == 0)
+									bFinalize = 0;
+							}
+						}
+					}
+					if (bFinalize)
+					{
+						cpdf_finalizeAll(pdf);
+						cpdf_savePDFmemoryStreamToFile(pdf, pdf_file);
+						cpdf_close(pdf);
+						pdf = cpdf_open(0, NULL);
+						cpdf_init(pdf);
+						cpdf_setTitle(pdf, m_name.GetBuffer());
+						pagenum = 1;
+					}
+					else
+						cpdf_finalizePage(pdf, pagenum - 1);
 				}
 			}
 		}
