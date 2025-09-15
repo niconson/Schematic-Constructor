@@ -3309,7 +3309,7 @@ void CFreePcbDoc::WriteOptions( CStdioFile * file, BOOL bConfig, CString * pr_na
 		// write optional
 		if( bConfig == 0 || m_system_colors )
 		{
-			for( int i=0; i<(LAY_ADD_1+m_num_additional_layers); i++ )
+			for( int i=0; i<MAX_LAYERS; i++ )
 			{
 				line.Format( "  layer_info: \"%s\" %d %d %d %d %d\n",
 					&layer_str[i][0], i,
@@ -7450,8 +7450,8 @@ int CFreePcbDoc::CreatePCBNets( int ITERATOR )
 		t->InVisible();
 	for( int i=m_outline_poly->GetSize()-1; i>=0; i-- )
 	{ 
-		if (m_outline_poly->GetAt(i).GetLayer() >= LAY_ADD_1)
-			continue; // experimental
+		//if (m_outline_poly->GetAt(i).GetLayer() >= LAY_ADD_1) !
+		//	continue; // experimental
 
 		// delete old net pointer
 		if( m_outline_poly->GetAt(i).pAttr[index_net_attr] == NULL )
@@ -7627,9 +7627,8 @@ int CFreePcbDoc::CreatePCBNets( int ITERATOR )
 				int y = m_outline_poly->GetAt(iFree).GetY(0);
 				DRError * dre = m_drelist->Add( &s, id1, id2, x, y, x, y, 20*NM_PER_MIL, LAY_CONNECTION );
 			}
-			else if( m_outline_poly->GetAt(iFree).GetLayer() < LAY_ADD_1 )
+			else 
 			{
-				//int newlayer = LAY_ADD_1 + 2;
 				m_outline_poly->GetAt(iFree).SetLayer( m_unconnected_pin_layer );
 				CText * tpin = m_outline_poly->GetAt(iFree).Check(index_pin_attr);
 				if (tpin)

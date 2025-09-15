@@ -1076,7 +1076,7 @@ void CPolyLine::Draw(  CDisplayList * dl )
 					int sel_type = g_type;
 					g_type = DL_LINES_ARRAY;
 					float len = Distance( P[0].x, P[0].y, P[1].x, P[1].y );
-					float k = len/(float)m_w;
+					float k = len/(float)max(m_w,NM_PER_MIL*2);
 					int npts = k/3 + 2;
 					npts -= npts%2;
 					CPoint * PT_ARR = new CPoint[npts];//new013

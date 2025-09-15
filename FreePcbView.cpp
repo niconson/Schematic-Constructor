@@ -5033,6 +5033,11 @@ void CFreePcbView::OnTextEdit()
 	int ret = add_text_dlg.DoModal();
 	if( ret == IDCANCEL )
 		return;
+
+	// save interval of autosave
+	int mem_auto_interval = m_Doc->m_auto_interval;
+	m_Doc->m_auto_interval = 0;
+
 	if( m_Doc->m_special_chars.Compare( add_text_dlg.m_special ) )
 	{
 		m_Doc->m_special_chars = add_text_dlg.m_special;
@@ -5170,6 +5175,9 @@ void CFreePcbView::OnTextEdit()
 	if( m_sel_count != 1 || m_sel_text->m_tl != m_Doc->Attr->m_pDesclist )
 		m_Doc->ProjectModified( TRUE );
 	
+	// restore autosave
+	m_Doc->m_auto_interval = mem_auto_interval;
+
 	// redraw
 	m_draw_layer = 0;// OnTextEdit
 	Invalidate( FALSE );// (doubtful)

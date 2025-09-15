@@ -364,7 +364,8 @@ void CMainFrame::OnTimer(UINT nIDEvent)
 		{
 			if( nIDEvent == TMR_AUTOSAVE )
 			{
-				if( doc->m_project_modified_since_autosave )
+				if( doc->m_project_modified_since_autosave && 
+					doc->m_view->m_cursor_mode == CUR_NONE_SELECTED )
 				{
 					doc->m_auto_elapsed += TIMER_PERIOD;
 					if( m_view && doc->m_auto_interval && doc->m_auto_elapsed > doc->m_auto_interval )
