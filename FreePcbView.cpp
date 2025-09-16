@@ -154,6 +154,7 @@ ON_COMMAND(ID_GROUP_MOVE, OnGroupMove)
 ON_COMMAND(ID_GROUP_SAVETOFILE, OnGroupSaveToFile)
 ON_COMMAND(ID_GROUP_SAVETOOPENSCAD, OnGroupSaveToOpenscadFile)
 ON_COMMAND(ID_GROUP_SAVETODXF, OnGroupSaveToDXFFile)
+ON_COMMAND(ID_GROUP_SAVETOFPC, OnGroupSaveToFPCFile)
 ON_COMMAND(ID_ADD_G_ORIGIN, OnAddGroupOrigin)
 ON_COMMAND(ID_RECT_FROM_SEL, OnAddGroupRect)
 ON_COMMAND(ID_STATIC_HIGHLIGHT, OnGroupStaticHighlight)
@@ -9879,14 +9880,17 @@ void CFreePcbView::TurnGroup ()
 					int newX = 2*groupAverageX - t->m_x;
 					int newY = t->m_y;
 					t->m_angle = t->m_angle%360;
-					if( t->m_angle == 90 )
-						newY = t->m_y - hgt;
-					else if( t->m_angle == 270 )
-						newY = t->m_y + hgt;
-					else if( t->m_angle == 180 )
-					    newX = 2*groupAverageX - t->m_x + wid;
-					else
-						newX = 2*groupAverageX - t->m_x - wid;
+					if (t->m_str.Right(2) != "|C")
+					{
+						if (t->m_angle == 90)
+							newY = t->m_y - hgt;
+						else if (t->m_angle == 270)
+							newY = t->m_y + hgt;
+						else if (t->m_angle == 180)
+							newX = 2 * groupAverageX - t->m_x + wid;
+						else
+							newX = 2 * groupAverageX - t->m_x - wid;
+					}
 					if( getbit( t->m_pdf_options, PDF_ALIGN ) )
 						clrbit( t->m_pdf_options, PDF_ALIGN );
 					else
@@ -11954,15 +11958,18 @@ void CFreePcbView::RotateGroup( int angle, int cx, int cy, double accurate )
 								ROTATE = 1;
 					}
 					//
-					if( (t->m_angle+180)%360 == 0 && ROTATE )
+					if( (t->m_angle+180)%360 == 0 && ROTATE)
 					{
 						t->MakeVisible();//(redraw to generate rect)
 						RECT r;
 						if( tl->GetTextRectOnPCB(t,&r) )
 						{
 							t->m_angle = 0;
-							t->m_x = r.left;
-							t->m_y = r.bottom;
+							if (t->m_str.Right(2) != "|C")
+							{
+								t->m_x = r.left + t->m_stroke_width / 2;
+								t->m_y = r.bottom + t->m_stroke_width / 2;
+							}
 							t->MakeVisible();
 						}
 					}
@@ -15921,7 +15928,100 @@ void CFreePcbView::OnGroupSaveToOpenscadFile()
 	}
 	ShellExecute(	NULL, "open", "open.scad", NULL, m_Doc->m_app_dir, SW_SHOWNORMAL );
 }
-
+void CFreePcbView::OnGroupSaveToFPCFile()
+{
+	CStdioFile f;
+	if (f.Open(m_Doc->m_app_dir + "\\buf.fpc", CFile::modeCreate | CFile::modeWrite, NULL))
+	{
+		//int sFont = 1;
+		//if (getbit(m_sel_flags, FLAG_SEL_TEXT))
+		//	if (AfxMessageBox(G_LANGUAGE == 0 ?
+		//		"Want to use Openscad font to reduce file size?" :
+		//		"Хотите использовать шрифт Openscad для оптимизации размера генерируемого файла?", MB_YESNO) == IDYES)
+		//		sFont = 0;
+		CString s;
+		f.WriteString("[options]\n");
+		f.WriteString("file_version: 2.427\n");
+		f.WriteString("[footprints]\n");
+		f.WriteString("[board]\n");
+		f.WriteString("[solder_mask_cutouts]\n");
+		f.WriteString("[graphics]\n");
+		if (::RemoveColinearSegments(m_Doc->m_outline_poly))
+			AfxMessageBox(G_LANGUAGE == 0 ?
+				"Some segments were removed due to collinearity" :
+				"Некоторые сегменты были удалены из-за коллинеарности");
+		for (int i = 0; i < m_Doc->m_outline_poly->GetSize(); i++)
+		{
+			if (m_Doc->m_outline_poly->GetAt(i).GetSel() == 0)
+				continue;
+			int numc = m_Doc->m_outline_poly->GetAt(i).GetNumCorners();
+			int htch = m_Doc->m_outline_poly->GetAt(i).GetHatch();
+			int L = 10;// m_Doc->m_outline_poly->GetAt(i).GetLayer();
+			int W = m_Doc->m_outline_poly->GetAt(i).GetW();
+			int clsd = m_Doc->m_outline_poly->GetAt(i).GetClosed();
+			s.Format("%s: %d %d %d %d -1 -1\n", clsd ? "polyline" : "line", numc, htch, L, W);
+			f.WriteString(s);
+			for (int ii = 0; ii < m_Doc->m_outline_poly->GetAt(i).GetNumCorners(); ii++)
+			{
+				int gx1 = m_Doc->m_outline_poly->GetAt(i).GetX(ii);
+				int gy1 = m_Doc->m_outline_poly->GetAt(i).GetY(ii);
+				int inb = m_Doc->m_outline_poly->GetAt(i).GetPrevCornerIndex(ii);
+				int stl = m_Doc->m_outline_poly->GetAt(i).GetSideStyle(inb);
+				int icont = m_Doc->m_outline_poly->GetAt(i).GetContour(ii);
+				int clf = m_Doc->m_outline_poly->GetAt(i).GetContourEnd(icont);
+				s.Format("corner: %d %d %d %d %d\n", ii+1, gx1, gy1, stl, clf);
+				f.WriteString(s);
+			}
+		}
+		for (int i = 0; i < m_Doc->m_outline_poly->GetSize(); i++)
+		{
+			for (CText* t = m_Doc->ScanAttr(&m_Doc->m_outline_poly->GetAt(i)); t; t = m_Doc->ScanAttr(&m_Doc->m_outline_poly->GetAt(i)))
+			{
+				if (t->m_selected)
+				{
+					CArray<CPoint>* pts = t->m_dlist->Get_Points(t->dl_el, NULL, 0);
+					int npts = pts->GetSize();
+					CPoint* PTS = new CPoint[npts];
+					t->m_dlist->Get_Points(t->dl_el, PTS, &npts);
+					for (int ipt = 0; ipt < npts - 1; ipt += 2)
+					{
+						int numc = 2;
+						int htch = 0;
+						int L = 7;
+						int W = t->dl_el->el_w * m_pcbu_per_wu;
+						int clsd = 0;
+						s.Format("line: %d %d %d %d -1 -1\n", numc, htch, L, W);
+						f.WriteString(s);
+						for (int ii = 0; ii < numc; ii++)
+						{
+							int gx1 = PTS[ipt+ii].x * m_user_scale;
+							int gy1 = PTS[ipt+ii].y * m_user_scale;
+							int stl = 0;
+							s.Format("corner: %d %d %d %d 0\n", ii + 1, gx1, gy1, stl);
+							f.WriteString(s);
+						}
+					}
+				}
+			}
+		}
+		f.WriteString("[parts]\n");
+		f.WriteString("[nets]\n");
+		f.WriteString("[texts]\n");
+		f.WriteString("[merges]\n");
+		f.WriteString("[end]\n");
+		f.Close();
+	}
+	if(G_LANGUAGE)
+		ShellExecute(NULL, "open",
+			"\"" + m_Doc->m_app_dir + "\\ПлатФорм.exe\"",
+			"\"" + m_Doc->m_app_dir + "\\buf.fpc\"",
+			m_Doc->m_app_dir, SW_SHOWNORMAL);
+	else
+		ShellExecute(NULL, "open",
+			"\"" + m_Doc->m_app_dir + "\\FreePcb.exe\"",
+			"\"" + m_Doc->m_app_dir + "\\buf.fpc\"",
+			m_Doc->m_app_dir, SW_SHOWNORMAL);
+}
 void CFreePcbView::OnGroupSaveToDXFFile()
 {
 	CStdioFile f;

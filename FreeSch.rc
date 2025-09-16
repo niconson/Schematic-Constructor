@@ -595,9 +595,10 @@ BEGIN
         MENUITEM "Добавить метки на полилинии", ID_ADD_MARKS
         MENUITEM "Режим статической подсветки", ID_STATIC_HIGHLIGHT
         MENUITEM SEPARATOR
-        MENUITEM "Сохранить в файл...",         ID_GROUP_SAVETOFILE
-        MENUITEM "Сохранить как данные OpenSCAD", ID_GROUP_SAVETOOPENSCAD
-        MENUITEM "Сохранить как данные AutoCAD DXF", ID_GROUP_SAVETODXF
+        MENUITEM "Сохранить в файл...",                     ID_GROUP_SAVETOFILE
+        MENUITEM "Сохранить как данные OpenSCAD",           ID_GROUP_SAVETOOPENSCAD
+        MENUITEM "Сохранить как данные AutoCAD DXF",        ID_GROUP_SAVETODXF
+        MENUITEM "Сохранить как данные Niconson ПлатФорм",  ID_GROUP_SAVETOFPC
         MENUITEM SEPARATOR
         MENUITEM "Открыть карту пинов",         ID_GET_PIN_MAP
         MENUITEM SEPARATOR

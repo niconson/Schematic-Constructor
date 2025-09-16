@@ -909,6 +909,7 @@ public:
 	void SaveToFile( CString * fileS );
 	afx_msg void OnGroupSaveToOpenscadFile();
 	afx_msg void OnGroupSaveToDXFFile();
+	afx_msg void OnGroupSaveToFPCFile();
 	afx_msg void OnAddGroupOrigin();
 	afx_msg void OnAddGroupRect();
 	afx_msg void OnGroupStaticHighlight();					//will remain

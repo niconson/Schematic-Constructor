@@ -1,6 +1,6 @@
  FreeCds
 
- Timestamp is 68c83d0e (Mon Sep 15 21:21:34 2025)
+ Timestamp is 68c9a45a (Tue Sep 16 22:54:34 2025)
 
  Preferred load address is 00400000
 
@@ -46,9 +46,9 @@
 
   Address         Publics by Value              Rva+Base       Lib:Object
 
- 0000:00000000       ___safe_se_handler_table   00000000     <absolute>
  0000:00000000       __except_list              00000000     <absolute>
  0000:00000000       ___safe_se_handler_count   00000000     <absolute>
+ 0000:00000000       ___safe_se_handler_table   00000000     <absolute>
  0000:00009876       __fltused                  00009876     <absolute>
  0000:00009876       __ldused                   00009876     <absolute>
  0000:00000000       ___ImageBase               00400000     <linker-defined>
@@ -59,15 +59,28 @@
  0002:0000a280       ?MakeReport@BomInTable@@QAEXXZ 00525280 f   BomInTable.obj
  0002:0000cac0       ??1CDocumentAdapter@CDocument@@UAE@XZ 00527ac0 f i Documents.obj
  0002:0000cbb0       ?OnSendMess@CFreePcbDoc@@QAEPAUHWND__@@PAU2@PAV?$CStringT@DV?$StrTraitMFC_DLL@DV?$ChTraitsCRT@D@ATL@@@@@ATL@@@Z 00527bb0 f   Documents.obj
+ 0002:0000cd10       ?RedrawLayers@CFreePcbView@@QAEXXZ 00527d10 f   FreePcbView.obj
+ 0002:0000d300       ??0CPolyLine@@QAE@ABV0@@Z  00528300 f i FreePcbView.obj
  0002:0000d4c0       ?GetURL@BomInTable@@QAE?AV?$CStringT@DV?$StrTraitMFC_DLL@DV?$ChTraitsCRT@D@ATL@@@@@ATL@@PAV23@0PAH1@Z 005284c0 f   BomInTable.obj
+ 0002:0000e050       ??1?$CArray@VCPolyPt@@ABV1@@@UAE@XZ 00529050 f i FreePcbView.obj
+ 0002:0000e130       ?AssertValid@?$CArray@VCPolyPt@@ABV1@@@UBEXXZ 00529130 f i FreePcbView.obj
+ 0002:0000e250       ??1?$CArray@VCContourData@@ABV1@@@UAE@XZ 00529250 f i FreePcbView.obj
  0002:0000e340       ?PushRows@BomInTable@@AAEHHH@Z 00529340 f   BomInTable.obj
+ 0002:0000e630       ??0?$CArray@Vid@@ABV1@@@QAE@XZ 00529630 f i FreePcbView.obj
  0002:0000e6f0       ?ReadParamsFromTagFile@BomInTable@@AAEHXZ 005296f0 f   BomInTable.obj
+ 0002:0000f930       ?AssertValid@?$CArray@VCContourData@@ABV1@@@UBEXXZ 0052a930 f i FreePcbView.obj
+ 0002:0000fa50       ??1?$CArray@PAVdl_element@@ABQAV1@@@UAE@XZ 0052aa50 f i FreePcbView.obj
+ 0002:0000fb30       ?AssertValid@?$CArray@PAVdl_element@@ABQAV1@@@UBEXXZ 0052ab30 f i FreePcbView.obj
+ 0002:0000fc50       ??$_Pow_int@N@@YANNH@Z     0052ac50 f i FreePcbView.obj
+ 0002:0000fce0       ?ElementAt@?$CArray@Vid@@ABV1@@@QAEAAVid@@H@Z 0052ace0 f i FreePcbView.obj
  0002:0000fdc0       ?GetCName@BomInTable@@QAE?AV?$CStringT@DV?$StrTraitMFC_DLL@DV?$ChTraitsCRT@D@ATL@@@@@ATL@@PAV23@0@Z 0052adc0 f   BomInTable.obj
  0002:00010340       ?AddObject@BomInTable@@AAEXHPAV?$CStringT@DV?$StrTraitMFC_DLL@DV?$ChTraitsCRT@D@ATL@@@@@ATL@@000@Z 0052b340 f   BomInTable.obj
+ 0002:00010c30       ??$SerializeElements@VCPolyPt@@@@YGXAAVCArchive@@PAVCPolyPt@@H@Z 0052bc30 f i FreePcbView.obj
  0002:00010e60       ?RemoveEmptyRows@BomInTable@@AAEXXZ 0052be60 f   BomInTable.obj
  0002:00011310       ?PushBack@BomInTable@@AAEHHH@Z 0052c310 f   BomInTable.obj
  0002:000113c0       ?RedrawNumbers@BomInTable@@AAEHXZ 0052c3c0 f   BomInTable.obj
  0002:00011630       ?FindNextRow@BomInTable@@AAEHPAV?$CStringT@DV?$StrTraitMFC_DLL@DV?$ChTraitsCRT@D@ATL@@@@@ATL@@@Z 0052c630 f   BomInTable.obj
+ 0002:00012180       ??$SerializeElements@VCContourData@@@@YGXAAVCArchive@@PAVCContourData@@H@Z 0052d180 f i FreePcbView.obj
  0002:00012450       ?ParseString@BomInTable@@AAEPAVCText@@PAV2@H@Z 0052d450 f   BomInTable.obj
  0002:00012960       ?AddPString@BomInTable@@AAEHPAVCText@@HHH@Z 0052d960 f   BomInTable.obj
  0002:00012ba0       ??HATL@@YA?AV?$CStringT@DV?$StrTraitMFC_DLL@DV?$ChTraitsCRT@D@ATL@@@@@0@ABV10@0@Z 0052dba0 f i BomInTable.obj
@@ -119,7 +132,10 @@
  0002:00015aa0       ??1CCompare@@QAE@XZ        00530aa0 f   CCompare.obj
  0002:00015ae0       ?Compare@CCompare@@QAEXPAVCFreePcbDoc@@H@Z 00530ae0 f   CCompare.obj
  0002:00015d70       ?ComparePartlist@CDlgCompare@@QAEHHH@Z 00530d70 f   CCompare.obj
+ 0002:00016840       ??$SerializeElements@PAVdl_element@@@@YGXAAVCArchive@@PAPAVdl_element@@H@Z 00531840 f i FreePcbView.obj
  0002:00016af0       ?CompareNetlist@CDlgCompare@@QAEHHH@Z 00531af0 f   CCompare.obj
+ 0002:00018d60       ?SetSize@?$CArray@VCPolyPt@@ABV1@@@QAEXHH@Z 00533d60 f i FreePcbView.obj
+ 0002:000192e0       ?InsertAt@?$CArray@VCPolyLine@@ABV1@@@QAEXHABVCPolyLine@@H@Z 005342e0 f i FreePcbView.obj
  0002:000195f0       ?DATA5_FindNet@CDlgCompare@@QAEHPAV?$CStringT@DV?$StrTraitMFC_DLL@DV?$ChTraitsCRT@D@ATL@@@@@ATL@@@Z 005345f0 f   CCompare.obj
  0002:00019850       ?Conformity@CDlgCompare@@QAEHPAV?$CStringT@DV?$StrTraitMFC_DLL@DV?$ChTraitsCRT@D@ATL@@@@@ATL@@0@Z 00534850 f   CCompare.obj
  0002:00019da0       ?FindPin@CDlgCompare@@QAEPAVCPolyLine@@PAVCText@@PAV?$CStringT@DV?$StrTraitMFC_DLL@DV?$ChTraitsCRT@D@ATL@@@@@ATL@@PAV?$CArray@VCPolyLine@@ABV1@@@@Z 00534da0 f   CCompare.obj
@@ -146,6 +162,7 @@
  0002:0001c070       ?OnValueDblClick@CDlgCompare@@QAEXXZ 00537070 f   CCompare.obj
  0002:0001c4e0       ?OnFootprintDblClick@CDlgCompare@@QAEXXZ 005374e0 f   CCompare.obj
  0002:0001c950       ?OnPinsNetsDblClick@CDlgCompare@@QAEXXZ 00537950 f   CCompare.obj
+ 0002:0001d4d0       ?RemoveAt@?$CArray@VCPolyLine@@ABV1@@@QAEXHH@Z 005384d0 f i FreePcbView.obj
  0002:0001d7b0       ?OnSwapPinsDblClick@CDlgCompare@@QAEXXZ 005387b0 f   CCompare.obj
  0002:0001dc20       ?OnBnClickedChParts@CDlgCompare@@QAEXXZ 00538c20 f   CCompare.obj
  0002:0001dcb0       ?OnBnClickedChNets@CDlgCompare@@QAEXXZ 00538cb0 f   CCompare.obj
@@ -226,6 +243,7 @@
  0002:00026230       ??_Gdl_element@@QAEPAXI@Z  00541230 f i DisplayList.obj
  0002:000262a0       ?ProcessMessages@CDisplayList@@QAEHXZ 005412a0 f   DisplayList.obj
  0002:00026360       ?Draw@CDisplayList@@QAEXPAVCDC@@H@Z 00541360 f   DisplayList.obj
+ 0002:0002a950       ?OnTextReplace@CFreePcbView@@QAEXXZ 00545950 f   FreePcbView.obj
  0002:0002bad0       ??_H@YGXPAXIHP6EPAX0@Z@Z   00546ad0 f i DisplayList.obj
  0002:0002bb40       ?SetLayerRGB@CDisplayList@@QAEXHHHH@Z 00546b40 f   DisplayList.obj
  0002:0002bbc0       ?SetLayerVisible@CDisplayList@@QAEXHH@Z 00546bc0 f   DisplayList.obj
@@ -240,6 +258,7 @@
  0002:0002d8c0       ?StartDraggingLineVertex@CDisplayList@@QAEHPAVCDC@@HHHHHHHHHHHHHHHHH@Z 005488c0 f   DisplayList.obj
  0002:0002db30       ?StartDraggingLineSegment@CDisplayList@@QAEHPAVCDC@@HHHHHHHHHHHHHHHHHHHHHHH@Z 00548b30 f   DisplayList.obj
  0002:0002dde0       ?Drag@CDisplayList@@QAEXPAVCDC@@HH@Z 00548de0 f   DisplayList.obj
+ 0002:0002fe60       ?SetSize@?$CArray@VCContourData@@ABV1@@@QAEXHH@Z 0054ae60 f i FreePcbView.obj
  0002:00030680       ?StopDragging@CDisplayList@@QAEHXZ 0054b680 f   DisplayList.obj
  0002:00030710       ?IncrementDragAngle@CDisplayList@@QAEXPAVCDC@@@Z 0054b710 f   DisplayList.obj
  0002:00030cb0       ?FlipDragSide@CDisplayList@@QAEXPAVCDC@@@Z 0054bcb0 f   DisplayList.obj
@@ -293,10 +312,10 @@
  0002:000345b0       ?Serialize@?$CArray@PAUCTemplate@@ABQAU1@@@UAEXAAVCArchive@@@Z 0054f5b0 f i DisplayList.obj
  0002:00034680       ?Dump@?$CArray@PAUCTemplate@@ABQAU1@@@UBEXAAVCDumpContext@@@Z 0054f680 f i DisplayList.obj
  0002:00034760       ?AssertValid@?$CArray@PAUCTemplate@@ABQAU1@@@UBEXXZ 0054f760 f i DisplayList.obj
- 0002:000348c0       ??_G?$CArray@VCPoint@@ABV1@@@UAEPAXI@Z 0054f8c0 f i DisplayList.obj
  0002:000348c0       ??_E?$CArray@VCPoint@@ABV1@@@UAEPAXI@Z 0054f8c0 f i DisplayList.obj
- 0002:00034930       ??_G?$CArray@PAUCTemplate@@ABQAU1@@@UAEPAXI@Z 0054f930 f i DisplayList.obj
+ 0002:000348c0       ??_G?$CArray@VCPoint@@ABV1@@@UAEPAXI@Z 0054f8c0 f i DisplayList.obj
  0002:00034930       ??_E?$CArray@PAUCTemplate@@ABQAU1@@@UAEPAXI@Z 0054f930 f i DisplayList.obj
+ 0002:00034930       ??_G?$CArray@PAUCTemplate@@ABQAU1@@@UAEPAXI@Z 0054f930 f i DisplayList.obj
  0002:000349a0       ?SetSize@?$CArray@VCPoint@@ABV1@@@QAEXHH@Z 0054f9a0 f i DisplayList.obj
  0002:00034fc0       ??$SerializeElements@VCPoint@@@@YGXAAVCArchive@@PAVCPoint@@H@Z 0054ffc0 f i DisplayList.obj
  0002:000351b0       ??$DumpElements@VCPoint@@@@YGXAAVCDumpContext@@PBVCPoint@@H@Z 005501b0 f i DisplayList.obj
@@ -329,10 +348,11 @@
  0002:00037a10       ?GetThisClass@CDlgAddMerge@@SGPAUCRuntimeClass@@XZ 00552a10 f   DlgAddMerge.obj
  0002:00037a50       ?GetRuntimeClass@CDlgAddMerge@@UBEPAUCRuntimeClass@@XZ 00552a50 f   DlgAddMerge.obj
  0002:00037a90       ??0CDlgAddMerge@@QAE@PAVCWnd@@@Z 00552a90 f   DlgAddMerge.obj
- 0002:00037bf0       ??_GCDlgAddMerge@@UAEPAXI@Z 00552bf0 f i DlgAddMerge.obj
  0002:00037bf0       ??_ECDlgAddMerge@@UAEPAXI@Z 00552bf0 f i DlgAddMerge.obj
+ 0002:00037bf0       ??_GCDlgAddMerge@@UAEPAXI@Z 00552bf0 f i DlgAddMerge.obj
  0002:00037c60       ??1CDlgAddMerge@@UAE@XZ    00552c60 f   DlgAddMerge.obj
  0002:00037d70       ?DoDataExchange@CDlgAddMerge@@MAEXPAVCDataExchange@@@Z 00552d70 f   DlgAddMerge.obj
+ 0002:00039420       ?SetSize@?$CArray@PAVdl_element@@ABQAV1@@@QAEXHH@Z 00554420 f i FreePcbView.obj
  0002:000399d0       ?GetMessageMap@CDlgAddMerge@@MBEPBUAFX_MSGMAP@@XZ 005549d0 f   DlgAddMerge.obj
  0002:00039a20       ?GetThisMessageMap@CDlgAddMerge@@KGPBUAFX_MSGMAP@@XZ 00554a20 f   DlgAddMerge.obj
  0002:00039a60       ?GetStr@StrList@@QAE?AV?$CStringT@DV?$StrTraitMFC_DLL@DV?$ChTraitsCRT@D@ATL@@@@@ATL@@H@Z 00554a60 f i DlgAddMerge.obj
@@ -341,8 +361,8 @@
  0002:00039be0       ?GetThisClass@CDlgAddPoly@@SGPAUCRuntimeClass@@XZ 00554be0 f   DlgAddPoly.obj
  0002:00039c20       ?GetRuntimeClass@CDlgAddPoly@@UBEPAUCRuntimeClass@@XZ 00554c20 f   DlgAddPoly.obj
  0002:00039c60       ??0CDlgAddPoly@@QAE@PAVCWnd@@@Z 00554c60 f   DlgAddPoly.obj
- 0002:00039d80       ??_ECDlgAddPoly@@UAEPAXI@Z 00554d80 f i DlgAddPoly.obj
  0002:00039d80       ??_GCDlgAddPoly@@UAEPAXI@Z 00554d80 f i DlgAddPoly.obj
+ 0002:00039d80       ??_ECDlgAddPoly@@UAEPAXI@Z 00554d80 f i DlgAddPoly.obj
  0002:00039df0       ??1CDlgAddPoly@@UAE@XZ     00554df0 f   DlgAddPoly.obj
  0002:00039ef0       ?DoDataExchange@CDlgAddPoly@@MAEXPAVCDataExchange@@@Z 00554ef0 f   DlgAddPoly.obj
  0002:0003a1d0       ?Initialize@CDlgAddPoly@@QAEXHHHHH@Z 005551d0 f   DlgAddPoly.obj
@@ -355,8 +375,8 @@
  0002:0003a780       ?GetThisClass@CDlgAddText@@SGPAUCRuntimeClass@@XZ 00555780 f   DlgAddText.obj
  0002:0003a7c0       ?GetRuntimeClass@CDlgAddText@@UBEPAUCRuntimeClass@@XZ 005557c0 f   DlgAddText.obj
  0002:0003a800       ??0CDlgAddText@@QAE@PAVCWnd@@@Z 00555800 f   DlgAddText.obj
- 0002:0003aaf0       ??_GCDlgAddText@@UAEPAXI@Z 00555af0 f i DlgAddText.obj
  0002:0003aaf0       ??_ECDlgAddText@@UAEPAXI@Z 00555af0 f i DlgAddText.obj
+ 0002:0003aaf0       ??_GCDlgAddText@@UAEPAXI@Z 00555af0 f i DlgAddText.obj
  0002:0003ab60       ??1CDlgAddText@@UAE@XZ     00555b60 f   DlgAddText.obj
  0002:0003ae00       ?DoDataExchange@CDlgAddText@@MAEXPAVCDataExchange@@@Z 00555e00 f   DlgAddText.obj
  0002:0003cd40       ?GetMessageMap@CDlgAddText@@MBEPBUAFX_MSGMAP@@XZ 00557d40 f   DlgAddText.obj
@@ -382,8 +402,8 @@
  0002:0003f100       ?GetThisClass@CDlgAddWidth@@SGPAUCRuntimeClass@@XZ 0055a100 f   DlgAddWidth.obj
  0002:0003f140       ?GetRuntimeClass@CDlgAddWidth@@UBEPAUCRuntimeClass@@XZ 0055a140 f   DlgAddWidth.obj
  0002:0003f180       ??0CDlgAddWidth@@QAE@PAVCWnd@@@Z 0055a180 f   DlgAddWidth.obj
- 0002:0003f1f0       ??_ECDlgAddWidth@@UAEPAXI@Z 0055a1f0 f i DlgAddWidth.obj
  0002:0003f1f0       ??_GCDlgAddWidth@@UAEPAXI@Z 0055a1f0 f i DlgAddWidth.obj
+ 0002:0003f1f0       ??_ECDlgAddWidth@@UAEPAXI@Z 0055a1f0 f i DlgAddWidth.obj
  0002:0003f260       ??1CDlgAddWidth@@UAE@XZ    0055a260 f   DlgAddWidth.obj
  0002:0003f2c0       ?DoDataExchange@CDlgAddWidth@@MAEXPAVCDataExchange@@@Z 0055a2c0 f   DlgAddWidth.obj
  0002:0003f670       ?GetMessageMap@CDlgAddWidth@@MBEPBUAFX_MSGMAP@@XZ 0055a670 f   DlgAddWidth.obj
@@ -409,8 +429,8 @@
  0002:00040c10       ?GetThisClass@CDlgCAD@@SGPAUCRuntimeClass@@XZ 0055bc10 f   DlgCAD.obj
  0002:00040c50       ?GetRuntimeClass@CDlgCAD@@UBEPAUCRuntimeClass@@XZ 0055bc50 f   DlgCAD.obj
  0002:00040c90       ??0CDlgCAD@@QAE@PAVCWnd@@@Z 0055bc90 f   DlgCAD.obj
- 0002:00041130       ??_ECDlgCAD@@UAEPAXI@Z     0055c130 f i DlgCAD.obj
  0002:00041130       ??_GCDlgCAD@@UAEPAXI@Z     0055c130 f i DlgCAD.obj
+ 0002:00041130       ??_ECDlgCAD@@UAEPAXI@Z     0055c130 f i DlgCAD.obj
  0002:000411a0       ??1CDlgCAD@@UAE@XZ         0055c1a0 f   DlgCAD.obj
  0002:00041600       ?DoDataExchange@CDlgCAD@@MAEXPAVCDataExchange@@@Z 0055c600 f   DlgCAD.obj
  0002:00041cd0       ?GetMessageMap@CDlgCAD@@MBEPBUAFX_MSGMAP@@XZ 0055ccd0 f   DlgCAD.obj
@@ -442,10 +462,11 @@
  0002:000462a0       ?GetThisClass@DlgCreateBranch@@SGPAUCRuntimeClass@@XZ 005612a0 f   DlgCreateBranch.obj
  0002:000462e0       ?GetRuntimeClass@DlgCreateBranch@@UBEPAUCRuntimeClass@@XZ 005612e0 f   DlgCreateBranch.obj
  0002:00046320       ??0DlgCreateBranch@@QAE@PAVCWnd@@@Z 00561320 f   DlgCreateBranch.obj
- 0002:00046430       ??_GDlgCreateBranch@@UAEPAXI@Z 00561430 f i DlgCreateBranch.obj
  0002:00046430       ??_EDlgCreateBranch@@UAEPAXI@Z 00561430 f i DlgCreateBranch.obj
+ 0002:00046430       ??_GDlgCreateBranch@@UAEPAXI@Z 00561430 f i DlgCreateBranch.obj
  0002:000464a0       ??1DlgCreateBranch@@UAE@XZ 005614a0 f   DlgCreateBranch.obj
  0002:000465a0       ?DoDataExchange@DlgCreateBranch@@MAEXPAVCDataExchange@@@Z 005615a0 f   DlgCreateBranch.obj
+ 0002:00049f00       ?OnGroupSaveToDXFFile@CFreePcbView@@QAEXXZ 00564f00 f   FreePcbView.obj
  0002:0004ad60       ?GetMessageMap@DlgCreateBranch@@MBEPBUAFX_MSGMAP@@XZ 00565d60 f   DlgCreateBranch.obj
  0002:0004adb0       ?GetThisMessageMap@DlgCreateBranch@@KGPBUAFX_MSGMAP@@XZ 00565db0 f   DlgCreateBranch.obj
  0002:0004adf0       ?Initialize@DlgCreateBranch@@QAEXPAVCFreePcbDoc@@@Z 00565df0 f   DlgCreateBranch.obj
@@ -489,8 +510,8 @@
  0002:0004cdb0       ?GetThisClass@CDlgFindPart@@SGPAUCRuntimeClass@@XZ 00567db0 f   DlgFindPart.obj
  0002:0004cdf0       ?GetRuntimeClass@CDlgFindPart@@UBEPAUCRuntimeClass@@XZ 00567df0 f   DlgFindPart.obj
  0002:0004ce30       ??0CDlgFindPart@@QAE@PAVCWnd@@@Z 00567e30 f   DlgFindPart.obj
- 0002:0004cf70       ??_ECDlgFindPart@@UAEPAXI@Z 00567f70 f i DlgFindPart.obj
  0002:0004cf70       ??_GCDlgFindPart@@UAEPAXI@Z 00567f70 f i DlgFindPart.obj
+ 0002:0004cf70       ??_ECDlgFindPart@@UAEPAXI@Z 00567f70 f i DlgFindPart.obj
  0002:0004cfe0       ??1CDlgFindPart@@UAE@XZ    00567fe0 f   DlgFindPart.obj
  0002:0004d110       ?DoDataExchange@CDlgFindPart@@MAEXPAVCDataExchange@@@Z 00568110 f   DlgFindPart.obj
  0002:0004d840       ?GetMessageMap@CDlgFindPart@@MBEPBUAFX_MSGMAP@@XZ 00568840 f   DlgFindPart.obj
@@ -525,8 +546,8 @@
  0002:00050ce0       ?GetThisClass@CDlgImportOptions@@SGPAUCRuntimeClass@@XZ 0056bce0 f   DlgImportOptions.obj
  0002:00050d20       ?GetRuntimeClass@CDlgImportOptions@@UBEPAUCRuntimeClass@@XZ 0056bd20 f   DlgImportOptions.obj
  0002:00050d60       ??0CDlgImportOptions@@QAE@PAVCWnd@@@Z 0056bd60 f   DlgImportOptions.obj
- 0002:00050f10       ??_GCDlgImportOptions@@UAEPAXI@Z 0056bf10 f i DlgImportOptions.obj
  0002:00050f10       ??_ECDlgImportOptions@@UAEPAXI@Z 0056bf10 f i DlgImportOptions.obj
+ 0002:00050f10       ??_GCDlgImportOptions@@UAEPAXI@Z 0056bf10 f i DlgImportOptions.obj
  0002:00050f80       ??1CDlgImportOptions@@UAE@XZ 0056bf80 f   DlgImportOptions.obj
  0002:00051120       ?DoDataExchange@CDlgImportOptions@@MAEXPAVCDataExchange@@@Z 0056c120 f   DlgImportOptions.obj
  0002:000517a0       ?GetMessageMap@CDlgImportOptions@@MBEPBUAFX_MSGMAP@@XZ 0056c7a0 f   DlgImportOptions.obj
@@ -584,8 +605,8 @@
  0002:0005e020       ?GetThisClass@CDlgIndexing@@SGPAUCRuntimeClass@@XZ 00579020 f   DlgIndexing.obj
  0002:0005e060       ?GetRuntimeClass@CDlgIndexing@@UBEPAUCRuntimeClass@@XZ 00579060 f   DlgIndexing.obj
  0002:0005e0a0       ??0CDlgIndexing@@QAE@PAVCWnd@@@Z 005790a0 f   DlgIndexing.obj
- 0002:0005e110       ??_GCDlgIndexing@@UAEPAXI@Z 00579110 f i DlgIndexing.obj
  0002:0005e110       ??_ECDlgIndexing@@UAEPAXI@Z 00579110 f i DlgIndexing.obj
+ 0002:0005e110       ??_GCDlgIndexing@@UAEPAXI@Z 00579110 f i DlgIndexing.obj
  0002:0005e180       ??1CDlgIndexing@@UAE@XZ    00579180 f   DlgIndexing.obj
  0002:0005e1e0       ?DoDataExchange@CDlgIndexing@@MAEXPAVCDataExchange@@@Z 005791e0 f   DlgIndexing.obj
  0002:0005e240       ?GetMessageMap@CDlgIndexing@@MBEPBUAFX_MSGMAP@@XZ 00579240 f   DlgIndexing.obj
@@ -594,8 +615,8 @@
  0002:0005e320       ?GetThisClass@CDlgLayers@@SGPAUCRuntimeClass@@XZ 00579320 f   DlgLayers.obj
  0002:0005e360       ?GetRuntimeClass@CDlgLayers@@UBEPAUCRuntimeClass@@XZ 00579360 f   DlgLayers.obj
  0002:0005e3a0       ??0CDlgLayers@@QAE@PAVCWnd@@@Z 005793a0 f   DlgLayers.obj
- 0002:0005e470       ??_ECDlgLayers@@UAEPAXI@Z  00579470 f i DlgLayers.obj
  0002:0005e470       ??_GCDlgLayers@@UAEPAXI@Z  00579470 f i DlgLayers.obj
+ 0002:0005e470       ??_ECDlgLayers@@UAEPAXI@Z  00579470 f i DlgLayers.obj
  0002:0005e4e0       ??1CDlgLayers@@UAE@XZ      005794e0 f   DlgLayers.obj
  0002:0005e5a0       ?DoDataExchange@CDlgLayers@@MAEXPAVCDataExchange@@@Z 005795a0 f   DlgLayers.obj
  0002:0005e770       ?GetMessageMap@CDlgLayers@@MBEPBUAFX_MSGMAP@@XZ 00579770 f   DlgLayers.obj
@@ -746,8 +767,8 @@
  0002:00067c20       ?Serialize@?$CArray@HABH@@UAEXAAVCArchive@@@Z 00582c20 f i DlgPartlist.obj
  0002:00067cf0       ?Dump@?$CArray@HABH@@UBEXAAVCDumpContext@@@Z 00582cf0 f i DlgPartlist.obj
  0002:00067dd0       ?AssertValid@?$CArray@HABH@@UBEXXZ 00582dd0 f i DlgPartlist.obj
- 0002:00067f30       ??_E?$CArray@HABH@@UAEPAXI@Z 00582f30 f i DlgPartlist.obj
  0002:00067f30       ??_G?$CArray@HABH@@UAEPAXI@Z 00582f30 f i DlgPartlist.obj
+ 0002:00067f30       ??_E?$CArray@HABH@@UAEPAXI@Z 00582f30 f i DlgPartlist.obj
  0002:00067fa0       ?ElementAt@?$CArray@HABH@@QAEAAHH@Z 00582fa0 f i DlgPartlist.obj
  0002:00068050       ?SetAtGrow@?$CArray@HABH@@QAEXHABH@Z 00583050 f i DlgPartlist.obj
  0002:00068120       ??$SerializeElements@H@@YGXAAVCArchive@@PAHH@Z 00583120 f i DlgPartlist.obj
@@ -756,8 +777,8 @@
  0002:00068450       ?GetThisClass@CDlgPDFLayers@@SGPAUCRuntimeClass@@XZ 00583450 f   DlgPDFLayers.obj
  0002:00068490       ?GetRuntimeClass@CDlgPDFLayers@@UBEPAUCRuntimeClass@@XZ 00583490 f   DlgPDFLayers.obj
  0002:000684d0       ??0CDlgPDFLayers@@QAE@PAVCWnd@@@Z 005834d0 f   DlgPDFLayers.obj
- 0002:000685c0       ??_ECDlgPDFLayers@@UAEPAXI@Z 005835c0 f i DlgPDFLayers.obj
  0002:000685c0       ??_GCDlgPDFLayers@@UAEPAXI@Z 005835c0 f i DlgPDFLayers.obj
+ 0002:000685c0       ??_ECDlgPDFLayers@@UAEPAXI@Z 005835c0 f i DlgPDFLayers.obj
  0002:00068630       ??1CDlgPDFLayers@@UAE@XZ   00583630 f   DlgPDFLayers.obj
  0002:00068710       ?DoDataExchange@CDlgPDFLayers@@MAEXPAVCDataExchange@@@Z 00583710 f   DlgPDFLayers.obj
  0002:00069190       ?GetMessageMap@CDlgPDFLayers@@MBEPBUAFX_MSGMAP@@XZ 00584190 f   DlgPDFLayers.obj
@@ -864,8 +885,8 @@
  0002:00071da0       ?GetThisClass@DlgRenumbers@@SGPAUCRuntimeClass@@XZ 0058cda0 f   DlgRenumbers.obj
  0002:00071de0       ?GetRuntimeClass@DlgRenumbers@@UBEPAUCRuntimeClass@@XZ 0058cde0 f   DlgRenumbers.obj
  0002:00071e20       ??0DlgRenumbers@@QAE@PAVCWnd@@@Z 0058ce20 f   DlgRenumbers.obj
- 0002:00071ff0       ??_EDlgRenumbers@@UAEPAXI@Z 0058cff0 f i DlgRenumbers.obj
  0002:00071ff0       ??_GDlgRenumbers@@UAEPAXI@Z 0058cff0 f i DlgRenumbers.obj
+ 0002:00071ff0       ??_EDlgRenumbers@@UAEPAXI@Z 0058cff0 f i DlgRenumbers.obj
  0002:00072060       ??1DlgRenumbers@@UAE@XZ    0058d060 f   DlgRenumbers.obj
  0002:00072210       ?Ini@DlgRenumbers@@QAEXPAV?$CStringT@DV?$StrTraitMFC_DLL@DV?$ChTraitsCRT@D@ATL@@@@@ATL@@HHH@Z 0058d210 f   DlgRenumbers.obj
  0002:00072290       ?DoDataExchange@DlgRenumbers@@MAEXPAVCDataExchange@@@Z 0058d290 f   DlgRenumbers.obj
@@ -876,8 +897,8 @@
  0002:00072da0       ?GetThisClass@DlgReplaceText@@SGPAUCRuntimeClass@@XZ 0058dda0 f   DlgReplaceText.obj
  0002:00072de0       ?GetRuntimeClass@DlgReplaceText@@UBEPAUCRuntimeClass@@XZ 0058dde0 f   DlgReplaceText.obj
  0002:00072e20       ??0DlgReplaceText@@QAE@PAVCWnd@@@Z 0058de20 f   DlgReplaceText.obj
- 0002:00072fa0       ??_GDlgReplaceText@@UAEPAXI@Z 0058dfa0 f i DlgReplaceText.obj
  0002:00072fa0       ??_EDlgReplaceText@@UAEPAXI@Z 0058dfa0 f i DlgReplaceText.obj
+ 0002:00072fa0       ??_GDlgReplaceText@@UAEPAXI@Z 0058dfa0 f i DlgReplaceText.obj
  0002:00073010       ??1DlgReplaceText@@UAE@XZ  0058e010 f   DlgReplaceText.obj
  0002:00073120       ?DoDataExchange@DlgReplaceText@@MAEXPAVCDataExchange@@@Z 0058e120 f   DlgReplaceText.obj
  0002:00073330       ?GetMessageMap@DlgReplaceText@@MBEPBUAFX_MSGMAP@@XZ 0058e330 f   DlgReplaceText.obj
@@ -887,8 +908,8 @@
  0002:000737f0       ?GetThisClass@CDlgPartlistRep@@SGPAUCRuntimeClass@@XZ 0058e7f0 f   DlgReport.obj
  0002:00073830       ?GetRuntimeClass@CDlgPartlistRep@@UBEPAUCRuntimeClass@@XZ 0058e830 f   DlgReport.obj
  0002:00073870       ??0CDlgPartlistRep@@QAE@PAVCWnd@@@Z 0058e870 f   DlgReport.obj
- 0002:00073a20       ??_GCDlgPartlistRep@@UAEPAXI@Z 0058ea20 f i DlgReport.obj
  0002:00073a20       ??_ECDlgPartlistRep@@UAEPAXI@Z 0058ea20 f i DlgReport.obj
+ 0002:00073a20       ??_GCDlgPartlistRep@@UAEPAXI@Z 0058ea20 f i DlgReport.obj
  0002:00073a90       ??1CDlgPartlistRep@@UAE@XZ 0058ea90 f   DlgReport.obj
  0002:00073be0       ?SaveBomOptions@CDlgPartlistRep@@QAEXXZ 0058ebe0 f   DlgReport.obj
  0002:00073ed0       ?DoDataExchange@CDlgPartlistRep@@MAEXPAVCDataExchange@@@Z 0058eed0 f   DlgReport.obj
@@ -919,8 +940,8 @@
  0002:000789c0       ?GetThisClass@CDlgSetAreaHatch@@SGPAUCRuntimeClass@@XZ 005939c0 f   DlgSetAreaHatch.obj
  0002:00078a00       ?GetRuntimeClass@CDlgSetAreaHatch@@UBEPAUCRuntimeClass@@XZ 00593a00 f   DlgSetAreaHatch.obj
  0002:00078a40       ??0CDlgSetAreaHatch@@QAE@PAVCWnd@@@Z 00593a40 f   DlgSetAreaHatch.obj
- 0002:00078b50       ??_GCDlgSetAreaHatch@@UAEPAXI@Z 00593b50 f i DlgSetAreaHatch.obj
  0002:00078b50       ??_ECDlgSetAreaHatch@@UAEPAXI@Z 00593b50 f i DlgSetAreaHatch.obj
+ 0002:00078b50       ??_GCDlgSetAreaHatch@@UAEPAXI@Z 00593b50 f i DlgSetAreaHatch.obj
  0002:00078bc0       ??1CDlgSetAreaHatch@@UAE@XZ 00593bc0 f   DlgSetAreaHatch.obj
  0002:00078cc0       ?DoDataExchange@CDlgSetAreaHatch@@MAEXPAVCDataExchange@@@Z 00593cc0 f   DlgSetAreaHatch.obj
  0002:00078d00       ?GetMessageMap@CDlgSetAreaHatch@@MBEPBUAFX_MSGMAP@@XZ 00593d00 f   DlgSetAreaHatch.obj
@@ -1006,8 +1027,8 @@
  0002:00083210       ?GetMessageMap@CFreePcbDoc@@MBEPBUAFX_MSGMAP@@XZ 0059e210 f   Documents.obj
  0002:00083260       ?GetThisMessageMap@CFreePcbDoc@@KGPBUAFX_MSGMAP@@XZ 0059e260 f   Documents.obj
  0002:000832a0       ??0CFreePcbDoc@@IAE@XZ     0059e2a0 f   Documents.obj
- 0002:00084000       ??_ECFreePcbDoc@@UAEPAXI@Z 0059f000 f i Documents.obj
  0002:00084000       ??_GCFreePcbDoc@@UAEPAXI@Z 0059f000 f i Documents.obj
+ 0002:00084000       ??_ECFreePcbDoc@@UAEPAXI@Z 0059f000 f i Documents.obj
  0002:00084070       ??1CFreePcbDoc@@UAE@XZ     0059f070 f   Documents.obj
  0002:000848c0       ??_GSMFontUtil@@QAEPAXI@Z  0059f8c0 f i Documents.obj
  0002:00084930       ?SendInitialUpdate@CFreePcbDoc@@QAEXXZ 0059f930 f   Documents.obj
@@ -1086,6 +1107,7 @@
  0002:000ab7f0       ?OnCreatePolyline@CFreePcbDoc@@QAEXXZ 005c67f0 f   Documents.obj
  0002:000acdc0       ?OnProjectCombineBoard@CFreePcbDoc@@QAEXXZ 005c7dc0 f   Documents.obj
  0002:000ad6f0       ?DRC@CFreePcbDoc@@QAEHXZ   005c86f0 f   Documents.obj
+ 0002:000b55a0       ?OnTextCSV@CFreePcbView@@QAEXXZ 005d05a0 f   FreePcbView.obj
  0002:000b7540       ?fabs@@YAMM@Z              005d2540 f i Documents.obj
  0002:000b75a0       _fabsf                     005d25a0 f i Documents.obj
  0002:000b7610       ?GetGerberPathes@CFreePcbDoc@@QAEHV?$CStringT@DV?$StrTraitMFC_DLL@DV?$ChTraitsCRT@D@ATL@@@@@ATL@@@Z 005d2610 f   Documents.obj
@@ -1197,8 +1219,8 @@
  0002:000df280       ??0IDocument@ATL@@IAE@XZ   005fa280 f i Documents.obj
  0002:000df2d0       ?AddRef@IDocument@ATL@@UAEJXZ 005fa2d0 f i Documents.obj
  0002:000df330       ?Release@IDocument@ATL@@UAEJXZ 005fa330 f i Documents.obj
- 0002:000df430       ??_EIDocument@ATL@@UAEPAXI@Z 005fa430 f i Documents.obj
  0002:000df430       ??_GIDocument@ATL@@UAEPAXI@Z 005fa430 f i Documents.obj
+ 0002:000df430       ??_EIDocument@ATL@@UAEPAXI@Z 005fa430 f i Documents.obj
  0002:000df4a0       ??1IDocument@ATL@@UAE@XZ   005fa4a0 f i Documents.obj
  0002:000df4e0       ?LoadFromStream@CDocumentAdapter@CDocument@@UAEJPAUIStream@@K@Z 005fa4e0 f i Documents.obj
  0002:000df610       ??0CTraceFileAndLineInfo@ATL@@QAE@PBDH@Z 005fa610 f i Documents.obj
@@ -1220,8 +1242,8 @@
  0002:000dff50       ?OnRichPreviewBackColorChanged@CDocument@@UAEXXZ 005faf50 f i Documents.obj
  0002:000dff90       ?OnRichPreviewSiteChanged@CDocument@@UAEXXZ 005faf90 f i Documents.obj
  0002:000dffd0       ?InitializeSearchContent@CDocument@@UAEXXZ 005fafd0 f i Documents.obj
- 0002:000e0050       ??_ECDocumentAdapter@CDocument@@UAEPAXI@Z 005fb050 f i Documents.obj
  0002:000e0050       ??_GCDocumentAdapter@CDocument@@UAEPAXI@Z 005fb050 f i Documents.obj
+ 0002:000e0050       ??_ECDocumentAdapter@CDocument@@UAEPAXI@Z 005fb050 f i Documents.obj
  0002:000e0390       ?SwitchToPCB@CFreePcbDoc@@QAEXXZ 005fb390 f   Documents.obj
  0002:000e03f0       ?SwitchToPcbOnButton@CFreePcbDoc@@QAEXXZ 005fb3f0 f   Documents.obj
  0002:000e0540       ?SwitchToPCB@CFreePcbDoc@@QAEXHHH@Z 005fb540 f   Documents.obj
@@ -1310,8 +1332,8 @@
  0002:000ef0e0       ?AddNew@StrList@@QAEHV?$CStringT@DV?$StrTraitMFC_DLL@DV?$ChTraitsCRT@D@ATL@@@@@ATL@@@Z 0060a0e0 f i Documents.obj
  0002:000ef2e0       ?Clear@StrList@@QAEXXZ     0060a2e0 f i Documents.obj
  0002:000ef350       ?RemoveAt@StrList@@QAEXH@Z 0060a350 f i Documents.obj
- 0002:000ef3e0       ??_GStrList@@UAEPAXI@Z     0060a3e0 f i Documents.obj
  0002:000ef3e0       ??_EStrList@@UAEPAXI@Z     0060a3e0 f i Documents.obj
+ 0002:000ef3e0       ??_GStrList@@UAEPAXI@Z     0060a3e0 f i Documents.obj
  0002:000ef450       ??1StrList@@UAE@XZ         0060a450 f i Documents.obj
  0002:000ef510       ?OnFileCam1@CFreePcbDoc@@QAEXXZ 0060a510 f i Documents.obj
  0002:000ef620       ?OnFileCam2@CFreePcbDoc@@QAEXXZ 0060a620 f i Documents.obj
@@ -1349,10 +1371,10 @@
  0002:000f1730       ?Serialize@?$CArray@NABN@@UAEXAAVCArchive@@@Z 0060c730 f i Documents.obj
  0002:000f1800       ?Dump@?$CArray@NABN@@UBEXAAVCDumpContext@@@Z 0060c800 f i Documents.obj
  0002:000f18e0       ?AssertValid@?$CArray@NABN@@UBEXXZ 0060c8e0 f i Documents.obj
- 0002:000f1a40       ??_E?$CArray@PAVCPolyLine@@ABQAV1@@@UAEPAXI@Z 0060ca40 f i Documents.obj
  0002:000f1a40       ??_G?$CArray@PAVCPolyLine@@ABQAV1@@@UAEPAXI@Z 0060ca40 f i Documents.obj
- 0002:000f1ab0       ??_G?$CArray@VCPolyLine@@ABV1@@@UAEPAXI@Z 0060cab0 f i Documents.obj
+ 0002:000f1a40       ??_E?$CArray@PAVCPolyLine@@ABQAV1@@@UAEPAXI@Z 0060ca40 f i Documents.obj
  0002:000f1ab0       ??_E?$CArray@VCPolyLine@@ABV1@@@UAEPAXI@Z 0060cab0 f i Documents.obj
+ 0002:000f1ab0       ??_G?$CArray@VCPolyLine@@ABV1@@@UAEPAXI@Z 0060cab0 f i Documents.obj
  0002:000f1b20       ??_E?$CArray@NABN@@UAEPAXI@Z 0060cb20 f i Documents.obj
  0002:000f1b20       ??_G?$CArray@NABN@@UAEPAXI@Z 0060cb20 f i Documents.obj
  0002:000f1b90       ?ElementAt@?$CArray@VCPolyPt@@ABV1@@@QAEAAVCPolyPt@@H@Z 0060cb90 f i Documents.obj
@@ -1562,8 +1584,7 @@
  0002:00142520       ?NewSelect@CFreePcbView@@QAEHPAXPAVid@@HH@Z 0065d520 f   FreePcbView.obj
  0002:00143300       ?MarkAllOutlinePoly@CFreePcbView@@QAEXHH@Z 0065e300 f   FreePcbView.obj
  0002:00143410       ?ScaleFactor@CFreePcbView@@QAEXNH@Z 0065e410 f   FreePcbView.obj
- 0002:00143b00       ?OnTextReplace@CFreePcbView@@QAEXXZ 0065eb00 f   FreePcbView.obj
- 0002:00144d50       ?SetSize@?$CArray@Vid@@ABV1@@@QAEXHH@Z 0065fd50 f i FreePcbView.obj
+ 0002:00143b00       ?SetSize@?$CArray@Vid@@ABV1@@@QAEXHH@Z 0065eb00 f i FreePcbView.obj
  0002:00145440       ??$SerializeElements@Vid@@@@YGXAAVCArchive@@PAVid@@H@Z 00660440 f i FreePcbView.obj
  0002:00145630       ??$DumpElements@Vid@@@@YGXAAVCDumpContext@@PBVid@@H@Z 00660630 f i FreePcbView.obj
  0002:00145720       ?OnTextChangeV@CFreePcbView@@QAEXXZ 00660720 f   FreePcbView.obj
@@ -1588,55 +1609,35 @@
  0002:001504c0       ?OnCreateMultiPinPartTemplate@CFreePcbView@@QAEHI@Z 0066b4c0 f   FreePcbView.obj
  0002:001506b0       ?FootprintNameTest@CFreePcbView@@QAEXPAV?$CStringT@DV?$StrTraitMFC_DLL@DV?$ChTraitsCRT@D@ATL@@@@@ATL@@0@Z 0066b6b0 f   FreePcbView.obj
  0002:00150870       ?OnGroupSaveToOpenscadFile@CFreePcbView@@QAEXXZ 0066b870 f   FreePcbView.obj
- 0002:00151940       ?OnGroupSaveToDXFFile@CFreePcbView@@QAEXXZ 0066c940 f   FreePcbView.obj
- 0002:00152a30       ?OnAddGroupOrigin@CFreePcbView@@QAEXXZ 0066da30 f   FreePcbView.obj
- 0002:00152ec0       ?OnAddGroupRect@CFreePcbView@@QAEXXZ 0066dec0 f   FreePcbView.obj
- 0002:00153330       ?OnSetSlidingAngle@CFreePcbView@@QAEHI@Z 0066e330 f   FreePcbView.obj
- 0002:00153750       ?OnTextCSV@CFreePcbView@@QAEXXZ 0066e750 f   FreePcbView.obj
- 0002:00154c70       ?RedrawLayers@CFreePcbView@@QAEXXZ 0066fc70 f   FreePcbView.obj
- 0002:001553e0       ??0CPolyLine@@QAE@ABV0@@Z  006703e0 f i FreePcbView.obj
- 0002:00155590       ??0?$CArray@VCPolyPt@@ABV1@@@QAE@XZ 00670590 f i FreePcbView.obj
- 0002:00155620       ??1?$CArray@VCPolyPt@@ABV1@@@UAE@XZ 00670620 f i FreePcbView.obj
- 0002:00155730       ?Serialize@?$CArray@VCPolyPt@@ABV1@@@UAEXAAVCArchive@@@Z 00670730 f i FreePcbView.obj
- 0002:00155800       ?Dump@?$CArray@VCPolyPt@@ABV1@@@UBEXAAVCDumpContext@@@Z 00670800 f i FreePcbView.obj
- 0002:001558e0       ?AssertValid@?$CArray@VCPolyPt@@ABV1@@@UBEXXZ 006708e0 f i FreePcbView.obj
- 0002:00155a40       ??0?$CArray@VCContourData@@ABV1@@@QAE@XZ 00670a40 f i FreePcbView.obj
- 0002:00155ad0       ??1?$CArray@VCContourData@@ABV1@@@UAE@XZ 00670ad0 f i FreePcbView.obj
- 0002:00155be0       ?Serialize@?$CArray@VCContourData@@ABV1@@@UAEXAAVCArchive@@@Z 00670be0 f i FreePcbView.obj
- 0002:00155cb0       ?Dump@?$CArray@VCContourData@@ABV1@@@UBEXAAVCDumpContext@@@Z 00670cb0 f i FreePcbView.obj
- 0002:00155d90       ?AssertValid@?$CArray@VCContourData@@ABV1@@@UBEXXZ 00670d90 f i FreePcbView.obj
- 0002:00155ef0       ??0?$CArray@PAVdl_element@@ABQAV1@@@QAE@XZ 00670ef0 f i FreePcbView.obj
- 0002:00155f80       ??1?$CArray@PAVdl_element@@ABQAV1@@@UAE@XZ 00670f80 f i FreePcbView.obj
- 0002:00156090       ?Serialize@?$CArray@PAVdl_element@@ABQAV1@@@UAEXAAVCArchive@@@Z 00671090 f i FreePcbView.obj
- 0002:00156160       ?Dump@?$CArray@PAVdl_element@@ABQAV1@@@UBEXAAVCDumpContext@@@Z 00671160 f i FreePcbView.obj
- 0002:00156240       ?AssertValid@?$CArray@PAVdl_element@@ABQAV1@@@UBEXXZ 00671240 f i FreePcbView.obj
- 0002:001563a0       ??_E?$CArray@VCPolyPt@@ABV1@@@UAEPAXI@Z 006713a0 f i FreePcbView.obj
- 0002:001563a0       ??_G?$CArray@VCPolyPt@@ABV1@@@UAEPAXI@Z 006713a0 f i FreePcbView.obj
- 0002:00156410       ??_E?$CArray@VCContourData@@ABV1@@@UAEPAXI@Z 00671410 f i FreePcbView.obj
- 0002:00156410       ??_G?$CArray@VCContourData@@ABV1@@@UAEPAXI@Z 00671410 f i FreePcbView.obj
- 0002:00156480       ??_G?$CArray@PAVdl_element@@ABQAV1@@@UAEPAXI@Z 00671480 f i FreePcbView.obj
- 0002:00156480       ??_E?$CArray@PAVdl_element@@ABQAV1@@@UAEPAXI@Z 00671480 f i FreePcbView.obj
- 0002:001564f0       ?SetSize@?$CArray@VCPolyPt@@ABV1@@@QAEXHH@Z 006714f0 f i FreePcbView.obj
- 0002:00156bd0       ??0CPolyPt@@QAE@HHH@Z      00671bd0 f i FreePcbView.obj
- 0002:00156c40       ??$SerializeElements@VCPolyPt@@@@YGXAAVCArchive@@PAVCPolyPt@@H@Z 00671c40 f i FreePcbView.obj
- 0002:00156e30       ??$DumpElements@VCPolyPt@@@@YGXAAVCDumpContext@@PBVCPolyPt@@H@Z 00671e30 f i FreePcbView.obj
- 0002:00156f20       ?SetSize@?$CArray@VCContourData@@ABV1@@@QAEXHH@Z 00671f20 f i FreePcbView.obj
- 0002:001574c0       ??$SerializeElements@VCContourData@@@@YGXAAVCArchive@@PAVCContourData@@H@Z 006724c0 f i FreePcbView.obj
- 0002:001576b0       ??$DumpElements@VCContourData@@@@YGXAAVCDumpContext@@PBVCContourData@@H@Z 006726b0 f i FreePcbView.obj
- 0002:001577a0       ?SetSize@?$CArray@PAVdl_element@@ABQAV1@@@QAEXHH@Z 006727a0 f i FreePcbView.obj
- 0002:00157d30       ??$SerializeElements@PAVdl_element@@@@YGXAAVCArchive@@PAPAVdl_element@@H@Z 00672d30 f i FreePcbView.obj
- 0002:00157f20       ??$DumpElements@PAVdl_element@@@@YGXAAVCDumpContext@@PBQAVdl_element@@H@Z 00672f20 f i FreePcbView.obj
- 0002:00158010       ?InsertAt@?$CArray@VCPolyLine@@ABV1@@@QAEXHABVCPolyLine@@H@Z 00673010 f i FreePcbView.obj
- 0002:001583b0       ??4CPolyLine@@QAE?AV0@V0@@Z 006733b0 f i FreePcbView.obj
- 0002:001584e0       ?RemoveAt@?$CArray@VCPolyLine@@ABV1@@@QAEXHH@Z 006734e0 f i FreePcbView.obj
- 0002:001586c0       ??A?$CArray@PAVCText@@ABQAV1@@@QAEAAPAVCText@@H@Z 006736c0 f i FreePcbView.obj
- 0002:00158720       ??0?$CArray@Vid@@ABV1@@@QAE@XZ 00673720 f i FreePcbView.obj
- 0002:001587b0       ?GetSize@?$CArray@Vid@@ABV1@@@QBEHXZ 006737b0 f i FreePcbView.obj
- 0002:001587f0       ??A?$CArray@Vid@@ABV1@@@QAEAAVid@@H@Z 006737f0 f i FreePcbView.obj
- 0002:00158850       ??$_Pow_int@N@@YANNH@Z     00673850 f i FreePcbView.obj
- 0002:00158900       ??$strcpy@$0CA@@@YAPADAAY0CA@DPBD@Z 00673900 f i FreePcbView.obj
- 0002:00158970       ?ElementAt@?$CArray@PAVCText@@ABQAV1@@@QAEAAPAVCText@@H@Z 00673970 f i FreePcbView.obj
- 0002:00158a20       ?ElementAt@?$CArray@Vid@@ABV1@@@QAEAAVid@@H@Z 00673a20 f i FreePcbView.obj
+ 0002:00151940       ?OnGroupSaveToFPCFile@CFreePcbView@@QAEXXZ 0066c940 f   FreePcbView.obj
+ 0002:00152ec0       ?OnAddGroupOrigin@CFreePcbView@@QAEXXZ 0066dec0 f   FreePcbView.obj
+ 0002:00153330       ?OnAddGroupRect@CFreePcbView@@QAEXXZ 0066e330 f   FreePcbView.obj
+ 0002:00153750       ?OnSetSlidingAngle@CFreePcbView@@QAEHI@Z 0066e750 f   FreePcbView.obj
+ 0002:00155620       ??0?$CArray@VCPolyPt@@ABV1@@@QAE@XZ 00670620 f i FreePcbView.obj
+ 0002:00155800       ?Serialize@?$CArray@VCPolyPt@@ABV1@@@UAEXAAVCArchive@@@Z 00670800 f i FreePcbView.obj
+ 0002:001558e0       ?Dump@?$CArray@VCPolyPt@@ABV1@@@UBEXAAVCDumpContext@@@Z 006708e0 f i FreePcbView.obj
+ 0002:00155ad0       ??0?$CArray@VCContourData@@ABV1@@@QAE@XZ 00670ad0 f i FreePcbView.obj
+ 0002:00155cb0       ?Serialize@?$CArray@VCContourData@@ABV1@@@UAEXAAVCArchive@@@Z 00670cb0 f i FreePcbView.obj
+ 0002:00155d90       ?Dump@?$CArray@VCContourData@@ABV1@@@UBEXAAVCDumpContext@@@Z 00670d90 f i FreePcbView.obj
+ 0002:00155f80       ??0?$CArray@PAVdl_element@@ABQAV1@@@QAE@XZ 00670f80 f i FreePcbView.obj
+ 0002:00156160       ?Serialize@?$CArray@PAVdl_element@@ABQAV1@@@UAEXAAVCArchive@@@Z 00671160 f i FreePcbView.obj
+ 0002:00156240       ?Dump@?$CArray@PAVdl_element@@ABQAV1@@@UBEXAAVCDumpContext@@@Z 00671240 f i FreePcbView.obj
+ 0002:00156410       ??_G?$CArray@VCPolyPt@@ABV1@@@UAEPAXI@Z 00671410 f i FreePcbView.obj
+ 0002:00156410       ??_E?$CArray@VCPolyPt@@ABV1@@@UAEPAXI@Z 00671410 f i FreePcbView.obj
+ 0002:00156480       ??_E?$CArray@VCContourData@@ABV1@@@UAEPAXI@Z 00671480 f i FreePcbView.obj
+ 0002:00156480       ??_G?$CArray@VCContourData@@ABV1@@@UAEPAXI@Z 00671480 f i FreePcbView.obj
+ 0002:001564f0       ??_E?$CArray@PAVdl_element@@ABQAV1@@@UAEPAXI@Z 006714f0 f i FreePcbView.obj
+ 0002:001564f0       ??_G?$CArray@PAVdl_element@@ABQAV1@@@UAEPAXI@Z 006714f0 f i FreePcbView.obj
+ 0002:00156c40       ??0CPolyPt@@QAE@HHH@Z      00671c40 f i FreePcbView.obj
+ 0002:00156f20       ??$DumpElements@VCPolyPt@@@@YGXAAVCDumpContext@@PBVCPolyPt@@H@Z 00671f20 f i FreePcbView.obj
+ 0002:001577a0       ??$DumpElements@VCContourData@@@@YGXAAVCDumpContext@@PBVCContourData@@H@Z 006727a0 f i FreePcbView.obj
+ 0002:00158010       ??$DumpElements@PAVdl_element@@@@YGXAAVCDumpContext@@PBQAVdl_element@@H@Z 00673010 f i FreePcbView.obj
+ 0002:001584e0       ??4CPolyLine@@QAE?AV0@V0@@Z 006734e0 f i FreePcbView.obj
+ 0002:00158720       ??A?$CArray@PAVCText@@ABQAV1@@@QAEAAPAVCText@@H@Z 00673720 f i FreePcbView.obj
+ 0002:001587f0       ?GetSize@?$CArray@Vid@@ABV1@@@QBEHXZ 006737f0 f i FreePcbView.obj
+ 0002:00158850       ??A?$CArray@Vid@@ABV1@@@QAEAAVid@@H@Z 00673850 f i FreePcbView.obj
+ 0002:00158970       ??$strcpy@$0CA@@@YAPADAAY0CA@DPBD@Z 00673970 f i FreePcbView.obj
+ 0002:00158a20       ?ElementAt@?$CArray@PAVCText@@ABQAV1@@@QAEAAPAVCText@@H@Z 00673a20 f i FreePcbView.obj
  0002:00158ad0       ?GetMessageMap@CFreeasyApp@@MBEPBUAFX_MSGMAP@@XZ 00673ad0 f   FreeSch.obj
  0002:00158b20       ?GetThisMessageMap@CFreeasyApp@@KGPBUAFX_MSGMAP@@XZ 00673b20 f   FreeSch.obj
  0002:00158b60       ??0CFreeasyApp@@QAE@XZ     00673b60 f   FreeSch.obj
@@ -1706,8 +1707,8 @@
  0002:00162ab0       ?GetSize@?$CArray@HH@@QBEHXZ 0067dab0 f i Gerber.obj
  0002:00162af0       ?GetAt@?$CArray@HH@@QAEAAHH@Z 0067daf0 f i Gerber.obj
  0002:00162ba0       ?Add@?$CArray@HH@@QAEHH@Z  0067dba0 f i Gerber.obj
- 0002:00162c10       ??_E?$CArray@VCAperture@@V1@@@UAEPAXI@Z 0067dc10 f i Gerber.obj
  0002:00162c10       ??_G?$CArray@VCAperture@@V1@@@UAEPAXI@Z 0067dc10 f i Gerber.obj
+ 0002:00162c10       ??_E?$CArray@VCAperture@@V1@@@UAEPAXI@Z 0067dc10 f i Gerber.obj
  0002:00162c80       ??_GCAperture@@QAEPAXI@Z   0067dc80 f i Gerber.obj
  0002:00162cf0       ?SetSize@?$CArray@VCAperture@@V1@@@QAEXHH@Z 0067dcf0 f i Gerber.obj
  0002:001633f0       ?ElementAt@?$CArray@VCAperture@@V1@@@QAEAAVCAperture@@H@Z 0067e3f0 f i Gerber.obj
@@ -1754,8 +1755,8 @@
  0002:00172ee0       ?Serialize@?$CArray@PAUINDEX@@ABQAU1@@@UAEXAAVCArchive@@@Z 0068dee0 f i LibPointer.obj
  0002:00172fb0       ?Dump@?$CArray@PAUINDEX@@ABQAU1@@@UBEXAAVCDumpContext@@@Z 0068dfb0 f i LibPointer.obj
  0002:00173090       ?AssertValid@?$CArray@PAUINDEX@@ABQAU1@@@UBEXXZ 0068e090 f i LibPointer.obj
- 0002:001731f0       ??_E?$CArray@PAUINDEX@@ABQAU1@@@UAEPAXI@Z 0068e1f0 f i LibPointer.obj
  0002:001731f0       ??_G?$CArray@PAUINDEX@@ABQAU1@@@UAEPAXI@Z 0068e1f0 f i LibPointer.obj
+ 0002:001731f0       ??_E?$CArray@PAUINDEX@@ABQAU1@@@UAEPAXI@Z 0068e1f0 f i LibPointer.obj
  0002:00173260       ?SetSize@?$CArray@PAUINDEX@@ABQAU1@@@QAEXHH@Z 0068e260 f i LibPointer.obj
  0002:001737f0       ??$SerializeElements@PAUINDEX@@@@YGXAAVCArchive@@PAPAUINDEX@@H@Z 0068e7f0 f i LibPointer.obj
  0002:001739e0       ??$DumpElements@PAUINDEX@@@@YGXAAVCDumpContext@@PBQAUINDEX@@H@Z 0068e9e0 f i LibPointer.obj
@@ -1766,8 +1767,8 @@
  0002:00173c90       ?GetMessageMap@CMainFrame@@MBEPBUAFX_MSGMAP@@XZ 0068ec90 f   MainFrm.obj
  0002:00173ce0       ?GetThisMessageMap@CMainFrame@@KGPBUAFX_MSGMAP@@XZ 0068ece0 f   MainFrm.obj
  0002:00173d20       ??0CMainFrame@@IAE@XZ      0068ed20 f   MainFrm.obj
- 0002:00173e40       ??_GCMainFrame@@UAEPAXI@Z  0068ee40 f i MainFrm.obj
  0002:00173e40       ??_ECMainFrame@@UAEPAXI@Z  0068ee40 f i MainFrm.obj
+ 0002:00173e40       ??_GCMainFrame@@UAEPAXI@Z  0068ee40 f i MainFrm.obj
  0002:00173eb0       ??1CMainFrame@@UAE@XZ      0068eeb0 f   MainFrm.obj
  0002:00173f80       ?OnCreate@CMainFrame@@IAEHPAUtagCREATESTRUCTA@@@Z 0068ef80 f   MainFrm.obj
  0002:00174860       ?PreCreateWindow@CMainFrame@@UAEHAAUtagCREATESTRUCTA@@@Z 0068f860 f   MainFrm.obj
@@ -1812,8 +1813,8 @@
  0002:00178d50       ?GetThisClass@CDlgNetlistSettings@@SGPAUCRuntimeClass@@XZ 00693d50 f   NetlistSettings.obj
  0002:00178d90       ?GetRuntimeClass@CDlgNetlistSettings@@UBEPAUCRuntimeClass@@XZ 00693d90 f   NetlistSettings.obj
  0002:00178dd0       ??0CDlgNetlistSettings@@QAE@PAVCWnd@@@Z 00693dd0 f   NetlistSettings.obj
- 0002:00178f20       ??_GCDlgNetlistSettings@@UAEPAXI@Z 00693f20 f i NetlistSettings.obj
  0002:00178f20       ??_ECDlgNetlistSettings@@UAEPAXI@Z 00693f20 f i NetlistSettings.obj
+ 0002:00178f20       ??_GCDlgNetlistSettings@@UAEPAXI@Z 00693f20 f i NetlistSettings.obj
  0002:00178f90       ??1CDlgNetlistSettings@@UAE@XZ 00693f90 f   NetlistSettings.obj
  0002:001790b0       ?Ini@CDlgNetlistSettings@@QAEXPAVCPageList@@H@Z 006940b0 f   NetlistSettings.obj
  0002:00179180       ?DoDataExchange@CDlgNetlistSettings@@MAEXPAVCDataExchange@@@Z 00694180 f   NetlistSettings.obj
@@ -2395,8 +2396,8 @@
  0002:001e5390       ?imbue@?$basic_filebuf@DU?$char_traits@D@std@@@std@@MAEXABVlocale@2@@Z 00700390 f i utility.obj
  0002:001e5400       ??_E?$basic_ifstream@DU?$char_traits@D@std@@@std@@UAEPAXI@Z 00700400 f i utility.obj
  0002:001e5400       ??_G?$basic_ifstream@DU?$char_traits@D@std@@@std@@UAEPAXI@Z 00700400 f i utility.obj
- 0002:001e5480       ??_E?$basic_filebuf@DU?$char_traits@D@std@@@std@@UAEPAXI@Z 00700480 f i utility.obj
  0002:001e5480       ??_G?$basic_filebuf@DU?$char_traits@D@std@@@std@@UAEPAXI@Z 00700480 f i utility.obj
+ 0002:001e5480       ??_E?$basic_filebuf@DU?$char_traits@D@std@@@std@@UAEPAXI@Z 00700480 f i utility.obj
  0002:001e54f0       ??1?$_String_iterator@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@XZ 007004f0 f i utility.obj
  0002:001e5540       ??1?$_String_const_iterator@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAE@XZ 00700540 f i utility.obj
  0002:001e5590       ??1?$_Iterator012@Urandom_access_iterator_tag@std@@DHPBDABDU_Iterator_base12@2@@std@@QAE@XZ 00700590 f i utility.obj
@@ -4153,10 +4154,13 @@
  0003:00000c68       ??_C@_0O@JEAOLBFL@?2freecds?4exe?$CC?$AA@ 0075cc68     BomInTable.obj
  0003:00000c78       ??_C@_09IDBDDKFN@2?$HM?4n_page?$AA@ 0075cc78     BomInTable.obj
  0003:00000c84       ??_C@_0BI@DBEFEFL@add_new_page?3?5?$CCPage?5?$CFd?$CC?$AA@ 0075cc84     BomInTable.obj
+ 0003:00000c9c       ??_C@_03EIKILCDN@10?6?$AA@ 0075cc9c     FreePcbView.obj
  0003:00000ca0       ??_C@_01EEMJAFIK@?6?$AA@   0075cca0     BomInTable.obj
  0003:00000ca4       ??_C@_0DB@GFLMJMGM@description?3?5?$CC?$CFs?$CC?5?$CFd?5?$CFd?5?$CFd?5?$CFd?5?$CFd@ 0075cca4     BomInTable.obj
+ 0003:00000cd8       ??_C@_04LCMPBGFC@YYYY?$AA@ 0075ccd8     TextList.obj
  0003:00000ce0       ??_C@_0BK@HLNMBKLF@?5?5corner?3?5?$CFd?5?$CFd?5?$CFd?5?$CFd?5?$CFd?6?$AA@ 0075cce0     BomInTable.obj
  0003:00000d00       ??_C@_0CD@KBIFKKDG@polyline?3?5?$CFd?5?$CFd?5?$CFd?5?$CFd?5?$CFd?5?$CFd?5?$CFd?5?$CF@ 0075cd00     BomInTable.obj
+ 0003:00000d24       ??_C@_04LOCMGGPM@?$CFd?$CFs?$AA@ 0075cd24     TextList.obj
  0003:00000d2c       ??_C@_05OCJEJOIA@?$FLend?$FN?$AA@ 0075cd2c     BomInTable.obj
  0003:00000d34       ??_C@_0N@FHEPEHCO@add_new_page?$AA@ 0075cd34     BomInTable.obj
  0003:00000d44       ??_C@_05FGLIGOPP@?$CC?$CIcol?$AA@ 0075cd44     BomInTable.obj
@@ -4180,6 +4184,7 @@
  0003:00000e14       ??_C@_13COJANIEC@?$AA0?$AA?$AA@ 0075ce14     BomInTable.obj
  0003:00000e18       ??_C@_1GG@IBHODCJK@?$AAd?$AA?3?$AA?2?$AAf?$AAr?$AAe?$AAe?$AAp?$AAc?$AAb?$AAd?$AAe?$AAv?$AA?2?$AAs?$AAc?$AAh?$AAe?$AAm?$AAa?$AAt?$AAi?$AAc?$AA?5?$AAc?$AAo?$AAn?$AAs?$AAt?$AAr?$AAu?$AAc@ 0075ce18     BomInTable.obj
  0003:00000e80       ??_C@_0M@NAOOGPIN@?$HMfill_mask?3?$AA@ 0075ce80     SpeedFiles.obj
+ 0003:00000e8c       ??_C@_06NIOGMAFK@PCB?3?5?5?$AA@ 0075ce8c     FreePcbView.obj
  0003:00000e94       ??_C@_0BL@MIMODBOD@?2related_files?2reports?2bom?$AA@ 0075ce94     BomInTable.obj
  0003:00000eb4       ??_C@_01LFCBOECM@?4?$AA@   0075ceb4     BomInTable.obj
  0003:00000eb8       ??_C@_04OEHMGJNM@?4col?$AA@ 0075ceb8     BomInTable.obj
@@ -4203,6 +4208,7 @@
  0003:00000f3c       ??_C@_04IFPAFBLM@?4url?$AA@ 0075cf3c     BomInTable.obj
  0003:00000f44       ??_C@_02KNHHEEKP@?5?5?$AA@ 0075cf44     BomInTable.obj
  0003:00000f48       ??_C@_0CA@EJLGBBBI@?M?e?b?n?g?l?n?f?m?n?5?n?r?j?p?$PL?r?$PM?5?t?$OA?i?k?5bom?4cds?$AA@ 0075cf48     BomInTable.obj
+ 0003:00000f68       ??_C@_04HJPCFDOP@line?$AA@ 0075cf68     FreePcbView.obj
  0003:00000f70       ??_C@_0BM@IGEHMLNN@Unable?5to?5open?5file?5bom?4cds?$AA@ 0075cf70     BomInTable.obj
  0003:00000f94       ??_C@_07DDDMHEIG@bmp_src?$AA@ 0075cf94     BomInTable.obj
  0003:00000fa0       ??_C@_08MAIKLLAG@polyline?$AA@ 0075cfa0     BomInTable.obj
@@ -4216,11 +4222,13 @@
  0003:00001004       ??_C@_05CPACEEEE@?4row2?$AA@ 0075d004     BomInTable.obj
  0003:0000100c       ??_C@_0M@PPJNHBMP@description?$AA@ 0075d00c     BomInTable.obj
  0003:0000101c       ??_C@_0CD@CCFOOFNH@?2related_files?2reports?2bom?2bom?4c@ 0075d01c     BomInTable.obj
+ 0003:00001040       ??_C@_02NACJHKEP@8?6?$AA@  0075d040     FreePcbView.obj
  0003:00001048       ??_C@_01NBENCBCI@?$CK?$AA@ 0075d048     BomInTable.obj
  0003:0000104c       ??_C@_04LCMACLFG@?4txt?$AA@ 0075d04c     BomInTable.obj
  0003:00001054       ??_C@_08OEMLMMDD@?$FO?$HMLINK?3?5?$AA@ 0075d054     BomInTable.obj
  0003:00001060       ??_C@_01IHBHIGKO@?0?$AA@   0075d060     BomInTable.obj
  0003:00001068       ??_C@_0ED@NFEKICP@0123456789ABCDEFGHIJKLMNOPQRSTUV@ 0075d068     BomInTable.obj
+ 0003:000010ac       ??_C@_08GGFGIKMP@not_used?$AA@ 0075d0ac     FreePcbView.obj
  0003:000010b8       ??_C@_0FB@LMHGDHBC@c?3?2program?5files?5?$CIx86?$CJ?2microsoft@ 0075d0b8     BomInTable.obj
  0003:0000110c       ??_C@_0N@CLCBABFP@?$HMfill_board?3?$AA@ 0075d10c     SpeedFiles.obj
  0003:00001120       ??_7?$CArray@PAVCText@@ABQAV1@@@6B@ 0075d120     BomInTable.obj
@@ -4229,10 +4237,12 @@
  0003:0000115c       ??_C@_09HCLNAIDE@?5elements?$AA@ 0075d15c     BomInTable.obj
  0003:00001168       ??_C@_0M@NKOIIJN@CDlgCompare?$AA@ 0075d168     CCompare.obj
  0003:00001178       ?classCDlgCompare@CDlgCompare@@2UCRuntimeClass@@B 0075d178     CCompare.obj
+ 0003:00001194       ??_C@_09GNPHBLMN@DETAILS?$GA?$GA?$AA@ 0075d194     FreePcbView.obj
  0003:000013b8       ??_C@_0N@NHFHICPE@?$HMfont_width?3?$AA@ 0075d3b8     SpeedFiles.obj
  0003:000013c8       ??_C@_0BF@MBAJGJGM@https?3?1?1niconson?4com?$AA@ 0075d3c8     ReportFiles.obj
  0003:000013e0       ??_C@_0BB@BIPCDCGM@Made?5in?5Niconson?$AA@ 0075d3e0     ReportFiles.obj
- 0003:000013f4       ??_C@_0CA@BIGMIJIB@There?5are?5no?5objects?5to?5insert?$CB?$AA@ 0075d3f4     FreePcbView.obj
+ 0003:000013f4       ??_C@_0BK@NOFDBHII@?M?e?r?5?n?a?z?e?j?r?n?b?5?d?k?$PP?5?b?q?r?$OA?b?j?h?$CB?$AA@ 0075d3f4     FreePcbView.obj
+ 0003:00001410       ??_C@_0BD@LOBCKDMF@?$CK?$CK?$CK?$CK?$CK?5DONE?5?$CK?$CK?$CK?$CK?$CK?$AN?6?$AA@ 0075d410     FreePcbView.obj
  0003:00001424       ??_C@_0DB@EGDNJMAB@d?3?2freepcbdev?2schematic?5construc@ 0075d424     CCompare.obj
  0003:00001460       ??_C@_09GMHCDLKN@?$CFs?5and?5?$CFs?$AA@ 0075d460     CCompare.obj
  0003:0000146c       ??_C@_02DKCKIIND@?$CFs?$AA@ 0075d46c     CCompare.obj
@@ -4257,6 +4267,8 @@
  0003:00001538       ??_C@_06CEENMHKF@no_net?$AA@ 0075d538     CCompare.obj
  0003:00001540       ??_C@_0BA@CLPENFP@Text?5?$CFd?5from?5?$CFd?$AA@ 0075d540     CCompare.obj
  0003:0000155c       ??_7CDlgCompare@@6B@       0075d55c     CCompare.obj
+ 0003:000016ec       ??_C@_0DB@MLOOJCFD@d?3?2freepcbdev?2schematic?5construc@ 0075d6ec     TextList.obj
+ 0003:00001720       ??_C@_0BJ@CDNGCHOO@PCB?5file?5?$CFs?5not?5found?3?9?$CI?$AA@ 0075d720     FreePcbView.obj
  0003:0000173c       ??_C@_0BE@FGIOBEED@Net?5list?5file?5names?$AA@ 0075d73c     CCompare.obj
  0003:00001754       ??_C@_0BA@FBDDMBJM@Compare?5Netlist?$AA@ 0075d754     CCompare.obj
  0003:00001768       ??_C@_0CH@MLFHABPG@?$NN?r?n?r?5?o?p?n?e?j?r?5?h?l?e?e?r?5?r?n?k?$PM?j?n?5?n?d?m?s?5?q?r@ 0075d768     CCompare.obj
@@ -4270,22 +4282,32 @@
  0003:0000184c       ??_C@_04JJJKKMIO@?4net?$AA@ 0075d84c     CCompare.obj
  0003:00001854       ??_C@_0CJ@JCBKDOMK@?M?e?b?n?g?l?n?f?m?n?5?o?n?l?e?m?$PP?r?$PM?5?l?e?q?r?$OA?l?h?5?o?h?m?$PL@ 0075d854     CCompare.obj
  0003:00001888       ??_C@_0DA@IGCGFML@?4?5?S?5?n?d?m?n?c?n?5?o?h?m?$OA?5?e?q?r?$PM?5?n?o?h?q?$OA?m?h?e?0?5?$OA@ 0075d888     CCompare.obj
+ 0003:000018b8       ??_C@_09GNHLDLMG@open?4scad?$AA@ 0075d8b8     FreePcbView.obj
  0003:000018c4       ??_C@_0CM@KENAKEC@It?5is?5not?5possible?5to?5swap?5the?5p@ 0075d8c4     CCompare.obj
  0003:000018f8       ??_C@_0DJ@DKMMCJJ@?5part?4?5One?5pin?5has?5a?5description@ 0075d8f8     CCompare.obj
+ 0003:00001934       ??_C@_0L@BMHJHDEA@union?$CI?$CJ?6?$HL?6?$AA@ 0075d934     FreePcbView.obj
  0003:00001940       ??_C@_0FH@KJHEBNNE@?U?n?r?h?r?e?5?w?r?n?a?$PL?5?o?p?n?c?p?$OA?l?l?$OA?5?o?n?l?e?m?$PP?k?$OA?5@ 0075d940     CCompare.obj
+ 0003:00001998       ??_C@_0P@JCLLHPBG@?$HMstart_number?3?$AA@ 0075d998     FreePcbView.obj
  0003:000019a8       ??_C@_0FA@LLFABLCG@Do?5you?5want?5the?5program?5to?5swap?5@ 0075d9a8     CCompare.obj
+ 0003:000019f8       ??_C@_0O@PLKAJINK@?2FreePcb?4exe?$CC?$AA@ 0075d9f8     FreePcbView.obj
  0003:00001a08       ??_C@_0BM@BHOLDFIO@?$NN?r?$OA?5?o?e?w?$OA?r?m?$OA?$PP?5?o?k?$OA?r?$OA?5?g?$OA?y?h?y?e?m?$OA?$AA@ 0075da08     CCompare.obj
  0003:00001a2c       ??_C@_0BG@NFGOHMGD@This?5PCB?5is?5protected?$AA@ 0075da2c     CCompare.obj
  0003:00001a48       ??_C@_0DL@LPPJDLOL@?$NN?r?$OA?5?q?r?p?$OA?m?h?v?$OA?5?m?e?5?o?p?h?m?$OA?d?k?e?f?h?r?5?j?5?r?e@ 0075da48     CCompare.obj
+ 0003:00001a84       ??_C@_09GMNGMLCI@?2buf?4fpc?$CC?$AA@ 0075da84     FreePcbView.obj
  0003:00001a90       ??_C@_0DC@JPJKNLDF@This?5page?5does?5not?5belong?5to?5the@ 0075da90     CCompare.obj
  0003:00001acc       ??_C@_03NBFOK@net?$AA@     0075dacc     CCompare.obj
  0003:00001ad0       ??_C@_0MH@LINKMHKH@?Q?m?$OA?w?$OA?k?$OA?5?q?c?e?m?e?p?h?p?s?i?r?e?5?q?o?h?q?n?j?5?q?n?e?d@ 0075dad0     CCompare.obj
+ 0003:00001b98       ??_C@_0CA@BIGMIJIB@There?5are?5no?5objects?5to?5insert?$CB?$AA@ 0075db98     FreePcbView.obj
  0003:00001bc0       ??_C@_0LD@GPLKEKNB@First?0?5generate?5a?5PADS?9PCB?5netli@ 0075dbc0     CCompare.obj
+ 0003:00001c74       ??_C@_0CB@PIFOKNBJ@?M?e?r?5?$PN?k?e?l?e?m?r?n?b?5?d?k?$PP?5?o?e?p?e?r?$OA?q?j?h?b?$OA?m?h?$PP@ 0075dc74     FreePcbView.obj
  0003:00001c98       ??_C@_0BL@CMLIFCHA@?M?e?b?n?g?l?n?f?m?n?5?n?r?j?p?$PL?r?$PM?5?t?$OA?i?k?3?5?6?$AA@ 0075dc98     CCompare.obj
  0003:00001cb8       ??_C@_0BH@OOCPJMDA@Unable?5to?5open?5file?3?5?6?$AA@ 0075dcb8     CCompare.obj
  0003:00001cd4       ??_C@_0BC@LDDGJHOG@CComponentNoteExt?$AA@ 0075dcd4     ComponentNoteExt.obj
  0003:00001cec       ?classCComponentNoteExt@CComponentNoteExt@@2UCRuntimeClass@@B 0075dcec     ComponentNoteExt.obj
+ 0003:00001d48       ??_C@_0P@BDEAHGAE@?2?O?k?$OA?r?T?n?p?l?4exe?$CC?$AA@ 0075dd48     FreePcbView.obj
  0003:00001d5c       ??_7CComponentNoteExt@@6B@ 0075dd5c     ComponentNoteExt.obj
+ 0003:00001eec       ??_C@_0DF@JOIJFKKA@Error?5code?5238?4?5Please?5report?5th@ 0075deec     FreePcbView.obj
+ 0003:00001f24       ??_C@_0BB@KLBKEANC@Empty?5Ref?5List?$CB?8?$AA@ 0075df24     FreePcbView.obj
  0003:00001f3c       ??_C@_04FAGKJGMG@?4pdf?$AA@ 0075df3c     ComponentNoteExt.obj
  0003:00001f44       ??_C@_05NBBLIKEF@?4docx?$AA@ 0075df44     ComponentNoteExt.obj
  0003:00001f4c       ??_C@_04FGAJMCLA@?2?$CK?4?$CK?$AA@ 0075df4c     ComponentNoteExt.obj
@@ -4294,12 +4316,15 @@
  0003:00001f9c       ??_C@_0P@FOIEIDDC@?2related_files?$AA@ 0075df9c     ComponentNoteExt.obj
  0003:00001fb0       ??_C@_0BJ@GOHCIGHL@?2related_files?2Component?$AA@ 0075dfb0     ComponentNoteExt.obj
  0003:00001fd0       ??_C@_1FK@HKKPLNLD@?$AAd?$AA?3?$AA?2?$AAf?$AAr?$AAe?$AAe?$AAp?$AAc?$AAb?$AAd?$AAe?$AAv?$AA?2?$AAs?$AAc?$AAh?$AAe?$AAm?$AAa?$AAt?$AAi?$AAc?$AA?5?$AAc?$AAo?$AAn?$AAs?$AAt?$AAr?$AAu?$AAc@ 0075dfd0     Cuid.obj
+ 0003:0000202c       ??_C@_0BB@JBMMNEEF@?$HMpage_number?3?5?$CFd?$AA@ 0075e02c     FreePcbView.obj
  0003:00002040       __real@4000000000000000    0075e040     DesignRules.obj
  0003:00002050       __real@413360f000000000    0075e050     DesignRules.obj
  0003:0000205c       ??_C@_0DE@MLJJAAAH@d?3?2freepcbdev?2schematic?5construc@ 0075e05c     DesignRules.obj
+ 0003:00002090       ??_C@_0M@LOJBOGN@?$FLgraphics?$FN?6?$AA@ 0075e090     FreePcbView.obj
  0003:000020a0       __real@0000000000000000    0075e0a0     DisplayList.obj
  0003:000020b0       __real@4093d80000000000    0075e0b0     DisplayList.obj
  0003:000020bc       ??_C@_0DE@PGPMMNOM@d?3?2freepcbdev?2schematic?5construc@ 0075e0bc     DisplayList.obj
+ 0003:000020f0       ??_C@_0L@BBDNDALP@?$FLoptions?$FN?6?$AA@ 0075e0f0     FreePcbView.obj
  0003:000020fc       ??_C@_0BJ@DDIKDBAH@restore?5original?5objects?$AA@ 0075e0fc     DisplayList.obj
  0003:00002120       __real@403e000000000000    0075e120     DisplayList.obj
  0003:00002130       __real@4024000000000000    0075e130     DisplayList.obj
@@ -4307,17 +4332,24 @@
  0003:00002150       __real@406fe00000000000    0075e150     DisplayList.obj
  0003:00002160       __real@4059000000000000    0075e160     DisplayList.obj
  0003:00002170       ??_C@_1GI@BHABBEDB@?$AAd?$AA?3?$AA?2?$AAf?$AAr?$AAe?$AAe?$AAp?$AAc?$AAb?$AAd?$AAe?$AAv?$AA?2?$AAs?$AAc?$AAh?$AAe?$AAm?$AAa?$AAt?$AAi?$AAc?$AA?5?$AAc?$AAo?$AAn?$AAs?$AAt?$AAr?$AAu?$AAc@ 0075e170     DisplayList.obj
+ 0003:000021d8       ??_C@_0BD@PHNGHKFD@module?5texts?5?$CI?$CJ?5?$HL?6?$AA@ 0075e1d8     FreePcbView.obj
  0003:000021f0       __real@4010000000000000    0075e1f0     DisplayList.obj
  0003:00002200       __real@4014000000000000    0075e200     DisplayList.obj
  0003:00002210       __real@3fe0000000000000    0075e210     DisplayList.obj
  0003:0000221c       ??_C@_1DM@MMGFGJEG@?$AAm?$AA_?$AAd?$AAr?$AAa?$AAg?$AA_?$AAs?$AAt?$AAy?$AAl?$AAe?$AA1?$AA?5?$AA?$DN?$AA?$DN?$AA?5?$AAD?$AAS?$AAS?$AA_?$AAS?$AAT?$AAR?$AAA?$AAI?$AAG?$AAH?$AAT?$AA?$AA@ 0075e21c     DisplayList.obj
+ 0003:00002258       ??_C@_05JEDBCGNM@LINE?6?$AA@ 0075e258     FreePcbView.obj
  0003:00002264       ??_C@_1DM@FJBFLNND@?$AAm?$AA_?$AAd?$AAr?$AAa?$AAg?$AA_?$AAs?$AAt?$AAy?$AAl?$AAe?$AA0?$AA?5?$AA?$DN?$AA?$DN?$AA?5?$AAD?$AAS?$AAS?$AA_?$AAS?$AAT?$AAR?$AAA?$AAI?$AAG?$AAH?$AAT?$AA?$AA@ 0075e264     DisplayList.obj
+ 0003:000022a0       ??_C@_02NNLOPPJJ@2?6?$AA@  0075e2a0     FreePcbView.obj
  0003:000022ac       __real@c2b40000            0075e2ac     DisplayList.obj
  0003:000022b4       ??_7?$CArray@VCPoint@@ABV1@@@6B@ 0075e2b4     DisplayList.obj
  0003:000022d0       ??_7?$CArray@PAUCTemplate@@ABQAU1@@@6B@ 0075e2d0     DisplayList.obj
  0003:000022e8       ??_C@_0BC@KHHBAGNL@CDlgAddMaskCutout?$AA@ 0075e2e8     DlgAddMaskCutout.obj
  0003:00002300       ?classCDlgAddMaskCutout@CDlgAddMaskCutout@@2UCRuntimeClass@@B 0075e300     DlgAddMaskCutout.obj
+ 0003:0000231c       ??_C@_02NODKCLPH@0?6?$AA@  0075e31c     FreePcbView.obj
+ 0003:00002438       ??_C@_0DE@DGAHFAJM@Unable?5to?5copy?5pictures?4?6source?3@ 0075e438     FreePcbView.obj
  0003:00002474       ??_7CDlgAddMaskCutout@@6B@ 0075e474     DlgAddMaskCutout.obj
+ 0003:00002604       ??_C@_0CK@ICGKGDDP@Objects?5will?5be?5pasted?5from?5the?5@ 0075e604     FreePcbView.obj
+ 0003:00002630       ??_C@_0CB@PLBCKOFK@Text?5search?5among?5parts?5?$CFs?4?4?4?3?$AN?6@ 0075e630     FreePcbView.obj
  0003:00002654       ??_C@_0CH@LDAMCFJH@?X?h?p?h?m?$OA?5?b?m?e?5?d?h?$OA?o?$OA?g?n?m?$OA?5?$CI?n?r?51?5?d?n?599@ 0075e654     DlgAddMaskCutout.obj
  0003:00002684       ??_C@_0CD@GIIDCIJF@Width?5out?5of?5range?5?$CI1?5to?5999?5mil@ 0075e684     DlgAddMaskCutout.obj
  0003:000026b0       ??_C@_02DNCLAJDG@MM?$AA@   0075e6b0     DlgAddMaskCutout.obj
@@ -4338,6 +4370,8 @@
  0003:0000270c       ??_C@_0N@DONNMJEN@CDlgAddMerge?$AA@ 0075e70c     DlgAddMerge.obj
  0003:0000271c       ?classCDlgAddMerge@CDlgAddMerge@@2UCRuntimeClass@@B 0075e71c     DlgAddMerge.obj
  0003:0000276c       ??_7CDlgAddMerge@@6B@      0075e76c     DlgAddMerge.obj
+ 0003:000028fc       ??_C@_0DJ@NLAKNPA@Text?5search?5among?5parts?5with?5foo@ 0075e8fc     FreePcbView.obj
+ 0003:00002938       ??_C@_08HOPMDNCE@open?4dxf?$AA@ 0075e938     FreePcbView.obj
  0003:0000294c       ??_C@_07CLDOPFAM@?B?b?e?d?h?r?e?$AA@ 0075e94c     DlgAddMerge.obj
  0003:00002958       ??_C@_0M@KELPMHPF@Enter?5value?$AA@ 0075e958     DlgAddMerge.obj
  0003:00002968       ??_C@_0P@BJBONJHJ@?D?k?h?m?$OA?5?q?e?c?l?e?m?r?$OA?$AA@ 0075e968     DlgAddMerge.obj
@@ -4388,7 +4422,9 @@
  0003:00002d00       ??_C@_08PJDIHONO@Merge?9?$CFs?$AA@ 0075ed00     DlgAddMerge.obj
  0003:00002d0c       ??_C@_07GGADEGEP@Merge?91?$AA@ 0075ed0c     DlgAddMerge.obj
  0003:00002d18       ??_C@_0DE@IOCOCNN@?M?e?d?n?o?s?q?r?h?l?$OA?$PP?5?q?r?p?n?j?$OA?4?5?H?l?$PP?5?m?e?5?l?n?f?e@ 0075ed18     DlgAddMerge.obj
+ 0003:00002d4c       ??_C@_09IIGKOONL@ENTITIES?6?$AA@ 0075ed4c     FreePcbView.obj
  0003:00002d58       ??_C@_0DM@GJFIAJGP@Illegal?5string?4?5The?5name?5can?5not@ 0075ed58     DlgAddMerge.obj
+ 0003:00002d94       ??_C@_08MHNHEFHN@SECTION?6?$AA@ 0075ed94     FreePcbView.obj
  0003:00002da0       ??_C@_0EK@PMNAPPLG@?M?e?d?n?o?s?q?r?h?l?$OA?$PP?5?q?r?p?n?j?$OA?4?5?H?l?$PP?5?m?e?5?l?n?f?e@ 0075eda0     DlgAddMerge.obj
  0003:00002df8       ??_C@_0FD@DMKCJHIB@Illegal?5string?4?5The?5name?5can?5not@ 0075edf8     DlgAddMerge.obj
  0003:00002e5c       ??_C@_09MEHKOFDP@?2?1?3?$CK?$DP?$CC?$DM?$DO?$HM?$AA@ 0075ee5c     DlgAddMerge.obj
@@ -4405,9 +4441,15 @@
  0003:00003010       ??_C@_0M@LLFCABMC@CDlgAddPoly?$AA@ 0075f010     DlgAddPoly.obj
  0003:00003020       ?classCDlgAddPoly@CDlgAddPoly@@2UCRuntimeClass@@B 0075f020     DlgAddPoly.obj
  0003:0000308c       ??_7CDlgAddPoly@@6B@       0075f08c     DlgAddPoly.obj
+ 0003:0000321c       ??_C@_0CO@GPILPCGB@?5?5?5?5Text?5found?3?5?$CFs?5?$CI?5x?5?$DN?5?$CFd?5Nm?0?5@ 0075f21c     FreePcbView.obj
+ 0003:0000324c       ??_C@_0BL@JEIPLGAF@Complex?5part?5has?5no?5suffix?$AA@ 0075f24c     FreePcbView.obj
  0003:0000326c       ??_C@_0M@IPOODCIH@CDlgAddText?$AA@ 0075f26c     DlgAddText.obj
  0003:0000327c       ?classCDlgAddText@CDlgAddText@@2UCRuntimeClass@@B 0075f27c     DlgAddText.obj
+ 0003:000033c8       ??_C@_0CD@DMDLIBHH@Unable?5to?5align?5colinear?5segment@ 0075f3c8     FreePcbView.obj
+ 0003:000033ec       ??_C@_0BH@LJOAEPAL@corner?3?5?$CFd?5?$CFd?5?$CFd?5?$CFd?50?6?$AA@ 0075f3ec     FreePcbView.obj
  0003:0000340c       ??_7CDlgAddText@@6B@       0075f40c     DlgAddText.obj
+ 0003:0000359c       ??_C@_0CF@CDCIKMFB@This?5group?5already?5has?5a?5merge?5n@ 0075f59c     FreePcbView.obj
+ 0003:000035c4       ??_C@_0BJ@GIEMGMMI@line?3?5?$CFd?5?$CFd?5?$CFd?5?$CFd?5?91?5?91?6?$AA@ 0075f5c4     FreePcbView.obj
  0003:000035ec       ??_C@_0DF@OAPKFPKN@?N?o?v?h?h?5?r?e?j?q?r?$OA?5?q?n?5?q?j?p?$PL?r?$PL?l?h?5?o?n?k?$PP?l?h?5@ 0075f5ec     DlgAddText.obj
  0003:0000362c       ??_C@_06EHLADMMM@key?3?5?$CC?$AA@ 0075f62c     DlgAddText.obj
  0003:00003634       ??_C@_03ELHPEHJG@?$CC?5?$CC?$AA@ 0075f634     DlgAddText.obj
@@ -4430,9 +4472,13 @@
  0003:000037f4       ??_C@_0BE@KOBOHBKB@Illegal?5string?5?$CC?$CFs?$CC?$AA@ 0075f7f4     DlgAddText.obj
  0003:0000380c       ??_C@_02MLAOPLGG@?$CC?$EA?$AA@ 0075f80c     DlgAddText.obj
  0003:00003810       ??_C@_0LB@MJEGEKJB@?D?e?r?$OA?k?$PM?5?s?f?e?5?q?s?y?e?q?r?b?s?e?r?5?m?$OA?5?$PN?r?n?i?5?q?r@ 0075f810     DlgAddText.obj
+ 0003:000038c4       ??_C@_0BI@EIAKJAMK@corner?3?5?$CFd?5?$CFd?5?$CFd?5?$CFd?5?$CFd?6?$AA@ 0075f8c4     FreePcbView.obj
  0003:000038e8       ??_C@_0JH@KBCLHLGK@Part?5already?5exists?5on?5this?5page@ 0075f8e8     DlgAddText.obj
+ 0003:00003980       ??_C@_0BH@MCEGENG@?$CFs?3?5?$CFd?5?$CFd?5?$CFd?5?$CFd?5?91?5?91?6?$AA@ 0075f980     FreePcbView.obj
  0003:000039a0       ??_C@_0LC@HKEHBDKL@?D?e?r?$OA?k?$PM?5?o?p?h?q?s?r?q?r?b?s?e?r?5?m?$OA?5?q?r?p?$OA?m?h?v?e?5@ 0075f9a0     DlgAddText.obj
+ 0003:00003a58       ??_7?$CArray@PAVdl_element@@ABQAV1@@@6B@ 0075fa58     FreePcbView.obj
  0003:00003a78       ??_C@_0JD@GEMPKOLF@Part?5present?5on?5page?5?$CFd?5?9?5?$CFs?4?6?6?$CI@ 0075fa78     DlgAddText.obj
+ 0003:00003b0c       ??_C@_0BL@JDOCOFMG@The?5axis?5tilt?5angle?5is?50?40?$AA@ 0075fb0c     FreePcbView.obj
  0003:00003b28       ??_C@_01JOAMLHOP@?9?$AA@   0075fb28     DlgAddText.obj
  0003:00003b2c       ??_C@_0CF@DMKCOGDN@?M?e?d?n?o?s?q?r?h?l?n?e?5?n?a?n?g?m?$OA?w?e?m?h?e?5?d?e?r?$OA?k?h?5@ 0075fb2c     DlgAddText.obj
  0003:00003b58       ??_C@_0CC@DFCOOCID@Illegal?5reference?5designator?5?$CC?$CFs@ 0075fb58     DlgAddText.obj
@@ -4458,18 +4504,31 @@
  0003:00003c7c       ??_C@_0N@IHNMGOJG@CDlgAddWidth?$AA@ 0075fc7c     DlgAddWidth.obj
  0003:00003c8c       ?classCDlgAddWidth@CDlgAddWidth@@2UCRuntimeClass@@B 0075fc8c     DlgAddWidth.obj
  0003:00003cdc       ??_7CDlgAddWidth@@6B@      0075fcdc     DlgAddWidth.obj
+ 0003:00003e6c       ??_C@_0DH@JGPHKFLA@The?5Complex?5Part?5must?5not?5contai@ 0075fe6c     FreePcbView.obj
+ 0003:00003ea8       ??_7?$CArray@VCPolyPt@@ABV1@@@6B@ 0075fea8     FreePcbView.obj
  0003:00003ebc       ??_C@_0N@HAHPIHPO@CDlgAttrSync?$AA@ 0075febc     DlgAttrSync.obj
  0003:00003ecc       ?classCDlgAttrSync@CDlgAttrSync@@2UCRuntimeClass@@B 0075fecc     DlgAttrSync.obj
+ 0003:000040f0       ??_C@_0DP@PENOAKEA@The?5Reference?5Designator?5must?5no@ 007600f0     FreePcbView.obj
+ 0003:00004130       ??_C@_09NIFHCHDK@?2open?4dxf?$AA@ 00760130     FreePcbView.obj
  0003:0000415c       ??_7CDlgAttrSync@@6B@      0076015c     DlgAttrSync.obj
+ 0003:000042ec       ??_C@_0DA@BHHPGDBG@First?5select?5only?5the?5text?5you?5w@ 007602ec     FreePcbView.obj
+ 0003:00004320       ??_7?$CArray@VCContourData@@ABV1@@@6B@ 00760320     FreePcbView.obj
  0003:00004340       ??_C@_0BDB@MEBNHMJE@?B?j?k?$PO?w?$OA?$PP?5?$PN?r?s?5?n?o?v?h?$PO?0?5?b?$PL?5?s?q?r?$OA?m?$OA?b?k?h?b@ 00760340     DlgAttrSync.obj
+ 0003:00004474       ??_C@_0CM@FPEAOEKG@?N?x?h?a?j?$OA?$CB?5?H?e?p?$OA?p?u?h?w?e?q?j?$OA?$PP?5?d?e?r?$OA?k?$PM?5?m?e?5@ 00760474     FreePcbView.obj
  0003:000044b0       ??_C@_0BDM@FEPAEPC@By?5enabling?5this?5option?0?5you?5set@ 007604b0     DlgAttrSync.obj
+ 0003:000045ec       ??_C@_0DF@MMEGJAKN@?Q?n?q?r?$OA?b?m?$OA?$PP?5?d?e?r?$OA?k?$PM?5?d?n?k?f?m?$OA?5?q?q?$PL?k?$OA?r?$PM?q@ 007605ec     FreePcbView.obj
  0003:00004630       ??_C@_0BHP@OOCGPEOD@?E?q?k?h?5?m?$OA?5?j?$OA?j?n?i?9?k?h?a?n?5?q?r?p?$OA?m?h?v?e?5?s?5?b?$OA@ 00760630     DlgAttrSync.obj
+ 0003:000047b0       ??_C@_0CJ@MACJPCBK@Complex?5part?5must?5link?5to?5differ@ 007607b0     FreePcbView.obj
+ 0003:000047dc       ??_C@_0BF@CFEFCNIF@file_version?3?52?4427?6?$AA@ 007607dc     FreePcbView.obj
  0003:00004800       ??_C@_0BIN@IDNPIMFP@If?5on?5any?5page?5you?5have?5a?5modifi@ 00760800     DlgAttrSync.obj
+ 0003:00004990       ??_C@_0DE@NABKGJKP@Complex?5part?5contains?5different?5@ 00760990     FreePcbView.obj
  0003:000049e0       ??_C@_0JM@KOIMJLIJ@?E?q?k?h?5?q?r?p?$OA?m?h?v?$OA?5?b?j?k?$PO?w?e?m?$OA?5?b?5?q?o?h?q?n?j?5@ 007609e0     DlgAttrSync.obj
  0003:00004aa0       ??_C@_0JL@GCMHIIKH@If?5the?5page?5is?5included?5in?5the?5n@ 00760aa0     DlgAttrSync.obj
  0003:00004b5c       ??_C@_07LFEDEKKL@CDlgCAD?$AA@ 00760b5c     DlgCAD.obj
  0003:00004b68       ?classCDlgCAD@CDlgCAD@@2UCRuntimeClass@@B 00760b68     DlgCAD.obj
+ 0003:00004ca0       ??_C@_0CP@GOEEAEOH@?N?x?h?a?j?$OA?3?5?h?e?p?$OA?p?u?h?w?e?q?j?$OA?$PP?5?d?e?r?$OA?k?$PM?5?m?e?5@ 00760ca0     FreePcbView.obj
  0003:00004cdc       ??_7CDlgCAD@@6B@           00760cdc     DlgCAD.obj
+ 0003:00004e6c       ??_C@_0DK@LGODBI@The?5suffix?5of?5a?5complex?5part?5mus@ 00760e6c     FreePcbView.obj
  0003:00004ebc       ??_C@_0DL@PKBLBIPK@?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?$CK?5DONE?5?$CK@ 00760ebc     DlgCAD.obj
  0003:00004f04       ??_C@_05FJMIFMML@Run?3?5?$AA@ 00760f04     DlgCAD.obj
  0003:00004f0c       ??_C@_02PCIJFNDE@?$AN?6?$AA@ 00760f0c     DlgCAD.obj
@@ -4530,9 +4589,11 @@
  0003:000054a0       ??_C@_0BA@BMPJKOBI@CDlgChangeLayer?$AA@ 007614a0     DlgChangeLayer.obj
  0003:000054b4       ?classCDlgChangeLayer@CDlgChangeLayer@@2UCRuntimeClass@@B 007614b4     DlgChangeLayer.obj
  0003:00005504       ??_7CDlgChangeLayer@@6B@   00761504     DlgChangeLayer.obj
+ 0003:00005694       ??_C@_0DH@EKOOHMHH@Objects?5have?5not?5been?5loaded?4?5Pr@ 00761694     FreePcbView.obj
  0003:000056e4       ??_C@_0BA@OIGEMOIE@DlgCreateBranch?$AA@ 007616e4     DlgCreateBranch.obj
  0003:000056f8       ?classDlgCreateBranch@DlgCreateBranch@@2UCRuntimeClass@@B 007616f8     DlgCreateBranch.obj
  0003:000057c4       ??_7DlgCreateBranch@@6B@   007617c4     DlgCreateBranch.obj
+ 0003:00005954       ??_C@_0DL@EKIGDALN@linear_extrude?$CI?$CFs?$CK2?0?5center?$DNtrue@ 00761954     FreePcbView.obj
  0003:000059a8       ??_C@_1HA@JABMBBPL@?$AAd?$AA?3?$AA?2?$AAf?$AAr?$AAe?$AAe?$AAp?$AAc?$AAb?$AAd?$AAe?$AAv?$AA?2?$AAs?$AAc?$AAh?$AAe?$AAm?$AAa?$AAt?$AAi?$AAc?$AA?5?$AAc?$AAo?$AAn?$AAs?$AAt?$AAr?$AAu?$AAc@ 007619a8     DlgCreateBranch.obj
  0003:00005a30       ??_C@_0O@JDIALEME@related_files?$AA@ 00761a30     DlgCreateBranch.obj
  0003:00005a40       ??_C@_09PMNEFJFD@pcb_name?3?$AA@ 00761a40     DlgCreateBranch.obj
@@ -4560,12 +4621,15 @@
  0003:00005bdc       ??_C@_06CGOJDMOF@DlgDRC?$AA@ 00761bdc     DlgDRC.obj
  0003:00005be4       ?classDlgDRC@DlgDRC@@2UCRuntimeClass@@B 00761be4     DlgDRC.obj
  0003:00005cac       ??_7DlgDRC@@6B@            00761cac     DlgDRC.obj
+ 0003:00005e3c       ??_C@_0CP@KHHMNBMC@Some?5segments?5were?5removed?5due?5t@ 00761e3c     FreePcbView.obj
  0003:00005e8c       ??_C@_0BD@MBGLLCNE@DlgEditBoardCorner?$AA@ 00761e8c     DlgEditBoardCorner.obj
  0003:00005ea4       ?classDlgEditBoardCorner@DlgEditBoardCorner@@2UCRuntimeClass@@B 00761ea4     DlgEditBoardCorner.obj
  0003:00005f2c       ??_7DlgEditBoardCorner@@6B@ 00761f2c     DlgEditBoardCorner.obj
+ 0003:000060bc       ??_C@_0CP@CODBPBKM@Want?5to?5use?5Openscad?5font?5to?5red@ 007620bc     FreePcbView.obj
  0003:0000610c       ??_C@_0N@CHDDDHOJ@CDlgFindPart?$AA@ 0076210c     DlgFindPart.obj
  0003:0000611c       ?classCDlgFindPart@CDlgFindPart@@2UCRuntimeClass@@B 0076211c     DlgFindPart.obj
  0003:000061a4       ??_7CDlgFindPart@@6B@      007621a4     DlgFindPart.obj
+ 0003:00006334       ??_C@_0CH@DLMCDGIJ@?S?q?r?$OA?m?n?b?k?e?m?5?s?c?n?k?5?m?$OA?j?k?n?m?$OA?5?n?q?h?5?p?$OA?b?m@ 00762334     FreePcbView.obj
  0003:00006384       ??_C@_02PGHGPEOM@?91?$AA@  00762384     DlgFindPart.obj
  0003:00006388       ??_C@_0BA@ECKGBOAH@CDlgImportMerge?$AA@ 00762388     DlgImportMerge.obj
  0003:0000639c       ?classCDlgImportMerge@CDlgImportMerge@@2UCRuntimeClass@@B 0076239c     DlgImportMerge.obj
@@ -5811,132 +5875,104 @@
  0003:0001fe78       ??_C@_0FF@MFIHJCOO@?J?n?k?h?w?e?q?r?b?n?5?b?e?p?x?h?m?5?o?n?k?h?k?h?m?h?h?5?d?n?k?f@ 0077be78     FreePcbView.obj
  0003:0001fee0       ??_C@_0FI@BPGKNBGP@The?5number?5of?5polyline?5vertices?5@ 0077bee0     FreePcbView.obj
  0003:0001ff4c       ??_C@_0CJ@BFIIELAI@Page?$CFd?8?$HMname?3?5?$CFs?4?$CFd?4pdf?8?$CFs?5Print@ 0077bf4c     FreePcbView.obj
- 0003:0001ff80       ??_C@_0BA@FNIKLIND@Mirror?5Texts?4?4?4?$AA@ 0077bf80     FreePcbView.obj
- 0003:0001ff94       ??_C@_0BA@NBLJDFDP@Mirror?5Lines?4?4?4?$AA@ 0077bf94     FreePcbView.obj
- 0003:0001ffa8       ??_C@_0BK@NOFDBHII@?M?e?r?5?n?a?z?e?j?r?n?b?5?d?k?$PP?5?b?q?r?$OA?b?j?h?$CB?$AA@ 0077bfa8     FreePcbView.obj
- 0003:0001ffd8       ??_C@_08GDANGNHP@?2buf?4cds?$AA@ 0077bfd8     FreePcbView.obj
+ 0003:0001ff80       ??_C@_02IGABKLBP@?$HMC?$AA@ 0077bf80     FreePcbView.obj
+ 0003:0001ff94       ??_C@_0BA@FNIKLIND@Mirror?5Texts?4?4?4?$AA@ 0077bf94     FreePcbView.obj
+ 0003:0001ffa8       ??_C@_0BA@NBLJDFDP@Mirror?5Lines?4?4?4?$AA@ 0077bfa8     FreePcbView.obj
  0003:0001ffe8       ??_C@_0LN@IKMKIHAK@?4?4?$JH?5?o?n?q?k?e?d?m?$PP?$PP?5?d?e?r?$OA?k?$PM?5?$PN?r?n?c?n?5?r?h?o?$OA?0@ 0077bfe8     FreePcbView.obj
  0003:000200d0       ??_C@_0KL@JNJKEKIP@?4?4?5is?5the?5last?5part?5of?5this?5type@ 0077c0d0     FreePcbView.obj
  0003:000201a0       ??_C@_0HJ@CMMNOFBB@?M?e?5?p?e?j?n?l?e?m?d?s?e?r?q?$PP?5?s?d?$OA?k?$PP?r?$PM?5?r?s?5?h?k?h?5@ 0077c1a0     FreePcbView.obj
  0003:00020238       ??_C@_0GH@OHEGNGPL@It?5is?5not?5recommended?5to?5delete?5@ 0077c238     FreePcbView.obj
- 0003:000202b4       ??_C@_0O@BKOBCJAO@?5?$CInot?5found?$CJ?6?$AA@ 0077c2b4     FreePcbView.obj
- 0003:000202c4       ??_C@_0CB@PIFOKNBJ@?M?e?r?5?$PN?k?e?l?e?m?r?n?b?5?d?k?$PP?5?o?e?p?e?r?$OA?q?j?h?b?$OA?m?h?$PP@ 0077c2c4     FreePcbView.obj
- 0003:000202ec       ??_C@_0BB@GFIBBONK@No?5items?5to?5drag?$AA@ 0077c2ec     FreePcbView.obj
+ 0003:000202b4       ??_C@_08GDANGNHP@?2buf?4cds?$AA@ 0077c2b4     FreePcbView.obj
+ 0003:000202c4       ??_C@_0O@BKOBCJAO@?5?$CInot?5found?$CJ?6?$AA@ 0077c2c4     FreePcbView.obj
  0003:00020300       ??_C@_0EG@GJDCEOFA@Please?5click?5by?8outline?5to?5updat@ 0077c300     FreePcbView.obj
  0003:00020358       ??_C@_0EB@JJDLCKD@Error?5code?5238?4?5?O?n?f?$OA?k?s?i?q?r?$OA?0?5?q?n?n?a@ 0077c358     FreePcbView.obj
- 0003:000203a8       ??_C@_0DF@JOIJFKKA@Error?5code?5238?4?5Please?5report?5th@ 0077c3a8     FreePcbView.obj
- 0003:000203e8       ??_C@_08LCBDGEBH@?$CFs?$CFd?$CFs?$CFd?$AA@ 0077c3e8     FreePcbView.obj
+ 0003:000203a8       ??_C@_0BB@GFIBBONK@No?5items?5to?5drag?$AA@ 0077c3a8     FreePcbView.obj
  0003:000203f8       __real@43cfffffff800000    0077c3f8     FreePcbView.obj
  0003:00020408       ??_C@_0EK@FEGIKDBJ@?M?e?b?n?g?l?n?f?m?n?5?q?j?n?o?h?p?n?b?$OA?r?$PM?5?m?e?j?n?r?n?p?$PL?e@ 0077c408     FreePcbView.obj
- 0003:00020460       ??_C@_0DE@DGAHFAJM@Unable?5to?5copy?5pictures?4?6source?3@ 0077c460     FreePcbView.obj
+ 0003:00020460       ??_C@_08LCBDGEBH@?$CFs?$CFd?$CFs?$CFd?$AA@ 0077c460     FreePcbView.obj
  0003:000204a0       ??_C@_0NN@PHJNIPHN@?J?n?m?v?e?o?v?h?$PP?5?p?e?d?$OA?j?r?n?p?$OA?5?q?u?e?l?5?m?e?5?o?n?g?b@ 0077c4a0     FreePcbView.obj
  0003:000205b0       ??_C@_0PJ@IPGGOJCM@The?5concept?5of?5the?5circuit?5edito@ 0077c5b0     FreePcbView.obj
- 0003:000206dc       ??_C@_06DMHPAFFD@?2?$CK?4cds?$AA@ 0077c6dc     FreePcbView.obj
- 0003:000206e4       ??_C@_0BN@OCBNJDGG@?M?e?5?s?d?$OA?k?n?q?$PM?5?q?n?u?p?$OA?m?h?r?$PM?5?t?$OA?i?k?5?$CFs?$AA@ 0077c6e4     FreePcbView.obj
- 0003:00020708       ??_C@_0BH@FPEJMMBA@Unable?5to?5save?5file?5?$CFs?$AA@ 0077c708     FreePcbView.obj
+ 0003:000206e4       ??_C@_06DMHPAFFD@?2?$CK?4cds?$AA@ 0077c6e4     FreePcbView.obj
+ 0003:00020708       ??_C@_0BN@OCBNJDGG@?M?e?5?s?d?$OA?k?n?q?$PM?5?q?n?u?p?$OA?m?h?r?$PM?5?t?$OA?i?k?5?$CFs?$AA@ 0077c708     FreePcbView.obj
  0003:00020728       ??_C@_0ME@KLIJBDJI@?B?5?n?r?j?k?$PO?w?e?m?m?n?l?5?p?e?f?h?l?e?5?l?$OA?q?j?h?5?d?e?r?$OA?k@ 0077c728     FreePcbView.obj
  0003:00020818       ??_C@_0NG@JODBNCJK@In?5the?5disabled?5mode?5of?5the?5part@ 0077c818     FreePcbView.obj
- 0003:00020918       ??_C@_0CK@CEOCCMKG@?N?a?z?e?j?r?$PL?5?a?s?d?s?r?5?b?q?r?$OA?b?k?e?m?$PL?5?h?g?5?a?s?t?e?p@ 0077c918     FreePcbView.obj
- 0003:0002094c       ??_C@_0CK@ICGKGDDP@Objects?5will?5be?5pasted?5from?5the?5@ 0077c94c     FreePcbView.obj
+ 0003:00020918       ??_C@_0BH@FPEJMMBA@Unable?5to?5save?5file?5?$CFs?$AA@ 0077c918     FreePcbView.obj
+ 0003:0002094c       ??_C@_0CK@CEOCCMKG@?N?a?z?e?j?r?$PL?5?a?s?d?s?r?5?b?q?r?$OA?b?k?e?m?$PL?5?h?g?5?a?s?t?e?p@ 0077c94c     FreePcbView.obj
  0003:00020980       ??_C@_0NA@FACHEANP@?B?$PL?5?m?e?5?l?n?f?e?r?e?5?b?$PL?p?e?g?$OA?r?$PM?5?c?p?s?o?o?s?5?n?a?z@ 0077c980     FreePcbView.obj
  0003:00020a80       ??_C@_0NP@LBBAJDOE@You?5cannot?5cut?5out?5a?5group?5of?5ob@ 0077ca80     FreePcbView.obj
  0003:00020b90       ??_C@_0LA@HEKHLHAG@?$NN?r?$OA?5?c?p?s?o?o?$OA?5?q?n?d?e?p?f?h?r?5?$PN?k?e?l?e?m?r?$PL?5?$PN?k?k@ 0077cb90     FreePcbView.obj
  0003:00020c68       ??_C@_0KN@MNBNELKM@This?5group?5contains?5arc?5elements@ 0077cc68     FreePcbView.obj
- 0003:00020d38       ??_C@_0BD@LOBCKDMF@?$CK?$CK?$CK?$CK?$CK?5DONE?5?$CK?$CK?$CK?$CK?$CK?$AN?6?$AA@ 0077cd38     FreePcbView.obj
- 0003:00020d50       ??_C@_0N@DLIHEEP@?5?5?5?5net?5?$CFs?$AN?6?$AA@ 0077cd50     FreePcbView.obj
- 0003:00020d60       ??_C@_0O@MAECHJ@?5?5?5?5part?5?$CFs?$AN?6?$AA@ 0077cd60     FreePcbView.obj
- 0003:00020d70       ??_C@_0CN@NHJFEOFN@Text?5search?5among?5parts?5with?5foo@ 0077cd70     FreePcbView.obj
- 0003:00020da8       ??_C@_0DJ@NLAKNPA@Text?5search?5among?5parts?5with?5foo@ 0077cda8     FreePcbView.obj
- 0003:00020dec       ??_C@_0CK@HGPLMFPC@Text?5search?5among?5parts?5with?5pre@ 0077cdec     FreePcbView.obj
- 0003:00020e20       ??_C@_0CO@GPILPCGB@?5?5?5?5Text?5found?3?5?$CFs?5?$CI?5x?5?$DN?5?$CFd?5Nm?0?5@ 0077ce20     FreePcbView.obj
- 0003:00020e58       ??_C@_0CB@PLBCKOFK@Text?5search?5among?5parts?5?$CFs?4?4?4?3?$AN?6@ 0077ce58     FreePcbView.obj
- 0003:00020e84       ??_7?$CArray@Vid@@ABV1@@@6B@ 0077ce84     FreePcbView.obj
- 0003:00020e9c       ??_C@_0CM@FDFJPGAE@?M?e?b?n?g?l?n?f?m?n?5?b?$PL?p?n?b?m?$PP?r?$PM?5?j?n?k?k?h?m?e?$OA?p?m?$PL@ 0077ce9c     FreePcbView.obj
- 0003:00020ed0       ??_C@_0CD@DMDLIBHH@Unable?5to?5align?5colinear?5segment@ 0077ced0     FreePcbView.obj
+ 0003:00020d60       ??_C@_0N@DLIHEEP@?5?5?5?5net?5?$CFs?$AN?6?$AA@ 0077cd60     FreePcbView.obj
+ 0003:00020d70       ??_C@_0O@MAECHJ@?5?5?5?5part?5?$CFs?$AN?6?$AA@ 0077cd70     FreePcbView.obj
+ 0003:00020da8       ??_C@_0CN@NHJFEOFN@Text?5search?5among?5parts?5with?5foo@ 0077cda8     FreePcbView.obj
+ 0003:00020e20       ??_C@_0CK@HGPLMFPC@Text?5search?5among?5parts?5with?5pre@ 0077ce20     FreePcbView.obj
+ 0003:00020ea0       ??_7?$CArray@Vid@@ABV1@@@6B@ 0077cea0     FreePcbView.obj
+ 0003:00020ed0       ??_C@_0CM@FDFJPGAE@?M?e?b?n?g?l?n?f?m?n?5?b?$PL?p?n?b?m?$PP?r?$PM?5?j?n?k?k?h?m?e?$OA?p?m?$PL@ 0077ced0     FreePcbView.obj
  0003:00020f00       __real@41bdcd64ff000000    0077cf00     FreePcbView.obj
  0003:00020f10       __real@417312d000000000    0077cf10     FreePcbView.obj
  0003:00020f20       __real@4056800000000000    0077cf20     FreePcbView.obj
  0003:00020f30       __real@4065400000000000    0077cf30     FreePcbView.obj
  0003:00020f40       ??_C@_0HE@DEJAOEMF@?D?p?s?c?h?e?5?q?r?p?$OA?m?h?v?$PL?5?h?l?e?$PO?r?5?q?k?h?$PP?m?h?e?5?q?5@ 0077cf40     FreePcbView.obj
  0003:00020fd0       ??_C@_0HJ@JGHFCHNI@Other?5pages?5have?5canceled?5a?5merg@ 0077cfd0     FreePcbView.obj
- 0003:00021064       ??_C@_0BK@JIKABDCG@?$NN?r?n?5?h?l?$PP?5?s?f?e?5?h?q?o?n?k?$PM?g?s?e?r?q?$PP?$CB?$AA@ 0077d064     FreePcbView.obj
- 0003:00021084       ??_C@_0BI@JGCHBIAO@This?5name?5already?5used?$CB?$AA@ 0077d084     FreePcbView.obj
- 0003:000210a0       ??_C@_0CM@LDAIMDLM@?S?5?$PN?r?n?i?5?c?p?s?o?o?$PL?5?s?f?e?5?h?l?e?e?r?q?$PP?5?m?$OA?g?b?$OA?m@ 0077d0a0     FreePcbView.obj
- 0003:000210d4       ??_C@_0CF@CDCIKMFB@This?5group?5already?5has?5a?5merge?5n@ 0077d0d4     FreePcbView.obj
- 0003:00021100       ??_C@_0BM@JELGPKCH@?P?$OA?q?t?n?p?l?h?p?n?b?$OA?r?$PM?5?$PN?r?n?5?q?k?h?$PP?m?h?e?$DP?$AA@ 0077d100     FreePcbView.obj
- 0003:00021124       ??_C@_0BF@NABNGNHO@?5Delete?5this?5merger?$DP?$AA@ 0077d124     FreePcbView.obj
- 0003:00021140       ??_C@_0CC@EPLBMOKE@?$CFd?5?t?p?$OA?c?l?e?m?r?n?b?5?h?g?l?e?m?e?m?n?0?5?$CFd?5?n?x?h?a?n@ 0077d140     FreePcbView.obj
- 0003:00021168       ??_C@_0CD@JJDMAFGM@?$CFd?5fragments?5modified?0?5?$CFd?5error?$CI@ 0077d168     FreePcbView.obj
- 0003:00021194       ??_C@_0DP@OFCMILEL@?H?e?p?$OA?p?u?h?w?e?q?j?$OA?$PP?5?d?e?r?$OA?k?$PM?5?m?e?5?d?n?k?f?m?$OA?5?q@ 0077d194     FreePcbView.obj
- 0003:000211e0       ??_C@_0DH@JGPHKFLA@The?5Complex?5Part?5must?5not?5contai@ 0077d1e0     FreePcbView.obj
- 0003:00021224       ??_C@_0N@GAEBCCKF@?5?$CD?$CG?$EA$?$CF?$GA?8?$CC?0?4?9?$AA@ 0077d224     FreePcbView.obj
- 0003:00021234       ??_C@_0DD@NEECKENA@?H?l?$PP?5?o?h?m?$OA?5?m?e?5?d?n?k?f?m?n?5?q?n?d?e?p?f?$OA?r?$PM?5?q?o?e@ 0077d234     FreePcbView.obj
- 0003:00021274       ??_C@_0DD@ELLHNFEE@The?5Pin?5Name?5must?5not?5contain?5a?5@ 0077d274     FreePcbView.obj
- 0003:000212b4       ??_C@_0DG@ENOBGNOI@?H?l?$PP?5?$PN?k?4?v?e?o?h?5?m?e?5?d?n?k?f?m?n?5?q?n?d?e?p?f?$OA?r?$PM?5@ 0077d2b4     FreePcbView.obj
- 0003:000212f4       ??_C@_0DD@OOFBAKMD@The?5Net?5Name?5must?5not?5contain?5a?5@ 0077d2f4     FreePcbView.obj
- 0003:00021334       ??_C@_0DP@JEHGBEAM@?S?q?k?n?b?m?n?e?5?n?a?n?g?m?$OA?w?e?m?h?e?5?m?e?5?d?n?k?f?m?n?5?q@ 0077d334     FreePcbView.obj
- 0003:00021380       ??_C@_0DP@PENOAKEA@The?5Reference?5Designator?5must?5no@ 0077d380     FreePcbView.obj
+ 0003:00021084       ??_C@_0BK@JIKABDCG@?$NN?r?n?5?h?l?$PP?5?s?f?e?5?h?q?o?n?k?$PM?g?s?e?r?q?$PP?$CB?$AA@ 0077d084     FreePcbView.obj
+ 0003:000210a0       ??_C@_0BI@JGCHBIAO@This?5name?5already?5used?$CB?$AA@ 0077d0a0     FreePcbView.obj
+ 0003:000210d4       ??_C@_0CM@LDAIMDLM@?S?5?$PN?r?n?i?5?c?p?s?o?o?$PL?5?s?f?e?5?h?l?e?e?r?q?$PP?5?m?$OA?g?b?$OA?m@ 0077d0d4     FreePcbView.obj
+ 0003:00021124       ??_C@_0BM@JELGPKCH@?P?$OA?q?t?n?p?l?h?p?n?b?$OA?r?$PM?5?$PN?r?n?5?q?k?h?$PP?m?h?e?$DP?$AA@ 0077d124     FreePcbView.obj
+ 0003:00021140       ??_C@_0BF@NABNGNHO@?5Delete?5this?5merger?$DP?$AA@ 0077d140     FreePcbView.obj
+ 0003:00021168       ??_C@_0CC@EPLBMOKE@?$CFd?5?t?p?$OA?c?l?e?m?r?n?b?5?h?g?l?e?m?e?m?n?0?5?$CFd?5?n?x?h?a?n@ 0077d168     FreePcbView.obj
+ 0003:00021194       ??_C@_0CD@JJDMAFGM@?$CFd?5fragments?5modified?0?5?$CFd?5error?$CI@ 0077d194     FreePcbView.obj
+ 0003:000211e0       ??_C@_0DP@OFCMILEL@?H?e?p?$OA?p?u?h?w?e?q?j?$OA?$PP?5?d?e?r?$OA?k?$PM?5?m?e?5?d?n?k?f?m?$OA?5?q@ 0077d1e0     FreePcbView.obj
+ 0003:00021234       ??_C@_0N@GAEBCCKF@?5?$CD?$CG?$EA$?$CF?$GA?8?$CC?0?4?9?$AA@ 0077d234     FreePcbView.obj
+ 0003:00021274       ??_C@_0DD@NEECKENA@?H?l?$PP?5?o?h?m?$OA?5?m?e?5?d?n?k?f?m?n?5?q?n?d?e?p?f?$OA?r?$PM?5?q?o?e@ 0077d274     FreePcbView.obj
+ 0003:000212b4       ??_C@_0DD@ELLHNFEE@The?5Pin?5Name?5must?5not?5contain?5a?5@ 0077d2b4     FreePcbView.obj
+ 0003:000212f4       ??_C@_0DG@ENOBGNOI@?H?l?$PP?5?$PN?k?4?v?e?o?h?5?m?e?5?d?n?k?f?m?n?5?q?n?d?e?p?f?$OA?r?$PM?5@ 0077d2f4     FreePcbView.obj
+ 0003:00021334       ??_C@_0DD@OOFBAKMD@The?5Net?5Name?5must?5not?5contain?5a?5@ 0077d334     FreePcbView.obj
+ 0003:00021380       ??_C@_0DP@JEHGBEAM@?S?q?k?n?b?m?n?e?5?n?a?n?g?m?$OA?w?e?m?h?e?5?m?e?5?d?n?k?f?m?n?5?q@ 0077d380     FreePcbView.obj
  0003:000213d0       ??_C@_0EK@HJAIJMJJ@?Q?m?$OA?w?$OA?k?$OA?5?b?$PL?a?e?p?h?r?e?5?r?n?k?$PM?j?n?5?r?e?j?q?r?$PL?0?5@ 0077d3d0     FreePcbView.obj
- 0003:00021428       ??_C@_0DA@BHHPGDBG@First?5select?5only?5the?5text?5you?5w@ 0077d428     FreePcbView.obj
- 0003:00021464       ??_C@_0BJ@CDNGCHOO@PCB?5file?5?$CFs?5not?5found?3?9?$CI?$AA@ 0077d464     FreePcbView.obj
- 0003:00021484       ??_C@_0L@IAOBEAPN@?$HMpcb_name?3?$AA@ 0077d484     FreePcbView.obj
- 0003:00021494       ??_C@_0P@JCLLHPBG@?$HMstart_number?3?$AA@ 0077d494     FreePcbView.obj
- 0003:000214a8       ??_C@_04HBHDLLBA@PATH?$AA@ 0077d4a8     FreePcbView.obj
- 0003:000214b0       ??_C@_0BB@KLBKEANC@Empty?5Ref?5List?$CB?8?$AA@ 0077d4b0     FreePcbView.obj
+ 0003:00021494       ??_C@_0L@IAOBEAPN@?$HMpcb_name?3?$AA@ 0077d494     FreePcbView.obj
+ 0003:000214b0       ??_C@_04HBHDLLBA@PATH?$AA@ 0077d4b0     FreePcbView.obj
  0003:000214c8       ??_C@_0MJ@LLAGPIP@?$HMstart_number?3?5?$CFd?8?$HMend_number?3?5?$CF@ 0077d4c8     FreePcbView.obj
- 0003:000215bc       ??_C@_08GGFGIKMP@not_used?$AA@ 0077d5bc     FreePcbView.obj
- 0003:000215c8       ??_C@_02CNJEIGGK@?$GA?$GA?$AA@ 0077d5c8     FreePcbView.obj
- 0003:000215cc       ??_C@_03GDHEHHLE@?$CFd?$GA?$AA@ 0077d5cc     FreePcbView.obj
- 0003:000215d0       __real@4e000000            0077d5d0     FreePcbView.obj
- 0003:000215d4       ??_C@_02OAHAGMDB@?$CD?8?$AA@ 0077d5d4     FreePcbView.obj
- 0003:000215d8       ??_C@_01NLNLIGKH@?$GA?$AA@ 0077d5d8     FreePcbView.obj
- 0003:000215dc       ??_C@_09GNPHBLMN@DETAILS?$GA?$GA?$AA@ 0077d5dc     FreePcbView.obj
- 0003:000215e8       ??_C@_04FDANOILO@CNT?$GA?$AA@ 0077d5e8     FreePcbView.obj
- 0003:000215f0       ??_C@_0M@BJHGAEFI@FOOTPRINT?$GA?$GA?$AA@ 0077d5f0     FreePcbView.obj
- 0003:00021600       ??_C@_07OCGBCGDO@VALUE?$GA?$GA?$AA@ 0077d600     FreePcbView.obj
- 0003:0002160c       ??_C@_05BKIMLBMI@ITEM?$GA?$AA@ 0077d60c     FreePcbView.obj
- 0003:00021614       ??_C@_06NIOGMAFK@PCB?3?5?5?$AA@ 0077d614     FreePcbView.obj
- 0003:0002161c       ??_C@_01BMBHCPLG@5?$AA@    0077d61c     FreePcbView.obj
- 0003:00021620       ??_C@_01EKENIIDA@3?$AA@    0077d620     FreePcbView.obj
- 0003:00021624       ??_C@_0CM@FPEAOEKG@?N?x?h?a?j?$OA?$CB?5?H?e?p?$OA?p?u?h?w?e?q?j?$OA?$PP?5?d?e?r?$OA?k?$PM?5?m?e?5@ 0077d624     FreePcbView.obj
- 0003:00021658       ??_C@_0CA@DOFOGFIB@Error?$CB?5Complex?5part?5has?5no?5pins?$AA@ 0077d658     FreePcbView.obj
- 0003:00021680       ??_C@_0DN@OMAFBEDF@?$CFs?5?$CI?$CFs?$CJ?8?$HMsuffix?3?5?$CFs?8?$HMLINK?3?5?$CFs?8?$HMp@ 0077d680     FreePcbView.obj
+ 0003:000215cc       ??_C@_02CNJEIGGK@?$GA?$GA?$AA@ 0077d5cc     FreePcbView.obj
+ 0003:000215d0       ??_C@_03GDHEHHLE@?$CFd?$GA?$AA@ 0077d5d0     FreePcbView.obj
+ 0003:000215d4       __real@4e000000            0077d5d4     FreePcbView.obj
+ 0003:000215d8       ??_C@_02OAHAGMDB@?$CD?8?$AA@ 0077d5d8     FreePcbView.obj
+ 0003:000215dc       ??_C@_01NLNLIGKH@?$GA?$AA@ 0077d5dc     FreePcbView.obj
+ 0003:000215f0       ??_C@_04FDANOILO@CNT?$GA?$AA@ 0077d5f0     FreePcbView.obj
+ 0003:00021600       ??_C@_0M@BJHGAEFI@FOOTPRINT?$GA?$GA?$AA@ 0077d600     FreePcbView.obj
+ 0003:0002160c       ??_C@_07OCGBCGDO@VALUE?$GA?$GA?$AA@ 0077d60c     FreePcbView.obj
+ 0003:00021614       ??_C@_05BKIMLBMI@ITEM?$GA?$AA@ 0077d614     FreePcbView.obj
+ 0003:00021620       ??_C@_01BMBHCPLG@5?$AA@    0077d620     FreePcbView.obj
+ 0003:00021624       ??_C@_01EKENIIDA@3?$AA@    0077d624     FreePcbView.obj
+ 0003:00021680       ??_C@_0CA@DOFOGFIB@Error?$CB?5Complex?5part?5has?5no?5pins?$AA@ 0077d680     FreePcbView.obj
  0003:000216d0       ??_C@_0EB@LPKIBGHP@?N?x?h?a?j?$OA?$CB?5?O?h?m?5?h?e?p?$OA?p?u?h?w?e?q?j?n?i?5?d?e?r?$OA?k?h@ 0077d6d0     FreePcbView.obj
  0003:00021720       ??_C@_0EF@JDLGMLOH@Error?$CB?5The?5pin?5of?5a?5complex?5part@ 0077d720     FreePcbView.obj
  0003:00021778       ??_C@_0FI@DNHLIGDB@?N?x?h?a?j?$OA?$CB?5?Q?r?p?$OA?m?h?v?$PL?5?q?u?e?l?5?h?e?p?$OA?p?u?h?w?e?q@ 0077d778     FreePcbView.obj
  0003:000217e8       ??_C@_0EK@LFBFEBOP@Error?$CB?5Complex?5part?5schematic?5pa@ 0077d7e8     FreePcbView.obj
  0003:00021840       ??_C@_0EE@KMHBLGDC@?H?e?p?$OA?p?u?h?w?e?q?j?$OA?$PP?5?d?e?r?$OA?k?$PM?5?q?n?d?e?p?f?h?r?5?s?j@ 0077d840     FreePcbView.obj
- 0003:00021894       ??_C@_0DM@HBHODEA@Complex?5part?5contains?5a?5pointer?5@ 0077d894     FreePcbView.obj
+ 0003:00021894       ??_C@_0DN@OMAFBEDF@?$CFs?5?$CI?$CFs?$CJ?8?$HMsuffix?3?5?$CFs?8?$HMLINK?3?5?$CFs?8?$HMp@ 0077d894     FreePcbView.obj
  0003:000218e0       ??_C@_0FH@OIHGMNKI@?N?x?h?a?j?$OA?5?s?j?$OA?g?$OA?r?e?k?$PP?5?b?m?s?r?p?h?5?$PN?r?n?i?5?h?e?p@ 0077d8e0     FreePcbView.obj
  0003:00021948       ??_C@_0EF@FNCHNGNM@Pointer?5error?5inside?5this?5comple@ 0077d948     FreePcbView.obj
- 0003:0002199c       ??_C@_0DN@DJOJMHLN@?H?e?p?$OA?p?u?h?w?e?q?j?$OA?$PP?5?d?e?r?$OA?k?$PM?5?q?q?$PL?k?$OA?e?r?q?$PP?5?m@ 0077d99c     FreePcbView.obj
- 0003:000219e8       ??_C@_0DC@DLLJHGEB@Complex?5part?5pin?5points?5to?5a?5non@ 0077d9e8     FreePcbView.obj
+ 0003:0002199c       ??_C@_0DM@HBHODEA@Complex?5part?5contains?5a?5pointer?5@ 0077d99c     FreePcbView.obj
+ 0003:000219e8       ??_C@_0DN@DJOJMHLN@?H?e?p?$OA?p?u?h?w?e?q?j?$OA?$PP?5?d?e?r?$OA?k?$PM?5?q?q?$PL?k?$OA?e?r?q?$PP?5?m@ 0077d9e8     FreePcbView.obj
  0003:00021a28       ??_C@_0EH@FDGCHEEI@?S?5?q?n?q?r?$OA?b?m?n?i?5?d?e?r?$OA?k?h?5?n?r?q?s?r?q?r?b?s?e?r?5?s@ 0077da28     FreePcbView.obj
- 0003:00021a80       ??_C@_0CP@OOKNKIIK@Complex?5part?5pin?5is?5missing?5a?5po@ 0077da80     FreePcbView.obj
+ 0003:00021a80       ??_C@_0DC@DLLJHGEB@Complex?5part?5pin?5points?5to?5a?5non@ 0077da80     FreePcbView.obj
  0003:00021ab8       ??_C@_0FE@KLIOFBEJ@?S?5?o?h?m?$OA?5?q?n?q?r?$OA?b?m?n?i?5?d?e?r?$OA?k?h?5?n?r?q?s?r?q?r?b@ 0077dab8     FreePcbView.obj
- 0003:00021b1c       ??_C@_0DA@JGFIAJJP@Complex?5part?5pin?5is?5missing?5a?5po@ 0077db1c     FreePcbView.obj
- 0003:00021b58       ??_C@_0DE@NOCKLOKK@?Q?q?$PL?k?j?$OA?5?m?e?5?d?n?k?f?m?$OA?5?q?n?d?e?p?f?$OA?r?$PM?5?q?o?e?v?h@ 0077db58     FreePcbView.obj
- 0003:00021b98       ??_C@_0DG@FKACMFNF@Complex?5part?5must?5not?5contain?5sp@ 0077db98     FreePcbView.obj
- 0003:00021bd8       ??_C@_0DF@MMEGJAKN@?Q?n?q?r?$OA?b?m?$OA?$PP?5?d?e?r?$OA?k?$PM?5?d?n?k?f?m?$OA?5?q?q?$PL?k?$OA?r?$PM?q@ 0077dbd8     FreePcbView.obj
- 0003:00021c18       ??_C@_0CJ@MACJPCBK@Complex?5part?5must?5link?5to?5differ@ 0077dc18     FreePcbView.obj
- 0003:00021c4c       ??_C@_0BB@JBMMNEEF@?$HMpage_number?3?5?$CFd?$AA@ 0077dc4c     FreePcbView.obj
- 0003:00021c60       ??_C@_07NNHAJNBA@?$HMLINK?3?5?$AA@ 0077dc60     FreePcbView.obj
+ 0003:00021b1c       ??_C@_0CP@OOKNKIIK@Complex?5part?5pin?5is?5missing?5a?5po@ 0077db1c     FreePcbView.obj
+ 0003:00021b58       ??_C@_0DA@JGFIAJJP@Complex?5part?5pin?5is?5missing?5a?5po@ 0077db58     FreePcbView.obj
+ 0003:00021b98       ??_C@_0DE@NOCKLOKK@?Q?q?$PL?k?j?$OA?5?m?e?5?d?n?k?f?m?$OA?5?q?n?d?e?p?f?$OA?r?$PM?5?q?o?e?v?h@ 0077db98     FreePcbView.obj
+ 0003:00021bd8       ??_C@_0DG@FKACMFNF@Complex?5part?5must?5not?5contain?5sp@ 0077dbd8     FreePcbView.obj
  0003:00021c70       ??_C@_0EH@GLFCOLNG@?Q?n?q?r?$OA?b?m?$OA?$PP?5?d?e?r?$OA?k?$PM?5?m?e?5?d?n?k?f?m?$OA?5?q?n?d?e?p@ 0077dc70     FreePcbView.obj
  0003:00021cc8       ??_C@_0EE@PNEODGGK@Complex?5part?5link?5must?5not?5conta@ 0077dcc8     FreePcbView.obj
- 0003:00021d1c       ??_C@_0DL@FDKKMFAL@?N?x?h?a?j?$OA?3?5?q?n?q?r?$OA?b?m?$OA?$PP?5?d?e?r?$OA?k?$PM?5?q?n?d?e?p?f?h@ 0077dd1c     FreePcbView.obj
- 0003:00021d64       ??_C@_0DE@NABKGJKP@Complex?5part?5contains?5different?5@ 0077dd64     FreePcbView.obj
- 0003:00021da4       ??_C@_09GNIENOEI@?$HMsuffix?3?5?$AA@ 0077dda4     FreePcbView.obj
+ 0003:00021d1c       ??_C@_07NNHAJNBA@?$HMLINK?3?5?$AA@ 0077dd1c     FreePcbView.obj
+ 0003:00021d64       ??_C@_0DL@FDKKMFAL@?N?x?h?a?j?$OA?3?5?q?n?q?r?$OA?b?m?$OA?$PP?5?d?e?r?$OA?k?$PM?5?q?n?d?e?p?f?h@ 0077dd64     FreePcbView.obj
  0003:00021db0       ??_C@_0EB@MMBHNGFB@?S?j?$OA?g?$OA?r?e?k?$PM?5?o?h?m?$OA?5?d?n?k?f?e?m?5?q?n?d?e?p?f?$OA?r?$PM?5@ 0077ddb0     FreePcbView.obj
- 0003:00021e00       ??_C@_0DL@NNEAFDDI@Pin?5pointer?5must?5contain?5the?5suf@ 0077de00     FreePcbView.obj
+ 0003:00021e00       ??_C@_09GNIENOEI@?$HMsuffix?3?5?$AA@ 0077de00     FreePcbView.obj
  0003:00021e48       ??_C@_0EA@KGKBNAPA@?M?e?b?n?g?l?n?f?m?n?5?n?a?z?e?d?h?m?h?r?$PM?5?h?e?p?$OA?p?u?h?w?e?q@ 0077de48     FreePcbView.obj
  0003:00021e98       ??_C@_0EE@FIBNBBOF@It?5is?5impossible?5to?5combine?5a?5co@ 0077de98     FreePcbView.obj
  0003:00021ef0       ??_C@_0HJ@BEENPGIF@?Q?s?t?t?h?j?q?5?s?5?h?e?p?$OA?p?u?h?w?e?q?j?n?i?5?d?e?r?$OA?k?h?5?m@ 0077def0     FreePcbView.obj
- 0003:00021f84       ??_C@_0DK@LGODBI@The?5suffix?5of?5a?5complex?5part?5mus@ 0077df84     FreePcbView.obj
- 0003:00021fcc       ??_C@_0CP@GOEEAEOH@?N?x?h?a?j?$OA?3?5?h?e?p?$OA?p?u?h?w?e?q?j?$OA?$PP?5?d?e?r?$OA?k?$PM?5?m?e?5@ 0077dfcc     FreePcbView.obj
- 0003:00022004       ??_C@_0BL@JEIPLGAF@Complex?5part?5has?5no?5suffix?$AA@ 0077e004     FreePcbView.obj
- 0003:00022024       ??_C@_0BA@HKNIIJBG@Block?5not?5found?$AA@ 0077e024     FreePcbView.obj
- 0003:00022038       ??_C@_0DK@PNPNFCEO@?N?a?z?e?j?r?$PL?5?m?e?5?g?$OA?c?p?s?f?e?m?$PL?4?5?M?$OA?f?l?h?r?e?5F1@ 0077e038     FreePcbView.obj
- 0003:00022080       ??_C@_0DH@EKOOHMHH@Objects?5have?5not?5been?5loaded?4?5Pr@ 0077e080     FreePcbView.obj
+ 0003:00021f84       ??_C@_0DL@NNEAFDDI@Pin?5pointer?5must?5contain?5the?5suf@ 0077df84     FreePcbView.obj
+ 0003:00022038       ??_C@_0BA@HKNIIJBG@Block?5not?5found?$AA@ 0077e038     FreePcbView.obj
+ 0003:00022080       ??_C@_0DK@PNPNFCEO@?N?a?z?e?j?r?$PL?5?m?e?5?g?$OA?c?p?s?f?e?m?$PL?4?5?M?$OA?f?l?h?r?e?5F1@ 0077e080     FreePcbView.obj
  0003:000220c8       __real@3ff4000000000000    0077e0c8     FreePcbView.obj
  0003:000220d8       __real@3ffaaaaaaaaaaaab    0077e0d8     FreePcbView.obj
  0003:000220e8       __real@4004000000000000    0077e0e8     FreePcbView.obj
@@ -5952,48 +5988,29 @@
  0003:00022188       __real@3fd5555555555555    0077e188     FreePcbView.obj
  0003:00022198       ??_C@_0IH@DFDFBAED@?$AN?6?$AN?6?5WARNING?$CB?5The?5footprint?5libr@ 0077e198     FreePcbView.obj
  0003:00022240       ??_C@_0KH@NODNNMDE@?$AN?6?$AN?6?5WARNING?$CB?5The?5footprint?5was?5@ 0077e240     FreePcbView.obj
- 0003:00022308       ??_C@_09GNHLDLMG@open?4scad?$AA@ 0077e308     FreePcbView.obj
- 0003:00022314       ??_C@_01CELHOKLL@?$HN?$AA@ 0077e314     FreePcbView.obj
  0003:00022318       ??_C@_0HH@HHPAJFON@translate?$CI?$FL?$CF?43f?0?5?$CF?43f?0?5?$CF?43f?$FN?$CJ?6?5?5@ 0077e318     FreePcbView.obj
- 0003:000223a8       ??_C@_04PGLFABNH@?$FN?$CJ?$DL?6?$AA@ 0077e3a8     FreePcbView.obj
- 0003:000223b0       ??_C@_0N@PCIHACC@?$FL?$CF?43f?0?5?$CF?43f?$FN?$AA@ 0077e3b0     FreePcbView.obj
- 0003:000223c0       ??_C@_0DL@EKIGDALN@linear_extrude?$CI?$CFs?$CK2?0?5center?$DNtrue@ 0077e3c0     FreePcbView.obj
- 0003:00022408       ??_C@_0BD@PHNGHKFD@module?5texts?5?$CI?$CJ?5?$HL?6?$AA@ 0077e408     FreePcbView.obj
- 0003:00022420       ??_C@_03LAJGDFPO@?$HN?6?6?$AA@ 0077e420     FreePcbView.obj
- 0003:00022424       ??_C@_03BHMANDAO@?6?$HN?6?$AA@ 0077e424     FreePcbView.obj
- 0003:00022428       ??_C@_0L@BMHJHDEA@union?$CI?$CJ?6?$HL?6?$AA@ 0077e428     FreePcbView.obj
- 0003:00022438       ??_C@_03NBFACCKM@?$CJ?$DL?6?$AA@ 0077e438     FreePcbView.obj
+ 0003:000223a8       ??_C@_01CELHOKLL@?$HN?$AA@ 0077e3a8     FreePcbView.obj
+ 0003:000223b0       ??_C@_04PGLFABNH@?$FN?$CJ?$DL?6?$AA@ 0077e3b0     FreePcbView.obj
+ 0003:000223c0       ??_C@_0N@PCIHACC@?$FL?$CF?43f?0?5?$CF?43f?$FN?$AA@ 0077e3c0     FreePcbView.obj
+ 0003:00022424       ??_C@_03LAJGDFPO@?$HN?6?6?$AA@ 0077e424     FreePcbView.obj
+ 0003:00022428       ??_C@_03BHMANDAO@?6?$HN?6?$AA@ 0077e428     FreePcbView.obj
  0003:00022440       ??_C@_0FC@GEHDHMDH@w?$CFd?5?$DN?5?$CF?43f?$DL?6linear_extrude?$CIh_ex?0@ 0077e440     FreePcbView.obj
- 0003:000224a4       ??_C@_04KKALNBKP@h_ex?$AA@ 0077e4a4     FreePcbView.obj
- 0003:000224ac       ??_C@_0DF@IGDIMKGB@?M?e?j?n?r?n?p?$PL?e?5?q?e?c?l?e?m?r?$PL?5?a?$PL?k?h?5?s?d?$OA?k?e?m?$PL?5@ 0077e4ac     FreePcbView.obj
- 0003:000224ec       ??_C@_0CP@KHHMNBMC@Some?5segments?5were?5removed?5due?5t@ 0077e4ec     FreePcbView.obj
+ 0003:000224a4       ??_C@_03NBFACCKM@?$CJ?$DL?6?$AA@ 0077e4a4     FreePcbView.obj
+ 0003:000224ac       ??_C@_04KKALNBKP@h_ex?$AA@ 0077e4ac     FreePcbView.obj
+ 0003:000224ec       ??_C@_0DF@IGDIMKGB@?M?e?j?n?r?n?p?$PL?e?5?q?e?c?l?e?m?r?$PL?5?a?$PL?k?h?5?s?d?$OA?k?e?m?$PL?5@ 0077e4ec     FreePcbView.obj
  0003:00022528       ??_C@_0EE@OOGDBGJM@$fn?5?$DN?550?$DL?6h_ex?5?$DN?5?$CFs?$DL?6?6polylines?$CI@ 0077e528     FreePcbView.obj
- 0003:0002257c       ??_C@_04GFJLOHHD@?$CF?43f?$AA@ 0077e57c     FreePcbView.obj
  0003:00022588       ??_C@_0FA@FINHBAKK@?U?n?r?h?r?e?5?h?q?o?n?k?$PM?g?n?b?$OA?r?$PM?5?x?p?h?t?r?5Opensc@ 0077e588     FreePcbView.obj
- 0003:000225e8       ??_C@_0CP@CODBPBKM@Want?5to?5use?5Openscad?5font?5to?5red@ 0077e5e8     FreePcbView.obj
- 0003:00022620       ??_C@_0L@JHNCKNLP@?2open?4scad?$AA@ 0077e620     FreePcbView.obj
- 0003:00022630       ??_C@_08HOPMDNCE@open?4dxf?$AA@ 0077e630     FreePcbView.obj
- 0003:0002263c       ??_C@_04OEEBIOEI@EOF?6?$AA@ 0077e63c     FreePcbView.obj
- 0003:00022644       ??_C@_07CABHGMEG@ENDSEC?6?$AA@ 0077e644     FreePcbView.obj
- 0003:00022650       ??_C@_03FLNPHHOE@21?6?$AA@ 0077e650     FreePcbView.obj
- 0003:00022654       ??_C@_03EJGKNIAK@11?6?$AA@ 0077e654     FreePcbView.obj
- 0003:00022658       ??_C@_03FKBNBNND@20?6?$AA@ 0077e658     FreePcbView.obj
- 0003:0002265c       ??_C@_05DDIGFDOL@?$CF?43f?6?$AA@ 0077e65c     FreePcbView.obj
- 0003:00022664       ??_C@_03EIKILCDN@10?6?$AA@ 0077e664     FreePcbView.obj
- 0003:00022668       ??_C@_02NACJHKEP@8?6?$AA@  0077e668     FreePcbView.obj
- 0003:0002266c       ??_C@_05JEDBCGNM@LINE?6?$AA@ 0077e66c     FreePcbView.obj
- 0003:00022674       ??_C@_09IIGKOONL@ENTITIES?6?$AA@ 0077e674     FreePcbView.obj
- 0003:00022680       ??_C@_02NNLOPPJJ@2?6?$AA@  0077e680     FreePcbView.obj
- 0003:00022684       ??_C@_08MHNHEFHN@SECTION?6?$AA@ 0077e684     FreePcbView.obj
- 0003:00022690       ??_C@_02NODKCLPH@0?6?$AA@  0077e690     FreePcbView.obj
- 0003:00022694       ??_C@_09NIFHCHDK@?2open?4dxf?$AA@ 0077e694     FreePcbView.obj
- 0003:000226a0       ??_C@_0CH@DLMCDGIJ@?S?q?r?$OA?m?n?b?k?e?m?5?s?c?n?k?5?m?$OA?j?k?n?m?$OA?5?n?q?h?5?p?$OA?b?m@ 0077e6a0     FreePcbView.obj
- 0003:000226d0       ??_C@_0BL@JDOCOFMG@The?5axis?5tilt?5angle?5is?50?40?$AA@ 0077e6d0     FreePcbView.obj
+ 0003:000225e8       ??_C@_04GFJLOHHD@?$CF?43f?$AA@ 0077e5e8     FreePcbView.obj
+ 0003:00022630       ??_C@_0L@JHNCKNLP@?2open?4scad?$AA@ 0077e630     FreePcbView.obj
+ 0003:00022684       ??_C@_08FDOIELA@?2buf?4fpc?$AA@ 0077e684     FreePcbView.obj
+ 0003:00022694       ??_C@_04OEEBIOEI@EOF?6?$AA@ 0077e694     FreePcbView.obj
+ 0003:000226a0       ??_C@_07CABHGMEG@ENDSEC?6?$AA@ 0077e6a0     FreePcbView.obj
+ 0003:000226d0       ??_C@_03FLNPHHOE@21?6?$AA@ 0077e6d0     FreePcbView.obj
  0003:000226f0       ??_C@_0HK@KABNHMCA@?S?c?n?k?5?m?$OA?j?k?n?m?$OA?5?n?q?h?5?q?n?q?r?$OA?b?k?$PP?e?r?5?$CF?43f@ 0077e6f0     FreePcbView.obj
  0003:00022788       ??_C@_0GH@EMPBCAAP@The?5axis?5tilt?5angle?5is?5?$CF?43f?5degr@ 0077e788     FreePcbView.obj
- 0003:00022808       ??_7?$CArray@VCPolyPt@@ABV1@@@6B@ 0077e808     FreePcbView.obj
- 0003:00022824       ??_7?$CArray@VCContourData@@ABV1@@@6B@ 0077e824     FreePcbView.obj
- 0003:00022840       ??_7?$CArray@PAVdl_element@@ABQAV1@@@6B@ 0077e840     FreePcbView.obj
+ 0003:00022804       ??_C@_03EJGKNIAK@11?6?$AA@ 0077e804     FreePcbView.obj
+ 0003:00022820       ??_C@_03FKBNBNND@20?6?$AA@ 0077e820     FreePcbView.obj
+ 0003:0002283c       ??_C@_05DDIGFDOL@?$CF?43f?6?$AA@ 0077e83c     FreePcbView.obj
  0003:00022a7c       ??_7CFreeasyApp@@6B@       0077ea7c     FreeSch.obj
  0003:00022bcc       ??_C@_08EEOHOBEO@Settings?$AA@ 0077ebcc     FreeSch.obj
  0003:00022bd8       ??_C@_07IDECFGGC@ShowCmd?$AA@ 0077ebd8     FreeSch.obj
@@ -6558,20 +6575,16 @@
  0003:000295d8       ??_C@_03EEBNCBOD@?5?$CFs?$AA@ 007855d8     TagTable.obj
  0003:000295dc       ??_C@_03IKGEINEE@?$CFs?5?$AA@ 007855dc     TagTable.obj
  0003:000295e0       ??_C@_01POHCFINO@Z?$AA@    007855e0     TagTable.obj
- 0003:000295e4       ??_C@_02IGABKLBP@?$HMC?$AA@ 007855e4     TextList.obj
  0003:000295e8       __real@402c000000000000    007855e8     TextList.obj
  0003:000295f8       __real@400c000000000000    007855f8     TextList.obj
  0003:00029608       __real@4022000000000000    00785608     TextList.obj
  0003:00029618       __real@3fd6666666666666    00785618     TextList.obj
- 0003:00029624       ??_C@_0DB@MLOOJCFD@d?3?2freepcbdev?2schematic?5construc@ 00785624     TextList.obj
- 0003:00029660       ??_C@_04HPADIMGJ@ZONE?$AA@ 00785660     TextList.obj
- 0003:00029668       ??_C@_04FBLNPEBP@DATE?$AA@ 00785668     TextList.obj
- 0003:00029670       ??_C@_03IFADCKOJ@?$CFd?$HM?$AA@ 00785670     TextList.obj
- 0003:00029674       ??_C@_04LCMPBGFC@YYYY?$AA@ 00785674     TextList.obj
- 0003:0002967c       ??_C@_01NFFPALBN@Y?$AA@    0078567c     TextList.obj
- 0003:00029680       ??_C@_04LOCMGGPM@?$CFd?$CFs?$AA@ 00785680     TextList.obj
- 0003:00029688       ??_C@_01PJKLJHI@?$HO?$AA@  00785688     TextList.obj
- 0003:0002968c       ??_C@_02IKKNFMP@YY?$AA@    0078568c     TextList.obj
+ 0003:00029624       ??_C@_04HPADIMGJ@ZONE?$AA@ 00785624     TextList.obj
+ 0003:00029660       ??_C@_04FBLNPEBP@DATE?$AA@ 00785660     TextList.obj
+ 0003:00029668       ??_C@_03IFADCKOJ@?$CFd?$HM?$AA@ 00785668     TextList.obj
+ 0003:00029674       ??_C@_01NFFPALBN@Y?$AA@    00785674     TextList.obj
+ 0003:00029680       ??_C@_01PJKLJHI@?$HO?$AA@  00785680     TextList.obj
+ 0003:00029688       ??_C@_02IKKNFMP@YY?$AA@    00785688     TextList.obj
  0003:00029690       ??_C@_0DB@BMEIMDML@d?3?2freepcbdev?2schematic?5construc@ 00785690     UndoList.obj
  0003:000296d0       ??_C@_1GC@LJNPAEKG@?$AAd?$AA?3?$AA?2?$AAf?$AAr?$AAe?$AAe?$AAp?$AAc?$AAb?$AAd?$AAe?$AAv?$AA?2?$AAs?$AAc?$AAh?$AAe?$AAm?$AAa?$AAt?$AAi?$AAc?$AA?5?$AAc?$AAo?$AAn?$AAs?$AAt?$AAr?$AAu?$AAc@ 007856d0     UndoList.obj
  0003:00029745       ?value@?$integral_constant@_N$0A@@tr1@std@@2_NB 00785745     utility.obj
@@ -7890,6 +7903,7 @@
  0004:00000184       ?__LINE__Var@?1??AddTemplate@CDisplayList@@QAEHHHPAUtagRECT@@H@Z@4JA 007a1184     DisplayList.obj
  0004:00000188       ??_R0?AV?$CArray@VCPoint@@ABV1@@@@8 007a1188     DisplayList.obj
  0004:000001b8       ??_R0?AV?$CArray@PAUCTemplate@@ABQAU1@@@@8 007a11b8     DisplayList.obj
+ 0004:000009f0       ??_R0?AV?$CArray@PAVdl_element@@ABQAV1@@@@8 007a19f0     FreePcbView.obj
  0004:00000b8c       ??_R0?AVCDlgAddMaskCutout@@@8 007a1b8c     DlgAddMaskCutout.obj
  0004:00000bb4       ??_R0?AVCDlgAddMerge@@@8   007a1bb4     DlgAddMerge.obj
  0004:00000bd4       ??_R0?AVCDlgAddPoly@@@8    007a1bd4     DlgAddPoly.obj
@@ -7986,10 +8000,10 @@
  0004:00003334       ?__LINE__Var@?1??RemoveOrphanMergeNames@CFreePcbView@@QAEXXZ@4JA 007a4334     FreePcbView.obj
  0004:00003338       ?__LINE__Var@?1??OnInfoBoxSendMess@CFreePcbView@@QAEPAVCWnd@@V?$CStringT@DV?$StrTraitMFC_DLL@DV?$ChTraitsCRT@D@ATL@@@@@ATL@@@Z@4JA 007a4338     FreePcbView.obj
  0004:0000333c       ?__LINE__Var@?1??OnGroupSaveToOpenscadFile@CFreePcbView@@QAEXXZ@4JA 007a433c     FreePcbView.obj
- 0004:00003340       ?__LINE__Var@?1??OnGroupSaveToDXFFile@CFreePcbView@@QAEXXZ@4JA 007a4340     FreePcbView.obj
- 0004:00003344       ??_R0?AV?$CArray@VCPolyPt@@ABV1@@@@8 007a4344     FreePcbView.obj
- 0004:00003374       ??_R0?AV?$CArray@VCContourData@@ABV1@@@@8 007a4374     FreePcbView.obj
- 0004:000033a8       ??_R0?AV?$CArray@PAVdl_element@@ABQAV1@@@@8 007a43a8     FreePcbView.obj
+ 0004:00003340       ?__LINE__Var@?1??OnGroupSaveToFPCFile@CFreePcbView@@QAEXXZ@4JA 007a4340     FreePcbView.obj
+ 0004:00003344       ?__LINE__Var@?1??OnGroupSaveToDXFFile@CFreePcbView@@QAEXXZ@4JA 007a4344     FreePcbView.obj
+ 0004:00003374       ??_R0?AV?$CArray@VCPolyPt@@ABV1@@@@8 007a4374     FreePcbView.obj
+ 0004:000033a8       ??_R0?AV?$CArray@VCContourData@@ABV1@@@@8 007a43a8     FreePcbView.obj
  0004:0000341c       ??_R0?AVCFreeasyApp@@@8    007a441c     FreeSch.obj
  0004:0000343c       ??_R0?AVCWinApp@@@8        007a443c     FreeSch.obj
  0004:00003458       ??_R0?AVCWinThread@@@8     007a4458     FreeSch.obj
@@ -8404,8 +8418,8 @@
  0005:00001940       __imp___wcsicmp            007b1940     msvcrtd:MSVCR100D.dll
  0005:00001944       __imp__wcslen              007b1944     msvcrtd:MSVCR100D.dll
  0005:00001948       __imp___setmode            007b1948     msvcrtd:MSVCR100D.dll
- 0005:0000194c       __imp___fileno             007b194c     msvcrtd:MSVCR100D.dll
  0005:0000194c       __imp__fileno              007b194c     msvcrtd:MSVCR100D.dll
+ 0005:0000194c       __imp___fileno             007b194c     msvcrtd:MSVCR100D.dll
  0005:00001950       __imp___setmbcp            007b1950     msvcrtd:MSVCR100D.dll
  0005:00001954       __imp___stat64i32          007b1954     msvcrtd:MSVCR100D.dll
  0005:00001958       __imp__abs                 007b1958     msvcrtd:MSVCR100D.dll
@@ -8419,10 +8433,10 @@
  0005:00001974       __imp__time                007b1974     msvcrtd:MSVCR100D.dll
  0005:00001978       __imp__mktime              007b1978     msvcrtd:MSVCR100D.dll
  0005:00001978       __imp___mktime32           007b1978     msvcrtd:MSVCR100D.dll
- 0005:0000197c       __imp___localtime32        007b197c     msvcrtd:MSVCR100D.dll
  0005:0000197c       __imp__localtime           007b197c     msvcrtd:MSVCR100D.dll
- 0005:00001980       __imp___stat               007b1980     msvcrtd:MSVCR100D.dll
+ 0005:0000197c       __imp___localtime32        007b197c     msvcrtd:MSVCR100D.dll
  0005:00001980       __imp___stat32             007b1980     msvcrtd:MSVCR100D.dll
+ 0005:00001980       __imp___stat               007b1980     msvcrtd:MSVCR100D.dll
  0005:00001984       __imp___initterm_e         007b1984     msvcrtd:MSVCR100D.dll
  0005:00001988       __imp___initterm           007b1988     msvcrtd:MSVCR100D.dll
  0005:0000198c       __imp___CrtSetCheckCount   007b198c     msvcrtd:MSVCR100D.dll
