@@ -10861,13 +10861,13 @@ void CFreePcbDoc::OnFilePrint()
 									CString fNote = Comp + "\\" + Vv + "@" + Pp;
 									struct _stat buf;
 									if( _stat( (fNote+".pdf"), &buf ) == 0 )
-										str = "file:./Component/" + Vv + "@" + Pp + ".pdf";
+										str = "file:.\\Component\\" + Vv + "@" + Pp + ".pdf";
 									else if( _stat( (fNote+".docx"), &buf ) == 0 )
-										str = "file:./Component/" + Vv + "@" + Pp + ".docx";
+										str = "file:.\\Component\\" + Vv + "@" + Pp + ".docx";
 									else if( _stat( (fNote+".doc"), &buf ) == 0 )
-										str = "file:./Component/" + Vv + "@" + Pp + ".doc";
+										str = "file:.\\Component\\" + Vv + "@" + Pp + ".doc";
 									else if( _stat( (fNote+".txt"), &buf ) == 0 )
-										str = "file:./Component/" + Vv + "@" + Pp + ".txt";
+										str = "file:.\\Component\\" + Vv + "@" + Pp + ".txt";
 								}
 							}
 						}

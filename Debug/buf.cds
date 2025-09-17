@@ -4,43 +4,42 @@ app_folder: "D:\FreePCBDev\Schematic Constructor\.\Debug"
 version: 1.427
 file_version: 1.427
 project_name: "buf.cds"
-library_folder: "d:\works\projects\micronics\lib"
-full_library_folder: "?\micronics\lib\footprints"
-CAM_folder: ""
+library_folder: "c:\users\nikonov\downloads\skhemator _ platform source code\niconson-platform-a306c2e\fp_lib"
+full_library_folder: "c:\users\nikonov\downloads\skhemator _ platform source code\niconson-platform-a306c2e\fp_lib\lib"
+CAM_folder: "C:\Users\Admin\Downloads\¬иснет\related_files\print_layers"
 netlist_completed: "0"
-bom_options: "160"
-page_number: "1"
+bom_options: "721056"
+page_number: "0"
 parent_index: "2"
 alignment: 0.70
 partlist_size_x: "534"
 partlist_size_y: "391"
-partlist_pos_x: "1088"
-partlist_pos_y: "95"
-partlist_col_w: "960223292"
-netlist_file_path: "D:\Works\Projects\duxahtech\W-CAN\version-01\related_files\CDS_netlist\W-CAN-02.fpc"
-pcb_name: "W-CAN-01.fpc" 1
-pcb_name: "W-CAN-02.fpc" 2
+partlist_pos_x: "105"
+partlist_pos_y: "69"
+partlist_col_w: "963936316"
+netlist_file_path: "C:\Users\Admin\Downloads\¬иснет\related_files\CDS_netlist\USS.pcb.fpc"
+pcb_name: "USS.pcb.fpc" 1
 netlist_format: 0
 page_mirror_mask: 0
 default_font: 11
-default_node_width: -733333
+default_node_width: -1100000
 autosave_interval: 60
 m_client_rect_left: 0
 m_client_rect_right: 1131
-m_client_rect_bottom: 712
+m_client_rect_bottom: 670
 m_client_rect_top: 0
-m_org_x: -8952
-m_org_y: -27644
-m_scale_factor: 36875
-m_attr_size: 500000 53333 500000 53333 500000 53333 500000 53333 1000000 113333 500000 53333
-m_user_scale: 1.5000000000
+m_org_x: 271653
+m_org_y: 242343
+m_scale_factor: 54995
+m_attr_size: 2200000 300000 2200000 300000 2200000 300000 2200000 300000 2200000 300000 2200000 300000
+m_user_scale: 1.0000000000
 units: MM
 
-m_sel_mask: -2
-m_visible_layers: -5
-m_top_layer: 6
+m_sel_mask: -65
+m_visible_layers: 134217723
+m_top_layer: 5
 m_grid_style: 0
-visible_grid_spacing: 500000.000000
+visible_grid_spacing: 2000000.000000
   visible_grid_item: 20mil
   visible_grid_item: 50mil
   visible_grid_item: 100mil
@@ -66,7 +65,7 @@ visible_grid_spacing: 500000.000000
   visible_grid_item: 50mm
   visible_grid_item: 100mm
 
-polyline_grid_spacing: 500000.000000
+polyline_grid_spacing: 400000.000000
   placement_grid_item: 5mil
   placement_grid_item: 10mil
   placement_grid_item: 20mil
@@ -96,7 +95,7 @@ polyline_grid_spacing: 500000.000000
   placement_grid_item: 5mm
   placement_grid_item: 10mm
 
-text_grid_spacing: 250000.000000
+text_grid_spacing: 200000.000000
   text_grid_item: 0.1mil
   text_grid_item: 0.5mil
   text_grid_item: 1mil
@@ -133,7 +132,7 @@ polyline_width: 200000
 text_height: 200000
 min_text_stroke_width: 100000
 highlight_width: 127000
-cam_flags: 262113
+cam_flags: 262114
 cam_layers: 8191
 cam_units: 1
 
@@ -144,11 +143,11 @@ drc_part_attr_to_poly: 100000
 drc_pin_attr_to_attr: 254000
 drc_pin_attr_to_poly: 254000
 
-default_polyline_width:0.133mm
-n_additional_layers: 12
+default_polyline_width:0.2mm
+n_additional_layers: 4
 m_pdf_font_i: 22
 m_pdf_margin: 0.01
-pdf_checking: 40
+pdf_checking: 3134
   layer_info: "перемещение" 0 130 130 130 1
   layer_info: "фон доски" 1 178 178 178 1
   layer_info: "видима€ сетка" 2 22 22 22 0
@@ -176,6 +175,11 @@ pdf_checking: 40
   layer_info: "чертЄжный" 24 159 45 156 1
   layer_info: "текстовый" 25 250 250 250 1
   layer_info: "вЄрсточный" 26 250 250 250 1
+  layer_info: "механический" 27 250 250 250 0
+  layer_info: "линейный" 28 250 250 250 0
+  layer_info: "резервный" 29 250 250 250 0
+  layer_info: "запасной" 30 250 250 250 0
+  layer_info: "undefined" 31 250 250 250 0
 
   pdf_layer_info: "перемещение" 0 255 255 255 0
   pdf_layer_info: "фон доски" 1 255 255 255 0
@@ -211,27 +215,14 @@ pdf_checking: 40
   pdf_layer_info: "undefined" 31 255 255 255 0
 
 m_bom_colors: 0 0 0 155 155 155 0 0 0 166 166 166 255 255 111 0 0 255 140 140 140
-  ref_list: "RefList-1"
+  merge: "Merge-1"
 
 [graphics]
 
-rename_page: "—хема"
-bmp_src: "D:\Works\Projects\duxahtech\W-CAN\version-01\related_files\pictures\00001.PIC"
-add_new_page: "—хема с изм."
-bmp_src: "D:\Works\Projects\duxahtech\W-CAN\version-01\related_files\pictures\00001.PIC"
-polyline: 4 2 19 200002 -1 -1 -1 0 0
-  corner: 1 5666661 -20666646 0 733333
-  corner: 2 7666658 -23666643 0 0
-  corner: 3 8666657 -21333313 0 0
-  corner: 4 11666655 -25999974 0 733333
+rename_page: "main_page"
+bmp_src: "C:\Users\Admin\Downloads\¬иснет\related_files\pictures\00001.PIC"
+polyline: 2 0 10 200000 -1 -1 -1 0 9
+  corner: 1 429260000 292100000 0 1
+  corner: 2 429260000 294640000 0 1
 
-add_new_page: "Page 1"
-bmp_src: "D:\Works\Projects\duxahtech\W-CAN\version-01\related_files\pictures\00001.PIC"
-bmp_src: "D:\Works\Projects\duxahtech\W-CAN\version-01\related_files\pictures\00002.PIC"
-bmp_src: "D:\Works\Projects\duxahtech\W-CAN\version-01\related_files\pictures\00003.PIC"
-bmp_src: "D:\Works\Projects\duxahtech\W-CAN\version-01\related_files\pictures\00004.PIC"
-bmp_src: "D:\Works\Projects\duxahtech\W-CAN\version-01\related_files\pictures\00005.PIC"
-bmp_src: "D:\Works\Projects\duxahtech\W-CAN\version-01\related_files\pictures\00006.PIC"
-bmp_src: "D:\Works\Projects\duxahtech\W-CAN\version-01\related_files\pictures\00007.PIC"
-add_new_page: "Page 2"
 [end]

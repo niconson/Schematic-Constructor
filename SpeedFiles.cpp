@@ -453,7 +453,7 @@ void OnGroupVtxMagnetize( CFreePcbDoc * doc )
 							if( net->m_tl == doc->Attr->m_Netlist )
 								if( pp->Check( index_pin_attr ) == NULL )
 									isNetMark = 1;
-						if( p->Check( index_pin_attr ) || isNetMark )
+						if( p->Check( index_pin_attr ) || isNetMark || (p->Check(index_desc_attr) && pp->Check(index_part_attr) == 0) )
 						{
 							int ok = 0;
 							if( pp->Check( index_part_attr ) )

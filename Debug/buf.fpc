@@ -1,53 +1,530 @@
 [options]
+
+app_folder: "D:\FreePCBDev\Schematic Constructor\Debug"
+version: 2.427
 file_version: 2.427
+project_name: "buf"
+library_folder: "d:\works\fp_lib"
+full_library_folder: "d:\works\fp_lib\lib"
+CAM_folder: "D:\Works\ѕлат‘орм на русском\Projects\Led\version-01\CAM(Driver-01)(9-14-2025)"
+ses_file_path: ""
+netlist_completed: "0"
+part_search: ""
+png_settings: "800 0.05"
+netlist_file_path: ""
+SMT_connect_copper: "0"
+default_glue_width: "635000"
+dsn_flags: "3"
+dsn_bounds_poly: "0"
+dsn_signals_poly: "0"
+autosave_interval: 0
+auto_ratline_disable: "1"
+auto_ratline_disable_min_pins: "100"
+netlist_import_flags: 19399
+m_client_rect_left: 110
+m_client_rect_right: 1487
+m_client_rect_bottom: 711
+m_client_rect_top: 0
+m_org_x: 295071
+m_org_y: 238956
+m_scale_factor: 59151
+part_line_visible: 1
+merge_shown: 1
+pdf_pin1: 0.700000
+pdf_use_font: -889000 889000 -635000
+units: MM
+
+m_sel_mask: 2147483647
+m_visible_layers: -84225
+m_top_layer: 15
+m_grid_style: 0
+visible_grid_spacing: 20000000.000000
+  visible_grid_item: 100mil
+  visible_grid_item: 125mil
+  visible_grid_item: 200mil
+  visible_grid_item: 250mil
+  visible_grid_item: 400mil
+  visible_grid_item: 500mil
+  visible_grid_item: 1000mil
+  visible_grid_item: 1mm
+  visible_grid_item: 2mm
+  visible_grid_item: 2.5mm
+  visible_grid_item: 4mm
+  visible_grid_item: 5mm
+  visible_grid_item: 10mm
+  visible_grid_item: 20mm
+  visible_grid_item: 25mm
+  visible_grid_item: 40mm
+  visible_grid_item: 50mm
+  visible_grid_item: 100mm
+
+placement_grid_spacing: 100000.000000
+  placement_grid_item: 10mil
+  placement_grid_item: 20mil
+  placement_grid_item: 25mil
+  placement_grid_item: 40mil
+  placement_grid_item: 50mil
+  placement_grid_item: 100mil
+  placement_grid_item: 200mil
+  placement_grid_item: 250mil
+  placement_grid_item: 400mil
+  placement_grid_item: 500mil
+  placement_grid_item: 1000mil
+  placement_grid_item: 0mm
+  placement_grid_item: 0.1mm
+  placement_grid_item: 0.2mm
+  placement_grid_item: 0.25mm
+  placement_grid_item: 0.4mm
+  placement_grid_item: 0.5mm
+  placement_grid_item: 1mm
+  placement_grid_item: 2mm
+  placement_grid_item: 2.5mm
+  placement_grid_item: 4mm
+  placement_grid_item: 5mm
+  placement_grid_item: 10mm
+
+routing_grid_spacing: 0.000000
+  routing_grid_item: 1mil
+  routing_grid_item: 2mil
+  routing_grid_item: 2.5mil
+  routing_grid_item: 3.33330709mil
+  routing_grid_item: 4mil
+  routing_grid_item: 5mil
+  routing_grid_item: 6.665mil
+  routing_grid_item: 10mil
+  routing_grid_item: 12.5mil
+  routing_grid_item: 16.665mil
+  routing_grid_item: 20mil
+  routing_grid_item: 25mil
+  routing_grid_item: 40mil
+  routing_grid_item: 50mil
+  routing_grid_item: 0mm
+  routing_grid_item: 0.01mm
+  routing_grid_item: 0.02mm
+  routing_grid_item: 0.04mm
+  routing_grid_item: 0.05mm
+  routing_grid_item: 0.1mm
+  routing_grid_item: 0.2mm
+  routing_grid_item: 0.25mm
+  routing_grid_item: 0.4mm
+  routing_grid_item: 0.5mm
+  routing_grid_item: 1mm
+  routing_grid_item: 2mm
+  routing_grid_item: 2.5mm
+  routing_grid_item: 4mm
+  routing_grid_item: 5mm
+  routing_grid_item: 10mm
+
+snap_angle: 45
+
+fp_visible_grid_spacing: 1000000.000000
+  fp_visible_grid_item: 100mil
+  fp_visible_grid_item: 125mil
+  fp_visible_grid_item: 200mil
+  fp_visible_grid_item: 250mil
+  fp_visible_grid_item: 400mil
+  fp_visible_grid_item: 500mil
+  fp_visible_grid_item: 1000mil
+  fp_visible_grid_item: 1mm
+  fp_visible_grid_item: 2mm
+  fp_visible_grid_item: 2.5mm
+  fp_visible_grid_item: 4mm
+  fp_visible_grid_item: 5mm
+  fp_visible_grid_item: 10mm
+  fp_visible_grid_item: 20mm
+  fp_visible_grid_item: 25mm
+  fp_visible_grid_item: 40mm
+  fp_visible_grid_item: 50mm
+  fp_visible_grid_item: 100mm
+
+fp_placement_grid_spacing: 500000.000000
+  fp_placement_grid_item: 10mil
+  fp_placement_grid_item: 20mil
+  fp_placement_grid_item: 25mil
+  fp_placement_grid_item: 40mil
+  fp_placement_grid_item: 50mil
+  fp_placement_grid_item: 100mil
+  fp_placement_grid_item: 200mil
+  fp_placement_grid_item: 250mil
+  fp_placement_grid_item: 400mil
+  fp_placement_grid_item: 500mil
+  fp_placement_grid_item: 1000mil
+  fp_placement_grid_item: 0.02mm
+  fp_placement_grid_item: 0.05mm
+  fp_placement_grid_item: 0.1mm
+  fp_placement_grid_item: 0.2mm
+  fp_placement_grid_item: 0.5mm
+  fp_placement_grid_item: 1mm
+  fp_placement_grid_item: 2mm
+  fp_placement_grid_item: 2.5mm
+  fp_placement_grid_item: 4mm
+  fp_placement_grid_item: 5mm
+  fp_placement_grid_item: 10mm
+
+fp_snap_angle: 45
+
+m_seg_clearance: 204080
+fill_clearance: 300000
+panel_fields: 20000000 20000000
+panel_holes: 3000000 4
+panel_ref_count: 2
+panel_reference: "RectType1"
+panel_scribing: 3
+panel_text: "OnTopSilk" "OnBotSilk" "OnTopCopper" "OnBotCopper"
+panel_frame_for_paste: 0 0 0 0
+mask_clearance: 0
+thermal_width: 400000
+thermal_clearance: 200000
+min_silkscreen_width: 150000
+highlight_width: 127000
+hole_clearance: 400000
+pilot_diameter: 200000
+annular_ring_for_pins: 200000
+annular_ring_for_vias: 200000
+shrink_paste_mask: 0
+cam_flags: 96
+crop_flags: 10500
+cam_layers: 1048639
+cam_drill_file: 1
+cam_units: 1
+cam_n_x: 6
+cam_n_y: 10
+cam_space_x: 5000000
+cam_space_y: 5000000
+
+report_options: 0
+drc_check_unrouted: 0
+drc_trace_width: 170000
+drc_pad_pad: 199000
+drc_pad_trace: 199000
+drc_trace_trace: 199000
+drc_hole_copper: 200000
+drc_annular_ring_pins: 199000
+drc_annular_ring_vias: 199000
+drc_board_edge_copper: 200000
+drc_board_edge_hole: 0
+drc_hole_hole: 600000
+drc_copper_copper: 200000
+
+default_trace_width:0.4mm
+default_via_pad_width:1mm
+default_via_hole_width:0.5mm
+n_width_menu: 4
+  width_menu_item: 1 0.4mm 0mil 0mil
+  width_menu_item: 2 0.5mm 0mil 0mil
+  width_menu_item: 3 0.7mm 0mil 0mil
+  width_menu_item: 4 1mm 1.5mm 1mm
+
+n_copper_layers: 2
+  layer_info: "движение" 0 255 255 0 1 127 127 127 0
+  layer_info: "фон доски" 1 239 239 239 1 255 255 255 0
+  layer_info: "подсветка" 2 255 255 0 1 0 0 0 0
+  layer_info: "линии сетки" 3 255 255 255 1 255 255 0 1
+  layer_info: "тестирование" 4 255 0 0 1 128 64 0 0
+  layer_info: "контур платы" 5 0 115 60 1 0 185 120 1
+  layer_info: "скрайбинг (V)" 6 255 0 128 1 127 127 127 0
+  layer_info: "заметки верх" 7 128 64 0 1 255 0 0 0
+  layer_info: "заметки низ" 8 128 64 0 0 128 128 128 0
+  layer_info: "эл. св€зи" 9 0 0 128 1 0 0 160 1
+  layer_info: "шЄлк верх" 10 178 178 178 1 255 255 255 1
+  layer_info: "шЄлк низ" 11 255 170 170 0 255 255 255 0
+  layer_info: "отверсти€" 12 235 235 235 1 255 255 255 1
+  layer_info: "вид верх" 13 77 77 122 1 230 230 230 1
+  layer_info: "вид низ" 14 222 111 111 0 127 127 127 0
+  layer_info: "медь верх" 15 40 165 90 1 47 255 182 1
+  layer_info: "медь низ" 16 30 90 50 0 10 100 20 0
+
 [footprints]
+
 [board]
+
+
 [solder_mask_cutouts]
+
+
 [graphics]
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 419520370 331095350 0
+  corner: 2 418898070 331095350 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 419663880 331047090 0
+  corner: 2 419520370 331095350 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 419807390 330903580 0
+  corner: 2 419663880 331047090 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 419854380 330760070 0
+  corner: 2 419807390 330903580 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 419854380 330234290 0
+  corner: 2 419854380 330760070 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 419807390 330090780 0
+  corner: 2 419854380 330234290 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 419663880 329947270 0
+  corner: 2 419807390 330090780 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 419520370 329900280 0
+  corner: 2 419663880 329947270 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 419233350 329900280 0
+  corner: 2 419520370 329900280 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 419089840 329947270 0
+  corner: 2 419233350 329900280 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 418946330 330090780 0
+  corner: 2 419089840 329947270 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 418898070 330234290 0
+  corner: 2 418946330 330090780 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 418898070 331190600 0
+  corner: 2 418898070 330234290 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 418994590 331525880 0
+  corner: 2 418898070 331190600 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 419233350 331861160 0
+  corner: 2 418994590 331525880 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 419520370 332051660 0
+  corner: 2 419233350 331861160 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 419473380 325501000 0
+  corner: 2 418899340 325501000 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 419616890 325547990 0
+  corner: 2 419473380 325501000 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 419760400 325691500 0
+  corner: 2 419616890 325547990 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 419808660 325835010 0
+  corner: 2 419760400 325691500 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 419808660 326360790 0
+  corner: 2 419808660 325835010 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 419760400 326504300 0
+  corner: 2 419808660 326360790 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 419616890 326647810 0
+  corner: 2 419760400 326504300 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 419473380 326696070 0
+  corner: 2 419616890 326647810 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 418899340 326696070 0
+  corner: 2 419473380 326696070 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 418899340 327652380 0
+  corner: 2 418899340 326696070 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 419808660 327652380 0
+  corner: 2 418899340 327652380 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 419615620 322056760 0
+  corner: 2 419615620 321100450 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 418898070 321577970 0
+  corner: 2 419902640 321577970 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 419281610 323251830 0
+  corner: 2 418898070 321577970 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 406384760 321024250 0
+  corner: 2 405858980 321024250 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 406528270 321072510 0
+  corner: 2 406384760 321024250 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 406671780 321216020 0
+  corner: 2 406528270 321072510 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 406720040 321359530 0
+  corner: 2 406671780 321216020 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 406720040 321885310 0
+  corner: 2 406720040 321359530 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 406671780 322028820 0
+  corner: 2 406720040 321885310 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 406528270 322172330 0
+  corner: 2 406671780 322028820 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 406337770 322219320 0
+  corner: 2 406528270 322172330 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 406146000 322219320 0
+  corner: 2 406337770 322219320 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 406528270 322267580 0
+  corner: 2 406384760 322219320 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 406671780 322411090 0
+  corner: 2 406528270 322267580 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 406720040 322554600 0
+  corner: 2 406671780 322411090 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 406720040 322841620 0
+  corner: 2 406720040 322554600 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 406671780 322985130 0
+  corner: 2 406720040 322841620 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 406528270 323128640 0
+  corner: 2 406671780 322985130 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 406384760 323176900 0
+  corner: 2 406528270 323128640 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 405858980 323176900 0
+  corner: 2 406384760 323176900 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 405810720 325424800 0
+  corner: 2 406767030 325424800 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 406720040 326906890 0
+  corner: 2 405810720 325424800 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 406767030 327050400 0
+  corner: 2 406720040 326906890 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 406767030 327193910 0
+  corner: 2 406767030 327050400 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 406720040 327385680 0
+  corner: 2 406767030 327193910 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 406576530 327529190 0
+  corner: 2 406720040 327385680 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 406384760 327576180 0
+  corner: 2 406576530 327529190 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 406194260 327576180 0
+  corner: 2 406384760 327576180 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 406002490 327529190 0
+  corner: 2 406194260 327576180 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 405858980 327385680 0
+  corner: 2 406002490 327529190 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 405810720 327193910 0
+  corner: 2 405858980 327385680 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 406528270 331975460 0
+  corner: 2 406528270 329824080 0
+
+line: 2 0 7 299720 -1 -1
+  corner: 1 406050750 331497940 0
+  corner: 2 406528270 331975460 0
+
 line: 2 0 10 200000 -1 -1
-corner: 1 407800000 328800000 0 1
-corner: 2 406800000 328800000 0 1
-line: 2 0 7 299720 -1 -1
-corner: 1 406050750 331497940 0 0
-corner: 2 406528270 331975460 0 0
-line: 2 0 7 299720 -1 -1
-corner: 1 406528270 331975460 0 0
-corner: 2 406528270 329824080 0 0
-line: 2 0 7 299720 -1 -1
-corner: 1 405810720 327193910 0 0
-corner: 2 405858980 327385680 0 0
-line: 2 0 7 299720 -1 -1
-corner: 1 405858980 327385680 0 0
-corner: 2 406002490 327529190 0 0
-line: 2 0 7 299720 -1 -1
-corner: 1 406002490 327529190 0 0
-corner: 2 406194260 327576180 0 0
-line: 2 0 7 299720 -1 -1
-corner: 1 406194260 327576180 0 0
-corner: 2 406384760 327576180 0 0
-line: 2 0 7 299720 -1 -1
-corner: 1 406384760 327576180 0 0
-corner: 2 406576530 327529190 0 0
-line: 2 0 7 299720 -1 -1
-corner: 1 406576530 327529190 0 0
-corner: 2 406720040 327385680 0 0
-line: 2 0 7 299720 -1 -1
-corner: 1 406720040 327385680 0 0
-corner: 2 406767030 327193910 0 0
-line: 2 0 7 299720 -1 -1
-corner: 1 406767030 327193910 0 0
-corner: 2 406767030 327050400 0 0
-line: 2 0 7 299720 -1 -1
-corner: 1 406767030 327050400 0 0
-corner: 2 406720040 326906890 0 0
-line: 2 0 7 299720 -1 -1
-corner: 1 406720040 326906890 0 0
-corner: 2 405810720 325424800 0 0
-line: 2 0 7 299720 -1 -1
-corner: 1 405810720 325424800 0 0
-corner: 2 406767030 325424800 0 0
+  corner: 1 418800000 328800000 0
+  corner: 2 417800000 328800000 0
+
+line: 2 0 10 200000 -1 -1
+  corner: 1 418800000 324400000 0
+  corner: 2 417800000 324400000 0
+
+line: 2 0 10 200000 -1 -1
+  corner: 1 418800000 320000000 0
+  corner: 2 417800000 320000000 0
+
+line: 2 0 10 200000 -1 -1
+  corner: 1 407800000 320000000 0
+  corner: 2 406800000 320000000 0
+
+line: 2 0 10 200000 -1 -1
+  corner: 1 407800000 324400000 0
+  corner: 2 406800000 324400000 0
+
+line: 2 0 10 200000 -1 -1
+  corner: 1 407800000 328800000 0
+  corner: 2 406800000 328800000 0
+
+polyline: 7 1 10 100000 -1 -1
+  corner: 1 407800000 317800000 0 0
+  corner: 2 407800000 331000000 0 0
+  corner: 3 417800000 331000000 0 0
+  corner: 4 417800000 317800000 0 0
+  corner: 5 410000000 325200000 0 1
+  corner: 6 413600000 321600000 2 1
+  corner: 7 416000000 324000000 0 1
+
+
 [parts]
+
 [nets]
+
 [texts]
+
 [merges]
+
+
 [end]

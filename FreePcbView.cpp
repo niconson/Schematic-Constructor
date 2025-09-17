@@ -4153,7 +4153,7 @@ int CFreePcbView::ShowActiveLayer(int n_layers, BOOL swCASE)
 	//if( m_active_layer != LAY_PART_OUTLINE )
 		m_Doc->m_dlist->SetLayerDrawOrder( LAY_PART_OUTLINE, i++ );
 	for( int order=0; order<m_Doc->m_num_layers-LAY_ADD_1; order++ )
-		m_Doc->m_dlist->SetLayerDrawOrder( m_Doc->m_num_layers-order+1, order+i );
+		m_Doc->m_dlist->SetLayerDrawOrder( m_Doc->m_num_layers-order, order+i );
 	for( int order=i+m_Doc->m_num_layers-LAY_ADD_1; order<MAX_LAYERS; order++ )
 		m_Doc->m_dlist->SetLayerDrawOrder( LAY_SELECTION, order );
 	m_Doc->m_dlist->SetTopLayer( m_active_layer );
@@ -15965,8 +15965,7 @@ void CFreePcbView::OnGroupSaveToFPCFile()
 			{
 				int gx1 = m_Doc->m_outline_poly->GetAt(i).GetX(ii);
 				int gy1 = m_Doc->m_outline_poly->GetAt(i).GetY(ii);
-				int inb = m_Doc->m_outline_poly->GetAt(i).GetPrevCornerIndex(ii);
-				int stl = m_Doc->m_outline_poly->GetAt(i).GetSideStyle(inb);
+				int stl = m_Doc->m_outline_poly->GetAt(i).GetSideStyle(ii);
 				int icont = m_Doc->m_outline_poly->GetAt(i).GetContour(ii);
 				int clf = m_Doc->m_outline_poly->GetAt(i).GetContourEnd(icont);
 				s.Format("corner: %d %d %d %d %d\n", ii+1, gx1, gy1, stl, clf);
@@ -16001,6 +16000,7 @@ void CFreePcbView::OnGroupSaveToFPCFile()
 							f.WriteString(s);
 						}
 					}
+					delete PTS;
 				}
 			}
 		}
@@ -16047,6 +16047,7 @@ void CFreePcbView::OnGroupSaveToDXFFile()
 		{
 			if (m_Doc->m_outline_poly->GetAt(i).GetSel() == 0)
 				continue;
+			int L = m_Doc->m_outline_poly->GetAt(i).GetLayer();
 			for (int ii = 0; ii < m_Doc->m_outline_poly->GetAt(i).GetNumSides(); ii++)
 			{
 				double gx1 = m_Doc->m_outline_poly->GetAt(i).GetX(ii);
@@ -16055,7 +16056,6 @@ void CFreePcbView::OnGroupSaveToDXFFile()
 				double gx2 = m_Doc->m_outline_poly->GetAt(i).GetX(inx);
 				double gy2 = m_Doc->m_outline_poly->GetAt(i).GetY(inx);
 				int stl = m_Doc->m_outline_poly->GetAt(i).GetSideStyle(ii);
-				int L = m_Doc->m_outline_poly->GetAt(i).GetLayer();
 				if (stl == 0)
 				{
 					f.WriteString("0\n");
@@ -16102,6 +16102,40 @@ void CFreePcbView::OnGroupSaveToDXFFile()
 					}
 				}
 			}
+			if (m_Doc->m_outline_poly->GetAt(i).GetHatch() == 1 ||
+				m_Doc->m_outline_poly->GetAt(i).GetHatch() > 2)
+			{
+				CArray <dl_element*>* GetH = m_Doc->m_outline_poly->GetAt(i).GetHatchPos();
+				int nh = GetH->GetSize();
+				for (int ic = 0; ic < nh; ic++)
+				{
+					CArray<CPoint>* pA = GetH->GetAt(ic)->dlist->Get_Points(GetH->GetAt(ic), NULL, 0);
+					int np = pA->GetSize();
+					CPoint* P = new CPoint[np];//new012
+					GetH->GetAt(ic)->dlist->Get_Points(GetH->GetAt(ic), P, &np);
+					for (int ip = 0; ip + 1 < np; ip += 2)
+					{
+						f.WriteString("0\n");
+						f.WriteString("LINE\n");
+						f.WriteString("8\n");
+						s = layer_str[L];
+						f.WriteString(s + "\n");
+						f.WriteString("10\n");
+						s.Format("%.3f\n", P[ip].x / h * m_user_scale);
+						f.WriteString(s);
+						f.WriteString("20\n");
+						s.Format("%.3f\n", P[ip].y / h * m_user_scale);
+						f.WriteString(s);
+						f.WriteString("11\n");
+						s.Format("%.3f\n", P[ip + 1].x / h * m_user_scale);
+						f.WriteString(s);
+						f.WriteString("21\n");
+						s.Format("%.3f\n", P[ip + 1].y / h * m_user_scale);
+						f.WriteString(s);
+					}
+					delete P;//new012
+				}
+			}
 		}
 		for (int i = 0; i < m_Doc->m_outline_poly->GetSize(); i++)
 		{
@@ -16133,6 +16167,7 @@ void CFreePcbView::OnGroupSaveToDXFFile()
 						s.Format("%.3f\n", PTS[ipt+1].y / h * m_user_scale);
 						f.WriteString(s);
 					}
+					delete PTS;
 				}
 			}
 		}
