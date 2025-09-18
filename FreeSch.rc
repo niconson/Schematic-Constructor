@@ -586,7 +586,7 @@ BEGIN
         MENUITEM "Вырезать",                    ID_GROUP_CUT
         MENUITEM "Удалить",                     ID_GROUP_DELETE
         MENUITEM SEPARATOR
-        MENUITEM "Выстроить детали в линию",    ID_GROUP_LINE_UP
+        MENUITEM "Выстроить в линию",           ID_GROUP_LINE_UP
         MENUITEM SEPARATOR
         MENUITEM "Аппроксимировать дугу",       ID_APPROXIMATION_ARC
         MENUITEM "Найти центр этой группы",     ID_ADD_G_ORIGIN

@@ -25,12 +25,12 @@ default_font: 11
 default_node_width: -1100000
 autosave_interval: 60
 m_client_rect_left: 0
-m_client_rect_right: 1131
-m_client_rect_bottom: 670
+m_client_rect_right: 1532
+m_client_rect_bottom: 726
 m_client_rect_top: 0
-m_org_x: 271653
-m_org_y: 242343
-m_scale_factor: 54995
+m_org_x: 280652
+m_org_y: 239274
+m_scale_factor: 65994
 m_attr_size: 2200000 300000 2200000 300000 2200000 300000 2200000 300000 2200000 300000 2200000 300000
 m_user_scale: 1.0000000000
 units: MM
@@ -221,8 +221,13 @@ m_bom_colors: 0 0 0 155 155 155 0 0 0 166 166 166 255 255 111 0 0 255 140 140 14
 
 rename_page: "main_page"
 bmp_src: "C:\Users\Admin\Downloads\Виснет\related_files\pictures\00001.PIC"
-polyline: 2 0 10 200000 -1 -1 -1 0 9
-  corner: 1 429260000 292100000 0 1
-  corner: 2 429260000 294640000 0 1
+polyline: 2 0 5 200001 -1 -1 -1 0 0
+  corner: 1 392800000 324400000 0 0
+  corner: 2 387200000 324400000 0 0
+description: "123" 388179847 325638259 14 0 2200000 300000 -1 -1 11 1
+
+polyline: 2 0 5 200001 -1 -1 -1 0 0
+  corner: 1 392000000 328800000 0 0
+  corner: 2 386400000 328800000 0 0
 
 [end]

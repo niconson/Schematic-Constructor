@@ -4327,7 +4327,7 @@ void CFreePcbView::CancelSelection( BOOL ConsiderFlags )
 	m_sel_merge_name = "";
 	gLastKeyWasArrow = FALSE;
 	gShiftKeyDown = FALSE;
-	MarkAllOutlinePoly(0,-1);
+	//MarkAllOutlinePoly(0,-1);
 
 	// dlg log
 	if( ConsiderFlags )
@@ -10369,42 +10369,101 @@ void CFreePcbView::OnGroupLineUp()
 			else
 				p->utility = 0;
 		}
-		if( count < 3 )
+		BOOL MOD_POLYLINES = 0;
+		if (count == 0)
+		{
+			count = 0;
+			MOD_POLYLINES = 1;
+			for (int i = 0; i < m_Doc->m_outline_poly->GetSize(); i++)
+			{
+				CPolyLine* p = &m_Doc->m_outline_poly->GetAt(i);
+				if (p->GetSideSel())
+				{
+					p->SetUtility(1);
+					RECT pb = p->GetCornerBounds();
+					min_x = min(min_x, pb.left);
+					max_x = max(max_x, pb.left);
+					min_y = min(min_y, pb.bottom);
+					max_y = max(max_y, pb.bottom);
+					count++;
+				}
+				else
+					p->SetUtility(0);
+			}
+		}
+		if (count < 2)
 			return;
 		int pt = 0;
 		CText * fp;
+		int fpo;
 		do
 		{
 			int min_d = DEFAULT;	
 			fp = NULL;
+			fpo = -1;
 			CancelSelection();
-			it = -1;
-			for(CText * p=m_Doc->Attr->m_Reflist->GetNextText(&it); p; p=m_Doc->Attr->m_Reflist->GetNextText(&it) )
+			if (MOD_POLYLINES == 0)
 			{
-				if( p->utility )
+				it = -1;
+				for (CText* p = m_Doc->Attr->m_Reflist->GetNextText(&it); p; p = m_Doc->Attr->m_Reflist->GetNextText(&it))
 				{
-					RECT pb = m_Doc->GetPartBounds( p, NULL );
-					int d = Distance( pb.left, pb.bottom, min_x, min_y );
-					if( d < min_d )
+					if (p->utility)
 					{
-						min_d = d;
-						fp = p;
+						RECT pb = m_Doc->GetPartBounds(p, NULL);
+						int d = Distance(pb.left, pb.bottom, min_x, min_y);
+						if (d < min_d)
+						{
+							min_d = d;
+							fp = p;
+						}
 					}
 				}
+				if (fp)
+				{
+					RECT pb = m_Doc->GetPartBounds(fp, NULL);
+					NewSelectP(fp, NULL);
+					m_Doc->SelectGroupAttributes();
+					if ((max_x - min_x) > (max_y - min_y))
+						MoveGroup(min_x + (pt * (max_x - min_x) / (count - 1)) - pb.left, min_y - pb.bottom);
+					else
+						MoveGroup(min_x - pb.left, min_y + (pt * (max_y - min_y) / (count - 1)) - pb.bottom);
+					fp->utility = 0;
+					pt++;
+				}
 			}
-			if( fp )
-			{		
-				RECT pb = m_Doc->GetPartBounds( fp, NULL );
-				NewSelectP( fp, NULL );
-				m_Doc->SelectGroupAttributes();
-				if( (max_x-min_x) > (max_y-min_y) )
-					MoveGroup( min_x+(pt*(max_x-min_x)/(count-1))-pb.left, min_y-pb.bottom );
-				else
-					MoveGroup( min_x-pb.left, min_y+(pt*(max_y-min_y)/(count-1))-pb.bottom );
-				fp->utility = 0;
-				pt++;
+			else
+			{
+				for (int i = 0; i < m_Doc->m_outline_poly->GetSize(); i++)
+				{
+					CPolyLine* p = &m_Doc->m_outline_poly->GetAt(i);
+					if (p->GetUtility())
+					{
+						RECT pb = p->GetCornerBounds();
+						int d = Distance(pb.left, pb.bottom, min_x, min_y);
+						if (d < min_d)
+						{
+							min_d = d;
+							fpo = i;
+						}
+					}
+				}
+				if (fpo >= 0)
+				{
+					CPolyLine* p = &m_Doc->m_outline_poly->GetAt(fpo);
+					RECT pb = p->GetCornerBounds();
+					id sid(ID_POLYLINE, ID_GRAPHIC, fpo, ID_SIDE, 0);
+					NewSelect(NULL, &sid, 0, 0);
+					SelectContour();
+					m_Doc->SelectGroupAttributes();
+					if ((max_x - min_x) > (max_y - min_y))
+						MoveGroup(min_x + (pt * (max_x - min_x) / (count - 1)) - pb.left, min_y - pb.bottom);
+					else
+						MoveGroup(min_x - pb.left, min_y + (pt * (max_y - min_y) / (count - 1)) - pb.bottom);
+					p->SetUtility(0);
+					pt++;
+				}
 			}
-		}while( fp );
+		}while( fp || fpo >= 0 );
 
 		CancelSelection();
 		it = -1;
