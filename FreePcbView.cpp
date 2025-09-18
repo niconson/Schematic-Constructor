@@ -16031,9 +16031,12 @@ void CFreePcbView::OnGroupSaveToFPCFile()
 				f.WriteString(s);
 			}
 		}
-		for (int i = 0; i < m_Doc->m_outline_poly->GetSize(); i++)
+		for (int iatt = 0; iatt < num_attributes; iatt++)
 		{
-			for (CText* t = m_Doc->ScanAttr(&m_Doc->m_outline_poly->GetAt(i)); t; t = m_Doc->ScanAttr(&m_Doc->m_outline_poly->GetAt(i)))
+			int itxt = -1;
+			int current = m_Doc->Pages.GetActiveNumber();
+			int ipag = current;
+			for (CText* t = m_Doc->Pages.GetNextAttr(iatt, &itxt, &ipag); t && ipag == current; t = m_Doc->Pages.GetNextAttr(iatt, &itxt, &ipag))
 			{
 				if (t->m_selected)
 				{
@@ -16052,8 +16055,8 @@ void CFreePcbView::OnGroupSaveToFPCFile()
 						f.WriteString(s);
 						for (int ii = 0; ii < numc; ii++)
 						{
-							int gx1 = PTS[ipt+ii].x * m_user_scale;
-							int gy1 = PTS[ipt+ii].y * m_user_scale;
+							int gx1 = PTS[ipt + ii].x * m_user_scale;
+							int gy1 = PTS[ipt + ii].y * m_user_scale;
 							int stl = 0;
 							s.Format("corner: %d %d %d %d 0\n", ii + 1, gx1, gy1, stl);
 							f.WriteString(s);
@@ -16196,9 +16199,12 @@ void CFreePcbView::OnGroupSaveToDXFFile()
 				}
 			}
 		}
-		for (int i = 0; i < m_Doc->m_outline_poly->GetSize(); i++)
+		for (int iatt = 0; iatt < num_attributes; iatt++)
 		{
-			for (CText* t = m_Doc->ScanAttr(&m_Doc->m_outline_poly->GetAt(i)); t; t = m_Doc->ScanAttr(&m_Doc->m_outline_poly->GetAt(i)))
+			int itxt = -1;
+			int current = m_Doc->Pages.GetActiveNumber();
+			int ipag = current;
+			for (CText* t = m_Doc->Pages.GetNextAttr(iatt, &itxt, &ipag); t && ipag == current; t = m_Doc->Pages.GetNextAttr(iatt, &itxt, &ipag))
 			{
 				if (t->m_selected)
 				{
