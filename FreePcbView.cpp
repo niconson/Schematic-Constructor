@@ -6398,6 +6398,7 @@ CString CFreePcbView::OPSetAttributes( CString * bDialog )
 								{
 									m_Doc->m_vis[iL] = TRUE;
 									m_Doc->m_dlist->SetLayerVisible(iL, 1);
+									m_Doc->m_dlist->SetLayerRGB(iL, m_Doc->m_rgb[iL][0], m_Doc->m_rgb[iL][1], m_Doc->m_rgb[iL][2]);
 								}
 								ShowActiveLayer(m_Doc->m_num_additional_layers);
 							}

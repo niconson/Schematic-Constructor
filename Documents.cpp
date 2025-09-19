@@ -1926,7 +1926,7 @@ CString CFreePcbDoc::ReadGraphics( CStdioFile * pcb_file, CArray<CPolyLine> * ss
 						if( ssm == NULL )
 						{
 							m_view->RedrawLayers(); // ReadGraphics
-							if( Pages.GetActiveNumber() )
+							//if( Pages.GetActiveNumber() ) n.u.
 							{
 								m_view->ViewAllElements(NULL);
 								if( m_current_page < Pages.GetNumPages() )
@@ -5010,20 +5010,12 @@ void CFreePcbDoc::OnProjectOptions()
 		else if( m_num_additional_layers < dlg.GetNumALayers() )
 		{
 			// increasing number of layers, don't reassign
-			/*for (int il = m_num_additional_layers; il<dlg.GetNumALayers(); il++)
+			for (int il = m_num_additional_layers; il<dlg.GetNumALayers(); il++)
 			{
-				m_rgb[LAY_ADD_1+il][0] = (8376*il)%255;
-				m_rgb[LAY_ADD_1+il][1] = (6295*il)%255;
-				m_rgb[LAY_ADD_1+il][2] = (7129*il)%255;
-				m_pdf_rgb[LAY_ADD_1+il][0] = (8376*il)%255;
-				m_pdf_rgb[LAY_ADD_1+il][1] = (6295*il)%255;
-				m_pdf_rgb[LAY_ADD_1+il][2] = (7129*il)%255;
-				m_dlist->SetLayerRGB(LAY_ADD_1+il,	m_rgb[LAY_ADD_1+il][0],
-													m_rgb[LAY_ADD_1+il][1],
-													m_rgb[LAY_ADD_1+il][2] );
+				m_dlist->SetLayerRGB(LAY_ADD_1 + il, m_rgb[LAY_ADD_1 + il][0], m_rgb[LAY_ADD_1 + il][1], m_rgb[LAY_ADD_1 + il][2] );
 				m_dlist->SetLayerVisible(LAY_ADD_1+il, 1);
 				m_vis[LAY_ADD_1+il] = 1;
-			}*/
+			}
 			m_num_additional_layers = dlg.GetNumALayers();
 			m_num_layers = m_num_additional_layers + LAY_ADD_1;
 			m_view->ShowActiveLayer(m_num_additional_layers);

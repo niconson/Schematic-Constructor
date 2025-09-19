@@ -1,45 +1,43 @@
 [options]
 
-app_folder: "D:\FreePCBDev\Schematic Constructor\.\Debug"
 version: 1.427
 file_version: 1.427
 project_name: "buf.cds"
-library_folder: "c:\users\nikonov\downloads\skhemator _ platform source code\niconson-platform-a306c2e\fp_lib"
-full_library_folder: "c:\users\nikonov\downloads\skhemator _ platform source code\niconson-platform-a306c2e\fp_lib\lib"
-CAM_folder: "C:\Users\Admin\Downloads\Виснет\related_files\print_layers"
+library_folder: "d:\works\projects\micronics\lib"
+full_library_folder: "?\micronics\lib\footprints"
+CAM_folder: ""
 netlist_completed: "0"
-bom_options: "721056"
+bom_options: "16777376"
 page_number: "0"
 parent_index: "2"
-alignment: 0.70
+alignment: 0.80
 partlist_size_x: "534"
 partlist_size_y: "391"
-partlist_pos_x: "105"
-partlist_pos_y: "69"
-partlist_col_w: "963936316"
-netlist_file_path: "C:\Users\Admin\Downloads\Виснет\related_files\CDS_netlist\USS.pcb.fpc"
-pcb_name: "USS.pcb.fpc" 1
+partlist_pos_x: "1088"
+partlist_pos_y: "95"
+partlist_col_w: "960223292"
+netlist_file_path: ""
 netlist_format: 0
 page_mirror_mask: 0
 default_font: 11
 default_node_width: -1100000
 autosave_interval: 60
 m_client_rect_left: 0
-m_client_rect_right: 1532
-m_client_rect_bottom: 726
+m_client_rect_right: 1131
+m_client_rect_bottom: 670
 m_client_rect_top: 0
-m_org_x: 280652
-m_org_y: 239274
-m_scale_factor: 65994
-m_attr_size: 2200000 300000 2200000 300000 2200000 300000 2200000 300000 2200000 300000 2200000 300000
+m_org_x: 9913
+m_org_y: -57167
+m_scale_factor: 50285
+m_attr_size: 1410000 110000 1410000 110000 990000 110000 1410000 110000 1410000 110000 1410000 110000
 m_user_scale: 1.0000000000
 units: MM
 
-m_sel_mask: -65
+m_sel_mask: -2
 m_visible_layers: 134217723
-m_top_layer: 5
+m_top_layer: 6
 m_grid_style: 0
-visible_grid_spacing: 2000000.000000
+visible_grid_spacing: 2500000.000000
   visible_grid_item: 20mil
   visible_grid_item: 50mil
   visible_grid_item: 100mil
@@ -95,7 +93,7 @@ polyline_grid_spacing: 400000.000000
   placement_grid_item: 5mm
   placement_grid_item: 10mm
 
-text_grid_spacing: 200000.000000
+text_grid_spacing: 100000.000000
   text_grid_item: 0.1mil
   text_grid_item: 0.5mil
   text_grid_item: 1mil
@@ -132,7 +130,7 @@ polyline_width: 200000
 text_height: 200000
 min_text_stroke_width: 100000
 highlight_width: 127000
-cam_flags: 262114
+cam_flags: 262113
 cam_layers: 8191
 cam_units: 1
 
@@ -144,10 +142,10 @@ drc_pin_attr_to_attr: 254000
 drc_pin_attr_to_poly: 254000
 
 default_polyline_width:0.2mm
-n_additional_layers: 4
+n_additional_layers: 12
 m_pdf_font_i: 22
 m_pdf_margin: 0.01
-pdf_checking: 3134
+pdf_checking: 1086
   layer_info: "перемещение" 0 130 130 130 1
   layer_info: "фон доски" 1 178 178 178 1
   layer_info: "видимая сетка" 2 22 22 22 0
@@ -215,19 +213,10 @@ pdf_checking: 3134
   pdf_layer_info: "undefined" 31 255 255 255 0
 
 m_bom_colors: 0 0 0 155 155 155 0 0 0 166 166 166 255 255 111 0 0 255 140 140 140
-  merge: "Merge-1"
+  merge: "BOARD-1-01.fpc.PCBVIEW1"
 
 [graphics]
 
-rename_page: "main_page"
-bmp_src: "C:\Users\Admin\Downloads\Виснет\related_files\pictures\00001.PIC"
-polyline: 2 0 5 200001 -1 -1 -1 0 0
-  corner: 1 392800000 324400000 0 0
-  corner: 2 387200000 324400000 0 0
-description: "123" 388179847 325638259 14 0 2200000 300000 -1 -1 11 1
-
-polyline: 2 0 5 200001 -1 -1 -1 0 0
-  corner: 1 392000000 328800000 0 0
-  corner: 2 386400000 328800000 0 0
-
+rename_page: "Page 1"
+bmp_src: "D:\Works\Projects\Reverse engineering\BOARD-1\version-01\related_files\pictures\00001.PIC"
 [end]
