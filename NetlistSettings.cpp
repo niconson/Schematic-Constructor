@@ -17,11 +17,12 @@ CDlgNetlistSettings::~CDlgNetlistSettings()
 {
 }
 
-void CDlgNetlistSettings::Ini( CPageList * pl, BOOL rnmb_present )
+void CDlgNetlistSettings::Ini( CPageList * pl, BOOL rnmb_present, CString * project_folder)
 {
 	m_pl = pl;
 	m_box_index = m_pl->m_netlist_format;
 	m_rnmb_present = rnmb_present;
+	m_project_folder = *project_folder;
 	if( m_rnmb_present )
 		AfxMessageBox(G_LANGUAGE == 0 ? 
 			"It is highly recommended that you do not change "\
@@ -317,10 +318,11 @@ void CDlgNetlistSettings::OnDeletePcb()
 		CString mess;
 		mess.Format(G_LANGUAGE == 0 ? 
 			"Are you sure you want to remove the %s from this list? (this will not affect the file in the folder)":
-			"Вы уверены, что хотите удалить из этого списка %s? (это не затронет файл в папке)", str);
+			"Вы уверены, что хотите удалить из этого списка %s? (это не затронет сам файл в папке)", str);
 		int ret = AfxMessageBox( mess, MB_ICONQUESTION | MB_OKCANCEL );
 		if( ret == IDOK )
 		{
+			remove(m_project_folder + freeasy_netlist + str + ".txt");
 			m_pl->m_pcb_names.RemoveAt( ind );
 			m_edit_pcb_names.DeleteString( ind );
 			if( m_pl->m_pcb_names.GetSize() != m_edit_pcb_names.GetCount() )

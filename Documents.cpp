@@ -3963,7 +3963,7 @@ void CFreePcbDoc::OnFileSetNetlist()
 	// extract dlg
 	int sv_page = Pages.GetActiveNumber();
 	CDlgNetlistSettings dlg;
-	dlg.Ini( &Pages, (BOOL)(m_netlist_used && err == 0) );
+	dlg.Ini( &Pages, (BOOL)(m_netlist_used && err == 0), &m_path_to_folder );
 	dlg.DoModal();
 	ProjectModified( TRUE );
 	//if( Pages.GetActiveNumber() != sv_page ) ! N.U.
@@ -13327,7 +13327,8 @@ void CFreePcbDoc::OnImportNetlist()
 			"Проект был изменен. Сохраните проект перед использованием этой опции.", MB_ICONWARNING);
 		return;
 	}
-	if( Pages.IsThePageIncludedInNetlist( Pages.GetActiveNumber(), TRUE ) || m_outline_poly->GetSize() )
+	int it = -1;
+	if( Pages.IsThePageIncludedInNetlist( Pages.GetActiveNumber(), TRUE ) || Attr->m_Reflist->GetNextText(&it) )
 	{
 		AfxMessageBox(G_LANGUAGE == 0 ? 
 			"Netlist can only be imported to a blank page that is not included in any netlist":
