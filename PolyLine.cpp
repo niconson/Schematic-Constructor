@@ -2610,14 +2610,14 @@ void CPolyLine::SetEndContour( int ic, BOOL end_contour )
 void CPolyLine::SetLayer( int layer )
 { 
 	m_layer = layer; 
-	if( m_layer != LAY_PIN_LINE && m_layer != LAY_FREE_LINE && m_layer != LAY_CONNECTION )
-	{
-		if( m_ncorners )
-		{
-			Node[0] = 0;
-			Node[m_ncorners-1] = 0;
-		}
-	}
+	//if( m_layer != LAY_PIN_LINE && m_layer != LAY_FREE_LINE && m_layer != LAY_CONNECTION )
+	//{
+	//	if( m_ncorners )
+	//	{
+	//		Node[0] = 0;
+	//		Node[m_ncorners-1] = 0;
+	//	}
+	//}
 }
 void CPolyLine::SetW( int w ) { m_w = max(1,w); }
 void CPolyLine::SetVisible ( int visible ){ m_visible = visible; }
