@@ -4931,8 +4931,8 @@ void CFreePcbView::OnTextEdit()
 	int attrib_mask = 0;
 	// create dialog and pass parameters
 	CString old_str = m_sel_text->m_str;
-	CDlgAddText add_text_dlg;
-	add_text_dlg.m_text_sizes = &txtSizes;
+	CDlgAddText dlg;
+	dlg.m_text_sizes = &txtSizes;
 	BOOL bNoAlign = 0;
 	BOOL isCOMMAND = m_sel_text->m_tl->IsCommand( m_sel_text );
 	if( m_sel_count > 1 || isCOMMAND || m_protect )
@@ -5010,14 +5010,14 @@ void CFreePcbView::OnTextEdit()
 			setbit( pdf_opt, PDF_NO_ALIGN );
 		if( m_sel_count > 1 && s.Compare("Disabled") == 0 && isCOMMAND == 0 )
 			s = "Several";
-		add_text_dlg.Initialize( &m_Doc->Pages, &s, &m_Doc->m_special_chars,
+		dlg.Initialize( &m_Doc->Pages, &s, &m_Doc->m_special_chars,
 			m_Doc->m_units, m_sel_text->m_font_size,
 			m_sel_text->m_stroke_width, m_sel_text->m_x, m_sel_text->m_y, m_sel_text->m_font_number, pdf_opt, attrib_mask, m_user_scale );
 	}
 	else if( m_sel_text->m_tl == m_Doc->Attr->m_Reflist )
 	{
 		setbit( attrib_mask, index_part_attr );
-		add_text_dlg.Initialize( &m_Doc->Pages, &m_sel_text->m_str, &m_Doc->m_special_chars,
+		dlg.Initialize( &m_Doc->Pages, &m_sel_text->m_str, &m_Doc->m_special_chars,
 			m_Doc->m_units, m_sel_text->m_font_size,
 			m_sel_text->m_stroke_width, m_sel_text->m_x, m_sel_text->m_y, m_sel_text->m_font_number, m_sel_text->m_pdf_options, attrib_mask, m_user_scale );
 	}
@@ -5026,12 +5026,12 @@ void CFreePcbView::OnTextEdit()
 		int ia = m_Doc->Pages.IsAttr( m_sel_text );
 		if( ia >= 0 )
 			setbit( attrib_mask, ia );
-		add_text_dlg.Initialize( &m_Doc->Pages, &m_sel_text->m_str, &m_Doc->m_special_chars,
+		dlg.Initialize( &m_Doc->Pages, &m_sel_text->m_str, &m_Doc->m_special_chars,
 			m_Doc->m_units, m_sel_text->m_font_size,
 			m_sel_text->m_stroke_width, m_sel_text->m_x, m_sel_text->m_y, m_sel_text->m_font_number, m_sel_text->m_pdf_options, attrib_mask, m_user_scale );
 	}
-	add_text_dlg.m_text_arr = &ArrTexts;
-	int ret = add_text_dlg.DoModal();
+	dlg.m_text_arr = &ArrTexts;
+	int ret = dlg.DoModal();
 	if( ret == IDCANCEL )
 		return;
 
@@ -5039,9 +5039,9 @@ void CFreePcbView::OnTextEdit()
 	int mem_auto_interval = m_Doc->m_auto_interval;
 	m_Doc->m_auto_interval = 0;
 
-	if( m_Doc->m_special_chars.Compare( add_text_dlg.m_special ) )
+	if( m_Doc->m_special_chars.Compare( dlg.m_special ) )
 	{
-		m_Doc->m_special_chars = add_text_dlg.m_special;
+		m_Doc->m_special_chars = dlg.m_special;
 		m_Doc->SaveOptions();
 	}
 	int mem_sel_count = m_sel_count;
@@ -5059,17 +5059,17 @@ void CFreePcbView::OnTextEdit()
 				m_sel_text = text;
 				if( mem_sel_count == 1 )
 				{
-					text->m_x = add_text_dlg.m_x;
-					text->m_y = add_text_dlg.m_y;
+					text->m_x = dlg.m_x;
+					text->m_y = dlg.m_y;
 				}
-				text->m_font_number = add_text_dlg.m_font_number;
+				text->m_font_number = dlg.m_font_number;
 				int old_opt = text->m_pdf_options;
-				text->m_pdf_options = add_text_dlg.m_pdf_options;
+				text->m_pdf_options = dlg.m_pdf_options;
 				if( getbit( old_opt, RVF_FLAG ) )
 					setbit( text->m_pdf_options, RVF_FLAG );
 				else
 					clrbit( text->m_pdf_options, RVF_FLAG );
-				if( add_text_dlg.m_remain )
+				if( dlg.m_remain )
 				{
 					clrbit( text->m_pdf_options, COMPRESSED );
 					clrbit( text->m_pdf_options, UNCLENCHED );
@@ -5078,31 +5078,31 @@ void CFreePcbView::OnTextEdit()
 					if( getbit( old_opt, UNCLENCHED ) )
 						setbit( text->m_pdf_options, UNCLENCHED );
 				}
-				if( add_text_dlg.m_remain_italic )
+				if( dlg.m_remain_italic )
 				{
 					if( getbit( old_opt, ITALIC ) )
 						setbit( text->m_pdf_options, ITALIC );
 					else
 						clrbit( text->m_pdf_options, ITALIC );
 				}
-				if( getbit( add_text_dlg.m_pdf_options, PDF_NO_ALIGN ) )
+				if( getbit( dlg.m_pdf_options, PDF_NO_ALIGN ) )
 					if( getbit( old_opt, PDF_ALIGN ) )
 						setbit( text->m_pdf_options, PDF_ALIGN );
 					else
 						clrbit( text->m_pdf_options, PDF_ALIGN );
 				clrbit( text->m_pdf_options, PDF_NO_ALIGN );//!!!
 				//
-				if( add_text_dlg.m_height != 1 )//  1==disabled
-					text->m_font_size = add_text_dlg.m_height;
-				if( add_text_dlg.m_width != 1 )//  1==disabled
-					text->m_stroke_width = add_text_dlg.m_width;
+				if( dlg.m_height != 1 )//  1==disabled
+					text->m_font_size = dlg.m_height;
+				if( dlg.m_width != 1 )//  1==disabled
+					text->m_stroke_width = dlg.m_width;
 				text->Undraw();
-				if( add_text_dlg.m_str.GetLength() )
+				if( dlg.m_str.GetLength() )
 				{
 					if( text->m_tl == m_Doc->Attr->m_Reflist )
-						if( text->m_str.Compare( add_text_dlg.m_str ) )
+						if( text->m_str.Compare( dlg.m_str ) )
 						{
-							m_Doc->Renumber__Add( &text->m_str, &add_text_dlg.m_str, m_Doc->Pages.GetActiveNumber() );
+							m_Doc->Renumber__Add( &text->m_str, &dlg.m_str, m_Doc->Pages.GetActiveNumber() );
 						}
 
 					// upd library
@@ -5120,8 +5120,8 @@ void CFreePcbView::OnTextEdit()
 							}
 						}
 					}
-					text->m_str = add_text_dlg.m_str;
-					text->m_nchars = add_text_dlg.m_str.GetLength();
+					text->m_str = dlg.m_str;
+					text->m_nchars = dlg.m_str.GetLength();
 					if( oldv.GetLength() && oldf.GetLength() )
 						m_Doc->CheckComponentInLibrary( text, &oldv, &oldf );
 				}
@@ -5169,7 +5169,7 @@ void CFreePcbView::OnTextEdit()
 			m_dlg_partlist->ImportPartlist();
 
 	// start dragging if requested in dialog
-	if( add_text_dlg.m_bDrag )
+	if( dlg.m_bDrag )
 		OnTextMove();
 
 	// project modified

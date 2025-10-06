@@ -8816,6 +8816,9 @@ void CFreePcbDoc::Renumber__Add( CString * old_ref, CString * new_ref, int curre
 					part->m_str = *new_ref;
 					part->m_nchars = new_ref->GetLength();
 					part->Draw( dl, m_smfontutil );
+					int mem_p = SwitchToPage(cur_p, 0, 0);
+					Renumber__Add(old_ref, new_ref, cur_p);
+					SwitchToPage(mem_p, 0, 0);
 				}
 			}
 		}
@@ -8826,6 +8829,7 @@ void CFreePcbDoc::Renumber__Add( CString * old_ref, CString * new_ref, int curre
 		int ipcb = Pages.GetPcbIndex( current_page );
 		if( ipcb == -1 )
 			return;
+
 		CString log;
 		log.Format( RENUMBERING_PATTERN, oldr, newr );
 		if( RemoveAt == -1 )
@@ -8840,6 +8844,8 @@ void CFreePcbDoc::Renumber__Add( CString * old_ref, CString * new_ref, int curre
 			log += " ";
 		m_dlg_log->AddLine( log+"\t(page: \""+Page+"\")\r\n" );
 		m_dlg_log->UpdateWindow();
+		// pcb modified
+		m_pcb_modified[ipcb] = TRUE;
 	}
 	else 
 	{	
@@ -11980,11 +11986,11 @@ int CFreePcbDoc::AttributeSync( CText * REF, CString * old_att, CText * new_att,
 		{
 			if( match_cnt == 1 || i_att == index_part_attr || i_att == index_value_attr || i_att == index_foot_attr )
 			{
+				OAtt->Undraw();
 				OAtt->m_str = new_att->m_str;
 				OAtt->m_nchars = new_att->m_str.GetLength();
 				OAtt->m_font_size = new_att->m_font_size;
 				OAtt->m_stroke_width = new_att->m_stroke_width;
-				OAtt->Undraw();
 				OAtt->MakeVisible();
 				RET = 1;
 				// set flags
