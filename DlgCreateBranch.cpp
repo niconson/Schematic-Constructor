@@ -151,9 +151,9 @@ void DlgCreateBranch::DoDataExchange(CDataExchange* pDX)
 						{
 							if( fn.Right(4) == ".cds" ||
 								fn.Right(4) == ".fpc" ||
-								fn.Right(5) == ".scad" )
+								fn.Right(5) == ".scad" ||
+								fn.Right(8) == ".PCBVIEW")
 							{
-								//PCB_OLD.Add( name );
 								{
 									CString str = name.Left( name.GetLength() - 4 );
 									PCB_OLD.Add( str );
