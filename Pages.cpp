@@ -1246,7 +1246,7 @@ int CPageList::SortDetails( CString * Details, int column_width )
 	*Details = "";
 	int prev_w=0;
 	CString ref = "A0", v="---", f="---";
-	for( int i=T.FindNextPart( &ref, &v, &f ); i>=0; i=T.FindNextPart( &ref, &v, &f ) )
+	for( int i=T.FindNextPart( &ref, &v, &f, -1 ); i>=0; i=T.FindNextPart( &ref, &v, &f, -1 ) )
 	{
 		if( Details->GetLength() )
 			*Details += ", ";
@@ -1255,7 +1255,7 @@ int CPageList::SortDetails( CString * Details, int column_width )
 			*Details += "'";
 		prev_w = width;
 		CString ref2;
-		int bCount = T.GetBomRepeats( &ref, &ref2, &v, &f );
+		int bCount = T.GetBomRepeats( &ref, &ref2, &v, &f, -1 );
 		if( bCount > 1 )
 		{
 			*Details += (ref+"..."+ref2);

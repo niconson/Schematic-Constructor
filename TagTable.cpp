@@ -2,8 +2,120 @@
 #include "FreeSch.h"
 #include "TagTable.h"
 #include "BomInTable.h"
-///#include "afxtempl.h"
 
+void TagTable::CopyTagPointers(int h_index, BOOL ERASE)
+{
+	globalStartData.x = NUM_PAGES;
+	globalStartData.y = INT_MAX;
+	for (int page = NUM_PAGES - 1; page >= 0; page--)
+	{
+		for (int i = TextData[page].GetSize() - 1; i >= 0; i--)
+		{
+			CText* data = TextData[page].GetAt(i);
+			if (data->m_str.Find("#") == 0)
+			{
+				data->m_str = data->m_str.Right(data->m_str.GetLength() - 1);
+				data->m_nchars = data->m_str.GetLength();
+				data->MakeVisible();
+				if ((data->m_y > globalStartData.y && page == globalStartData.x) || page < globalStartData.x)
+				{
+					globalStartData.y = data->m_y;
+					globalStartData.x = page;
+				}
+			}
+		}
+	}
+	if (globalStartData.x == NUM_PAGES)
+	{
+		globalStartData.y = pgTop[0];
+		globalStartData.x = 0;
+		if (h_index >= 0 && h_index < Headers.GetSize())
+		{
+			CString str = Headers[h_index] + MOVABLE + "|C";
+			nPages = PushRows(globalStartData.y + (shiftY / 2), globalStartData.x);
+			CText* T = m_doc->GetFreeNet(&str, Xs[CName] + (COL3W / 2), globalStartData.y + (textH / 2), textH, textW);
+			TextData[globalStartData.x].Add(T);
+			T->m_pdf_options = pdfOptions;
+			T->m_font_number = fontNum;
+			T->m_layer = tLayers[CName];
+			T->MakeVisible();
+			globalStartData.y -= shiftY;
+			if (globalStartData.y < pgBottom[globalStartData.x])
+			{
+				globalStartData.x = globalStartData.x + 1;
+				if (globalStartData.x >= NUM_PAGES)
+					return;
+				globalStartData.y = pgTop[globalStartData.x];
+			}
+		}
+	}
+	else
+	{
+		for (int page = NUM_PAGES - 1; page >= 0; page--)
+		{
+			for (int i = TextData[page].GetSize() - 1; i >= 0; i--)
+			{
+				CText* data = TextData[page].GetAt(i);
+				BOOL TRIGGER = ((data->m_y > globalStartData.y - (shiftY / 2) && page == globalStartData.x) || page < globalStartData.x);
+				if ((data->m_str.Find(".col") == 0 && data->m_str.GetLength() == 5) ||
+					(data->m_str.Find(".") == 0 && abs(data->m_x - Xs[RefDes]) < NM_PER_MIL))
+					{
+						if (ERASE)
+						{
+							PushBack(data->m_y, page);
+							TextData[page].RemoveAt(i);
+							if (TRIGGER)
+							{
+								globalStartData.y += shiftY;
+								if (globalStartData.y > pgTop[globalStartData.x])
+								{
+									globalStartData.x = globalStartData.x - 1;
+									if (globalStartData.x < 0)
+										return;
+									globalStartData.y = pgBottom[globalStartData.x];
+								}
+							}
+						}
+						else if (TRIGGER)
+						{
+							TextData[page].RemoveAt(i);
+						}
+					}
+			}
+		}
+		if (ERASE == 0)
+			if (h_index >= 0 && h_index < Headers.GetSize())
+			{
+				nPages = PushRows(globalStartData.y + (shiftY / 2), globalStartData.x);
+				nPages = PushRows(globalStartData.y + (shiftY / 2), globalStartData.x);
+				CString str = Headers[h_index] + MOVABLE + "|C";
+				CText* T = m_doc->GetFreeNet(&str, Xs[CName] + (COL3W / 2), globalStartData.y + (textH / 2), textH, textW);
+				TextData[globalStartData.x].Add(T);
+				T->m_pdf_options = pdfOptions;
+				T->m_font_number = fontNum;
+				T->m_layer = tLayers[CName];
+				T->MakeVisible();
+				for (int n = 0; n < 2; n++)
+				{
+					globalStartData.y -= shiftY;
+					if (globalStartData.y < pgBottom[globalStartData.x])
+					{
+						globalStartData.x = globalStartData.x + 1;
+						if (globalStartData.x >= NUM_PAGES)
+							return;
+						globalStartData.y = pgTop[globalStartData.x];
+					}
+				}
+			}
+	}
+	if (ERASE)
+		return;
+	if (globalStartData.x < NUM_PAGES)
+		for (int i_push = 0; i_push < RangeY; i_push += shiftY)
+		{
+			nPages = PushRows(globalStartData.y + (shiftY / 2), globalStartData.x, i_push+1);
+		}
+}
 //-------------------------------------------------------------------------
 //=========================================================================
 //-------------------------------------------------------------------------
@@ -27,76 +139,87 @@ void TagTable::MakeReport( CFreePcbDoc * doc )
 	if( ProjName.Right(3) == "cds" )
 		ProjName.Truncate( ProjName.GetLength()-4 );
 
-	// mark all ref texts
-	int it = -1; int ip = -1;
-	for( CText * t=m_doc->Pages.GetNextAttr(index_part_attr, &it, &ip, TRUE );
-				 t;
-				 t=m_doc->Pages.GetNextAttr(index_part_attr, &it, &ip, TRUE ))
-				 t->utility = 0;
-
 	// Get Partlist Data
 	Partlist.SetSize(0);
 	m_doc->ExportPCBNetlist( NULL, EXPORT_PARTS, 0, &Partlist );
 
 	AddPString( NULL,0,0,0 );
-	CString pref="A0", V, F;
-	int pgi = -1;
-	for( int best_i=FindNextPart( &pref, &V, &F, (Xs[PGI]?&pgi:NULL) );
-				 best_i>=0 && nPages>=0;
-				 best_i=FindNextPart( &pref, &V, &F, (Xs[PGI]?&pgi:NULL) ) )
+
+	for (int ref_list_index = (i_reflist.GetSize()?0:-1); ref_list_index < i_reflist.GetSize(); ref_list_index++)
 	{
-		CString refText, pref2;
-		int Bcount = GetBomRepeats( &pref, &pref2, &V, &F );
-		if( Bcount )
+		// mark all ref texts
+		int it = -1; int ip = -1;
+		for (CText* t = m_doc->Pages.GetNextAttr(index_part_attr, &it, &ip, TRUE);
+			t;
+			t = m_doc->Pages.GetNextAttr(index_part_attr, &it, &ip, TRUE))
+			t->utility = 0;
+
+		CopyTagPointers(ref_list_index);
+
+		CString pref = "A0", V, F;
+		int pgi = -1;
+		for (int best_i = FindNextPart(&pref, &V, &F, ref_list_index, (Xs[PGI] ? &pgi : NULL));
+			best_i >= 0 && nPages >= 0;
+			best_i = FindNextPart(&pref, &V, &F, ref_list_index, (Xs[PGI] ? &pgi : NULL)))
 		{
-			if( Bcount > 1 )
-				refText.Format("%s...%s", pref, pref2 );
-			else
-				refText.Format("%s, %s", pref, pref2 );
-			pref = pref2;
-		}
-		else
-			refText = pref;
-		CString prefix, sfx;
-		ParseRef( &pref, &prefix, &sfx );
-		int page = nPages;
-		int startPg = 0;
-		int startY = 0;
-		for( ; (page>=0&&nPages<MAX_PAGES); page-- )
-		{
-			for( int i=TextData[page].GetSize()-1; i>=0; i-- )
+			CString refText, pref2;
+			int Bcount = GetBomRepeats(&pref, &pref2, &V, &F, ref_list_index);
+			if (Bcount)
 			{
-				CText * data = TextData[page].GetAt(i);
-				if( abs(data->m_x - Xs[RefDes]) < NM_PER_MM )
+				if (Bcount > 1)
+					refText.Format("%s - %s", pref, pref2);
+				else
+					refText.Format("%s, %s", pref, pref2);
+				pref = pref2;
+			}
+			else
+				refText = pref;
+			CString prefix, sfx;
+			ParseRef(&pref, &prefix, &sfx);
+			int page = nPages;
+			int startPg = 0;
+			int startY = 0;
+			for (; (page >= 0 && nPages < NUM_PAGES); page--)
+			{
+				for (int i = TextData[page].GetSize() - 1; i >= 0; i--)
 				{
-					if( data->m_str.Find(".col") == 0 && data->m_str.GetLength() == 5 )
+					CText* data = TextData[page].GetAt(i);
+					if (abs(data->m_x - Xs[RefDes]) < NM_PER_MM)
 					{
-						startY = data->m_y;
-						startPg = page;
+						if (data->m_str.Find(".col") == 0 && data->m_str.GetLength() == 5)
+						{
+							startY = data->m_y;
+							startPg = page;
+						}
+						if (data->m_str.Compare("." + prefix) == 0)
+						{
+							curY = data->m_y;
+							nPages = PushRows(curY + (shiftY / 2), page);
+							if (nPages >= 0)
+								AddObject(page, Bcount + 1, &refText, &V, &F, pgi);
+							page = -1;// break
+							break;
+						}
 					}
-					if( data->m_str.Compare("."+prefix) == 0 )
-					{
-						curY = data->m_y;
-						nPages = PushRows( curY+(shiftY/2), page );
-						if( nPages >= 0 )
-							AddObject( page, Bcount+1, &refText, &V, &F, pgi );
-						page = -1;// break
-						break;
-					}
-				}	
+				}
+			}
+			if (page == -1)
+			{
+				if (!startY)
+					ASSERT(0);
+				curY = startY;
+				page = startPg;
+				nPages = PushRows(curY + (shiftY / 2), page);
+				if (nPages >= 0)
+					AddObject(page, Bcount + 1, &refText, &V, &F, pgi);
 			}
 		}
-		if( page == -1 )
-		{
-			if( !startY )
-				ASSERT(0);
-			curY = startY;
-			page = startPg;
-			nPages = PushRows( curY+(shiftY/2), page );
-			if( nPages >= 0 )
-				AddObject( page, Bcount+1, &refText, &V, &F, pgi );
-		}
+		if (i_reflist.GetSize() == 0)
+			break;
 	}
+	CopyTagPointers(-1,TRUE);
+	RemoveEmptyRows();
+
 	if( nPages == -1 )
 		AfxMessageBox(G_LANGUAGE == 0 ? 
 			"Big amount of data! The program currently "\
@@ -110,10 +233,9 @@ void TagTable::MakeReport( CFreePcbDoc * doc )
 			"списка деталей в файле tag.cds. "\
 			"Откройте этот файл в редакторе схем тем же способом, что и файлы проекта. (Этот файл находится "\
 			"в исполняемой папке программы)", MB_ICONERROR );
-	nPages = MAX_PAGES-1;
-	RemoveEmptyRows();
+
 	int cnt_pgs = 0;
-	for( int i=0; i<MAX_PAGES;i++ )
+	for (int i = 0; i < NUM_PAGES; i++)
 	{
 		int TextDataSize = TextData[i].GetSize();
 		if (TextDataSize)
@@ -290,7 +412,7 @@ void TagTable::MakeReport( CFreePcbDoc * doc )
 	else if( ok2 )
 		w.Close();
 	// end
-	it = -1;
+	int it = -1;
 	for( CText *t=m_doc->m_tlist->GetNextText(&it); t; t=m_doc->m_tlist->GetNextText(&it) )
 	{
 		t->InVisible();
@@ -301,37 +423,56 @@ void TagTable::MakeReport( CFreePcbDoc * doc )
 //-------------------------------------------------------------------------
 //=========================================================================
 //-------------------------------------------------------------------------
-int TagTable::PushRows( int Y, int ip )
+int TagTable::PushRows( int Y, int ip, int copyingMode)
 {
+	if (copyingMode && shiftY < 0)
+		ASSERT(0);
 	for( int index=(shiftY<0?ip:nPages); (index>=ip && index<=nPages); shiftY<0?index++:index-- )
 	{
-		//int it = -1;
 		for( int i=TextData[index].GetSize()-1; i>=0; i-- )
 		{
 			CText * t=TextData[index].GetAt(i);
-			if( t->m_y <= pgTop[index] )
+			if (copyingMode > 1)
+				if (t->m_str.Left(1) != "#")
+					continue;
+
 			if( t->m_y < Y || index > ip )
 			{
 				if( t->m_y >= pgBottom[index] )
 				{
+					if (copyingMode == 1)
+					{
+						CText* T = m_doc->GetFreeNet(&t->m_str, t->m_x, t->m_y, t->m_font_size, t->m_stroke_width);
+						TextData[index].Add(T);
+						T->m_pdf_options = t->m_pdf_options;
+						T->m_font_number = t->m_font_number;
+						T->m_layer = t->m_layer;
+						T->MakeVisible();
+						t->m_str = "#" + t->m_str;
+						t->m_nchars = t->m_str.GetLength();
+						t->MakeVisible();
+					}
 					t->m_y -= shiftY;
+					int delta = 0;
+					if (t->m_str.Right(2) == "|C")
+						delta = t->m_font_size / 2;
 					if( t->m_y < pgBottom[index] && shiftY > 0 )
 					{
 						if( index == nPages )
 							nPages++;
-						if( nPages >= MAX_PAGES )
+						if( nPages >= NUM_PAGES )
 						{
 							t->m_y += shiftY;
 							return -1; // Fail
 						}
 						TextData[index].RemoveAt(i);
-						t->m_y = pgTop[index+1];
+						t->m_y = pgTop[index+1] + delta;
 						TextData[index+1].Add(t);	
 					}
-					else if( t->m_y > pgTop[index] && index > 0 && shiftY < 0 )
+					else if( t->m_y - delta > pgTop[index] && index > 0 && shiftY < 0 )
 					{
 						TextData[index].RemoveAt(i);
-						t->m_y = pgBottom[index-1] + ((pgTop[index-1]-pgBottom[index-1])%shiftY);
+						t->m_y = pgBottom[index - 1] + delta;// ((pgTop[index - 1] - pgBottom[index - 1]) % shiftY);
 						TextData[index-1].Add(t);	
 					}
 				}
@@ -348,24 +489,28 @@ int TagTable::ReadParamsFromTagFile()
 	const int defLayer = LAY_ADD_1+3;
 	curY = 0;
 	shiftY = 0;
+	RangeY = 0;
 	textH = 0;
 	textW = 0;
 	fontNum = 0;
 	pdfOptions = 0;
 	nPages = 0;
 	e_reflist = 0;
-	i_reflist = 0;
+	i_reflist.SetSize(0);
 	pLayer = defLayer;
 	COL3W = 10*NM_PER_MM;
+	COL9W = 5* NM_PER_MM;
 	WARNING = "";
 	Sources = dSPACE;
+	Headers.SetSize(0);
 
 	for(int i=0; i<MaxCols; i++)
 	{
 		Xs[i] = 0;
 		tLayers[i] = defLayer;
+		Suffix[i] = "";
 	}
-	for(int i=0; i<MAX_PAGES; i++)
+	for(int i=0; i<NUM_PAGES; i++)
 	{
 		pgTop[i] = 0;
 		pgBottom[i] = 0;
@@ -378,7 +523,7 @@ int TagTable::ReadParamsFromTagFile()
 	int ok = rParam.Open( m_doc->m_path_to_folder+"\\related_files\\reports\\tag\\tag.cds", CFile::modeRead, NULL );
 	if( ok )
 	{
-		CString instr, key;
+		CString instr, key, key2;
 		CArray<CString> arr;
 		int row2Y = 0;
 		int cur = 0; // current page number
@@ -407,20 +552,22 @@ int TagTable::ReadParamsFromTagFile()
 					int col_num = ParseRef(&ref, &pref, &suff);
 					if(col_num>0 && col_num<=MaxCols)
 					{	
-						if( suff.GetLength() == 0 )
+						if (suff.GetLength() == 0)
 						{
 							curY = y;
-							Xs[col_num-1] = x;
+							Xs[col_num - 1] = x;
 							textH = tH;
 							textW = tW;
-							if( pLayer == defLayer )
+							if (pLayer == defLayer)
 								pLayer = currPLayer;
-							
-							if( tLayers[col_num-1] == defLayer )
-								tLayers[col_num-1] = currTLayer;
+
+							if (tLayers[col_num - 1] == defLayer)
+								tLayers[col_num - 1] = currTLayer;
 						}
-						else
-							COL3W = my_atoi( &suff.Right( suff.GetLength()-2 ) );
+						else if (col_num == 3)
+							COL3W = my_atoi(&suff.Right(suff.GetLength() - 2));
+						else if (col_num == 9)
+							COL9W = my_atoi(&suff.Right(suff.GetLength() - 2));
 					}
 				}
 				if( arr[0].Left(5) == ".row2" )
@@ -445,20 +592,32 @@ int TagTable::ReadParamsFromTagFile()
 					else
 						e_reflist = 0;
 				}
-				else if( arr[0].Left(8) == ".include" )
+				else if( arr[0].Left(9) == ".includes" )
 				{
-					CString s = arr[0].Right( arr[0].GetLength()-8 );
-					s = s.Trim();
-					i_reflist = m_doc->m_ref_lists->GetIndex(s);
-					if( i_reflist >= 0 )
-						i_reflist += REF_LIST_INDEX;
-					else
-						i_reflist = 0;
+					CArray <CString> lists;
+					ParseKeyString(&arr[0], &key2, &lists);
+					for (int il = 0; il < lists.GetSize(); il++)
+					{
+						CString s = lists[il];
+						s = s.Trim();
+						int iref = m_doc->m_ref_lists->GetIndex(s);
+						if (iref >= 0)
+							i_reflist.Add(iref + REF_LIST_INDEX);
+						else
+							i_reflist.Add(0);
+					}
 				}
 				else if( arr[0].Left(10) == ".file_name" )
 				{
 					FILE_NAME = arr[0].Right( arr[0].GetLength()-10 );
 					ExtractComponentName( &FILE_NAME, NULL );
+				}
+				else if (arr[0].Left(8) == ".headers")
+				{
+					arr[0].Replace(".headers'", ".headers: \"");
+					arr[0].Replace("'", "\" \"");
+					arr[0] += "\"";
+					ParseKeyString(&arr[0], &key2, &Headers);
 				}
 				else if( arr[0].Left(1) == "." || arr[0].Find( MOVABLE ) > 0 )
 				{
@@ -490,13 +649,14 @@ int TagTable::ReadParamsFromTagFile()
 		if( row2Y == 0 )
 			row2Y = curY;
 		shiftY = curY - row2Y;
+		RangeY = pgTop[0] - row2Y;
 	}
 	else 
 	{
 		AfxMessageBox(G_LANGUAGE == 0 ? "Unable to open file tag.cds":"Невозможно открыть файл tag.cds", MB_ICONERROR);
 		return 1;
 	}
-	for(int i=2; i<MAX_PAGES; i++)
+	for(int i=2; i<NUM_PAGES; i++)
 	{
 		pgTop[i] = pgTop[i-1];
 		pgBottom[i] = pgBottom[i-1];
@@ -506,7 +666,7 @@ int TagTable::ReadParamsFromTagFile()
 //-------------------------------------------------------------------------
 //=========================================================================
 //-------------------------------------------------------------------------
-int TagTable::GetBomRepeats( CString * pref, CString * pref2, CString * V, CString * F )
+int TagTable::GetBomRepeats( CString * pref, CString * pref2, CString * V, CString * F, int iof_ref_list)
 {
 	CString sPref = *pref, prefix, suffix;
 	int num = ParseRef( pref, &prefix, &suffix );
@@ -518,7 +678,7 @@ int TagTable::GetBomRepeats( CString * pref, CString * pref2, CString * V, CStri
 	int repeats = 0;
 	while( 1 )
 	{
-		int i = FindNextPart( &sPref, &sV, &sF );
+		int i = FindNextPart( &sPref, &sV, &sF, iof_ref_list);
 		if( i < 0 )
 			break;
 		CString sPrefix, sSuffix;
@@ -556,7 +716,7 @@ int TagTable::GetBomRepeats( CString * pref, CString * pref2, CString * V, CStri
 int TagTable::LoadPartlistFromString( CString * partlist )
 {
 	e_reflist = 0;
-	i_reflist = 0;
+	i_reflist.SetSize(0);
 	*partlist = "key: " + *partlist;
 	partlist->Replace(","," ");
 	partlist->Replace("'"," ");
@@ -597,7 +757,7 @@ int TagTable::GetPartID( CString * ref )
 //-------------------------------------------------------------------------
 //=========================================================================
 //-------------------------------------------------------------------------
-int TagTable::FindNextPart( CString * ref, CString * V, CString * F, int * printable_area_index )
+int TagTable::FindNextPart( CString * ref, CString * V, CString * F, int iof_ref_list, int * printable_area_index )
 {
 	static int counter = 0;
 
@@ -613,21 +773,57 @@ int TagTable::FindNextPart( CString * ref, CString * V, CString * F, int * print
 		int g_id = GetPartID( &gref );
 		if( g_id <= p_id )
 			continue;
-		if( i_reflist )
+		if (iof_ref_list >= 0 && i_reflist.GetSize() > iof_ref_list)
 		{
-			CText * t = NULL;
-			m_doc->Pages.FindPart( &gref, &t, TRUE, TRUE );
-			if( t )
-				if( getbit( t->m_pdf_options, i_reflist ) == 0 )
-					continue;
+			if (i_reflist[iof_ref_list])
+			{
+				CText* t = NULL;
+				CString uref = gref + "&";
+				m_doc->Pages.FindPart(&uref, &t, TRUE, TRUE);
+				if (t)
+				{
+					if (getbit(t->m_pdf_options, i_reflist[iof_ref_list]) == 0)
+						continue;
+				}
+				else
+				{
+					int it = -1;
+					int ip = m_doc->Pages.GetActiveNumber();
+					t = m_doc->Pages.FindCPartElement(&gref, &ip, &it);
+					if (t)
+					{
+						if (getbit(t->m_pdf_options, i_reflist[iof_ref_list]) == 0)
+							continue;
+					}
+					else
+					{
+						// skip
+						continue;
+					}
+				}
+			}
 		}
 		if( e_reflist )
 		{
 			CText * t = NULL;
-			m_doc->Pages.FindPart( &gref, &t, TRUE, TRUE );
-			if( t )
-				if( getbit( t->m_pdf_options, e_reflist ) )
+			CString uref = gref + "&";
+			m_doc->Pages.FindPart( &uref, &t, TRUE, TRUE );
+			if (t)
+			{
+				if (getbit(t->m_pdf_options, e_reflist))
 					continue;
+			}
+			else
+			{
+				int it = -1;
+				int ip = m_doc->Pages.GetActiveNumber();
+				t = m_doc->Pages.FindCPartElement(&gref, &ip, &it);
+				if (t)
+				{
+					if (getbit(t->m_pdf_options, e_reflist))
+						continue;
+				}
+			}
 		}
 		if( g_id < BEST_ID )
 		{
@@ -692,184 +888,6 @@ int TagTable::FindNextPart( CString * ref, CString * V, CString * F, int * print
 //-------------------------------------------------------------------------
 //=========================================================================
 //-------------------------------------------------------------------------
-/*TagStruct * TagTable::FindNextPart( CString * pref, int * num, CString * suff, CString * V, CString * F )
-{
-	static int counter = 0;
-	static TagStruct RET;
-
-	int MARK = 9;
-	if( pref->GetLength() == 0 )
-		return NULL;
-	CString sort = CSORT;
-		
-	int i1 = sort.Find( pref->Left(1) );
-	int ii1 = -1;
-	
-	RET.CP_REF = "";
-	RET.BEST_T = NULL;
-	RET.BEST_IP = -1;
-	RET.n_parts = 0;
-	
-
-	// iof prefix
-	if( pref->GetLength() > 1 )
-		ii1 = sort.Find( pref->Mid(1,1) );
-
-	// iof suffix
-	int iS1 = -1;
-	if( suff->GetLength() )
-		iS1 = sort.Find( suff->Right(1) );
-
-	int it=-1, ip=-1;
-	for( CText * t=m_doc->Pages.GetNextAttr(index_part_attr, &it, &ip );
-				 t;
-				 t=m_doc->Pages.GetNextAttr(index_part_attr, &it, &ip ))
-	{
-		if( t->utility == MARK )
-			continue;
-		if( m_doc->Pages.IsThePageIncludedInNetlist( ip, 0 ) == 0 &&
-			m_doc->Pages.IsThePageIncludedInNetlist( ip, 1 ) )// the page included in different netlist
-			continue;
-		if( i_reflist )
-			if( getbit( t->m_pdf_options, i_reflist ) == 0 )
-				continue;
-		if( e_reflist )
-			if( getbit( t->m_pdf_options, e_reflist ) )
-				continue;
-		CString pref2, suff2;
-		int num2 = ParseRef( &t->m_str, &pref2, &suff2 );
-		if( pref2.GetLength() == 0 )
-			continue;
-		int i2 = sort.Find( pref2.Left(1) );
-		if( i2 < i1 )
-			continue;
-
-		// iof prefix
-		int ii2 = -1;
-		if( pref2.GetLength() > 1 )
-			ii2 = sort.Find( pref2.Mid(1,1) );
-
-		// iof suffix
-		int iS2 = -1;
-		if( suff2.GetLength() )
-			iS2 = sort.Find( suff2.Right(1) );
-
-		if( i2 == i1 )
-		{
-			if( ii2 < ii1 )
-				continue;
-			else if( ii2 == ii1 )
-			{
-				if( num2 < *num )
-					continue;
-				else if( num2 == *num )
-				{
-					if( iS2 < iS1 )
-						continue;
-				}
-			}
-		}
-		if( RET.BEST_T == NULL )
-		{
-			RET.BEST_T = t;
-			RET.BEST_IP = ip;
-			continue;
-		}
-		CString pref3, suff3;
-		int num3 = ParseRef( &RET.BEST_T->m_str, &pref3, &suff3 );
-		int i3 = sort.Find( pref3.Left(1) );
-		if( i3 < i2 )
-			continue;
-
-		// iof prefix
-		int ii3 = -1;
-		if( pref3.GetLength() > 1 )
-			ii3 = sort.Find( pref3.Mid(1,1) );
-
-		if( i3 == i2 )
-		{
-			if( ii3 < ii2 )
-				continue;
-			else if( ii3 == ii2 )
-			{
-				if( num3 < num2 )
-					continue;
-				else if( num3 == num2 )
-				{
-					// iof suffix
-					int iS3 = -1;
-					if( suff3.GetLength() )
-						iS3 = sort.Find( suff3.Right(1) );
-					if( iS3 < iS2 )
-						continue;
-				}
-			}
-		}
-		RET.BEST_T = t;
-		RET.BEST_IP = ip;
-	}
-	if( RET.BEST_T )
-	{
-		RET.BEST_T->utility = MARK;
-
-		CString pref3, suff3;
-		int new_num = ParseRef( &RET.BEST_T->m_str, &pref3, &suff3 );
-		if( pref->Compare( pref3 ) == 0 && suff->Compare( suff3 ) == 0 )
-			if( new_num - (*num) > 1 )
-				if( WARNING.GetLength() )
-				{
-					CString s1,s2;
-					s1.Format("%s%d ",*pref, *num );
-					s2.Format(" %s%d", pref3, new_num );
-					if( WARNING.Find(s1) < 0 && WARNING.Find(s2) < 0 )
-					{
-						CString s;
-						s.Format("%s%d then %s%d",*pref, *num, pref3, new_num );
-						if( counter%3 == 0 )
-							WARNING += (",\n" + s);
-						else
-							WARNING += (",\t" + s);
-						counter++;
-					}
-				}
-				else
-				{
-					counter = 1;
-					CString s;
-					s.Format("%s%d then %s%d",*pref, *num, pref3, new_num );
-					WARNING.Format("Your circuit design contains gaps in part numbering:\n\n%s", s );
-				}
-		*num = new_num;
-		*pref = pref3;
-		*suff = suff3;
-		CArray<CPolyLine> * pP = m_doc->Pages.GetPolyArray( RET.BEST_IP );
-		if( RET.BEST_T->m_polyline_start < 0 )
-			ASSERT(0);
-		if( RET.BEST_T->m_polyline_start >= pP->GetSize() )
-			ASSERT(0);
-		CText * gV = pP->GetAt(RET.BEST_T->m_polyline_start).Check( index_value_attr );
-		if( gV )
-			*V = gV->m_str;
-		CText * gF = pP->GetAt(RET.BEST_T->m_polyline_start).Check( index_foot_attr );
-		if( gF )
-			*F = gF->m_str;
-
-		if( m_doc->Pages.IsThePageIncludedInNetlist( RET.BEST_IP, 0 ) == 0 )
-		{
-			int np =-1;
-			RET.CP_REF = m_doc->Pages.CheckBlockPart( &RET.BEST_T->m_str, RET.BEST_IP, V, F, &np );
-			if( RET.CP_REF.GetLength() )
-				RET.n_parts = np;
-		}
-
-		if( gV == NULL || gF == NULL )
-			FindNextPart( pref, num, suff, V, F );
-	}
-	return &RET;
-}		*/
-//-------------------------------------------------------------------------
-//=========================================================================
-//-------------------------------------------------------------------------
 int TagTable::AddObject( int page, int CNT, CString * R, CString * V, CString * F, int pgindex )
 {
 	static int static_count = 0;
@@ -879,22 +897,31 @@ int TagTable::AddObject( int page, int CNT, CString * R, CString * V, CString * 
 	if( sort.Find(R->Left(1)) < sort.Find(prevR.Left(1)) )
 		static_count = 0;
 	prevR = *R;
-
-	CText * T = m_doc->GetFreeNet(R, Xs[RefDes], curY, textH, textW );
+	Suffix[RefDes] = "|C";
+	CString adds = *R + Suffix[RefDes];
+	int delta = (Suffix[RefDes] == "|C" ? textH / 2 : 0);
+	CText * T = m_doc->GetFreeNet(&adds, Xs[RefDes], curY + delta, textH, textW );
 	TextData[page].Add( T );
 	T->m_pdf_options = pdfOptions;
 	T->m_font_number = fontNum;
 	T->m_layer = tLayers[RefDes];
 	T->MakeVisible();
-	CString cName, URL;
+	CString URL;
 
 	if( CNT == -1 )
 		ASSERT(0);
 	BomInTable BOM( m_doc );
-	cName = BOM.GetCName( V, F );
-	if( Xs[CName] && cName.GetLength() )
+	CString name = BOM.GetCName( V, F );
+	if( Xs[CName] && name.GetLength() )
 	{
-		T = m_doc->GetFreeNet(&cName, Xs[CName], curY, textH, textW );
+		CString comment = "";
+		int icomm = name.Find("|");
+		if (icomm > 0)
+		{
+			comment = name.Right(name.GetLength() - icomm - 1);
+			name.Truncate(icomm);
+		}
+		T = m_doc->GetFreeNet(&name, Xs[CName], curY, textH, textW );
 		T->m_pdf_options = pdfOptions;
 		T->m_font_number = fontNum;
 		T->m_layer = tLayers[CName];
@@ -907,10 +934,28 @@ int TagTable::AddObject( int page, int CNT, CString * R, CString * V, CString * 
 		else
 			T->InVisible();
 		nPushes = max( nPushes, np );
+		if (Xs[Comment] && comment.GetLength())
+		{
+			T = m_doc->GetFreeNet(&comment, Xs[Comment], curY, textH, textW);
+			T->m_pdf_options = pdfOptions;
+			T->m_font_number = fontNum;
+			T->m_layer = tLayers[CName];
+			T->MakeVisible();
+			int np = -1;
+			while (CText* newT = ParseString(T, COL9W))
+				np = AddPString(newT, page, np, Comment);
+			if (np == -1)
+				TextData[page].Add(T);
+			else
+				T->InVisible();
+			nPushes = max(nPushes, np);
+		}
 	}
 	if( Xs[Value] && V->GetLength() )
 	{
-		T = m_doc->GetFreeNet(V, Xs[Value], curY, textH, textW );
+		delta = (Suffix[Value] == "|C" ? textH / 2 : 0);
+		adds = *V + Suffix[Value];
+		T = m_doc->GetFreeNet(&adds, Xs[Value], curY + delta, textH, textW );
 		TextData[page].Add( T );
 		T->m_pdf_options = pdfOptions;
 		T->m_font_number = fontNum;
@@ -919,7 +964,9 @@ int TagTable::AddObject( int page, int CNT, CString * R, CString * V, CString * 
 	}
 	if( Xs[Footprint] && F->GetLength() )
 	{
-		T = m_doc->GetFreeNet(F, Xs[Footprint], curY, textH, textW );
+		delta = (Suffix[Footprint] == "|C" ? textH / 2 : 0);
+		adds = *F + Suffix[Footprint];
+		T = m_doc->GetFreeNet(&adds, Xs[Footprint], curY + delta, textH, textW );
 		TextData[page].Add( T );
 		T->m_pdf_options = pdfOptions;
 		T->m_font_number = fontNum;
@@ -931,8 +978,9 @@ int TagTable::AddObject( int page, int CNT, CString * R, CString * V, CString * 
 	URL = BOM.GetURL( V, F, &it, &ip );
 	while( Xs[CURL] && URL.GetLength() )
 	{
-		CString Link = "^|LINK: " + URL;
-		T = m_doc->GetFreeNet(&Link, Xs[CURL]+(step*textH), curY, textH, textW );
+		delta = (Suffix[CURL] == "|C" ? textH / 2 : 0);
+		CString Link = "^|LINK: " + URL + Suffix[CURL];
+		T = m_doc->GetFreeNet(&Link, Xs[CURL]+(step*textH), curY + delta, textH, textW );
 		TextData[page].Add( T );
 		T->m_pdf_options = pdfOptions;
 		T->m_font_number = fontNum;
@@ -943,9 +991,10 @@ int TagTable::AddObject( int page, int CNT, CString * R, CString * V, CString * 
 	}
 	if( Xs[Quantity] )
 	{
+		delta = (Suffix[Quantity] == "|C" ? textH / 2 : 0);
 		CString strCnt;
-		strCnt.Format("%d",CNT);
-		T = m_doc->GetFreeNet(&strCnt, Xs[Quantity], curY, textH, textW );
+		strCnt.Format("%d%s",CNT, Suffix[Quantity]);
+		T = m_doc->GetFreeNet(&strCnt, Xs[Quantity], curY + delta, textH, textW );
 		TextData[page].Add( T );
 		T->m_pdf_options = pdfOptions;
 		T->m_font_number = fontNum;
@@ -954,9 +1003,10 @@ int TagTable::AddObject( int page, int CNT, CString * R, CString * V, CString * 
 	}
 	if( Xs[LNumber] )
 	{
+		delta = (Suffix[LNumber] == "|C" ? textH / 2 : 0);
 		CString strCnt;
-		strCnt.Format("%d", ++static_count);
-		T = m_doc->GetFreeNet(&strCnt, Xs[LNumber], curY, textH, textW );
+		strCnt.Format("%d%s", ++static_count, Suffix[LNumber]);
+		T = m_doc->GetFreeNet(&strCnt, Xs[LNumber], curY + delta, textH, textW );
 		TextData[page].Add( T );
 		T->m_pdf_options = pdfOptions;
 		T->m_font_number = fontNum;
@@ -965,9 +1015,10 @@ int TagTable::AddObject( int page, int CNT, CString * R, CString * V, CString * 
 	}
 	if( Xs[PGI] && pgindex >= 0 )
 	{
+		delta = (Suffix[PGI] == "|C" ? textH / 2 : 0);
 		CString strCnt;
-		strCnt.Format("%d", pgindex);
-		T = m_doc->GetFreeNet(&strCnt, Xs[PGI], curY, textH, textW );
+		strCnt.Format("%d%s", pgindex, Suffix[PGI]);
+		T = m_doc->GetFreeNet(&strCnt, Xs[PGI], curY + delta, textH, textW );
 		TextData[page].Add( T );
 		T->m_pdf_options = pdfOptions;
 		T->m_font_number = fontNum;
@@ -980,7 +1031,7 @@ int TagTable::AddObject( int page, int CNT, CString * R, CString * V, CString * 
 		if( curY < pgBottom[page] )
 		{
 			page++;
-			if( page == MAX_PAGES )
+			if( page == NUM_PAGES )
 			{
 				curY += shiftY;// return back
 				break;
@@ -993,70 +1044,93 @@ int TagTable::AddObject( int page, int CNT, CString * R, CString * V, CString * 
 //-------------------------------------------------------------------------
 //=========================================================================
 //-------------------------------------------------------------------------
+int TagTable::LineTest(int page, int Y)
+{
+	int bit_map = 0; // 0-MOVABLE 1-Header 2-otherTXT
+	for (int i2 = TextData[page].GetSize() - 1; i2 >= 0; i2--)
+	{
+		CText* t = TextData[page].GetAt(i2);
+		if (t->m_y < Y + shiftY / 2 && t->m_y > Y - shiftY / 2)
+		{
+			for (int i = 0; i < Headers.GetSize(); i++)
+				if (t->m_str.Find(Headers.GetAt(i)) == 0)
+					setbit(bit_map, 1); // Header
+			if (bit_map == 0)
+			{
+				if (t->m_str.Find(".") == 0)
+				{
+
+				}
+				else if (t->m_str.Find(MOVABLE) > 0)
+					setbit(bit_map, 0);
+				else
+					setbit(bit_map, 2);
+			}
+		}
+	}
+	if (bit_map == 3 || bit_map > 4)
+		ASSERT(0);
+	return bit_map;
+}
+//-------------------------------------------------------------------------
+//=========================================================================
+//-------------------------------------------------------------------------
 void TagTable::RemoveEmptyRows()
 {
-	for( int page=0; page<=nPages; page++ )
+	for( int page=NUM_PAGES-1; page>=0; page-- )
 	{
 		for( int i=TextData[page].GetSize()-1; i>=0; i-- )
 		{
 			CText * data = TextData[page].GetAt(i);
-			if( abs(data->m_x - Xs[RefDes]) < NM_PER_MM )
+			if (data->m_str.Find(MOVABLE) > 0)
 			{
-				if( data->m_str.Left(1) == "." && 
-					data->m_str.Find(PR_NAME) < 0 &&
-					data->m_str.Find(PCB_NAME) < 0 )
+				if (data->m_str == "Прочее|movable")
 				{
-					int bHDelete = 0;
-					TextData[page].RemoveAt(i);
-					PushBack( data->m_y+(shiftY/2), page );
-					int topT = -1;
-					for( int i2=TextData[page].GetSize()-1; i2>=0; i2-- )
+					int t = 0;
+				}
+				if (LineTest(page, data->m_y) == 2)
+					continue;
+				int testPG = page;
+				int testY = data->m_y - shiftY;
+				if (testY < pgBottom[page])
+				{
+					testPG = page + 1;
+					if (testPG >= NUM_PAGES)
+						continue;
+					testY = pgTop[testPG];
+				}
+				int bTest = LineTest(testPG, testY);
+				for (int counter = 0; (bTest == 0 && counter < 10); counter++)
+				{
+					PushBack(data->m_y - shiftY, page);
+					bTest = LineTest(testPG, testY);
+					if (counter == 9)
 					{
-						CText * t = TextData[page].GetAt(i2);
-						if( (t->m_y - data->m_y) < (shiftY*3/2) &&
-							(t->m_y - data->m_y) > (shiftY/2) )
-						{
-							if( t->m_str.Find( MOVABLE ) > 0 )
-							{
-								topT = i2;
-		 						setbit( bHDelete, 0 );
-							}
-						}
-						if( abs(t->m_y - data->m_y) < (shiftY/2) )
-						{
-							if( t->m_str.Find( MOVABLE ) > 0 )
-							{
-								setbit( bHDelete, 1 );
-							}
-						}
-					}	
-					/*if (bHDelete == 2 && page > 0)
-					{
-						for( int i2=TextData[page-1].GetSize()-1; i2>=0; i2-- )
-						{
-							CText * t = TextData[page-1].GetAt(i2);
-							if( abs(t->m_y - pgBottom[page-1]) < (shiftY/2) )
-							{
-								if( t->m_str.Find( MOVABLE ) > 0 )
-								{
-									page--;
-									topT = i2;
-									setbit( bHDelete, 0 );
-									break;
-								}
-							}
-						}
-					}*/
-					if( bHDelete == 3 )
-					{	
-						PushBack( TextData[page].GetAt(topT)->m_y-(shiftY/2), page );
-						TextData[page].RemoveAt(topT);
+						bTest = 1;
+						break;
 					}
-					i=TextData[page].GetSize();
+				}
+				if (bTest == 1 || bTest == 2)
+				{
+					PushBack(data->m_y, page);
+					TextData[page].RemoveAt(i);
+					//i = TextData[page].GetSize();
 				}
 			}
 		}
 	}
+	/*for (int page = NUM_PAGES - 1; page >= 0; page--)
+	{
+		for (int i = TextData[page].GetSize() - 1; i >= 0; i--)
+		{
+			CText* data = TextData[page].GetAt(i);
+			if (data->m_str.Find(".col") == 0 && data->m_str.GetLength() == 5)
+			{
+				PushBack(data->m_y, page);
+				TextData[page].RemoveAt(i);
+			}
+		}
+	}*/
 }
 //-------------------------------------------------------------------------
 //=========================================================================
@@ -1182,7 +1256,7 @@ int TagTable::AddPString( CText * T, int n_page, int n_pushes, int col )
 		if( new_y < pgBottom[new_page] )
 		{
 			new_page++;
-			if( new_page == MAX_PAGES )
+			if( new_page == NUM_PAGES )
 				return n_pushes;
 			new_y = pgTop[new_page];
 		}
