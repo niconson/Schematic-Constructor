@@ -57,30 +57,41 @@ void TagTable::CopyTagPointers(int h_index, BOOL ERASE)
 			{
 				CText* data = TextData[page].GetAt(i);
 				BOOL TRIGGER = ((data->m_y > globalStartData.y - (shiftY / 2) && page == globalStartData.x) || page < globalStartData.x);
-				if ((data->m_str.Find(".col") == 0 && data->m_str.GetLength() == 5) ||
-					(data->m_str.Find(".") == 0 && abs(data->m_x - Xs[RefDes]) < NM_PER_MIL))
+				BOOL bCOL_STR = (data->m_str.Find(".col") == 0 && data->m_str.GetLength() == 5);
+				BOOL bPREFIX = (data->m_str.Find(".") == 0 && abs(data->m_x - Xs[RefDes]) < NM_PER_MIL);
+				if (bCOL_STR || bPREFIX)
+				{
+					int rowY = data->m_y;
+					if (TRIGGER || ERASE)
 					{
-						if (ERASE)
+						PushBack(rowY, page);
+						TextData[page].RemoveAt(i);
+						globalStartData.y += shiftY;
+						if (globalStartData.y > pgTop[globalStartData.x])
 						{
-							PushBack(data->m_y, page);
-							TextData[page].RemoveAt(i);
-							if (TRIGGER)
+							globalStartData.x = globalStartData.x - 1;
+							if (globalStartData.x < 0)
+								return;
+							globalStartData.y = pgBottom[globalStartData.x];
+						}
+						if (bCOL_STR)
+						{
+							for (int i2 = TextData[page].GetSize() - 1; i2 >= 0; i2--)
 							{
-								globalStartData.y += shiftY;
-								if (globalStartData.y > pgTop[globalStartData.x])
+								CText* t2 = TextData[page].GetAt(i2);
+								if (abs(rowY - t2->m_y) < shiftY / 2)
 								{
-									globalStartData.x = globalStartData.x - 1;
-									if (globalStartData.x < 0)
-										return;
-									globalStartData.y = pgBottom[globalStartData.x];
+									BOOL bCOL = (t2->m_str.Find(".col") == 0 && t2->m_str.GetLength() == 5);
+									if (bCOL_STR)
+									{
+										TextData[page].RemoveAt(i2);
+									}
 								}
 							}
-						}
-						else if (TRIGGER)
-						{
-							TextData[page].RemoveAt(i);
+							i = TextData[page].GetSize();
 						}
 					}
+				}
 			}
 		}
 		if (ERASE == 0)
@@ -342,21 +353,69 @@ void TagTable::MakeReport( CFreePcbDoc * doc )
 				nPage++;
 				if( instr.Left(5) == "[end]" )
 				{
+					int startPage = nPage - 1;
 					for( ; nPage<=nPages; nPage++ )
 					{
 						if( TextData[nPage].GetSize() == 0 )
 							continue;
-						line.Format("add_new_page: \"Page %d\"", nPage+1 );
-						w.WriteString( line );
-						w.WriteString("\n");
+
+						int current_page_mult = (nPage - startPage) % 5;
+						if (current_page_mult == 0)
+						{
+							line.Format("add_new_page: \"Page %d\"", nPage + 1);
+							w.WriteString(line);
+							w.WriteString("\n");
+						}
 						for( int imem=1; imem<MemStr.GetSize(); imem++ )
 						{
 							line = MemStr.GetAt(imem);
+							line = line.Trim();
+							if (line.Find("corner:") == 0)
+							{
+								CString key;
+								CArray <CString> param;
+								int np = ParseKeyString(&line, &key, &param);
+								if (np >= 6)
+								{
+									int x = my_atoi(&param.GetAt(1));
+									x += 150000000 * current_page_mult;
+									line.Format("corner: %s %d %s %s %s", param[0], x, param[2], param[3], param[4]);
+								}
+							}
+							if (line.Find("description:") == 0)
+							{
+								CString key;
+								CArray <CString> param;
+								int np = ParseKeyString(&line, &key, &param);
+								if (np >= 6)
+								{
+									int x = my_atoi(&param.GetAt(1));
+									x += 150000000 * current_page_mult;
+									line.Format("description: \"%s\" %d %s %s %s %s %s %s %s %s %s", 
+										param[0], 
+										x, 
+										param[2], 
+										param[3], 
+										param[4],
+										param[5],
+										param[6],
+										param[7],
+										param[8],
+										param[9],
+										param[10]);
+								}
+							}
 							if( line.Find("2|.n_page") > 0 )
 							{
 								CString npage;
 								npage.Format("%d", nPage+1);
 								line.Replace("2|.n_page",npage);
+							}
+							if (line.Find("|command: PrintableArea") > 0)
+							{
+								CString npage;
+								npage.Format("Page%d'", current_page_mult + 1);
+								line.Replace("Page1'", npage);
 							}
 							w.WriteString( line );
 							w.WriteString("\n");
@@ -374,7 +433,7 @@ void TagTable::MakeReport( CFreePcbDoc * doc )
 							w.WriteString( line );
 							line.Format( "description: \"%s\" %d %d %d %d %d %d %d %d %d %d\n", 
 								t->m_str,
-								t->m_x, 
+								t->m_x + (150000000 * current_page_mult),
 								t->m_y, 
 								t->m_layer, 
 								t->m_angle, 
@@ -1046,7 +1105,7 @@ int TagTable::AddObject( int page, int CNT, CString * R, CString * V, CString * 
 //-------------------------------------------------------------------------
 int TagTable::LineTest(int page, int Y)
 {
-	int bit_map = 0; // 0-MOVABLE 1-Header 2-otherTXT
+	int bit_map = 0; // 1-MOVABLE 2-Header 4-otherTXT
 	for (int i2 = TextData[page].GetSize() - 1; i2 >= 0; i2--)
 	{
 		CText* t = TextData[page].GetAt(i2);
@@ -1084,10 +1143,6 @@ void TagTable::RemoveEmptyRows()
 			CText * data = TextData[page].GetAt(i);
 			if (data->m_str.Find(MOVABLE) > 0)
 			{
-				if (data->m_str == "Прочее|movable")
-				{
-					int t = 0;
-				}
 				if (LineTest(page, data->m_y) == 2)
 					continue;
 				int testPG = page;
@@ -1110,7 +1165,7 @@ void TagTable::RemoveEmptyRows()
 						break;
 					}
 				}
-				if (bTest == 1 || bTest == 2)
+				if (bTest == 0 || bTest == 1 || bTest == 2)
 				{
 					PushBack(data->m_y, page);
 					TextData[page].RemoveAt(i);
@@ -1119,18 +1174,30 @@ void TagTable::RemoveEmptyRows()
 			}
 		}
 	}
-	/*for (int page = NUM_PAGES - 1; page >= 0; page--)
+	for (int page = NUM_PAGES - 1; page >= 0; page--)
 	{
 		for (int i = TextData[page].GetSize() - 1; i >= 0; i--)
 		{
 			CText* data = TextData[page].GetAt(i);
-			if (data->m_str.Find(".col") == 0 && data->m_str.GetLength() == 5)
+			if (LineTest(page, data->m_y) == 2)
 			{
-				PushBack(data->m_y, page);
-				TextData[page].RemoveAt(i);
+				int testPG = page;
+				int testY = data->m_y + shiftY;
+				if (testY > pgTop[page])
+				{
+					testPG = page - 1;
+					if (testPG < 0)
+						return;
+					testY = pgBottom[testPG];
+				}
+				int bTest = LineTest(testPG, testY);
+				if (bTest == 4)
+				{
+					PushRows(data->m_y + shiftY / 2, page);
+				}
 			}
 		}
-	}*/
+	}
 }
 //-------------------------------------------------------------------------
 //=========================================================================
