@@ -3,6 +3,7 @@
 #include "TagTable.h"
 #include "BomInTable.h"
 
+
 void TagTable::CopyTagPointers(int h_index, BOOL ERASE)
 {
 	globalStartData.x = NUM_PAGES;
@@ -64,8 +65,9 @@ void TagTable::CopyTagPointers(int h_index, BOOL ERASE)
 					int rowY = data->m_y;
 					if (TRIGGER || ERASE)
 					{
-						PushBack(rowY, page);
 						TextData[page].RemoveAt(i);
+						PushBack(rowY, page);
+						
 						globalStartData.y += shiftY;
 						if (globalStartData.y > pgTop[globalStartData.x])
 						{
@@ -88,8 +90,8 @@ void TagTable::CopyTagPointers(int h_index, BOOL ERASE)
 									}
 								}
 							}
-							i = TextData[page].GetSize();
 						}
+						i = TextData[page].GetSize();
 					}
 				}
 			}
@@ -262,7 +264,7 @@ void TagTable::MakeReport( CFreePcbDoc * doc )
 				cnt_pgs++;
 		}
 	}
-	nPages = min( MAX_PAGES-1, (cnt_pgs-1) );
+	nPages = min( max_tag_pages, (cnt_pgs-1) );
 	RedrawNumbers();
 
 
@@ -497,7 +499,7 @@ int TagTable::PushRows( int Y, int ip, int copyingMode)
 
 			if( t->m_y < Y || index > ip )
 			{
-				if( t->m_y >= pgBottom[index] )
+				if( t->m_y >= pgBottom[index] - abs(shiftY) / 4)
 				{
 					if (copyingMode == 1)
 					{
@@ -514,8 +516,16 @@ int TagTable::PushRows( int Y, int ip, int copyingMode)
 					t->m_y -= shiftY;
 					int delta = 0;
 					if (t->m_str.Right(2) == "|C")
+					{
 						delta = t->m_font_size / 2;
-					if( t->m_y < pgBottom[index] && shiftY > 0 )
+						RECT tr;
+						t->m_tl->GetTextRectOnPCB(t, &tr);
+						if (tr.top - tr.bottom > t->m_font_size)
+						{
+							delta -= (tr.top - tr.bottom - t->m_font_size) / 2;
+						}
+					}
+					if( t->m_y - delta < (pgBottom[index] - abs(shiftY) / 4) && shiftY > 0)
 					{
 						if( index == nPages )
 							nPages++;
@@ -528,7 +538,7 @@ int TagTable::PushRows( int Y, int ip, int copyingMode)
 						t->m_y = pgTop[index+1] + delta;
 						TextData[index+1].Add(t);	
 					}
-					else if( t->m_y - delta > pgTop[index] && index > 0 && shiftY < 0 )
+					else if( t->m_y - delta > (pgTop[index] + abs(shiftY) / 4) && index > 0 && shiftY < 0)
 					{
 						TextData[index].RemoveAt(i);
 						t->m_y = pgBottom[index - 1] + delta;// ((pgTop[index - 1] - pgBottom[index - 1]) % shiftY);
@@ -1147,7 +1157,7 @@ void TagTable::RemoveEmptyRows()
 					continue;
 				int testPG = page;
 				int testY = data->m_y - shiftY;
-				if (testY < pgBottom[page])
+				if (testY < (pgBottom[page] - shiftY/3))
 				{
 					testPG = page + 1;
 					if (testPG >= NUM_PAGES)
@@ -1167,9 +1177,9 @@ void TagTable::RemoveEmptyRows()
 				}
 				if (bTest == 0 || bTest == 1 || bTest == 2)
 				{
-					PushBack(data->m_y, page);
 					TextData[page].RemoveAt(i);
-					//i = TextData[page].GetSize();
+					PushBack(data->m_y, page);
+					i = TextData[page].GetSize();
 				}
 			}
 		}
@@ -1183,7 +1193,7 @@ void TagTable::RemoveEmptyRows()
 			{
 				int testPG = page;
 				int testY = data->m_y + shiftY;
-				if (testY > pgTop[page])
+				if (testY > (pgTop[page] + shiftY/3))
 				{
 					testPG = page - 1;
 					if (testPG < 0)
@@ -1194,6 +1204,23 @@ void TagTable::RemoveEmptyRows()
 				if (bTest == 4)
 				{
 					PushRows(data->m_y + shiftY / 2, page);
+					i = TextData[page].GetSize();
+				}
+			}
+		}
+	}
+	for (int page = NUM_PAGES - 1; page >= 0; page--)
+	{
+		for (int i = TextData[page].GetSize() - 1; i >= 0; i--)
+		{
+			CText* data = TextData[page].GetAt(i);
+			int bTest = LineTest(page, data->m_y);
+			if (bTest == 1 || bTest == 2)
+			{
+				if (abs(pgBottom[page] - data->m_y) < shiftY / 2)
+				{
+					PushRows(data->m_y + shiftY / 2, page);
+					i = TextData[page].GetSize();
 				}
 			}
 		}

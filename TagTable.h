@@ -1,5 +1,7 @@
 #pragma once
 #include "stdafx.h"
+const int num_pages_on_page = 5;
+const int max_tag_pages = num_pages_on_page * 7;
 
 struct TagStruct 
 {
@@ -19,7 +21,7 @@ public:
 
 private:
 	enum{LNumber=0,RefDes,CName,Value,Footprint,Quantity,CURL,PGI,Comment,MaxCols};
-	enum{NUM_PAGES= MAX_PAGES*2};
+	enum{NUM_PAGES = max_tag_pages*2};
 	CString MOVABLE;
 	CString WARNING;
 	CString PR_NAME;
