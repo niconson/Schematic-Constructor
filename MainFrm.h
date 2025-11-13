@@ -19,6 +19,7 @@
 #define TMR_SW_CDS 4
 #define TMR_SW_CDSM 5
 #define TMR_SW_STATIC 6
+#define TMR_DRC 7
 #if G_LANGUAGE==0
 #define CDS_HEADER "Schematic Constructor - "
 #define FPC_HEADER "FreePCB - "

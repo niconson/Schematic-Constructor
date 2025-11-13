@@ -144,6 +144,8 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_timer = SetTimer( TMR_FK_PRESS, INT_MAX, 0 );
 	m_timer = SetTimer( TMR_SW_PCB, INT_MAX, 0 );
 	m_timer = SetTimer( TMR_SW_CDS, INT_MAX, 0 );
+	m_timer = SetTimer( TMR_DRC, 1000, 0 );
+
 	// separator
 	// DecimalSeparator;
 
@@ -416,6 +418,31 @@ void CMainFrame::OnTimer(UINT nIDEvent)
 				}
 				else
 					SetTimer( TMR_SW_STATIC, INT_MAX, 0 );
+			}
+			else if (nIDEvent == TMR_DRC)
+			{
+				static int state = 0;
+				if (doc->m_drelist->list.GetSize())
+				{
+					if (state == 0 || state == 2)
+					{
+						doc->m_drelist->MakeSolidCircles();
+						SetTimer(TMR_DRC, 50, 0);
+					}
+					else
+					{
+						doc->m_drelist->MakeHollowCircles();
+						if (state == 3)
+							SetTimer(TMR_DRC, 1500, 0);
+						else
+							SetTimer(TMR_DRC, 100, 0);
+					}
+					state++;
+					if (state > 3)
+						state = 0;
+					doc->m_view->m_draw_layer = LAY_DRC_ERROR;
+					doc->m_view->Invalidate(FALSE);
+				}
 			}
 		}
 	}

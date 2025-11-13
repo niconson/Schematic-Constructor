@@ -202,7 +202,7 @@ void DRErrorList::MakeSolidCircles()
 					RECT Get;
 					RECT * r = m_dlist->Get_Rect( dre->dl_el, &Get );
 					dre->dl_el->el_w = r->right - r->left;
-					SwellRect( r, 1999 );
+					SwellRect( r, 2500 );
 				}
 			}
 		}

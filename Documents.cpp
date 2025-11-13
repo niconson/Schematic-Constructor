@@ -3701,7 +3701,8 @@ void CFreePcbDoc::ProjectModified( int flag, BOOL b_clear_redo )
 	{
 		submenu->EnableMenuItem( ID_FILE_EXPORTNETLIST, MF_BYCOMMAND | MF_ENABLED );
 		submenu->EnableMenuItem( ID_FILE_SETNETLIST, MF_BYCOMMAND | MF_ENABLED );
-		pMenu->EnableMenuItem( 4, MF_BYPOSITION | MF_ENABLED );
+		if(m_view->CurDragging() == 0)
+			pMenu->EnableMenuItem( 4, MF_BYPOSITION | MF_ENABLED );
 	}
 	pMain->DrawMenuBar();
 }
