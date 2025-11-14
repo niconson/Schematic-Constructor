@@ -11487,6 +11487,18 @@ void CFreePcbDoc::DeletePage( int number )
 			AfxMessageBox(G_LANGUAGE == 0 ? "Page contains parts, cannot be deleted.":"Страница содержит детали поэтому не может быть удалена", MB_ICONWARNING);
 			return;
 		}
+	CArray<CPolyLine> * p_array = Pages.GetPolyArray(number);
+	if (p_array)
+	{
+		for (int ipo = 0; ipo < p_array->GetSize(); ipo++)
+		{
+			if (p_array->GetAt(ipo).GetVisible())
+			{
+				AfxMessageBox(G_LANGUAGE == 0 ? "Page contains polylines, cannot be deleted." : "Страница содержит полилинии поэтому не может быть удалена", MB_ICONWARNING);
+				return;
+			}
+		}
+	}
 	CWnd* pMain = AfxGetMainWnd();
 	CMenu* pMenu = &theApp.m_main;
 	CMenu* sMenu = pMenu->GetSubMenu(2);// view
