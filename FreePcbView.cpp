@@ -13070,6 +13070,7 @@ void CFreePcbView::MergeGroup()
 			AfxMessageBox(G_LANGUAGE == 0 ? "This name already used!":"Это имя уже используется!", MB_ICONERROR);
 			return;
 		}
+		m_Doc->SelectGroupAttributes();
 		MergeGroup(merge0);
 	}
 	CancelSelection();
