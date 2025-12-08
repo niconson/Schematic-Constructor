@@ -58,7 +58,10 @@ int CLibPointer::iof( CString * Str, CArray<CString> *S )
 					if( Str2.CompareNoCase( tmps->Right( sGL-io-2 ) ) == 0 )
 					{
 						if( m_test_string.GetLength() == 0 )
-							m_test_string = "The reused part has a different designation in the second case, the prefixes or case does not match!\n\n";
+							if(G_LANGUAGE == 0)
+								m_test_string = "The designation prefixes for the same part vary!\n\n";
+							else
+								m_test_string = "Префиксы обозначений для одной и той же детали различаются!\n\n";
 						if( m_test_string.Find( *Str ) <= 0 )
 							m_test_string += *Str + "\n";
 						if( m_test_string.Find( *tmps ) <= 0 )

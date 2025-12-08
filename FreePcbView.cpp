@@ -649,7 +649,7 @@ void CFreePcbView::OnDraw(CDC* pDC)
 		}
 		else
 		{
-			pDC->DrawText( "Исп 1 - 8 кнопки", -1, &r, DT_TOP );
+			pDC->DrawText( "Исп. кнопки 1 - 8", -1, &r, DT_TOP );
 			r.bottom += VSTEP;
 			r.top += VSTEP;
 			pDC->DrawText( "для смены страниц", -1, &r, DT_TOP );
@@ -7942,10 +7942,20 @@ void CFreePcbView::FindAttr( int insertMode, int singleMode, CString * autoRun )
 		//
 		setbit( f_flags, F_OTHER );
 		clrbit( m_mask, F_OTHER );
-		if( singleMode == 0 )
-			Cap = "Import an array of parts";
+		if(G_LANGUAGE == 0)
+		{
+			if (singleMode == 0)
+				Cap = "Import an array of parts from a distributed library";
+			else
+				Cap = "Import part from a distributed library";
+		}
 		else
-			Cap = "Import part by attribute";
+		{
+			if (singleMode == 0)
+				Cap = "Групповой импорт УГО из распределённой библиотеки";
+			else
+				Cap = "Импорт УГО из распределённой библиотеки";
+		}
 		// clear OP
 		m_Doc->clip_outline_poly.RemoveAll();
 	}
