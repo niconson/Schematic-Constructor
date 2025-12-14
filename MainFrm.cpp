@@ -422,12 +422,16 @@ void CMainFrame::OnTimer(UINT nIDEvent)
 			else if (nIDEvent == TMR_DRC)
 			{
 				static bool state = 0;
+				m_timer = SetTimer(TMR_DRC, 1000, 0);
 				if (doc->m_drelist->list.GetSize() && 
 					doc->m_view->m_bLButtonDown == 0 && 
 					doc->m_view->m_cursor_mode == CUR_NONE_SELECTED)
 				{
 					if (state)
+					{
+						m_timer = SetTimer(TMR_DRC, 50, 0);
 						doc->m_drelist->MakeSolidCircles();
+					}
 					else
 						doc->m_drelist->MakeHollowCircles();
 					state = !state;
