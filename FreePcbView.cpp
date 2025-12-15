@@ -2134,6 +2134,9 @@ void CFreePcbView::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 	}
 	if( nChar == 'D' )
 	{
+		CMainFrame* frm = (CMainFrame*)AfxGetMainWnd();
+		if (frm)
+			frm->SetTimer(TMR_DRC, INT_MAX-1, 0);
 		m_Doc->m_drelist->MakeHollowCircles();
 		m_draw_layer = LAY_DRC_ERROR;// if( nChar == 'D' )
 	}
@@ -2185,7 +2188,7 @@ void CFreePcbView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		gShiftKeyDown = TRUE;
 	if( nChar == 'D' )
 	{
-		m_Doc->m_drelist->MakeSolidCircles();
+		m_Doc->m_drelist->MakeSolidCircles(2500);
 		m_draw_layer = LAY_DRC_ERROR;// if( nChar == 'D' )
 	}
 	else if( nChar == VK_SHIFT || nChar == VK_CONTROL )
@@ -4165,6 +4168,7 @@ int CFreePcbView::ShowActiveLayer(int n_layers, BOOL swCASE)
 BOOL CFreePcbView::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 {
 	static  CPoint mem_p(0,0);
+	//
 	//
 	GetCursorPos( &pt );
 	//
@@ -8688,6 +8692,9 @@ void CFreePcbView::FindAttr( int insertMode, int singleMode, CString * autoRun )
 		else
 			setbit( f_flags, F_OTHER );
 	}
+	CMainFrame* frm = (CMainFrame*)AfxGetMainWnd();
+	if (frm)
+		frm->SetTimer(TMR_DRC, 50, 0);
 	Invalidate( FALSE );// (doubtful)//OnViewFindpart
 }
 //===============================================================================================
@@ -12388,6 +12395,9 @@ void CFreePcbView::OnTextSimilar()
 						}
 		}
 	}
+	CMainFrame* frm = (CMainFrame*)AfxGetMainWnd();
+	if (frm)
+		frm->SetTimer(TMR_DRC, 50, 0);
 	m_Doc->m_dlg_log->AddLine( "***** DONE *****\r\n" );
 	m_Doc->m_dlg_log->AddLine( "Use key 'D' to enlarge marks\r\n" );
 	m_Doc->m_dlg_log->UpdateWindow();
@@ -13578,7 +13588,7 @@ void CFreePcbView::OnMess( int command, int n_str, CArray<CString> *str, BOOL Ir
 	{
 		m_Doc->OnToolsClearDrc();
 		FindAttr(0,0,&str->GetAt(0));
-		m_Doc->m_drelist->MakeSolidCircles();
+		m_Doc->m_drelist->MakeSolidCircles(2500);
 	}
 	else if( command == C_SEL_M )
 	{

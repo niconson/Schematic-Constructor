@@ -42,7 +42,7 @@ public:
 					int w, int layer, CText * t1 = NULL, CText * t2 = NULL );
 	void Remove( DRError * dre );
 	void HighLight( DRError * dre );
-	void MakeSolidCircles();
+	void MakeSolidCircles(int sw);
 	void MakeHollowCircles();
 	void MoveOrigin( int dx, int dy );
 

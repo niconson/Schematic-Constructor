@@ -144,7 +144,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_timer = SetTimer( TMR_FK_PRESS, INT_MAX, 0 );
 	m_timer = SetTimer( TMR_SW_PCB, INT_MAX, 0 );
 	m_timer = SetTimer( TMR_SW_CDS, INT_MAX, 0 );
-	m_timer = SetTimer( TMR_DRC, 500, 0 );
+	m_timer = SetTimer( TMR_DRC, 50, 0 );
 
 	// separator
 	// DecimalSeparator;
@@ -421,20 +421,23 @@ void CMainFrame::OnTimer(UINT nIDEvent)
 			}
 			else if (nIDEvent == TMR_DRC)
 			{
-				static bool state = 0;
-				m_timer = SetTimer(TMR_DRC, 1000, 0);
+				static int state = 3;
+				if (state == 0)
+					m_timer = SetTimer(TMR_DRC, 1500, 0);
+				else if (state < 0)
+				{
+					SetTimer(TMR_DRC, 50, 0);
+					state = 3;
+				}
 				if (doc->m_drelist->list.GetSize() && 
 					doc->m_view->m_bLButtonDown == 0 && 
 					doc->m_view->m_cursor_mode == CUR_NONE_SELECTED)
 				{
-					if (state)
-					{
-						m_timer = SetTimer(TMR_DRC, 50, 0);
-						doc->m_drelist->MakeSolidCircles();
-					}
+					if (state%2)
+						doc->m_drelist->MakeSolidCircles(250);
 					else
 						doc->m_drelist->MakeHollowCircles();
-					state = !state;
+					state--;// = !state;
 					doc->m_view->m_draw_layer = LAY_DRC_ERROR;
 					doc->m_view->Invalidate(FALSE);
 				}

@@ -6900,6 +6900,9 @@ int CFreePcbDoc::DRC()
 	{
 		m_dlg_log->AddLine("\r\n\r\nCorrect fatal errors to continue...\r\nUse the D key to highlight errors in the workspace\r\n");
 		m_dlg_log->UpdateWindow();
+		CMainFrame* frm = (CMainFrame*)AfxGetMainWnd();
+		if (frm)
+			frm->SetTimer(TMR_DRC, 50, 0);
 		return err_page;
 	}
 	else if( Pages.IsThePageIncludedInNetlist( cur_page ) )
@@ -7197,6 +7200,12 @@ int CFreePcbDoc::DRC()
 	// end
 	m_dlg_log->AddParagraph( "DONE" );
 	m_dlg_log->UpdateWindow();
+	if (n_err)
+	{
+		CMainFrame* frm = (CMainFrame*)AfxGetMainWnd();
+		if (frm)
+			frm->SetTimer(TMR_DRC, 50, 0);
+	}
 	return err_page;
 }
 
