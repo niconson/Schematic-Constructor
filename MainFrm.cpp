@@ -433,8 +433,9 @@ void CMainFrame::OnTimer(UINT nIDEvent)
 					doc->m_view->m_bLButtonDown == 0 && 
 					doc->m_view->m_cursor_mode == CUR_NONE_SELECTED)
 				{
+					double rSize = doc->m_view->m_pcbu_per_pixel / 100.0;
 					if (state%2)
-						doc->m_drelist->MakeSolidCircles(250);
+						doc->m_drelist->MakeSolidCircles((int)rSize);
 					else
 						doc->m_drelist->MakeHollowCircles();
 					state--;// = !state;
