@@ -60,6 +60,9 @@ void CDlgAddMaskCutout::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_RADIO3, m_radio_full);
 	DDX_Control(pDX, IDC_DOTTED, m_radio_dotted);
 	DDX_Control(pDX, IDC_DEF_LAYER, m_def_layer);
+	DDX_Control(pDX, IDC_NOT_CONT, m_monochrom);
+	//
+	DDX_Check(pDX, IDC_NOT_CONT, m_no_contours);
 	if( !pDX->m_bSaveAndValidate )
 	{
 		// incoming
@@ -79,7 +82,6 @@ void CDlgAddMaskCutout::DoDataExchange(CDataExchange* pDX)
 		m_combo_tone.EnableWindow(0);
 		while( m_combo_tone.GetCount() )
 			m_combo_tone.DeleteString(0);
-		m_combo_tone.AddString("3%");
 		m_combo_tone.AddString("5%");
 		m_combo_tone.AddString("10%");
 		m_combo_tone.AddString("15%");
@@ -88,26 +90,32 @@ void CDlgAddMaskCutout::DoDataExchange(CDataExchange* pDX)
 		m_combo_tone.AddString("30%");
 		m_combo_tone.AddString("40%");
 		m_combo_tone.AddString("50%");
+		m_combo_tone.AddString("60%");
 		m_combo_tone.AddString("70%");
 		m_combo_tone.SetCurSel(8);
 		//
-		if( m_hatch == CPolyLine::HALF_TONE )
+		if (m_hatch > 5 && (m_hatch % 5))
+		{
+			m_hatch -= (m_hatch % 5);
+			m_monochrom.SetCheck(1);
+		}
+		if( m_hatch == 5 )
 			m_combo_tone.SetCurSel(0);
-		else if( m_hatch == 5 )
-			m_combo_tone.SetCurSel(1);
 		else if( m_hatch == 10 )
-			m_combo_tone.SetCurSel(2);
+			m_combo_tone.SetCurSel(1);
 		else if( m_hatch == 15 )
-			m_combo_tone.SetCurSel(3);
+			m_combo_tone.SetCurSel(2);
 		else if( m_hatch == 20 )
-			m_combo_tone.SetCurSel(4);
+			m_combo_tone.SetCurSel(3);
 		else if( m_hatch == 25 )
-			m_combo_tone.SetCurSel(5);
+			m_combo_tone.SetCurSel(4);
 		else if( m_hatch == 30 )
-			m_combo_tone.SetCurSel(6);
+			m_combo_tone.SetCurSel(5);
 		else if( m_hatch == 40 )
-			m_combo_tone.SetCurSel(7);
+			m_combo_tone.SetCurSel(6);
 		else if( m_hatch == 50 )
+			m_combo_tone.SetCurSel(7);
+		else if (m_hatch == 60)
 			m_combo_tone.SetCurSel(8);
 		else if( m_hatch == 70 )
 			m_combo_tone.SetCurSel(9);
@@ -180,25 +188,27 @@ void CDlgAddMaskCutout::DoDataExchange(CDataExchange* pDX)
 		{
 			int itone = m_combo_tone.GetCurSel();
 			if( itone <= 0 )
-				m_hatch = CPolyLine::HALF_TONE;
-			else if( itone == 1 )
 				m_hatch = 5;
-			else if( itone == 2 )
+			else if( itone == 1 )
 				m_hatch = 10;
-			else if( itone == 3 )
+			else if( itone == 2 )
 				m_hatch = 15;
-			else if( itone == 4 )
+			else if( itone == 3 )
 				m_hatch = 20;
-			else if( itone == 5 )
+			else if( itone == 4 )
 				m_hatch = 25;
-			else if( itone == 6 )
+			else if( itone == 5 )
 				m_hatch = 30;
-			else if( itone == 7 )
+			else if( itone == 6 )
 				m_hatch = 40;
-			else if( itone == 8 )
+			else if( itone == 7 )
 				m_hatch = 50;
+			else if (itone == 8)
+				m_hatch = 60;
 			else if( itone == 9 )
 				m_hatch = 70;
+			if (m_no_contours)
+				m_hatch++;
 		}
 		else if( m_radio_full.GetCheck() )
 			m_hatch = CPolyLine::DIAGONAL_FULL;

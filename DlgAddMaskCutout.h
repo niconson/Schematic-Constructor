@@ -37,6 +37,7 @@ public:
 	int m_hatch_off_flag;
 	int m_layer_off_flag;
 	int m_range_flag;
+	int m_no_contours;
 	//
 	CComboBox m_combo_layer;
 	CComboBox m_combo_tone;
@@ -45,6 +46,7 @@ public:
 	CButton m_radio_full;
 	CButton m_radio_dotted;
 	CButton m_radio_hatch_off;
+	CButton m_monochrom;
 	//
 	CButton m_def_layer;
 	CButton m_layer_off;

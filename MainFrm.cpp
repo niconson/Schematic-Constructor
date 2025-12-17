@@ -429,11 +429,12 @@ void CMainFrame::OnTimer(UINT nIDEvent)
 					SetTimer(TMR_DRC, 50, 0);
 					state = 3;
 				}
+				double rSize = doc->m_view->m_pcbu_per_pixel / 200.0;
 				if (doc->m_drelist->list.GetSize() && 
 					doc->m_view->m_bLButtonDown == 0 && 
-					doc->m_view->m_cursor_mode == CUR_NONE_SELECTED)
-				{
-					double rSize = doc->m_view->m_pcbu_per_pixel / 100.0;
+					doc->m_view->m_cursor_mode == CUR_NONE_SELECTED &&
+					rSize > 500.0 )
+				{	
 					if (state%2)
 						doc->m_drelist->MakeSolidCircles((int)rSize);
 					else

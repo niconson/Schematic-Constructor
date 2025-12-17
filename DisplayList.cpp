@@ -936,8 +936,25 @@ void CDisplayList::Draw( CDC * dDC, int draw_layer )
 					{
 						if ( el->gtype == DL_LINE )
 						{	
-							pDC->MoveTo( xi, yi );
-							pDC->LineTo( xf, yf );
+							if (el->half_tone)
+							{
+								float proc = (100.0 - (float)el->half_tone) / 100.0;
+								int C1 = (float)m_rgb[layer][0] + (float)((255.0 * B_GND) - m_rgb[layer][0]) * proc;
+								int C2 = (float)m_rgb[layer][1] + (float)((255.0 * B_GND) - m_rgb[layer][1]) * proc;
+								int C3 = (float)m_rgb[layer][2] + (float)((255.0 * B_GND) - m_rgb[layer][2]) * proc;
+								COLORREF HALF_TONE = RGB(C1, C2, C3);
+								int w = el->el_w + m_scale * 2.0;
+								CPen Half_Pen(PS_SOLID, w, HALF_TONE);
+								CPen* old = pDC->SelectObject(&Half_Pen);
+								pDC->MoveTo(xi, yi);
+								pDC->LineTo(xf, yf);
+								pDC->SelectObject(old);
+							}
+							else
+							{
+								pDC->MoveTo(xi, yi);
+								pDC->LineTo(xf, yf);
+							}
 						}
 						else 
 						{

@@ -983,6 +983,8 @@
 #define IDC_NOT_CHANGE3                 1528
 #define IDC_CHECK_MP1                   1529
 #define IDC_PCB_NAMES                   1529
+#define IDC_NOT_CHANGE4                 1529
+#define IDC_NOT_CONT                    1529
 #define IDC_CHECK_MP2                   1530
 #define IDC_CHECK_MP3                   1531
 #define IDC_CHECK_MP4                   1532
@@ -1267,7 +1269,7 @@
 #define ID_PRINT_PDF                    32885
 #define ID_GROUP_LINE_UP                32886
 #define ID_GROUP_SAVETODXF              32887
-#define ID_GROUP_SAVETOFPC				32888
+#define ID_GROUP_SAVETOFPC              32888
 #define ID_EDIT_SAVEGROUPTOFILE         32889
 #define ID_PRINT                        32890
 #define ID_PRINT_BUTTON                 32890

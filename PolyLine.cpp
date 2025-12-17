@@ -1091,6 +1091,8 @@ void CPolyLine::Draw(  CDisplayList * dl )
 				else
 				{
 					dl_side[ic] = m_dlist->Add( m_ptr, m_id, m_layer, g_type, 1, &r, max(m_pcbu_per_wu,abs(wid)), P, 2, 1, end_el );
+					if (m_hatch >= HALF_TONE && (m_hatch % 5))
+						dl_side[ic]->half_tone = m_hatch - (m_hatch % 5);
 					dl_side_sel[ic] = m_dlist->AddSelector( m_ptr, m_id, g_type, 1, &r, max(m_pcbu_per_wu,abs(wid)), P, 2, m_layer );
 				}
 			}
@@ -2008,7 +2010,7 @@ void CPolyLine::Hatch( dl_element * end_el )
 					hatch_id.ii = nhatch;
 					dl_element * dl = m_dlist->Add( NULL, hatch_id, m_layer, DL_LINES_ARRAY, 1, &r, wid, pts, GROUPLINES, 1, end_el );
 					if( m_hatch >= HALF_TONE )
-						dl->half_tone = m_hatch;
+						dl->half_tone = m_hatch - (m_hatch % 5);
 					dl_hatch.SetAtGrow(nhatch, dl);
 					caret = 0;
 					nhatch++;
@@ -2042,7 +2044,7 @@ void CPolyLine::Hatch( dl_element * end_el )
 			hatch_id.ii = nhatch;
 			dl_element * dl = m_dlist->Add( NULL, hatch_id, m_layer, DL_LINES_ARRAY, 1, &r, wid, pts, caret, 1, end_el );
 			if( m_hatch >= HALF_TONE )
-				dl->half_tone = m_hatch;
+				dl->half_tone = m_hatch - (m_hatch % 5);
 			dl_hatch.SetAtGrow(nhatch, dl);
 			caret = 0;
 			nhatch++;
