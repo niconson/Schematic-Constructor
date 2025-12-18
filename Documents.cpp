@@ -12421,7 +12421,7 @@ void CFreePcbDoc::PlayRefList( int i )
 	m_view->Invalidate( FALSE );// (doubtful)
 	if( m_view->m_dlg_partlist )
 		if( m_view->m_dlg_partlist->IsWindowVisible() )
-			m_view->m_dlg_partlist->ImportPartlist();
+			m_view->m_dlg_partlist->ImportPartlist(TRUE);
 }
 
 void CFreePcbDoc::EnsureNotMinimized( HWND hWnd, BOOL bGRAB, BOOL bIronScale )

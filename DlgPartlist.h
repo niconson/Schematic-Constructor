@@ -30,7 +30,7 @@ public:
 	void ReDraw();
 	void OnFilter();
 	void GetColWidths();
-	void ImportPartlist();
+	void ImportPartlist(BOOL bReplaceSel=0);
 	int GetPCBButtonCheck();
 	int Find( CString * s, CString * page );
 	//

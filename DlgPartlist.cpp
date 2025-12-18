@@ -411,6 +411,7 @@ void CDlgPartlist::OnFilter()
 	//	
 	CString str, key;
 	m_flt.GetWindowTextA(str);
+	str = str.TrimLeft();
 	if( str.Left(6) == "search" )
 		str = "";
 	
@@ -704,13 +705,16 @@ void CDlgPartlist::OnTXT()
 	}
 }
 
-void CDlgPartlist::ImportPartlist()
+void CDlgPartlist::ImportPartlist(BOOL bReplaceSel)
 {
 	BOOL EnSel = 0;
 	CString str;
 	m_flt.GetWindowTextA(str);
-	if( str.GetLength()  == 0 || str.Left(6) == "search" )
+	if (str.GetLength() == 0 || str.Left(6) == "search")
+	{
 		EnSel = 1;
+		m_flt.SetWindowTextA("");
+	}
 	else
 		SaveSelections();
 
@@ -721,7 +725,7 @@ void CDlgPartlist::ImportPartlist()
 	if( EnSel )
 		bSelected.RemoveAll();
 	bVisibled.RemoveAll();
-	CString p_name;
+	CString p_name, flt_str="";
 	int it = -1;
 	int ip = -1;
 	int m_ip = -1;
@@ -746,8 +750,16 @@ void CDlgPartlist::ImportPartlist()
 		int st = t->m_polyline_start;
 		if( st >= 0 )
 		{
-			if( EnSel )
-				bSelected.Add( t->m_selected || po->GetAt(st).GetSideSel() );
+			if (EnSel)
+			{
+				if (bReplaceSel)
+				{
+					if (t->m_selected || po->GetAt(st).GetSideSel())
+						flt_str += (" " + t->m_str + SFX + " ");
+				}
+				else
+					bSelected.Add(t->m_selected || po->GetAt(st).GetSideSel());
+			}
 			if( po->GetAt(st).Check( index_value_attr ) )
 				pl[COL_VALUE].Add( po->GetAt(st).pAttr[index_value_attr]->m_str );
 			else
@@ -760,6 +772,8 @@ void CDlgPartlist::ImportPartlist()
 		else
 			ASSERT(0);
 	}
+	if(flt_str.GetLength())
+		m_flt.ReplaceSel(flt_str);
 	ReDraw();
 }
 

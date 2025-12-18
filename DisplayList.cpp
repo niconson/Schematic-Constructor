@@ -1099,25 +1099,39 @@ void CDisplayList::Draw( CDC * dDC, int draw_layer )
 					pDC->Polygon( &el->pts[0], np );
 				}
 			}*/
-//-----> next type
-			else if( el->gtype == DL_ARC_CW )
+			else if(el->gtype == DL_ARC_CW ||
+					el->gtype == DL_ARC_CCW ||
+					el->gtype == DL_CURVE_CW ||
+					el->gtype == DL_CURVE_CCW)
 			{
-				DrawArc( pDC, DL_ARC_CW, el->pts[0].x, el->pts[0].y, el->pts[1].x, el->pts[1].y );
-			}
-//-----> next type
-			else if( el->gtype == DL_ARC_CCW )
-			{
-				DrawArc( pDC, DL_ARC_CCW, el->pts[0].x, el->pts[0].y, el->pts[1].x, el->pts[1].y );
-			}
-//-----> next type
-			else if( el->gtype == DL_CURVE_CW )
-			{
-				DrawCurve( pDC, DL_CURVE_CW, el->pts[0].x, el->pts[0].y, el->pts[1].x, el->pts[1].y );
-			}
-//-----> next type
-			else if( el->gtype == DL_CURVE_CCW )
-			{
-				DrawCurve( pDC, DL_CURVE_CCW, el->pts[0].x, el->pts[0].y, el->pts[1].x, el->pts[1].y );
+				if (el->half_tone)
+				{
+					float proc = (100.0 - (float)el->half_tone) / 100.0;
+					int C1 = (float)m_rgb[layer][0] + (float)((255.0 * B_GND) - m_rgb[layer][0]) * proc;
+					int C2 = (float)m_rgb[layer][1] + (float)((255.0 * B_GND) - m_rgb[layer][1]) * proc;
+					int C3 = (float)m_rgb[layer][2] + (float)((255.0 * B_GND) - m_rgb[layer][2]) * proc;
+					COLORREF HALF_TONE = RGB(C1, C2, C3);
+					int w = el->el_w + m_scale * 2.0;
+					CPen Half_Pen(PS_SOLID, w, HALF_TONE);
+					CPen* old = pDC->SelectObject(&Half_Pen);
+					if (el->gtype == DL_ARC_CW)
+						DrawArc(pDC, DL_ARC_CW, el->pts[0].x, el->pts[0].y, el->pts[1].x, el->pts[1].y);
+					else if (el->gtype == DL_ARC_CCW)
+						DrawArc(pDC, DL_ARC_CCW, el->pts[0].x, el->pts[0].y, el->pts[1].x, el->pts[1].y);
+					else if (el->gtype == DL_CURVE_CW)
+						DrawCurve(pDC, DL_CURVE_CW, el->pts[0].x, el->pts[0].y, el->pts[1].x, el->pts[1].y);
+					else if (el->gtype == DL_CURVE_CCW)
+						DrawCurve(pDC, DL_CURVE_CCW, el->pts[0].x, el->pts[0].y, el->pts[1].x, el->pts[1].y);
+					pDC->SelectObject(old);
+				}
+				else if (el->gtype == DL_ARC_CW)
+					DrawArc(pDC, DL_ARC_CW, el->pts[0].x, el->pts[0].y, el->pts[1].x, el->pts[1].y);
+				else if (el->gtype == DL_ARC_CCW)
+					DrawArc(pDC, DL_ARC_CCW, el->pts[0].x, el->pts[0].y, el->pts[1].x, el->pts[1].y);
+				else if (el->gtype == DL_CURVE_CW)
+					DrawCurve(pDC, DL_CURVE_CW, el->pts[0].x, el->pts[0].y, el->pts[1].x, el->pts[1].y);
+				else if (el->gtype == DL_CURVE_CCW)
+					DrawCurve(pDC, DL_CURVE_CCW, el->pts[0].x, el->pts[0].y, el->pts[1].x, el->pts[1].y);
 			}
 			if( old_ROP2 )
 				pDC->SetROP2(old_ROP2);
