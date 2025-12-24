@@ -2134,9 +2134,6 @@ void CFreePcbView::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 	}
 	if( nChar == 'D' )
 	{
-		CMainFrame* frm = (CMainFrame*)AfxGetMainWnd();
-		if (frm)
-			frm->SetTimer(TMR_DRC, INT_MAX-1, 0);
 		m_Doc->m_drelist->MakeHollowCircles();
 		m_draw_layer = LAY_DRC_ERROR;// if( nChar == 'D' )
 	}
@@ -2188,6 +2185,9 @@ void CFreePcbView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 		gShiftKeyDown = TRUE;
 	if( nChar == 'D' )
 	{
+		CMainFrame* frm = (CMainFrame*)AfxGetMainWnd();
+		if (frm && gShiftKeyDown == 0)
+			frm->SetTimer(TMR_DRC, INT_MAX - 1, 0);
 		m_Doc->m_drelist->MakeSolidCircles(2500);
 		m_draw_layer = LAY_DRC_ERROR;// if( nChar == 'D' )
 	}

@@ -443,6 +443,13 @@ void CMainFrame::OnTimer(UINT nIDEvent)
 					doc->m_view->m_draw_layer = LAY_DRC_ERROR;
 					doc->m_view->Invalidate(FALSE);
 				}
+				else if ((state % 2) == 0)
+				{
+					doc->m_drelist->MakeHollowCircles();
+					state = 1;
+					doc->m_view->m_draw_layer = LAY_DRC_ERROR;
+					doc->m_view->Invalidate(FALSE);
+				}
 			}
 		}
 	}

@@ -10732,6 +10732,14 @@ void CFreePcbDoc::OnFilePrint()
 				}
 				else if( el->gtype == DL_ARC_CW || el->gtype == DL_ARC_CCW )
 				{
+					if (el->half_tone)
+					{
+						float proc = (100.0 - (float)el->half_tone) / 100.0;
+						int c1 = (float)m_pdf_rgb[layer][0] + (float)(255.0 - m_pdf_rgb[layer][0]) * proc;
+						int c2 = (float)m_pdf_rgb[layer][1] + (float)(255.0 - m_pdf_rgb[layer][1]) * proc;
+						int c3 = (float)m_pdf_rgb[layer][2] + (float)(255.0 - m_pdf_rgb[layer][2]) * proc;
+						cpdf_setrgbcolorStroke(pdf, clr_pdf * c1, clr_pdf * c2, clr_pdf * c3);
+					}
 					const double MagicBezier = 0.2761423749154;
 					int sz = PTS->GetSize();			
 					for( int ii=0; ii+1<sz; ii+=2 )
@@ -10791,6 +10799,13 @@ void CFreePcbDoc::OnFilePrint()
 						}
 						cpdf_stroke( pdf );
 						//cpdf_closepath( pdf );	
+					}
+					if (el->half_tone)
+					{
+						float c1 = m_pdf_rgb[layer][0];
+						float c2 = m_pdf_rgb[layer][1];
+						float c3 = m_pdf_rgb[layer][2];
+						cpdf_setrgbcolorStroke(pdf, clr_pdf * c1, clr_pdf * c2, clr_pdf * c3);
 					}
 				}
 			}
