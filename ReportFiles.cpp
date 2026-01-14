@@ -512,6 +512,12 @@ Package:			// (footprint name)
 						File.Close();
 						if( title.GetLength() )
 						{
+							int sep = title.Find("|");
+							if (sep > 0)
+							{
+								title.Truncate(sep);
+							}
+
 							// DRAW TEXT
 							x = stValue + (StringHeight/2.0);
 							CPDFtboxAttr attr;

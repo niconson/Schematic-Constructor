@@ -138,6 +138,7 @@ enum {
 	FK_SET_LENGTH,
 	FK_ADD_SIZE,
 	FK_ADD_NODE,
+	FK_IMPORT_MERGE,
 	//									
 	FK_NUM_OPTIONS,						
 	FK_ARROW							
@@ -352,6 +353,7 @@ const char fk_str[FK_NUM_OPTIONS * 2 + 2][32] =
 " Задать",		" длину",
 " Замер", " длины",
 " Ввести", " концевик",
+" Импорт", " слияния",
 //
 "",	        ""
 };

@@ -2834,19 +2834,38 @@ void CPolyLine::MakeFirst(int ic)
 {
 	if (ic > 0)
 	{
+		int icont = GetContour(ic);
+		if (icont > 0)
+			return;
 		int cl = 0, st = 0;
-		if (GetClosed())
-		{
-			UnClose();
-			cl = 1;
-			st = side_style[ic - 1];
-		}
 		Node[0] = 0;
 		Node[m_ncorners - 1] = 0;
-		for (int i = 0; i < ic; i++)
-			AppendCorner(corner[i].x, corner[i].y, side_style[i ? i - 1 : m_ncorners - 1], 0);
-		for (int i = ic - 1; i >= 0; i--)
-			DeleteCorner(i);
+		if (GetNumContours() == 1)
+		{
+			if (GetClosed())
+			{
+				UnClose();
+				cl = 1;
+				st = side_style[ic - 1];
+			}
+			for (int i = 0; i < ic; i++)
+				AppendCorner(corner[i].x, corner[i].y, side_style[i ? i - 1 : m_ncorners - 1], 0);
+			for (int i = ic - 1; i >= 0; i--)
+				DeleteCorner(i);
+		}
+		else
+		{
+			int iend = GetContourEnd(icont);
+			int num_vtx = iend - ic;
+			for (int i = iend; GetContourEnd(icont) - iend <= num_vtx;)
+			{
+				InsertCorner(0, corner[i].x, corner[i].y, 0);
+				SetSideStyle(0, side_style[i+1], 0);
+			}
+			int ie2 = GetContourEnd(icont);
+			for (int i = ie2; i > iend; i--)
+				DeleteCorner(i);
+		}
 		if (cl)
 			Close(st);
 	}

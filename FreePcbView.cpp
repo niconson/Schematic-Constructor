@@ -2430,6 +2430,10 @@ void CFreePcbView::HandleKeyPress(UINT nChar, UINT nRepCnt, UINT nFlags)
 		{
 			m_Doc->OnOpenComponentDatasheets();
 		}
+		else if( fk == FK_IMPORT_MERGE )
+		{
+			OnImportMerges();
+		}
 		break;
 
 	case CUR_TEXT_SELECTED:
@@ -3547,8 +3551,11 @@ void CFreePcbView::SetFKText( int mode )
 					m_fkey_option[2] = FK_ADD_LINE;
 					if( m_polyline_layer )
 						m_fkey_option[3] = FK_REPEAT_LINE;
+					m_fkey_option[5] = FK_IMPORT_MERGE;
 				}
 			}
+			//else
+			//	m_fkey_option[2] = FK_SIDE;
 		}
 		break;
 
