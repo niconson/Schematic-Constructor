@@ -16029,7 +16029,7 @@ void CFreePcbView::OnGroupSaveToFPCFile()
 		//		sFont = 0;
 		CString s;
 		f.WriteString("[options]\n");
-		f.WriteString("file_version: 2.427\n");
+		f.WriteString("file_version: 2.428\n");
 		f.WriteString("[footprints]\n");
 		f.WriteString("[board]\n");
 		f.WriteString("[solder_mask_cutouts]\n");
