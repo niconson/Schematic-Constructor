@@ -6912,7 +6912,33 @@ void CFreePcbView::SnapCursorPoint( CPoint wp, UINT nFlags )
 				return;
 			}
 			else
-				m_Doc->m_dlist->Drag( pDC, wp.x, wp.y );
+			{
+				// update alignment target
+				m_Doc->m_dlist->DeleteTargetLines();
+				for (int ip0 = 0; ip0 < m_Doc->m_outline_poly->GetSize(); ip0++)
+				{
+					CPolyLine* p = &m_Doc->m_outline_poly->GetAt(ip0);
+					if (p->m_visible)
+					{
+						for (int ip1 = 0; ip1 < p->GetNumCorners(); ip1++)
+						{
+							if (abs(wp.x - p->GetX(ip1)) < m_Doc->m_part_grid_spacing)
+							{
+								CPoint pt1(p->GetX(ip1), p->GetY(ip1));
+								CPoint pt2(p->GetX(ip1)+NM_PER_MM, p->GetY(ip1)+NM_PER_MM);
+								m_Doc->m_dlist->AddDragATargetLine(pt1, pt2);
+							}
+							if (abs(wp.y - p->GetY(ip1)) < m_Doc->m_part_grid_spacing)
+							{
+								CPoint pt1(p->GetX(ip1), p->GetY(ip1));
+								CPoint pt2(p->GetX(ip1) + NM_PER_MM, p->GetY(ip1) + NM_PER_MM);
+								m_Doc->m_dlist->AddDragATargetLine(pt1, pt2);
+							}
+						}
+					}
+				}
+				m_Doc->m_dlist->Drag(pDC, wp.x, wp.y);
+			}
 			ReleaseDC( pDC );
 			// show relative distance
 			if( m_cursor_mode == CUR_DRAG_GROUP
