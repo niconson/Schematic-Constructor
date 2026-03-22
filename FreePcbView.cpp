@@ -360,6 +360,8 @@ void CFreePcbView::InitializeView()
 	m_disable_context_menu = 0;
 	m_sel_rect = rect(0,0,0,0);
 	m_draw_pic = "";
+	m_targetline_alignment_X = 0;
+	m_targetline_alignment_Y = 0;
 	Invalidate( FALSE );// (doubtful)
 }
 //===============================================================================================
@@ -681,8 +683,11 @@ void CFreePcbView::OnDraw(CDC* pDC)
 	// now draw the display list
 	SetDCToWorldCoords( pDC );
 	m_Doc->m_dlist->Draw( pDC, m_draw_layer );
-	if( CurDragging() )
-		m_Doc->m_dlist->Drag(  pDC, m_last_cursor_point.x, m_last_cursor_point.y );
+	if (CurDragging())
+	{
+		m_targetline_alignment_X = m_targetline_alignment_Y = 0;
+		m_Doc->m_dlist->Drag(pDC, m_last_cursor_point.x, m_last_cursor_point.y);
+	}
 
 	CDC * gDC = GetDC();
 	// Interpage Attribute Syncronization
@@ -1630,7 +1635,9 @@ void CFreePcbView::OnLButtonUp(UINT nFlags, CPoint point)
 					if( m_sel_op.Check(index_desc_attr) )
 						if( m_sel_op.pAttr[index_desc_attr]->m_str.Right(3) == "BOM" )
 							BOM_PATH = m_sel_op.pAttr[index_desc_attr];
-				MoveGroup( dx, dy, BOM_PATH );
+				MoveGroup( dx - m_targetline_alignment_X, dy - m_targetline_alignment_Y, BOM_PATH );
+				m_last_cursor_point.x -= m_targetline_alignment_X;
+				m_last_cursor_point.y -= m_targetline_alignment_Y;
 				OnGroupGridMagnetize( m_Doc );
 				m_Doc->m_dlist->CancelHighLight();
 				
@@ -6915,27 +6922,73 @@ void CFreePcbView::SnapCursorPoint( CPoint wp, UINT nFlags )
 			{
 				// update alignment target
 				m_Doc->m_dlist->DeleteTargetLines();
-				for (int ip0 = 0; ip0 < m_Doc->m_outline_poly->GetSize(); ip0++)
+				int min_X = abs(m_Doc->m_dlist->m_max_x - m_Doc->m_dlist->m_org_x) / 2 * m_pcbu_per_wu;
+				int min_Y = abs(m_Doc->m_dlist->m_max_y - m_Doc->m_dlist->m_org_y) / 2 * m_pcbu_per_wu;
+				CPoint BEST_PT1(0, 0);
+				CPoint BEST_PT2(0, 0);
+				m_targetline_alignment_X = m_targetline_alignment_Y = 0;
+				if (m_cursor_mode == CUR_DRAG_GROUP && getbit(m_sel_flags,FLAG_SEL_OP))
 				{
-					CPolyLine* p = &m_Doc->m_outline_poly->GetAt(ip0);
-					if (p->m_visible)
+					for (int ip0 = 0; ip0 < m_Doc->m_outline_poly->GetSize(); ip0++)
 					{
-						for (int ip1 = 0; ip1 < p->GetNumCorners(); ip1++)
+						CPolyLine* p = &m_Doc->m_outline_poly->GetAt(ip0);
+						if (p->m_visible && p->GetSel() == 0)
 						{
-							if (abs(wp.x - p->GetX(ip1)) < m_Doc->m_part_grid_spacing)
+							for (int ip1 = 0; ip1 < p->GetNumCorners(); ip1++)
 							{
-								CPoint pt1(p->GetX(ip1), p->GetY(ip1));
-								CPoint pt2(p->GetX(ip1)+NM_PER_MM, p->GetY(ip1)+NM_PER_MM);
-								m_Doc->m_dlist->AddDragATargetLine(pt1, pt2);
-							}
-							if (abs(wp.y - p->GetY(ip1)) < m_Doc->m_part_grid_spacing)
-							{
-								CPoint pt1(p->GetX(ip1), p->GetY(ip1));
-								CPoint pt2(p->GetX(ip1) + NM_PER_MM, p->GetY(ip1) + NM_PER_MM);
-								m_Doc->m_dlist->AddDragATargetLine(pt1, pt2);
+								int dist_x = abs(wp.x - p->GetX(ip1));
+								int dist_y = abs(wp.y - p->GetY(ip1));
+								if (dist_x < m_Doc->m_part_grid_spacing)
+								{
+									if (dist_y < min_Y)
+									{
+										min_Y = dist_y;
+										BEST_PT1 = CPoint(p->GetX(ip1), p->GetY(ip1));
+										//CPoint pt1(p->GetX(ip1), p->GetY(ip1));
+										//CPoint pt2(p->GetX(ip1) + NM_PER_MM, p->GetY(ip1) + NM_PER_MM);
+										//m_Doc->m_dlist->AddDragATargetLine(pt1, pt2);
+									}
+								}
+								if (dist_y < m_Doc->m_part_grid_spacing)
+								{
+									if (dist_x < min_X)
+									{
+										min_X = dist_x;
+										BEST_PT2 = CPoint(p->GetX(ip1), p->GetY(ip1));
+										//CPoint pt1(p->GetX(ip1), p->GetY(ip1));
+										//CPoint pt2(p->GetX(ip1) + NM_PER_MM, p->GetY(ip1) + NM_PER_MM);
+										//m_Doc->m_dlist->AddDragATargetLine(pt1, pt2);
+									}
+								}
 							}
 						}
 					}
+				}
+				if (BEST_PT1.x && BEST_PT1.y)//(min_Y < INT_MAX)
+				{
+					int NM_PER = NM_PER_MM - NM_PER_MIL;
+					m_targetline_alignment_X = wp.x - BEST_PT1.x;
+					CPoint pt1(BEST_PT1.x + NM_PER, BEST_PT1.y);
+					CPoint pt2(BEST_PT1.x - NM_PER, BEST_PT1.y);
+					CPoint pt3(BEST_PT1.x, BEST_PT1.y + NM_PER);
+					CPoint pt4(BEST_PT1.x, BEST_PT1.y - NM_PER);
+					m_Doc->m_dlist->AddDragATargetLine(pt3, pt1);
+					m_Doc->m_dlist->AddDragATargetLine(pt3, pt2);
+					m_Doc->m_dlist->AddDragATargetLine(pt2, pt4);
+					m_Doc->m_dlist->AddDragATargetLine(pt1, pt4);
+				}
+				if (BEST_PT2.x && BEST_PT2.y)//(min_X < INT_MAX)
+				{
+					int NM_PER = NM_PER_MM + NM_PER_MIL;
+					m_targetline_alignment_Y = wp.y - BEST_PT2.y;
+					CPoint pt1(BEST_PT2.x + NM_PER, BEST_PT2.y);
+					CPoint pt2(BEST_PT2.x - NM_PER, BEST_PT2.y);
+					CPoint pt3(BEST_PT2.x, BEST_PT2.y + NM_PER);
+					CPoint pt4(BEST_PT2.x, BEST_PT2.y - NM_PER);
+					m_Doc->m_dlist->AddDragATargetLine(pt3, pt1);
+					m_Doc->m_dlist->AddDragATargetLine(pt3, pt2);
+					m_Doc->m_dlist->AddDragATargetLine(pt2, pt4);
+					m_Doc->m_dlist->AddDragATargetLine(pt1, pt4);
 				}
 				m_Doc->m_dlist->Drag(pDC, wp.x, wp.y);
 			}
@@ -16055,7 +16108,7 @@ void CFreePcbView::OnGroupSaveToFPCFile()
 		//		sFont = 0;
 		CString s;
 		f.WriteString("[options]\n");
-		f.WriteString("file_version: 2.428\n");
+		f.WriteString("file_version: 2.429\n");
 		f.WriteString("[footprints]\n");
 		f.WriteString("[board]\n");
 		f.WriteString("[solder_mask_cutouts]\n");

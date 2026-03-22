@@ -17,7 +17,7 @@
 #define TRANSPARENT_LAYER			m_active_layer
 #define HILITE_SHIFT 10
 #define SWITCH_LAYER				LAY_PIN_LINE
-#define MAX_TARGETLINES 8
+#define MAX_TARGETLINES 16
 
 //#define PCBU_PER_WU		25400	// conversion from PCB units to world units 
 #define BMP 1
@@ -201,6 +201,8 @@ private:
 	int m_drag_num_ratlines;		// number of ratlines to drag
 	int m_drag_num_alignment_target;
 	CPoint m_drag_alignment_targetline_pt[MAX_TARGETLINES];
+	int m_prev_targetline;
+	CPoint m_prev_targetline_pt[MAX_TARGETLINES];
 	CPoint * m_drag_ratline_start_pt;	// absolute coords for ratline start points 
 	CPoint * m_drag_ratline_end_pt;		// relative coords for ratline endpoints
 	int m_drag_ratline_width;

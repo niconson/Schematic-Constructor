@@ -643,6 +643,8 @@ public:
 	CPoint m_snap_angle_ref;	// reference point for snap angle
 	int m_snap_mode;			// snap mode
 	int m_inflection_mode;		// inflection mode for routing
+	int m_targetline_alignment_X;
+	int m_targetline_alignment_Y;
 
 	// window parameters
 	CPoint m_client_origin;	// coordinates of (0,0) in screen coords

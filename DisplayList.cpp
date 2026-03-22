@@ -48,6 +48,7 @@ CDisplayList::CDisplayList()
 	m_drag_line_pt = 0;
 	m_drag_num_ratlines = 0;
 	m_drag_num_alignment_target = 0;
+	m_prev_targetline = 0;
 	m_drag_ratline_start_pt = 0;
 	m_drag_ratline_end_pt = 0;
 	m_drag_ratline_width = 0;
@@ -2318,22 +2319,28 @@ void CDisplayList::Drag( CDC * pDC, int x, int y )
 	}
 
 	// drag array of lines, used to align group objects
-	if (m_drag_num_alignment_target)
+	if (m_drag_num_alignment_target || m_prev_targetline)
 	{
 		CPen drag_pen(PS_SOLID, 1, drag_color);
 		CPen* old_pen = pDC->SelectObject(&drag_pen);
-		for (int il = 0; il < m_drag_num_alignment_target; il++)
+		for (int il = 0; il < m_prev_targetline; il++)
 		{
 			// undraw
 			if (m_drag_start)
 			{
-				pDC->MoveTo(m_drag_x + m_drag_alignment_targetline_pt[2 * il].x, m_drag_y + m_drag_alignment_targetline_pt[2 * il].y);
-				pDC->LineTo(m_drag_x + m_drag_alignment_targetline_pt[2 * il + 1].x, m_drag_y + m_drag_alignment_targetline_pt[2 * il + 1].y);
+				pDC->MoveTo(m_prev_targetline_pt[2 * il].x, m_prev_targetline_pt[2 * il].y);
+				pDC->LineTo(m_prev_targetline_pt[2 * il + 1].x, m_prev_targetline_pt[2 * il + 1].y);
 			}
-			// redraw
-			pDC->MoveTo(xx + m_drag_alignment_targetline_pt[2 * il].x, yy + m_drag_alignment_targetline_pt[2 * il].y);
-			pDC->LineTo(xx + m_drag_alignment_targetline_pt[2 * il + 1].x, yy + m_drag_alignment_targetline_pt[2 * il + 1].y);
 		}
+		for (int il = 0; il < m_drag_num_alignment_target; il++)
+		{
+			// redraw
+			pDC->MoveTo(m_drag_alignment_targetline_pt[2 * il].x, m_drag_alignment_targetline_pt[2 * il].y);
+			pDC->LineTo(m_drag_alignment_targetline_pt[2 * il + 1].x, m_drag_alignment_targetline_pt[2 * il + 1].y);
+			m_prev_targetline_pt[2 * il] = m_drag_alignment_targetline_pt[2 * il];
+			m_prev_targetline_pt[2 * il + 1] = m_drag_alignment_targetline_pt[2 * il + 1];
+		}
+		m_prev_targetline = m_drag_num_alignment_target;
 		pDC->SelectObject(old_pen);
 	}
 
@@ -2750,7 +2757,12 @@ void CDisplayList::IncrementDragAngle( CDC * pDC )
 		pDC->MoveTo( m_drag_ratline_start_pt[il].x, m_drag_ratline_start_pt[il].y );
 		pDC->LineTo( m_drag_x+m_drag_ratline_end_pt[il].x, m_drag_y+m_drag_ratline_end_pt[il].y );
 	}
-		
+	/*for (int il = 0; il<m_prev_targetline; il++)
+	{
+		pDC->MoveTo(m_prev_targetline_pt[2*il].x, m_prev_targetline_pt[2*il].y);
+		pDC->LineTo(m_prev_targetline_pt[2*il + 1].x, m_prev_targetline_pt[2*il+1].y);
+	}*/
+
 	// rotate points, redraw lines
 	for( int il=0; il<m_drag_num_lines; il++ )
 	{
@@ -2765,7 +2777,16 @@ void CDisplayList::IncrementDragAngle( CDC * pDC )
 		pDC->MoveTo( m_drag_ratline_start_pt[il].x, m_drag_ratline_start_pt[il].y );
 		pDC->LineTo( m_drag_x+m_drag_ratline_end_pt[il].x, m_drag_y+m_drag_ratline_end_pt[il].y );
 	}
-
+	/*for (int il = 0; il < m_drag_num_alignment_target; il++)
+	{
+		RotatePoint(&m_drag_alignment_targetline_pt[2 * il], -90, zero);
+		RotatePoint(&m_drag_alignment_targetline_pt[2 * il + 1], -90, zero);
+		pDC->MoveTo(m_drag_alignment_targetline_pt[2 * il].x, m_drag_alignment_targetline_pt[2 * il].y);
+		pDC->LineTo(m_drag_alignment_targetline_pt[2 * il + 1].x, m_drag_alignment_targetline_pt[2 * il + 1].y);
+		m_prev_targetline_pt[2 * il] = m_drag_alignment_targetline_pt[2 * il];
+		m_prev_targetline_pt[2 * il + 1] = m_drag_alignment_targetline_pt[2 * il + 1];
+	}
+	m_prev_targetline = m_drag_num_alignment_target;*/
 	pDC->SelectObject( old_pen );
 	pDC->SetROP2( old_ROP2 );
 }
