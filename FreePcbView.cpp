@@ -685,7 +685,7 @@ void CFreePcbView::OnDraw(CDC* pDC)
 	m_Doc->m_dlist->Draw( pDC, m_draw_layer );
 	if (CurDragging())
 	{
-		m_targetline_alignment_X = m_targetline_alignment_Y = 0;
+		//m_targetline_alignment_X = m_targetline_alignment_Y = 0;
 		m_Doc->m_dlist->Drag(pDC, m_last_cursor_point.x, m_last_cursor_point.y);
 	}
 
@@ -6927,7 +6927,8 @@ void CFreePcbView::SnapCursorPoint( CPoint wp, UINT nFlags )
 				CPoint BEST_PT1(0, 0);
 				CPoint BEST_PT2(0, 0);
 				m_targetline_alignment_X = m_targetline_alignment_Y = 0;
-				if (m_cursor_mode == CUR_DRAG_GROUP && getbit(m_sel_flags,FLAG_SEL_OP))
+				if ((m_cursor_mode == CUR_DRAG_GROUP || m_cursor_mode == CUR_DRAG_GROUP_ADD) && 
+					getbit(m_sel_flags,FLAG_SEL_OP))
 				{
 					for (int ip0 = 0; ip0 < m_Doc->m_outline_poly->GetSize(); ip0++)
 					{
@@ -6938,7 +6939,7 @@ void CFreePcbView::SnapCursorPoint( CPoint wp, UINT nFlags )
 							{
 								int dist_x = abs(wp.x - p->GetX(ip1));
 								int dist_y = abs(wp.y - p->GetY(ip1));
-								if (dist_x < m_Doc->m_part_grid_spacing)
+								if ((float)dist_x < (float)m_Doc->m_part_grid_spacing/m_user_scale)
 								{
 									if (dist_y < min_Y)
 									{
@@ -6949,7 +6950,7 @@ void CFreePcbView::SnapCursorPoint( CPoint wp, UINT nFlags )
 										//m_Doc->m_dlist->AddDragATargetLine(pt1, pt2);
 									}
 								}
-								if (dist_y < m_Doc->m_part_grid_spacing)
+								if ((float)dist_y < (float)m_Doc->m_part_grid_spacing/m_user_scale)
 								{
 									if (dist_x < min_X)
 									{
@@ -6966,7 +6967,7 @@ void CFreePcbView::SnapCursorPoint( CPoint wp, UINT nFlags )
 				}
 				if (BEST_PT1.x && BEST_PT1.y)//(min_Y < INT_MAX)
 				{
-					int NM_PER = NM_PER_MM - NM_PER_MIL;
+					int NM_PER = (float)m_Doc->m_part_grid_spacing/m_user_scale;
 					m_targetline_alignment_X = wp.x - BEST_PT1.x;
 					CPoint pt1(BEST_PT1.x + NM_PER, BEST_PT1.y);
 					CPoint pt2(BEST_PT1.x - NM_PER, BEST_PT1.y);
@@ -6979,7 +6980,7 @@ void CFreePcbView::SnapCursorPoint( CPoint wp, UINT nFlags )
 				}
 				if (BEST_PT2.x && BEST_PT2.y)//(min_X < INT_MAX)
 				{
-					int NM_PER = NM_PER_MM + NM_PER_MIL;
+					int NM_PER = (float)m_Doc->m_part_grid_spacing/m_user_scale + NM_PER_MIL;
 					m_targetline_alignment_Y = wp.y - BEST_PT2.y;
 					CPoint pt1(BEST_PT2.x + NM_PER, BEST_PT2.y);
 					CPoint pt2(BEST_PT2.x - NM_PER, BEST_PT2.y);
@@ -7670,13 +7671,16 @@ int CFreePcbView::FindStrInFile( CString * file,
 					int np = ParseKeyString( &instr, &key_str, &ss );
 					if( np >= 2 )
 					{
-						m_index++;
-						int ret_v = m_Doc->m_merge_library.AddItem( &ss.GetAt(0), m_index );
-						if( ret_v == 1 )
+						if (ss.GetAt(0).Find("PCBVIEW") == -1)
 						{
-							m_Doc->m_dlg_log->AddLine( "added merge index: "+ss.GetAt(0)+"\r\n" );
-							if(iterator%32==0)
-								m_Doc->m_dlg_log->UpdateWindow();
+							m_index++;
+							int ret_v = m_Doc->m_merge_library.AddItem(&ss.GetAt(0), m_index);
+							if (ret_v == 1)
+							{
+								m_Doc->m_dlg_log->AddLine("added merge index: " + ss.GetAt(0) + "\r\n");
+								if (iterator % 32 == 0)
+									m_Doc->m_dlg_log->UpdateWindow();
+							}
 						}
 					}
 				}
@@ -11650,7 +11654,8 @@ void CFreePcbView::OnSelectObjectByAttr()
 	if( m_sel_text )
 		if( m_sel_text->m_polyline_start >= 0 )
 			if( m_sel_text->m_polyline_start < m_Doc->m_outline_poly->GetSize() )
-				if( m_Doc->m_outline_poly->GetAt(m_sel_text->m_polyline_start).Check( index_part_attr ) )
+				if( m_Doc->m_outline_poly->GetAt(m_sel_text->m_polyline_start).Check( index_part_attr ) &&
+					(m_sel_mask & (1 << SEL_MASK_PART)))
 					SelectByAttr(0);
 				else
 					SelectByAttr(1);
@@ -11671,7 +11676,7 @@ void CFreePcbView::SelectByAttr( BOOL bPOLY )
 					if( t->m_polyline_start >= 0 )
 						if( bPOLY )
 						{
-							if( m_Doc->m_outline_poly->GetAt(t->m_polyline_start).Check( index_part_attr ) == 0 )
+							//if( m_Doc->m_outline_poly->GetAt(t->m_polyline_start).Check( index_part_attr ) == 0 )
 							{
 								id pID( ID_POLYLINE, ID_GRAPHIC, t->m_polyline_start, ID_SIDE, -1 );
 								if( m_Doc->m_outline_poly->GetAt(t->m_polyline_start).Check( index_net_attr ) ||

@@ -2903,7 +2903,7 @@ int CDisplayList::AddDragLine( CPoint pi, CPoint pf )
 	return 0;
 }
 
-int CDisplayList::AddDragATargetLine(CPoint pi, CPoint pf)
+int CDisplayList::AddDragATargetLine(CPoint pi, CPoint pf, int size)
 {
 	if (m_drag_num_alignment_target >= MAX_TARGETLINES/2)
 		return  1;

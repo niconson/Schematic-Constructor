@@ -299,7 +299,7 @@ public:
 	int MakeDragRatlineArray( int num_ratlines, int width );
 	int AddDragLine( CPoint pi, CPoint pf );
 	int AddDragRatline( CPoint pi, CPoint pf );
-	int AddDragATargetLine(CPoint pi, CPoint pf);
+	int AddDragATargetLine(CPoint pi, CPoint pf, int size=0);
 	void DeleteTargetLines();
 	int GetDragAngle();
 	void FlipDragSide( CDC * pDC );

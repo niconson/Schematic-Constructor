@@ -5672,6 +5672,7 @@ void CFreePcbDoc::OnCreatePolyline()
 	
 	m_view->MarkAllOutlinePoly(0,-1);
 	BOOL found;
+	const int min_wid = 100;
 	int sel_i, sel_ii, W=0;
 	int MARK = 7403;
 	int sz = m_outline_poly->GetSize();
@@ -5739,8 +5740,8 @@ void CFreePcbDoc::OnCreatePolyline()
 											st = 3 - st;
 									}
 									int x0=0, y0=0;
-									double cor2toSeg = ::GetClearanceBetweenSegments(	prevx, prevy, cur_x, cur_y, st, _2540, 
-																				gx2, gy2, gx2+10, gy2+10, CPolyLine::STRAIGHT, _2540, 2*NM_PER_MM, &x0, &y0 );
+									double cor2toSeg = ::GetClearanceBetweenSegments(	prevx, prevy, cur_x, cur_y, st, min_wid,
+																				gx2, gy2, gx2+10, gy2+10, CPolyLine::STRAIGHT, min_wid, 2*NM_PER_MM, &x0, &y0 );
 									if( //cor2toSeg > W/10 &&
 										(dist1 < min_dist || cor2toSeg > max_dist) )
 									{
@@ -5766,9 +5767,9 @@ void CFreePcbDoc::OnCreatePolyline()
 								else
 								{
 									int x0=0, y0=0;
-									int cortoSeg = ::GetClearanceBetweenSegments(	gx1, gy1, gx2, gy2, st, _2540, 
+									int cortoSeg = ::GetClearanceBetweenSegments(	gx1, gy1, gx2, gy2, st, min_wid,
 																				cur_x, cur_y, cur_x+10, cur_y+10, 
-																				CPolyLine::STRAIGHT, _2540, 2*NM_PER_MM, &x0, &y0 );
+																				CPolyLine::STRAIGHT, min_wid, 2*NM_PER_MM, &x0, &y0 );
 									if( cortoSeg < W/10 )
 									{
 										int g1toPoly = INT_MAX;
@@ -5781,13 +5782,13 @@ void CFreePcbDoc::OnCreatePolyline()
 											int getx2 = m_outline_poly->GetAt(sz).GetX(inxt);
 											int gety2 = m_outline_poly->GetAt(sz).GetY(inxt);
 											int getst = m_outline_poly->GetAt(sz).GetSideStyle(ico);
-											int d = ::GetClearanceBetweenSegments(	getx1, gety1, getx2, gety2, getst, _2540, 
+											int d = ::GetClearanceBetweenSegments(	getx1, gety1, getx2, gety2, getst, min_wid,
 																				gx1, gy1, gx1+10, gy1+10, 
-																				CPolyLine::STRAIGHT, _2540, 2*NM_PER_MM, &x0, &y0 );
+																				CPolyLine::STRAIGHT, min_wid, 2*NM_PER_MM, &x0, &y0 );
 											g1toPoly = min( g1toPoly, d );
-											d = ::GetClearanceBetweenSegments(	getx1, gety1, getx2, gety2, getst, _2540, 
+											d = ::GetClearanceBetweenSegments(	getx1, gety1, getx2, gety2, getst, min_wid,
 																				gx2, gy2, gx2+10, gy2+10, 
-																				CPolyLine::STRAIGHT, _2540, 2*NM_PER_MM, &x0, &y0 );
+																				CPolyLine::STRAIGHT, min_wid, 2*NM_PER_MM, &x0, &y0 );
 											g2toPoly = min( g2toPoly, d );
 										}	
 										if( g1toPoly < W/10 && g2toPoly < W/10 )
