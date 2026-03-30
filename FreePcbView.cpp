@@ -685,7 +685,7 @@ void CFreePcbView::OnDraw(CDC* pDC)
 	m_Doc->m_dlist->Draw( pDC, m_draw_layer );
 	if (CurDragging())
 	{
-		//m_targetline_alignment_X = m_targetline_alignment_Y = 0;
+		///m_targetline_alignment_X = m_targetline_alignment_Y = 0;!!!
 		m_Doc->m_dlist->Drag(pDC, m_last_cursor_point.x, m_last_cursor_point.y);
 	}
 

@@ -3407,18 +3407,20 @@ int SelectAdjacent ( CArray<CPolyLine>* arr )
 			CPolyLine* p = &arr->GetAt(i);
 			if (p->m_visible == 0)
 				continue;
+			RECT R1 = p->GetCornerBounds();
+			int L1 = p->GetLayer();
 			for (int ii = 0; ii < p->GetNumSides(); ii++)
 			{
 				if (p->GetSideSel(ii) == 0)
 				{
-					RECT R1 = p->GetBounds();
-					int L1 = p->GetLayer();
 					for (int i2 = 0; i2 < arr->GetSize(); i2++)
 					{
 						CPolyLine* p2 = &arr->GetAt(i2);
 						if (p2->m_visible == 0)
 							continue;
-						RECT R2 = p2->GetBounds();
+						//if (p2->GetSideSel() == 0) slowed
+						//	continue;
+						RECT R2 = p2->GetCornerBounds();
 						if (RectsIntersection(R1, R2) == -1)
 							continue;
 						int L2 = p2->GetLayer();
@@ -3460,7 +3462,7 @@ int SelectAdjacent ( CArray<CPolyLine>* arr )
 									p->SetSideSel(ii, 1);
 									nc++;
 									bBreak = 1;
-									i = -1;
+									///i = -1;!!!slowed
 								}
 							}
 							if (bBreak)
