@@ -1867,6 +1867,8 @@ void CFreePcbView::OnLButtonUp(UINT nFlags, CPoint point)
 			else if( m_cursor_mode == CUR_DRAG_MEASURE_1 )
 			{
 				m_measure_dist = 0;
+				m_last_cursor_point.x -= m_targetline_alignment_X;
+				m_last_cursor_point.y -= m_targetline_alignment_Y;
 				m_from_pt = m_last_cursor_point;
 				m_Doc->m_dlist->MakeDragRatlineArray( 1, 1 );
 				m_Doc->m_dlist->AddDragRatline( m_from_pt, zero ); 
@@ -1874,6 +1876,8 @@ void CFreePcbView::OnLButtonUp(UINT nFlags, CPoint point)
 			}
 			else if( m_cursor_mode == CUR_DRAG_MEASURE_2 )
 			{
+				m_last_cursor_point.x -= m_targetline_alignment_X;
+				m_last_cursor_point.y -= m_targetline_alignment_Y;
 				int dst = Distance( m_from_pt.x, m_from_pt.y, m_last_cursor_point.x, m_last_cursor_point.y );
 				float cur_ang = Angle( m_from_pt.x, m_from_pt.y, m_last_cursor_point.x, m_last_cursor_point.y );
 				m_measure_dist += dst;
@@ -6927,8 +6931,11 @@ void CFreePcbView::SnapCursorPoint( CPoint wp, UINT nFlags )
 				CPoint BEST_PT1(0, 0);
 				CPoint BEST_PT2(0, 0);
 				m_targetline_alignment_X = m_targetline_alignment_Y = 0;
-				if ((m_cursor_mode == CUR_DRAG_GROUP || m_cursor_mode == CUR_DRAG_GROUP_ADD) && 
-					getbit(m_sel_flags,FLAG_SEL_OP))
+				if ((m_cursor_mode == CUR_DRAG_GROUP || 
+					m_cursor_mode == CUR_DRAG_GROUP_ADD || 
+					m_cursor_mode == CUR_DRAG_MEASURE_1 ||
+					m_cursor_mode == CUR_DRAG_MEASURE_2))// &&
+					//getbit(m_sel_flags,FLAG_SEL_OP))
 				{
 					for (int ip0 = 0; ip0 < m_Doc->m_outline_poly->GetSize(); ip0++)
 					{
