@@ -132,6 +132,7 @@ void CDlgRFiles::DoDataExchange(CDataExchange* pDX)
 			double Pic_Y = INT_MAX;
 			CString PrevPac = "";
 			BOOL bPicOnPart;
+			int prevItem = -1;
 			while( PACKAGES.GetSize() )
 			{
 				bPicOnPart = 0;
@@ -367,7 +368,7 @@ Package:			// (footprint name)
 							Width *= 70.0;
 							if( bottom < (m_pdf_margin+StringHeight+(StringHeight/10.0)) )
 							{
-								static int prevItem = -1;
+								//
 								y = Cur_Y;
 								if( bTITLE )
 									y += (StringHeight*2.0);
