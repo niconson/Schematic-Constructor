@@ -10414,6 +10414,8 @@ void CFreePcbDoc::OnFilePrint()
 	CPDFdoc * pdf;
 	pdf = cpdf_open(0, NULL);
 	cpdf_init(pdf);
+	cpdf_setGlobalDocumentLimits(100, 100, 100, 100, 0);
+	cpdf_enableCompression(pdf, TRUE);
 	cpdf_setTitle(pdf,m_name.GetBuffer());
 
 	int cP = 0;
@@ -10518,7 +10520,7 @@ void CFreePcbDoc::OnFilePrint()
 				continue;
 
 			// print bmp pictures
-			for( int itmp=0; itmp<m_dlist->GetNumTemplates(); itmp++ )
+			///for( int itmp=0; itmp<m_dlist->GetNumTemplates(); itmp++ )
 				m_dlist->Marker();
 			for( ; m_dlist->m_show_pictures; )
 			{
@@ -10544,6 +10546,14 @@ void CFreePcbDoc::OnFilePrint()
 					if( marker )
 						continue;
 					if( rt.right-rt.left < max_w )
+						continue;
+					if( rt.right > r_dsp.right / m_pcbu_per_wu )
+						continue;
+					if( rt.left < r_dsp.left / m_pcbu_per_wu)
+						continue;
+					if( rt.top > r_dsp.top / m_pcbu_per_wu)
+						continue;
+					if( rt.bottom < r_dsp.bottom / m_pcbu_per_wu)
 						continue;
 					ret_i = itmp;
 					max_w = rt.right-rt.left;
