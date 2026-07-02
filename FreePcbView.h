@@ -893,7 +893,7 @@ public:
 	afx_msg void OnViewFindAmoungSel();
 	afx_msg void OnDrc();									//will remain
 	afx_msg void OnClearDRC();								//will remain
-	afx_msg void OnViewAll();								//will remain							
+	//afx_msg void OnViewAll();								//will remain							
 	afx_msg void OnToolsMoveOrigin();						//will remain
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);	//will remain
 	afx_msg void OnGroupMove();								//will remain

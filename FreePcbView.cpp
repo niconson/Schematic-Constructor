@@ -635,10 +635,10 @@ void CFreePcbView::OnDraw(CDC* pDC)
 						else if( inn )
 							m_favorite_poly[inn] = -1; // delete this link
 						else
-							pDC->DrawText( "no net", -1, &r, DT_TOP );
+							pDC->DrawText( "unknown", -1, &r, DT_TOP );
 					}
 					else
-						pDC->DrawText( "error", -1, &r, DT_TOP );
+						pDC->DrawText( "unknown", -1, &r, DT_TOP );
 				}
 				if( inn%2 )
 				{
@@ -6930,6 +6930,7 @@ void CFreePcbView::SnapCursorPoint( CPoint wp, UINT nFlags )
 				int min_Y = abs(m_Doc->m_dlist->m_max_y - m_Doc->m_dlist->m_org_y) / 2 * m_pcbu_per_wu;
 				CPoint BEST_PT1(0, 0);
 				CPoint BEST_PT2(0, 0);
+				int BEST_W1 = 0, BEST_W2 = 0;
 				m_targetline_alignment_X = m_targetline_alignment_Y = 0;
 				if ((m_cursor_mode == CUR_DRAG_GROUP || 
 					m_cursor_mode == CUR_DRAG_GROUP_ADD || 
@@ -6952,6 +6953,7 @@ void CFreePcbView::SnapCursorPoint( CPoint wp, UINT nFlags )
 									{
 										min_Y = dist_y;
 										BEST_PT1 = CPoint(p->GetX(ip1), p->GetY(ip1));
+										BEST_W1 = p->GetW();
 										//CPoint pt1(p->GetX(ip1), p->GetY(ip1));
 										//CPoint pt2(p->GetX(ip1) + NM_PER_MM, p->GetY(ip1) + NM_PER_MM);
 										//m_Doc->m_dlist->AddDragATargetLine(pt1, pt2);
@@ -6963,6 +6965,7 @@ void CFreePcbView::SnapCursorPoint( CPoint wp, UINT nFlags )
 									{
 										min_X = dist_x;
 										BEST_PT2 = CPoint(p->GetX(ip1), p->GetY(ip1));
+										BEST_W2 = p->GetW();
 										//CPoint pt1(p->GetX(ip1), p->GetY(ip1));
 										//CPoint pt2(p->GetX(ip1) + NM_PER_MM, p->GetY(ip1) + NM_PER_MM);
 										//m_Doc->m_dlist->AddDragATargetLine(pt1, pt2);
@@ -6975,6 +6978,7 @@ void CFreePcbView::SnapCursorPoint( CPoint wp, UINT nFlags )
 				if (BEST_PT1.x && BEST_PT1.y)//(min_Y < INT_MAX)
 				{
 					int NM_PER = (float)m_Doc->m_part_grid_spacing/m_user_scale;
+					NM_PER += BEST_W1;
 					m_targetline_alignment_X = wp.x - BEST_PT1.x;
 					CPoint pt1(BEST_PT1.x + NM_PER, BEST_PT1.y);
 					CPoint pt2(BEST_PT1.x - NM_PER, BEST_PT1.y);
@@ -6988,6 +6992,7 @@ void CFreePcbView::SnapCursorPoint( CPoint wp, UINT nFlags )
 				if (BEST_PT2.x && BEST_PT2.y)//(min_X < INT_MAX)
 				{
 					int NM_PER = (float)m_Doc->m_part_grid_spacing/m_user_scale + NM_PER_MIL;
+					NM_PER += BEST_W2;
 					m_targetline_alignment_Y = wp.y - BEST_PT2.y;
 					CPoint pt1(BEST_PT2.x + NM_PER, BEST_PT2.y);
 					CPoint pt2(BEST_PT2.x - NM_PER, BEST_PT2.y);

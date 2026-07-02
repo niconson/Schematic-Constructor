@@ -2992,9 +2992,9 @@ BEGIN
         BEGIN
             VALUE "Comments", "alpha"
             VALUE "FileDescription", "—хематор"
-            VALUE "FileVersion", "1,0,0,0"
+            VALUE "FileVersion", "1,4,2,9"
             VALUE "InternalName", "—хемјтор"
-            VALUE "LegalCopyright", "Copyright (C) 2020-2025"
+            VALUE "LegalCopyright", "Copyright (C) 2020-2026"
             VALUE "OriginalFilename", "—хемјтор.EXE"
             VALUE "ProductName", "—хемјтор"
             VALUE "ProductVersion", "1,4,x,x"
