@@ -6928,6 +6928,7 @@ void CFreePcbView::SnapCursorPoint( CPoint wp, UINT nFlags )
 				m_Doc->m_dlist->DeleteTargetLines();
 				int min_X = abs(m_Doc->m_dlist->m_max_x - m_Doc->m_dlist->m_org_x) / 2 * m_pcbu_per_wu;
 				int min_Y = abs(m_Doc->m_dlist->m_max_y - m_Doc->m_dlist->m_org_y) / 2 * m_pcbu_per_wu;
+				int mX = INT_MAX, mY = INT_MAX;
 				CPoint BEST_PT1(0, 0);
 				CPoint BEST_PT2(0, 0);
 				int BEST_W1 = 0, BEST_W2 = 0;
@@ -6949,8 +6950,9 @@ void CFreePcbView::SnapCursorPoint( CPoint wp, UINT nFlags )
 								int dist_y = abs(wp.y - p->GetY(ip1));
 								if ((float)dist_x < (float)m_Doc->m_part_grid_spacing/m_user_scale)
 								{
-									if (dist_y < min_Y)
+									if ((dist_y < min_Y - NM_PER_MIL) || (dist_y < min_Y + NM_PER_MIL && dist_x < mX))
 									{
+										mX = dist_x;
 										min_Y = dist_y;
 										BEST_PT1 = CPoint(p->GetX(ip1), p->GetY(ip1));
 										BEST_W1 = p->GetW();
@@ -6961,9 +6963,10 @@ void CFreePcbView::SnapCursorPoint( CPoint wp, UINT nFlags )
 								}
 								if ((float)dist_y < (float)m_Doc->m_part_grid_spacing/m_user_scale)
 								{
-									if (dist_x < min_X)
+									if ((dist_x < min_X - NM_PER_MIL) || (dist_x < min_X + NM_PER_MIL && dist_y < mY))
 									{
 										min_X = dist_x;
+										mY = dist_y;
 										BEST_PT2 = CPoint(p->GetX(ip1), p->GetY(ip1));
 										BEST_W2 = p->GetW();
 										//CPoint pt1(p->GetX(ip1), p->GetY(ip1));

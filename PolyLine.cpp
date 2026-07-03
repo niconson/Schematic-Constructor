@@ -1034,8 +1034,11 @@ void CPolyLine::Draw(  CDisplayList * dl )
 		{
 			dl_side.SetSize( m_ncorners );
 			dl_side_sel.SetSize( m_ncorners );
-			Node[0] = 0;
-			Node[m_ncorners - 1] = 0;
+			if (m_layer != LAY_CONNECTION)
+			{
+				Node[0] = 0;
+				Node[m_ncorners - 1] = 0;
+			}
 		}
 		dl_corner_sel.SetSize( m_ncorners );
 
@@ -1274,6 +1277,9 @@ void CPolyLine::StartDraggingToMoveCorner( CDC * pDC, int ic, int x, int y, int 
 			post_c = istart+1;
 			poly_side_style1 = side_style[iend];
 			poly_side_style2 = side_style[istart];
+			if(icont == 0)
+				if (dl_node1)
+					dl_node1->visible = 0;
 		}
 		else if( ic == iend )
 		{
@@ -1282,6 +1288,9 @@ void CPolyLine::StartDraggingToMoveCorner( CDC * pDC, int ic, int x, int y, int 
 			post_c = istart;
 			poly_side_style1 = side_style[ic-1];
 			poly_side_style2 = side_style[ic];
+			if(icont == GetNumContours() - 1)
+				if (dl_node2)
+					dl_node2->visible = 0;
 		}
 		else
 		{
@@ -1608,7 +1617,7 @@ void CPolyLine::MakeVisible( int is,  BOOL visible )
 		if( cl )
 			ns = m_ncorners;
 		dl_side[min(ns-1,is)]->visible = visible; 
-		if( cl == 0 )
+		//if( cl == 0 )
 		{
 			if( is == 0 )
 				if( dl_node1 )
