@@ -6981,30 +6981,50 @@ void CFreePcbView::SnapCursorPoint( CPoint wp, UINT nFlags )
 				if (BEST_PT1.x && BEST_PT1.y)//(min_Y < INT_MAX)
 				{
 					int NM_PER = (float)m_Doc->m_part_grid_spacing/m_user_scale;
-					NM_PER += BEST_W1;
 					m_targetline_alignment_X = wp.x - BEST_PT1.x;
-					CPoint pt1(BEST_PT1.x + NM_PER, BEST_PT1.y);
-					CPoint pt2(BEST_PT1.x - NM_PER, BEST_PT1.y);
-					CPoint pt3(BEST_PT1.x, BEST_PT1.y + NM_PER);
-					CPoint pt4(BEST_PT1.x, BEST_PT1.y - NM_PER);
-					m_Doc->m_dlist->AddDragATargetLine(pt3, pt1);
-					m_Doc->m_dlist->AddDragATargetLine(pt3, pt2);
-					m_Doc->m_dlist->AddDragATargetLine(pt2, pt4);
-					m_Doc->m_dlist->AddDragATargetLine(pt1, pt4);
+					int alignment_Y = abs(wp.y - BEST_PT1.y);
+					if (alignment_Y < NM_PER)
+					{
+						NM_PER += BEST_W1;
+						CPoint pt1(BEST_PT1.x + NM_PER, BEST_PT1.y);
+						CPoint pt2(BEST_PT1.x - NM_PER, BEST_PT1.y);
+						CPoint pt3(BEST_PT1.x, BEST_PT1.y + NM_PER);
+						CPoint pt4(BEST_PT1.x, BEST_PT1.y - NM_PER);
+						m_Doc->m_dlist->AddDragATargetLine(pt3, pt1);
+						m_Doc->m_dlist->AddDragATargetLine(pt3, pt2);
+						m_Doc->m_dlist->AddDragATargetLine(pt2, pt4);
+						m_Doc->m_dlist->AddDragATargetLine(pt1, pt4);
+					}
+					else
+					{
+						CPoint pt5(BEST_PT1.x, BEST_PT1.y);
+						CPoint pt6(BEST_PT1.x, wp.y);
+						m_Doc->m_dlist->AddDragATargetLine(pt5, pt6);
+					}
 				}
 				if (BEST_PT2.x && BEST_PT2.y)//(min_X < INT_MAX)
 				{
-					int NM_PER = (float)m_Doc->m_part_grid_spacing/m_user_scale + NM_PER_MIL;
-					NM_PER += BEST_W2;
+					int NM_PER = (float)m_Doc->m_part_grid_spacing/m_user_scale;
 					m_targetline_alignment_Y = wp.y - BEST_PT2.y;
-					CPoint pt1(BEST_PT2.x + NM_PER, BEST_PT2.y);
-					CPoint pt2(BEST_PT2.x - NM_PER, BEST_PT2.y);
-					CPoint pt3(BEST_PT2.x, BEST_PT2.y + NM_PER);
-					CPoint pt4(BEST_PT2.x, BEST_PT2.y - NM_PER);
-					m_Doc->m_dlist->AddDragATargetLine(pt3, pt1);
-					m_Doc->m_dlist->AddDragATargetLine(pt3, pt2);
-					m_Doc->m_dlist->AddDragATargetLine(pt2, pt4);
-					m_Doc->m_dlist->AddDragATargetLine(pt1, pt4);
+					int alignment_X = abs(wp.x - BEST_PT2.x);
+					if (alignment_X < NM_PER)
+					{
+						NM_PER += BEST_W2 + (2*NM_PER_MIL);
+						CPoint pt1(BEST_PT2.x + NM_PER, BEST_PT2.y);
+						CPoint pt2(BEST_PT2.x - NM_PER, BEST_PT2.y);
+						CPoint pt3(BEST_PT2.x, BEST_PT2.y + NM_PER);
+						CPoint pt4(BEST_PT2.x, BEST_PT2.y - NM_PER);
+						m_Doc->m_dlist->AddDragATargetLine(pt3, pt1);
+						m_Doc->m_dlist->AddDragATargetLine(pt3, pt2);
+						m_Doc->m_dlist->AddDragATargetLine(pt2, pt4);
+						m_Doc->m_dlist->AddDragATargetLine(pt1, pt4);
+					}
+					else
+					{
+						CPoint pt5(BEST_PT2.x, BEST_PT2.y);
+						CPoint pt6(wp.x, BEST_PT2.y);
+						m_Doc->m_dlist->AddDragATargetLine(pt5, pt6);
+					}
 				}
 				m_Doc->m_dlist->Drag(pDC, wp.x, wp.y);
 			}

@@ -2321,7 +2321,8 @@ void CDisplayList::Drag( CDC * pDC, int x, int y )
 	// drag array of lines, used to align group objects
 	if (m_drag_num_alignment_target || m_prev_targetline)
 	{
-		CPen drag_pen(PS_SOLID, 1, drag_color);
+		int wL = 4 * m_scale;
+		CPen drag_pen(PS_SOLID, wL, drag_color);
 		CPen* old_pen = pDC->SelectObject(&drag_pen);
 		for (int il = 0; il < m_prev_targetline; il++)
 		{
