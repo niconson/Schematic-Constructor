@@ -309,6 +309,7 @@ void CDlgAddText::Initialize(	CPageList * pl,
 		{
 			if( m_text_ptr->m_tl != m_pl->GetCurrentAttrPtr()->m_Reflist &&
 				m_text_ptr->m_tl != m_pl->GetCurrentAttrPtr()->m_Pinlist &&
+				m_text_ptr->m_tl != m_pl->GetCurrentAttrPtr()->m_Netlist &&
 				m_text_ptr->m_tl != m_pl->GetCurrentAttrPtr()->m_pDesclist )
 				m_text_ptr = NULL;
 		}
@@ -609,7 +610,7 @@ void CDlgAddText::OnBnClickedCheckUnclenched()
 
 void CDlgAddText::OnEnSetfocusEditText()
 {
-	int io1 = m_str.Find("|");
+	/*int io1 = m_str.Find("|");
 	int io2 = m_str.Find("'");
 	if( io1 > 0 || io2 > 0 )
 	{
@@ -620,11 +621,11 @@ void CDlgAddText::OnEnSetfocusEditText()
 		else
 			m_text.SetEditSel(0,io1);
 	}
-	else if( m_text_ptr )
+	else */if( m_text_ptr )
 	{
 		CString pref, suff;
 		int num = ParseRef( &m_str, &pref, &suff );
-		if( num > 0 && suff.GetLength() == 0 )
+		if( num > 0 )//&& suff.GetLength() == 0 )
 			m_text.SetEditSel( pref.GetLength(), m_str.GetLength()-suff.GetLength() );
 		else
 			m_text.SetEditSel( 0, m_str.GetLength() );
