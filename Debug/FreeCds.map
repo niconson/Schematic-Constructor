@@ -1,6 +1,6 @@
  FreeCds
 
- Timestamp is 6a5c9185 (Sun Jul 19 13:57:41 2026)
+ Timestamp is 6a5cfe99 (Sun Jul 19 21:43:05 2026)
 
  Preferred load address is 00400000
 
@@ -1397,7 +1397,7 @@
  0002:000f7330       ?Dump@CFreePcbView@@UBEXAAVCDumpContext@@@Z 00616330 f   FreePcbView.obj
  0002:000f7390       ?GetDocument@CFreePcbView@@QAEPAVCFreePcbDoc@@XZ 00616390 f   FreePcbView.obj
  0002:000f7430       ?OnSize@CFreePcbView@@IAEXIHH@Z 00616430 f   FreePcbView.obj
- 0002:000f7aa0       ?OnLButtonUp@CFreePcbView@@QAEXIVCPoint@@@Z 00616aa0 f   FreePcbView.obj
+ 0002:000f7960       ?OnLButtonUp@CFreePcbView@@QAEXIVCPoint@@@Z 00616960 f   FreePcbView.obj
  0002:000fdcd0       ?SelectItemsInRect@CFreePcbView@@QAEXVCRect@@I@Z 0061ccd0 f   FreePcbView.obj
  0002:000ff470       ?OnLButtonDblClk@CFreePcbView@@IAEXIVCPoint@@@Z 0061e470 f   FreePcbView.obj
  0002:000ff4d0       ?OnRButtonDown@CFreePcbView@@IAEXIVCPoint@@@Z 0061e4d0 f   FreePcbView.obj

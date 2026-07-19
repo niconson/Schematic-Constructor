@@ -1638,7 +1638,8 @@ void CFreePcbView::OnLButtonUp(UINT nFlags, CPoint point)
 				MoveGroup( dx - m_targetline_alignment_X, dy - m_targetline_alignment_Y, BOM_PATH );
 				m_last_cursor_point.x -= m_targetline_alignment_X;
 				m_last_cursor_point.y -= m_targetline_alignment_Y;
-				OnGroupGridMagnetize( m_Doc );
+				if( m_sel_flags != TEXT_ONLY )
+					OnGroupGridMagnetize( m_Doc );
 				m_Doc->m_dlist->CancelHighLight();
 				
 				//
@@ -6936,8 +6937,8 @@ void CFreePcbView::SnapCursorPoint( CPoint wp, UINT nFlags )
 				if ((m_cursor_mode == CUR_DRAG_GROUP || 
 					m_cursor_mode == CUR_DRAG_GROUP_ADD || 
 					m_cursor_mode == CUR_DRAG_MEASURE_1 ||
-					m_cursor_mode == CUR_DRAG_MEASURE_2))// &&
-					//getbit(m_sel_flags,FLAG_SEL_OP))
+					m_cursor_mode == CUR_DRAG_MEASURE_2) &&
+					m_sel_flags != TEXT_ONLY)
 				{
 					for (int ip0 = 0; ip0 < m_Doc->m_outline_poly->GetSize(); ip0++)
 					{
