@@ -152,6 +152,7 @@ void DlgCreateBranch::DoDataExchange(CDataExchange* pDX)
 							if( fn.Right(4) == ".cds" ||
 								fn.Right(4) == ".fpc" ||
 								fn.Right(5) == ".scad" ||
+								fn.Right(5) == ".json" ||
 								fn.Right(8) == ".PCBVIEW")
 							{
 								
@@ -256,7 +257,8 @@ void DlgCreateBranch::DoDataExchange(CDataExchange* pDX)
 												}
 												WrFile.WriteString( instr+"\n" );
 											}
-											else if (instr.Find(scadRep1) > 0 && fn.Right(5) == ".scad")
+											else if (instr.Find(scadRep1) > 0 && 
+													(fn.Right(5) == ".scad" || fn.Right(5) == ".json"))
 											{
 												instr.Replace(scadRep1, scadRep2);
 												WrFile.WriteString(instr + "\n");
