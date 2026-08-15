@@ -154,48 +154,54 @@ void DlgCreateBranch::DoDataExchange(CDataExchange* pDX)
 								fn.Right(5) == ".scad" ||
 								fn.Right(8) == ".PCBVIEW")
 							{
-								{
-									CString str = name.Left( name.GetLength() - 4 );
-									PCB_OLD.Add( str );
-									if( mb_increment.GetCheck() )
-									{		
-										CString prefix="", postfix="", prefSumm="";
-										int LEN = 0;
-										int num = GetRightNumber( &str, &prefix, &postfix, &LEN );
+								
+								int rf = name.ReverseFind('.');
+								int rlen = name.GetLength() - rf;
+								CString str = name;
+								str.Truncate(rf);
+								PCB_OLD.Add( str );
+								if( mb_increment.GetCheck() )
+								{		
+									CString prefix="", postfix="", prefSumm="";
+									int LEN = 0;
+									int num = GetRightNumber( &str, &prefix, &postfix, &LEN );
 										
-										if( LEN )
-										{
-											CString s;
-											s.Format(G_LANGUAGE == 0 ? 
-												"The number in the file name %s is %d. Increment this file number?":
-												"Номер в имени файла %s равен %d. Увеличить этот номер файла?", name, num);
-											int Q = AfxMessageBox(s, MB_YESNOCANCEL);
-											if( Q == IDYES )
-											{
-												if( num == mem_num && LEN == mem_len )
-													num += add;
-												else
-													num++;
-											}
-											else if( Q == IDCANCEL )
-												num = mem_num+add;
-											//
-											str.Format("%d",num);
-										}	
-										else
-											str = "";
-										
-										while( str.GetLength() < LEN )
-											str = "0" + str;
-										name = prefix + str + postfix;// + fn.Right(4);
-									}
-									else if( name.Left(4) != "tag." && name.Left(4) != "bom." )
+									if( LEN )
 									{
-										name = str + m_suffix;// + fn.Right(4);
-									}
+										CString s;
+										s.Format(G_LANGUAGE == 0 ? 
+											"The number in the file name %s is %d. Increment this file number?":
+											"Номер в имени файла %s равен %d. Увеличить этот номер файла?", name, num);
+										int Q = AfxMessageBox(s, MB_YESNOCANCEL);
+										if( Q == IDYES )
+										{
+											if( num == mem_num && LEN == mem_len )
+												num += add;
+											else
+												num++;
+										}
+										else if( Q == IDCANCEL )
+											num = mem_num+add;
+										//
+										str.Format("%d",num);
+									}	
+									else
+										str = "";
+										
+									while( str.GetLength() < LEN )
+										str = "0" + str;
+									name = prefix + str + postfix;// + fn.Right(4);
+								}
+								else if( name.Left(4) != "tag." && name.Left(4) != "bom." )
+								{
+									name = str + m_suffix;// + fn.Right(4);
 								}
 								PCB_NEW.Add( name );
-								name += fn.Right(4);
+								int scadIndex = PCB_NEW.GetSize() - 1;
+								CString scadRep1 = PCB_OLD.GetAt(scadIndex);
+								CString scadRep2 = PCB_NEW.GetAt(scadIndex);
+								//
+								name += fn.Right(rlen);
 								CString TMP = Path2+"\\"+name+".tmp";
 								CopyFile( fn, TMP, 1 );
 								CStdioFile File;
@@ -249,6 +255,11 @@ void DlgCreateBranch::DoDataExchange(CDataExchange* pDX)
 													}
 												}
 												WrFile.WriteString( instr+"\n" );
+											}
+											else if (instr.Find(scadRep1) > 0 && fn.Right(5) == ".scad")
+											{
+												instr.Replace(scadRep1, scadRep2);
+												WrFile.WriteString(instr + "\n");
 											}
 											else
 												WrFile.WriteString( instr+"\n" );

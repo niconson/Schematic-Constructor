@@ -174,3 +174,4 @@ void ReplaceCharsForURL( CString * sURL );
 CString AnsiToUtf8 ( CString * url );
 int SelectAdjacent(CArray<CPolyLine>* arr);
 BOOL SameFiles(CString* SRC, CString* fn);
+void CStringToLegalFileName(CString* fileName);
