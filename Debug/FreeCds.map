@@ -1,6 +1,6 @@
  FreeCds
 
- Timestamp is 6a80322e (Sat Aug 15 14:32:30 2026)
+ Timestamp is 6a89cef2 (Sat Aug 22 21:31:46 2026)
 
  Preferred load address is 00400000
 
@@ -3480,8 +3480,8 @@
  0002:002199c0       __RTC_UninitUse            007399c0 f   msvcrtd:_error_.obj
  0002:00219ae4       _free                      00739ae4 f   msvcrtd:MSVCR100D.dll
  0002:00219aea       _clock                     00739aea f   msvcrtd:MSVCR100D.dll
- 0002:00219af0       __chkstk                   00739af0 f   msvcrtd:chkstk.obj
  0002:00219af0       __alloca_probe             00739af0     msvcrtd:chkstk.obj
+ 0002:00219af0       __chkstk                   00739af0 f   msvcrtd:chkstk.obj
  0002:00219b30       __allmul                   00739b30 f   msvcrtd:llmul.obj
  0002:00219b72       _floor                     00739b72 f   msvcrtd:MSVCR100D.dll
  0002:00219b78       _calloc                    00739b78 f   msvcrtd:MSVCR100D.dll
@@ -3614,8 +3614,8 @@
  0002:0021b204       __time32                   0073b204 f   msvcrtd:MSVCR100D.dll
  0002:0021b20a       __except_handler4_common   0073b20a f   msvcrtd:MSVCR100D.dll
  0002:0021b210       __crt_debugger_hook        0073b210 f   msvcrtd:MSVCR100D.dll
- 0002:0021b216       ?_type_info_dtor_internal_method@type_info@@QAEXXZ 0073b216 f   msvcrtd:MSVCR100D.dll
  0002:0021b216       ??1type_info@@UAE@XZ       0073b216 f   msvcrtd:MSVCR100D.dll
+ 0002:0021b216       ?_type_info_dtor_internal_method@type_info@@QAEXXZ 0073b216 f   msvcrtd:MSVCR100D.dll
  0002:0021b21c       __controlfp_s              0073b21c f   msvcrtd:MSVCR100D.dll
  0002:0021b222       __invoke_watson            0073b222 f   msvcrtd:MSVCR100D.dll
  0002:0021b228       _CopyFileA@12              0073b228 f   kernel32:KERNEL32.dll
@@ -4156,11 +4156,13 @@
  0003:00000b24       ___xi_z                    0076ab24     msvcrtd:cinitexe.obj
  0003:00000c4c       ??_C@_04PMOCAHAA@open?$AA@ 0076ac4c     BomInTable.obj
  0003:00000c54       ??_C@_0P@DJFFGIAL@?2?Q?u?e?l?$MA?r?n?p?4exe?$CC?$AA@ 0076ac54     BomInTable.obj
+ 0003:00000c64       ??_C@_01GBGANLPD@0?$AA@    0076ac64     DlgCreateBranch.obj
  0003:00000c68       ??_C@_0O@JEAOLBFL@?2freecds?4exe?$CC?$AA@ 0076ac68     BomInTable.obj
  0003:00000c78       ??_C@_09IDBDDKFN@2?$HM?4n_page?$AA@ 0076ac78     BomInTable.obj
  0003:00000c84       ??_C@_0BI@DBEFEFL@add_new_page?3?5?$CCPage?5?$CFd?$CC?$AA@ 0076ac84     BomInTable.obj
  0003:00000ca0       ??_C@_01EEMJAFIK@?6?$AA@   0076aca0     BomInTable.obj
  0003:00000ca4       ??_C@_0DB@GFLMJMGM@description?3?5?$CC?$CFs?$CC?5?$CFd?5?$CFd?5?$CFd?5?$CFd?5?$CFd@ 0076aca4     BomInTable.obj
+ 0003:00000cd8       ??_C@_05DMLEFIND@?4rnmb?$AA@ 0076acd8     DlgCreateBranch.obj
  0003:00000ce0       ??_C@_0BK@HLNMBKLF@?5?5corner?3?5?$CFd?5?$CFd?5?$CFd?5?$CFd?5?$CFd?6?$AA@ 0076ace0     BomInTable.obj
  0003:00000d00       ??_C@_0CD@KBIFKKDG@polyline?3?5?$CFd?5?$CFd?5?$CFd?5?$CFd?5?$CFd?5?$CFd?5?$CFd?5?$CF@ 0076ad00     BomInTable.obj
  0003:00000d2c       ??_C@_05OCJEJOIA@?$FLend?$FN?$AA@ 0076ad2c     BomInTable.obj
@@ -4185,6 +4187,7 @@
  0003:00000e0c       ??_C@_04EDEAGBGM@?4fpc?$AA@ 0076ae0c     BomInTable.obj
  0003:00000e14       ??_C@_13COJANIEC@?$AA0?$AA?$AA@ 0076ae14     BomInTable.obj
  0003:00000e18       ??_C@_1GG@IBHODCJK@?$AAd?$AA?3?$AA?2?$AAf?$AAr?$AAe?$AAe?$AAp?$AAc?$AAb?$AAd?$AAe?$AAv?$AA?2?$AAs?$AAc?$AAh?$AAe?$AAm?$AAa?$AAt?$AAi?$AAc?$AA?5?$AAc?$AAo?$AAn?$AAs?$AAt?$AAr?$AAu?$AAc@ 0076ae18     BomInTable.obj
+ 0003:00000e80       ??_C@_08CGJPEJK@openscad?$AA@ 0076ae80     DlgCreateBranch.obj
  0003:00000e94       ??_C@_0BL@MIMODBOD@?2related_files?2reports?2bom?$AA@ 0076ae94     BomInTable.obj
  0003:00000eb4       ??_C@_01LFCBOECM@?4?$AA@   0076aeb4     BomInTable.obj
  0003:00000eb8       ??_C@_04OEHMGJNM@?4col?$AA@ 0076aeb8     BomInTable.obj
@@ -4233,6 +4236,7 @@
  0003:0000115c       ??_C@_09HCLNAIDE@?5elements?$AA@ 0076b15c     BomInTable.obj
  0003:00001168       ??_C@_0M@NKOIIJN@CDlgCompare?$AA@ 0076b168     CCompare.obj
  0003:00001178       ?classCDlgCompare@CDlgCompare@@2UCRuntimeClass@@B 0076b178     CCompare.obj
+ 0003:000013b8       ??_C@_0CA@HCJJPKLO@Error?$CB?5?$CFs?5folder?5already?5exists?$AA@ 0076b3b8     DlgCreateBranch.obj
  0003:00001424       ??_C@_0DB@EGDNJMAB@d?3?2freepcbdev?2schematic?5construc@ 0076b424     CCompare.obj
  0003:00001460       ??_C@_09GMHCDLKN@?$CFs?5and?5?$CFs?$AA@ 0076b460     CCompare.obj
  0003:0000146c       ??_C@_02DKCKIIND@?$CFs?$AA@ 0076b46c     CCompare.obj
@@ -4548,16 +4552,13 @@
  0003:00005ab0       ??_C@_0DN@JFDJFBOD@?M?n?l?e?p?5?b?5?h?l?e?m?h?5?t?$OA?i?k?$OA?5?$CFs?5?p?$OA?b?e?m?5?$CFd?4@ 0076fab0     DlgCreateBranch.obj
  0003:00005b00       ??_C@_0EC@MBEICFPA@The?5number?5in?5the?5file?5name?5?$CFs?5i@ 0076fb00     DlgCreateBranch.obj
  0003:00005b50       ??_C@_08ODHECMEB@?4PCBVIEW?$AA@ 0076fb50     DlgCreateBranch.obj
- 0003:00005b5c       ??_C@_05KMPOPHFM@?4scad?$AA@ 0076fb5c     DlgCreateBranch.obj
- 0003:00005b64       ??_C@_08CGJPEJK@openscad?$AA@ 0076fb64     DlgCreateBranch.obj
- 0003:00005b70       ??_C@_04CADJKFBK@CAM?$CI?$AA@ 0076fb70     DlgCreateBranch.obj
- 0003:00005b78       ??_C@_04CGBBCILG@?4lib?$AA@ 0076fb78     DlgCreateBranch.obj
- 0003:00005b80       ??_C@_05DMLEFIND@?4rnmb?$AA@ 0076fb80     DlgCreateBranch.obj
- 0003:00005b88       ??_C@_02GFKGEECC@?4b?$AA@  0076fb88     DlgCreateBranch.obj
- 0003:00005b8c       ??_C@_06FKEMOMJM@?2?$CK?4fpc?$AA@ 0076fb8c     DlgCreateBranch.obj
- 0003:00005b94       ??_C@_0CA@PJGJHDCM@?N?x?h?a?j?$OA?$CB?5?O?$OA?o?j?$OA?5?$CFs?5?s?f?e?5?q?s?y?e?q?r?b?s?e?r?$AA@ 0076fb94     DlgCreateBranch.obj
- 0003:00005bbc       ??_C@_0CA@HCJJPKLO@Error?$CB?5?$CFs?5folder?5already?5exists?$AA@ 0076fbbc     DlgCreateBranch.obj
- 0003:00005be4       ??_C@_01GBGANLPD@0?$AA@    0076fbe4     DlgCreateBranch.obj
+ 0003:00005b5c       ??_C@_05GBGGJALA@?4json?$AA@ 0076fb5c     DlgCreateBranch.obj
+ 0003:00005b64       ??_C@_05KMPOPHFM@?4scad?$AA@ 0076fb64     DlgCreateBranch.obj
+ 0003:00005b78       ??_C@_04CADJKFBK@CAM?$CI?$AA@ 0076fb78     DlgCreateBranch.obj
+ 0003:00005b80       ??_C@_04CGBBCILG@?4lib?$AA@ 0076fb80     DlgCreateBranch.obj
+ 0003:00005b8c       ??_C@_02GFKGEECC@?4b?$AA@  0076fb8c     DlgCreateBranch.obj
+ 0003:00005b94       ??_C@_06FKEMOMJM@?2?$CK?4fpc?$AA@ 0076fb94     DlgCreateBranch.obj
+ 0003:00005bbc       ??_C@_0CA@PJGJHDCM@?N?x?h?a?j?$OA?$CB?5?O?$OA?o?j?$OA?5?$CFs?5?s?f?e?5?q?s?y?e?q?r?b?s?e?r?$AA@ 0076fbbc     DlgCreateBranch.obj
  0003:00005be8       ??_C@_06CGOJDMOF@DlgDRC?$AA@ 0076fbe8     DlgDRC.obj
  0003:00005bf0       ?classDlgDRC@DlgDRC@@2UCRuntimeClass@@B 0076fbf0     DlgDRC.obj
  0003:00005cbc       ??_7DlgDRC@@6B@            0076fcbc     DlgDRC.obj

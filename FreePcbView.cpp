@@ -15287,7 +15287,7 @@ CString CFreePcbView::SelectBlock( CPolyLine * poly, int npage, BOOL bSelect  )
 						ret.Format(G_LANGUAGE == 0 ? 
 							"Error! The pin of a complex part does not touch the outline polyline":
 							"Ошибка! Пин иерархической детали не касается контурной полилинии");
-						get_error = NULL;
+						get_error = poly;
 						break;
 					}
 				}
