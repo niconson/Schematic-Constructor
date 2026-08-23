@@ -3858,8 +3858,8 @@ void CFreePcbDoc::OnFileExport(BOOL DLG)
 		BOOL CH = TRUE;
 		if( mem_n_page != pg ) 
 		{
-			int get_pcb = Pages.GetPcbIndex(pg);
-			if( get_pcb != Pages.GetPcbIndex(mem_n_page) )
+			int get_pcb = Pages.GetPcbIndex(pg, FALSE);
+			if( get_pcb != Pages.GetPcbIndex(mem_n_page, FALSE) && get_pcb >= 0 )
 				CH = FALSE; // this page included in a different netlist, ignored
 		}
 		if( CH && m_netlist_created[pg] == 0 )
