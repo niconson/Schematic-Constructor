@@ -8,6 +8,7 @@ public:
 	void MakeReport();
 	CString GetURL( CString * v, CString * f, int * it, int * ip );
 	CString GetCName( CString * V, CString * F );
+	BOOL GetCustomField(CString* V, CString* F, CString* field, CString* content);
 
 private:
 	enum{LNumber=0,RefDes,CName,Value,Footprint,Quantity,CURL,MaxCols};

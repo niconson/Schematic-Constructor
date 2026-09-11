@@ -16,7 +16,8 @@ enum {
 	NUM_COLS
 };
 
-CArray<CString> bl[NUM_COLS];
+CArray<CArray<CString>> bl;
+CArray<CString> custom_fields;
 
 // sort types
 enum {
@@ -80,19 +81,12 @@ int CALLBACK CompareBOM( LPARAM lp1, LPARAM lp2, LPARAM type )
 		case SORT_DOWN_U:
 			ret = (strcmp( bl[COL_URL][lp1], bl[COL_URL][lp2] ));
 			break;
+
+		default: ret = (strcmp(bl[type / 2][lp1], bl[type / 2][lp2]));
 			
 	}
-	switch( type )
-	{
-		case SORT_DOWN_V:
-		case SORT_DOWN_F:
-		case SORT_DOWN_N:
-		case SORT_DOWN_C:
-		case SORT_DOWN_D:
-		case SORT_DOWN_U:
-			ret = -ret;
-			break;
-	}
+	if(type%2)
+		ret = -ret;
 	return ret;
 }
 
@@ -186,12 +180,14 @@ void CDlgPartlistRep::DoDataExchange(CDataExchange* pDX)
 		//
 		ReloadList();
 		//
-		m_list_ctrl.InsertColumn( COL_VALUE, "Value", LVCFMT_LEFT, 80 );
-		m_list_ctrl.InsertColumn( COL_FOOTPRINT, "Footprint", LVCFMT_LEFT, 80 );
-		m_list_ctrl.InsertColumn( COL_NAME, "Name", LVCFMT_LEFT, 180 );
-		m_list_ctrl.InsertColumn( COL_COUNT, "Count", LVCFMT_LEFT, 25 );
-		m_list_ctrl.InsertColumn( COL_DETAILS, "Details", LVCFMT_LEFT, 65 );
-		m_list_ctrl.InsertColumn( COL_URL, "URL", LVCFMT_LEFT, 80 );
+		m_list_ctrl.InsertColumn( COL_VALUE, "Value", LVCFMT_LEFT, 60);
+		m_list_ctrl.InsertColumn( COL_FOOTPRINT, "Footprint", LVCFMT_LEFT, 60);
+		m_list_ctrl.InsertColumn( COL_NAME, "Name", LVCFMT_LEFT, 120 );
+		m_list_ctrl.InsertColumn( COL_COUNT, "Count", LVCFMT_LEFT, 30 );
+		m_list_ctrl.InsertColumn( COL_DETAILS, "Details", LVCFMT_LEFT, 60);
+		m_list_ctrl.InsertColumn( COL_URL, "URL", LVCFMT_LEFT, 60);
+		for( int icol = NUM_COLS; icol < bl.GetSize(); icol++ )
+			m_list_ctrl.InsertColumn(icol, custom_fields[icol - NUM_COLS], LVCFMT_LEFT, 60);
 		//
 		DrawListCtrl();
 	}
@@ -211,12 +207,14 @@ void CDlgPartlistRep::ReloadList()
 	if( index < REF_LIST_INDEX ) 
 		index = 0;
 
+	bl.SetSize(NUM_COLS);
 	bl[COL_VALUE].SetSize( 0 );
 	bl[COL_FOOTPRINT].SetSize( 0 );
 	bl[COL_NAME].SetSize( 0 );
 	bl[COL_COUNT].SetSize( 0 );
 	bl[COL_DETAILS].SetSize( 0 );
 	bl[COL_URL].SetSize( 0 );
+	custom_fields.SetSize(0);
 
 	//modify m_netlist_page_mask
 	int cur_pcb = m_plist->GetCurrentPcbIndex();
@@ -272,7 +270,34 @@ void CDlgPartlistRep::ReloadList()
 				if( CN.GetLength() == 0 )
 					CN = "---";
 				bl[COL_NAME].Add(CN);
-
+				CString new_field, content;
+				while (BOM.GetCustomField(&V, &P, &new_field, &content))
+				{
+					int f = -1;
+					for (int ci = 0; ci < custom_fields.GetSize(); ci++)
+					{
+						if (custom_fields[ci].CompareNoCase(new_field) == 0)
+						{
+							f = NUM_COLS + ci;
+							break;
+						}
+					}
+					if (f == -1)
+					{
+						custom_fields.Add(new_field);
+						f = bl.GetSize();
+						bl.SetSize(f + 1);
+						bl[f].SetSize (bl[COL_NAME].GetSize() - 1);
+						for (int z = 0; z < bl[f].GetSize(); z++)
+							bl[f][z] = "---";
+					}
+					bl[f].Add(content);
+				}
+				for (int icol = NUM_COLS; icol < bl.GetSize(); icol++)
+				{
+					if (bl[icol].GetSize() < bl[COL_NAME].GetSize())
+						bl[icol].Add("---");
+				}
 				// url
 				ExtractComponentName( &cV, &cP );
 				CString URL = "";
@@ -354,6 +379,8 @@ void CDlgPartlistRep::DrawListCtrl()
 		m_list_ctrl.SetItem( i, COL_DETAILS, LVIF_TEXT, ::bl[COL_DETAILS][i], 0, 0, 0, 0 );
 		m_list_ctrl.SetItem( i, COL_NAME, LVIF_TEXT, ::bl[COL_NAME][i], 0, 0, 0, 0 );
 		m_list_ctrl.SetItem( i, COL_URL, LVIF_TEXT, ::bl[COL_URL][i], 0, 0, 0, 0 );
+		for( int icol = NUM_COLS; icol < bl.GetSize(); icol++ )
+			m_list_ctrl.SetItem(i, icol, LVIF_TEXT, ::bl[icol][i], 0, 0, 0, 0);
 		if( i < bSelected.GetSize() )
 			if( bSelected[i] )
 			{
@@ -428,6 +455,14 @@ void CDlgPartlistRep::OnLvnColumnClickList1(NMHDR *pNMHDR, LRESULT *pResult)
 		else
 			m_sort_type = SORT_UP_U;
 		m_list_ctrl.SortItems( ::CompareBOM, m_sort_type );
+	}
+	else 
+	{
+		if (m_sort_type == column * 2)
+			m_sort_type = column * 2 + 1;
+		else
+			m_sort_type = column * 2;
+		m_list_ctrl.SortItems(::CompareBOM, m_sort_type);
 	}
 	*pResult = 0;
 }
@@ -533,14 +568,18 @@ void CDlgPartlistRep::OnTXT()
 		if( m_list_ctrl.GetSelectedCount() < 2 )
 			for( int ii=0; ii<m_list_ctrl.GetItemCount(); ii++ )
 				m_list_ctrl.SetItemState( ii, LVIS_SELECTED, LVIS_SELECTED );
-		int col[NUM_COLS];
+		//int col[NUM_COLS];
+		CArray<int> col;
+		col.SetSize(bl.GetSize());
+		for (int ic = NUM_COLS; ic < col.GetSize(); ic++)
+			col[ic] = custom_fields[ic - NUM_COLS].GetLength() + 2;
 		col[COL_VALUE] = 7;
 		col[COL_FOOTPRINT] = 11;
 		col[COL_NAME] = 6;
 		col[COL_COUNT] = 7;
 		col[COL_DETAILS] = 9;
 		col[COL_URL] = 5;
-		for( int i=0; i<NUM_COLS; i++ )
+		for( int i=0; i < bl.GetSize(); i++ )
 			for( int ii=0; ii<m_list_ctrl.GetItemCount(); ii++ )
 			{
 				if( m_list_ctrl.GetItemState( ii, LVIS_SELECTED ) == LVIS_SELECTED )
@@ -626,9 +665,22 @@ void CDlgPartlistRep::OnTXT()
 			detailsstart++;
 			File.WriteString( " " );
 		}
+		for (int item=0; item < custom_fields.GetSize(); item++)
+		{
+			Head = custom_fields[item];
+			detailsstart += Head.GetLength();
+			File.WriteString(Head);
+			if (m_csv)
+				File.WriteString(";");
+			else for (int sp = col[item + NUM_COLS] + 2; sp > Head.GetLength(); sp--)
+			{
+				detailsstart++;
+				File.WriteString(" ");
+			}
+		}
 		File.WriteString("\n");
 		//
-		for( int i=0; i<=(m_csv?NUM_COLS:detailsstart); i++ )
+		for( int i=0; i<=(m_csv?bl.GetSize() : detailsstart); i++)
 			if( m_csv )
 				File.WriteString(";");
 			else
@@ -649,7 +701,7 @@ void CDlgPartlistRep::OnTXT()
 					File.WriteString(";");
 				else 
 					File.WriteString( "    " );
-				for( int i=0; i<NUM_COLS; i++ )
+				for( int i=0; i<bl.GetSize(); i++ )
 				{
 					CString gS = m_list_ctrl.GetItemText(ii,i);
 					/*if( i == COL_DETAILS && gS.GetLength() > m_d_len )

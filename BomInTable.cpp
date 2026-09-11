@@ -623,6 +623,56 @@ CString BomInTable::GetCName( CString * V, CString * F )
 //-------------------------------------------------------------------------
 //=========================================================================
 //-------------------------------------------------------------------------
+BOOL BomInTable::GetCustomField(CString* V, CString* F, CString* field, CString* content)
+{
+	static CString gv = "none";
+	static CString gf = "none";
+	static int current_row = 0;
+	if (V->CompareNoCase(gv) || F->CompareNoCase(gf))
+		current_row = 0;
+	gv = *V;
+	gf = *F;
+	ExtractComponentName(&gv, &gf);
+	CString fName = gv + "@" + gf + ".txt";
+	CString sfile = m_doc->m_app_dir + main_component + "\\" + fName;
+	CStdioFile f;
+	int ok = f.Open(sfile, CFile::modeRead, NULL);
+	int counter = 0;
+	if (ok)
+	{
+		*field = "";
+		*content = "";
+		CString instr;
+		while (f.ReadString(instr))
+		{
+			counter++;
+			if (counter < current_row)
+				continue;
+			current_row++;
+			instr = instr.Trim();
+			instr.Replace("\"", "*");
+			if (instr.Left(1) == "[")
+			{
+				instr.Replace("[", "");
+				instr.Replace("]", "");
+				*field = instr;
+				continue;
+			}
+			if (field->GetLength())
+			{
+				*content = instr;
+				break;
+			}
+		}
+		f.Close();
+		if (field->GetLength() && content->GetLength())
+			return TRUE;
+	}
+	return FALSE;
+}
+//-------------------------------------------------------------------------
+//=========================================================================
+//-------------------------------------------------------------------------
 void BomInTable::AddObject( int page, CString * CNT, CString * R, CString * V, CString * F )
 {
 	CText * T;
