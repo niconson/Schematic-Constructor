@@ -57,4 +57,6 @@ public:
 	afx_msg void OnNMDblclkList1(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnCbnDropdownRefLists();
 	afx_msg void OnBnClickedCancel();
+	afx_msg void OnComponentNote();
+	afx_msg void OnTXTNote();
 };

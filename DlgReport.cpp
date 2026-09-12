@@ -180,12 +180,12 @@ void CDlgPartlistRep::DoDataExchange(CDataExchange* pDX)
 		//
 		ReloadList();
 		//
-		m_list_ctrl.InsertColumn( COL_VALUE, "Value", LVCFMT_LEFT, 60);
-		m_list_ctrl.InsertColumn( COL_FOOTPRINT, "Footprint", LVCFMT_LEFT, 60);
+		m_list_ctrl.InsertColumn( COL_VALUE, "Value", LVCFMT_LEFT, 80);
+		m_list_ctrl.InsertColumn( COL_FOOTPRINT, "Footprint", LVCFMT_LEFT, 80);
 		m_list_ctrl.InsertColumn( COL_NAME, "Name", LVCFMT_LEFT, 120 );
 		m_list_ctrl.InsertColumn( COL_COUNT, "Count", LVCFMT_LEFT, 30 );
-		m_list_ctrl.InsertColumn( COL_DETAILS, "Details", LVCFMT_LEFT, 60);
-		m_list_ctrl.InsertColumn( COL_URL, "URL", LVCFMT_LEFT, 60);
+		m_list_ctrl.InsertColumn( COL_DETAILS, "Details", LVCFMT_LEFT, 80);
+		m_list_ctrl.InsertColumn( COL_URL, "URL", LVCFMT_LEFT, 80);
 		for( int icol = NUM_COLS; icol < bl.GetSize(); icol++ )
 			m_list_ctrl.InsertColumn(icol, custom_fields[icol - NUM_COLS], LVCFMT_LEFT, 60);
 		//
@@ -344,6 +344,8 @@ BEGIN_MESSAGE_MAP(CDlgPartlistRep, CDialog)
 	ON_NOTIFY(NM_DBLCLK, IDC_LIST1, &CDlgPartlistRep::OnNMDblclkList1)
 	ON_CBN_DROPDOWN(IDC_REF_LISTS, &CDlgPartlistRep::OnCbnDropdownRefLists)
 	ON_BN_CLICKED(IDCANCEL, &CDlgPartlistRep::OnBnClickedCancel)
+	ON_COMMAND(ID_TXT_NOTE, &CDlgPartlistRep::OnTXTNote)
+	//ON_COMMAND(ID_COMPONENT_NOTE, &CDlgPartlistRep::OnComponentNote)
 END_MESSAGE_MAP()
 
 //===============================================================================================
@@ -832,6 +834,7 @@ void CDlgPartlistRep::OnNMRClickList1(NMHDR *pNMHDR, LRESULT *pResult)
 				pPopup->EnableMenuItem( ID_COMPONENT_NOTE, MF_GRAYED );
 				pPopup->EnableMenuItem( ID_COMPONENT_URL, MF_GRAYED );
 				pPopup->EnableMenuItem( ID_COMPONENT_IMAGE, MF_GRAYED );
+				pPopup->EnableMenuItem( ID_TXT_NOTE, MF_GRAYED);
 			}
 
 			POINT point;
@@ -879,4 +882,14 @@ void CDlgPartlistRep::OnBnClickedCancel()
 	// TODO: добавьте свой код обработчика уведомлений
 	CDialog::OnCancel();
 	theApp.m_Doc->SwitchToPage( main_page );
+}
+
+void CDlgPartlistRep::OnTXTNote()
+{
+	theApp.m_Doc->OnTXTNote();
+}
+
+void CDlgPartlistRep::OnComponentNote()
+{
+	theApp.m_Doc->OnComponentNote();
 }

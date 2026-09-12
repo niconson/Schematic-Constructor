@@ -653,6 +653,8 @@ BEGIN
         MENUITEM "Прикрепить изображение корпуса", ID_COMPONENT_IMAGE
         MENUITEM SEPARATOR
         MENUITEM "Внести в список обозначений", ID_PROJECT_REFLIST
+        MENUITEM SEPARATOR
+        MENUITEM "Открыть текстовый файл",      ID_TXT_NOTE
     END
 END
 
