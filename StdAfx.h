@@ -52,7 +52,12 @@
 
 #define ASSERT(f) assert(f)	//changed ASSERT() to work in release versions if NDEBUG undefined
 
+//#define ASSERT(f) assert(f)	//changed ASSERT() to work in release versions if NDEBUG undefined
+
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
 
 #endif // !defined(AFX_STDAFX_H__C29FB9FF_0492_4F8B_9C69_871E6A2CDF93__INCLUDED_)
+
+#include <cmath>
+using std::abs;

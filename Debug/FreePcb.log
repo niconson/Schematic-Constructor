@@ -1,7 +1,9 @@
 ﻿  StdAfx.cpp
-d:\freepcbdev\schematic constructor\stdafx.h(53): warning C4005: ASSERT: изменение макроопределения
-          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\atlmfc\include\afx.h(333): см. предыдущее определение "ASSERT"
-  afxasert.cpp
+D:\FreePCBDev\Schematic Constructor\stdafx.h(53,1): warning C4005: ASSERT: изменение макроопределения
+  (компиляция исходного файла "StdAfx.cpp")
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\atlmfc\include\afx.h(366,1):
+  см. предыдущее определение "ASSERT"
+  
   BomInTable.cpp
   CCompare.cpp
   ComponentNoteExt.cpp
@@ -13,6 +15,7 @@ d:\freepcbdev\schematic constructor\stdafx.h(53): warning C4005: ASSERT: изм�
   DlgAddPoly.cpp
   DlgAddText.cpp
   DlgAddWidth.cpp
+  DlgAttr.cpp
   DlgAttrSync.cpp
   DlgCAD.cpp
   DlgChangeLayer.cpp
@@ -30,8 +33,8 @@ d:\freepcbdev\schematic constructor\stdafx.h(53): warning C4005: ASSERT: изм�
   DlgMoveOrigin.cpp
   DlgMyMessageBox.cpp
   DlgMyMessageBox2.cpp
-  DlgPartlist.cpp
   DlgPDFLayers.cpp
+  DlgPartlist.cpp
   DlgPinMap.cpp
   DlgProjectOptions.cpp
   DlgProtection.cpp
@@ -43,13 +46,10 @@ d:\freepcbdev\schematic constructor\stdafx.h(53): warning C4005: ASSERT: изм�
   DlgShortcuts.cpp
   DlgSideStyle.cpp
   Компиляция...
-  DlgAttr.cpp
-  file_io.cpp
   Documents.cpp
   FreePcbView.cpp
   FreeSch.cpp
   Gerber.cpp
-  gpc_232.cpp
   ImportNetlist.cpp
   LibPointer.cpp
   MainFrm.cpp
@@ -58,21 +58,24 @@ d:\freepcbdev\schematic constructor\stdafx.h(53): warning C4005: ASSERT: изм�
   Pages.cpp
   PartTemplate.cpp
   PathDialog.cpp
-  php_polygon.cpp
-  php_polygon_vertex.cpp
   PolyLine.cpp
   QAFDebug.cpp
-  ReadFootprintFolder.cpp
-  Компиляция...
-  ReportFiles.cpp
   RTcall.cpp
-  smcharacter.cpp
-  smfontutil.cpp
+  ReadFootprintFolder.cpp
+  ReportFiles.cpp
   SpeedFiles.cpp
   TagTable.cpp
   TextList.cpp
+  Компиляция...
   UndoList.cpp
+  file_io.cpp
+  gpc_232.cpp
+  php_polygon.cpp
+  php_polygon_vertex.cpp
+  smcharacter.cpp
+  smfontutil.cpp
   utility.cpp
   Создание кода
   Создание кода завершено
-  FreePcb.vcxproj -> D:\FreePCBDev\Schematic Constructor\.\Debug\СхемАтор.exe
+  FreePcb.vcxproj -> D:\FreePCBDev\Schematic Constructor\Debug\СхемАтор.exe
+  Скопировано файлов:         1.

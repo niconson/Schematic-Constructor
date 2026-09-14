@@ -81,7 +81,7 @@ int CDlgCompare::ComparePartlist( int Pg1, int Pg2 )
 	{
 		int it2 = -1;
 		CText * t2 = NULL;
-		if( BY_COORDINATES == 0 )
+		if( BY_COORDINATES == 0 ) 
 			t2 = Reflist_2->GetText( &t1->m_str, &it2 );
 		else if( t1->m_polyline_start >= 0 )
 		{

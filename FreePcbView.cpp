@@ -5334,7 +5334,7 @@ void CFreePcbView::SelPolylineTest( CText ** part_found, CString * P, CString * 
 	*nparts = 0;
 	*nvalues = 0;
 	*nfootprints = 0;
-	(*P) += ":"dSPACE;
+	(*P) += (":" dSPACE);
 	(*V) += dSPACE;
 	(*F) += dSPACE;
 	//
@@ -11402,7 +11402,7 @@ void CFreePcbView::OnGroupPaste( BOOL bwDialog, BOOL bSaveMerges, int m_apply_de
 									CString Suff = "";
 									m_Doc->ExtractBLK( &new_str, &Suff );
 									Suff = GenNextSuffix( &Suff );
-									new_str.Format( "Please click by'outline to update'this text'"CP_SUFFIX" %s'"COMMAND" BLK", Suff, Suff );
+									new_str.Format( "Please click by'outline to update'this text'" CP_SUFFIX " %s'" COMMAND " BLK", Suff, Suff );
 								}
 								else if( m_paste_flags == PINS_ONLY )
 								{
@@ -14978,7 +14978,7 @@ BOOL CFreePcbView::DrawBOM( CPolyLine * p,
 			//	cmd.Format("(%s)%s", list2, TXT);
 			//	TXT = cmd;
 			//}
-			cmd.Format( "|start_number: %d'|end_number: %d'|sorting_column: %d'|detail_column_width: %d'|ignore_those_without_value: %d'|include_ref_list: %s'|exclude_ref_list: %s'|column_order: %s'|pcb_name: %s'"COMMAND" BOM", iStart, iEnd, sortStyle, Extended, ignore_without_value, list1, list2, *order, *pcb );
+			cmd.Format( "|start_number: %d'|end_number: %d'|sorting_column: %d'|detail_column_width: %d'|ignore_those_without_value: %d'|include_ref_list: %s'|exclude_ref_list: %s'|column_order: %s'|pcb_name: %s'" COMMAND " BOM", iStart, iEnd, sortStyle, Extended, ignore_without_value, list1, list2, *order, *pcb );
 			TXT += cmd;
 			//
 			//
@@ -15300,7 +15300,7 @@ CString CFreePcbView::SelectBlock( CPolyLine * poly, int npage, BOOL bSelect  )
 		CString mName = BNAME;
 		if( BNAME.Left(1)=="|" )
 			mName.Delete(0);
-		desc->m_str.Format( "%s (%s)'"CP_SUFFIX" %s'"CP_LINK" %s'"CP_PAGE_NUM" %d'"COMMAND" BLK", BLINK, mName, BNAME, BLINK, BPAGE+1 );
+		desc->m_str.Format( "%s (%s)'" CP_SUFFIX " %s'" CP_LINK " %s'" CP_PAGE_NUM " %d'" COMMAND " BLK", BLINK, mName, BNAME, BLINK, BPAGE+1 );
 		desc->m_nchars = desc->m_str.GetLength();
 		desc->MakeVisible();
 		OnRangeCmds(NULL);

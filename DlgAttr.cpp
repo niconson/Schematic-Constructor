@@ -692,11 +692,11 @@ void CDlgAttr::OnQ2()
 	AfxMessageBox(G_LANGUAGE == 0 ? 
 		("Indicate the path to the FreePcb-2 footprint library via the Project->Options menu"\
 		"so that you can select them in this combo box, and also "\
-		"so that the "PROGRAM_NAME" can check for the presence "\
+		"so that the " PROGRAM_NAME " can check for the presence "\
 		"of the specified footprint in the library"):
 		("Укажите путь к библиотеке футпринтов ПлатФорм через меню Проект->Настройки, "\
 		"чтобы можно было выбрать их в этом выпадающем списке, а также "\
-		"чтобы "PROGRAM_NAME" мог проверить наличие "\
+		"чтобы " PROGRAM_NAME " мог проверить наличие "\
 		"указанного футпринта в библиотеке"), MB_ICONINFORMATION);
 }
 
@@ -749,11 +749,11 @@ void CDlgAttr::OnQ6()
 {
 	AfxMessageBox(G_LANGUAGE == 0 ? 
 		("In the first line you can enter any link text. "\
-		"After the text: "CP_LINK", separated by a space, indicate which part you want to jump to. "\
+		"After the text: " CP_LINK ", separated by a space, indicate which part you want to jump to. "\
 		"For the link to work, you need to click on it "\
 		"while holding down the CTRL key"):
 		("В первой строке можно ввести любой текст ссылки. "\
-		"После текста: "CP_LINK", через пробел укажите, к какой детали вы хотите перейти. "\
+		"После текста: " CP_LINK ", через пробел укажите, к какой детали вы хотите перейти. "\
 		"Чтобы ссылка сработала, нужно нажать на нее "\
 		"удерживая клавишу CTRL"), MB_ICONINFORMATION);
 }
@@ -776,7 +776,7 @@ void CDlgAttr::OnQ7()
 		"To add any complex part to the diagram and, accordingly, to the netlist, "\
 		"you must first draw a contour line of this complex part and then "\
 		"in the \"description\" attribute of the polyline, enter "\
-		"for example the following text \n\n\tChannel_1\n\t"CP_SUFFIX" _1\n\t"COMMAND" BLK\n\n "\
+		"for example the following text \n\n\tChannel_1\n\t" CP_SUFFIX " _1\n\t" COMMAND " BLK\n\n "\
 		"The program will create a parts block named [ref des of complex part]_1 (those. Channel_1) and the suffix _1 "\
 		"will be added to all part numbers in that block. See next item to continue ..."):
 		("Создание сложной детали: Для многоканальных схем удобно использовать иерархическую деталь, содержащую внутри "\
@@ -794,7 +794,7 @@ void CDlgAttr::OnQ7()
 		"Чтобы добавить любую иерархическую деталь к схеме и соответственно к списку эл.цепей, "\
 		"необходимо сначала нарисовать контурную полилинию этой иерархической детали, а затем "\
 		"в атрибуте \"описание\" полилинии ввести "\
-		"например следующий текст \n\n\tChannel_1\n\t"CP_SUFFIX" _1\n\t"COMMAND" BLK\n\n "\
+		"например следующий текст \n\n\tChannel_1\n\t" CP_SUFFIX " _1\n\t" COMMAND " BLK\n\n "\
 		"Программа создаст блок деталей с именем [обозначение]_1 (т.е. в нашем примере Channel_1) и суффикс _1 "\
 		"будет добавлен ко всем номерам деталей в этом блоке. Продолжение см. в следующем пункте..."), MB_ICONINFORMATION);
 }
@@ -805,8 +805,8 @@ void CDlgAttr::OnQ8()
 		("To get started, see the previous question\n\n"\
 		"Draw a pin of block, that should touch the outline of this block. "\
 		"In the \"description\" attribute of the pin polyline, "\
-		"enter the following for example: \n\n\t8\n\t"CP_SUFFIX" _1"\
-		"\n\t"CP_LINK" Channel\n\t|pin_name: 8\n\t"CP_PAGE_NUM" 2\n\t"COMMAND" BLK_PTR\n\nThe program "\
+		"enter the following for example: \n\n\t8\n\t" CP_SUFFIX " _1"\
+		"\n\t" CP_LINK " Channel\n\t|pin_name: 8\n\t" CP_PAGE_NUM " 2\n\t" COMMAND " BLK_PTR\n\nThe program "\
 		"will add a suffix _1 to the ref \"Channel\" (and also to all parts inside this complex part) and connect "\
 		"pin 8 of part Channel_1 to this polyline. \n"\
 		"A suffix will be added to the nets with an automatically generated name "\
@@ -817,8 +817,8 @@ void CDlgAttr::OnQ8()
 		("Для начала см. предыдущий вопрос\n\n"\
 		"Нарисуйте пин блока, который должен касаться контура этого блока. "\
 		"В атрибуте \"Описание\" полилинии пина, "\
-		"введите следующее, например: \n\n\t8\n\t"CP_SUFFIX" _1"\
-		"\n\t"CP_LINK" Channel\n\t|pin_name: 8\n\t"CP_PAGE_NUM" 2\n\t"COMMAND" BLK_PTR\n\nПрограмма "\
+		"введите следующее, например: \n\n\t8\n\t" CP_SUFFIX " _1"\
+		"\n\t" CP_LINK " Channel\n\t|pin_name: 8\n\t" CP_PAGE_NUM " 2\n\t" COMMAND " BLK_PTR\n\nПрограмма "\
 		"добавит указанный суффикс _1 к ссылке \"Channel\" (а также ко всем деталям внутри этой иерархической детали) и подключит "\
 		"к пину 8 детали Channel_1. \n"\
 		"Суффикс _1 также будет добавлен к эл.цепям (к ним относятся цепи, формата "\
@@ -858,7 +858,7 @@ void CDlgAttr::OnQ10()
 		"the following for example: \n\n\tTable\n\t|start_number: 1\n\t|"\
 		"end_number: 100\n\t|sorting_column: 1\n\t|detail_column_width: 20\n\t"\
 		"|ignore_those_without_value: 1\n\t|include_ref_list: not_used\n\t"\
-		"|exclude_ref_list: not_used\n\t|column_order: 12345\n\t|pcb_name: example.fpc\n\t"COMMAND" BOM\n\n"\
+		"|exclude_ref_list: not_used\n\t|column_order: 12345\n\t|pcb_name: example.fpc\n\t" COMMAND " BOM\n\n"\
 		"The program will insert into the outline of this "\
 		"rectangle from 1 to 100 lines of the BOM list. Auto-update table when saving file."):
 		("Вы можете добавить фрагмент таблицы спецификации на страницу. "\
@@ -869,7 +869,7 @@ void CDlgAttr::OnQ10()
 		"\n\n\tTable\n\t|start_number: 1\n\t|"\
 		"end_number: 100\n\t|sorting_column: 1\n\t|detail_column_width: 20\n\t"\
 		"|ignore_those_without_value: 1\n\t|include_ref_list: not_used\n\t"\
-		"|exclude_ref_list: not_used\n\t|column_order: 12345\n\t|pcb_name: example.fpc\n\t"COMMAND" BOM\n\n"\
+		"|exclude_ref_list: not_used\n\t|column_order: 12345\n\t|pcb_name: example.fpc\n\t" COMMAND " BOM\n\n"\
 		"Программа вставит в контур этого прямоугольника от 1 до 100 строк списка спецификации. "\
 		"Авто-обновление таблицы происходит при сохранении файла"), MB_ICONINFORMATION);
 }
@@ -910,7 +910,7 @@ void CDlgAttr::OnCmd2()
 			"Текст описания уже содержит код команды");
 		return;
 	}
-	m_edit_pindesc.SetWindowTextA(str + "\r\n"CP_LINK" "+str2+"\r\n"CP_PAGE_NUM" 1");
+	m_edit_pindesc.SetWindowTextA(str + "\r\n" CP_LINK " "+str2+"\r\n" CP_PAGE_NUM " 1");
 }
 
 void CDlgAttr::OnCmd3()
@@ -927,7 +927,7 @@ void CDlgAttr::OnCmd3()
 			"Текст описания уже содержит код команды");
 		return;
 	}
-	m_edit_pindesc.SetWindowTextA(str+"\r\n"CP_SUFFIX" xx\r\n"CP_LINK" xx\r\n"CP_PAGE_NUM" xx\r\n"COMMAND" BLK");
+	m_edit_pindesc.SetWindowTextA(str+"\r\n" CP_SUFFIX " xx\r\n" CP_LINK " xx\r\n" CP_PAGE_NUM " xx\r\n" COMMAND " BLK");
 }
 
 void CDlgAttr::OnCmd4()
@@ -944,7 +944,7 @@ void CDlgAttr::OnCmd4()
 			"Текст описания уже содержит код команды");
 		return;
 	}
-	m_edit_pindesc.SetWindowTextA(str+"\r\n"CP_SUFFIX" xx\r\n"CP_LINK" xx\r\n|pin_name: xx\r\n"CP_PAGE_NUM" xx\r\n"COMMAND" BLK_PTR");
+	m_edit_pindesc.SetWindowTextA(str+"\r\n" CP_SUFFIX " xx\r\n" CP_LINK " xx\r\n|pin_name: xx\r\n" CP_PAGE_NUM " xx\r\n" COMMAND " BLK_PTR");
 }
 
 void CDlgAttr::OnCmd5()
@@ -984,7 +984,7 @@ void CDlgAttr::OnCmd6()
 		if( pname.GetLength() == 0 )
 			pname = m_pl->m_pcb_names.GetAt( 0 );
 		CString str2;
-		str2.Format("\r\n|start_number: 1\r\n|end_number: 100\r\n|sorting_column: 5\r\n|detail_column_width: 15\r\n|ignore_those_without_value: 1\r\n|include_ref_list: not_used\r\n|exclude_ref_list: not_used\r\n|column_order: 12345\r\n|pcb_name: %s\r\n"COMMAND" BOM", pname );
+		str2.Format("\r\n|start_number: 1\r\n|end_number: 100\r\n|sorting_column: 5\r\n|detail_column_width: 15\r\n|ignore_those_without_value: 1\r\n|include_ref_list: not_used\r\n|exclude_ref_list: not_used\r\n|column_order: 12345\r\n|pcb_name: %s\r\n" COMMAND " BOM", pname );
 		m_edit_pindesc.SetWindowTextA(str+str2);
 	}
 	else
@@ -1010,7 +1010,7 @@ void CDlgAttr::OnCmd7()
 			"Текст описания уже содержит код команды");
 		return;
 	}
-	m_edit_pindesc.SetWindowTextA(str+"\r\n|path: 0\r\n|name: 1\r\n|pcb_flag: 1\r\n|extention: 1\r\n|length: 99\r\n|make_lower: 0\r\n"COMMAND" PATH");
+	m_edit_pindesc.SetWindowTextA(str+"\r\n|path: 0\r\n|name: 1\r\n|pcb_flag: 1\r\n|extention: 1\r\n|length: 99\r\n|make_lower: 0\r\n" COMMAND " PATH");
 }
 
 int CDlgAttr::OnCopyData(CWnd* pWnd, COPYDATASTRUCT* Msg) 
@@ -1154,7 +1154,7 @@ void CDlgAttr::OnCmd9()
 			pname = m_pl->m_pcb_names.GetAt(0);
 	}
 	CString str2;
-	str2.Format("\r\n|UID: 0\r\n|text_height: 1mm\r\n|font_width: 0.2mm\r\n|line_width: 0\r\n|fill_board: 1\r\n|fill_mask: 70\r\n|scale_factor: 0\r\n|draw_size: LRTB *\r\n|rotation: 0\r\n|flipped: 0\r\n|pcb: %s\r\n"COMMAND" PCBVIEW", pname);
+	str2.Format("\r\n|UID: 0\r\n|text_height: 1mm\r\n|font_width: 0.2mm\r\n|line_width: 0\r\n|fill_board: 1\r\n|fill_mask: 70\r\n|scale_factor: 0\r\n|draw_size: LRTB *\r\n|rotation: 0\r\n|flipped: 0\r\n|pcb: %s\r\n" COMMAND " PCBVIEW", pname);
 	m_edit_pindesc.SetWindowTextA(str + str2);
 }
 

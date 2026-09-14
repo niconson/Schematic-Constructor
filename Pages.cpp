@@ -528,7 +528,7 @@ int CPageList::FindBlkPtrs( int polylineIndex, BOOL bSelect )
 						theApp.m_Doc->m_view->NewSelect( NULL, &sid, 0, 0 );
 						CText * pinname = pa->GetAt(i).pAttr[ index_pin_attr ];
 						CString CMDSTR;
-						CMDSTR.Format("%s'"CP_SUFFIX" %s'"CP_LINK" %s'|pin_name: %s'"CP_PAGE_NUM" %d'"COMMAND" BLK_PTR", pinname->m_str, SUFF, REF, pinname->m_str, IP+1 );
+						CMDSTR.Format("%s'" CP_SUFFIX " %s'" CP_LINK " %s'|pin_name: %s'" CP_PAGE_NUM " %d'" COMMAND " BLK_PTR", pinname->m_str, SUFF, REF, pinname->m_str, IP+1 );
 						CText * descA = pgs[ThisNumber].Attributes->m_pDesclist->AddText( pinname->m_x, 
 						pinname->m_y, pinname->m_angle, LAY_PIN_DESC, pinname->m_font_size, 
 						pinname->m_stroke_width, pinname->m_font_number, &CMDSTR, 0 );

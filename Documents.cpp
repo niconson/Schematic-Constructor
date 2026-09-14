@@ -771,8 +771,8 @@ BOOL CFreePcbDoc::FileOpen( LPCTSTR fn )
 		{
 			CString mess;
 			mess.Format(G_LANGUAGE == 0 ? 
-				("Warning: the file version is %5.3f\n\nYou are running an earlier "PROGRAM_NAME" version %5.3f"):
-				("Внимание: версия файла %5.3f\n\nВы используете более раннюю версию "PROGRAM_NAME" %5.3f"),
+				("Warning: the file version is %5.3f\n\nYou are running an earlier " PROGRAM_NAME " version %5.3f"):
+				("Внимание: версия файла %5.3f\n\nВы используете более раннюю версию " PROGRAM_NAME " %5.3f"),
 				m_file_version, m_version );
 			mess += "\n\nErrors may occur\n\nClick on OK to continue reading or CANCEL to cancel";
 			int ret = AfxMessageBox( mess, MB_OKCANCEL );

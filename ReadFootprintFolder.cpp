@@ -76,12 +76,12 @@ int FindFootprintInFolder( CFreePcbDoc * doc, CString * fname, CString * old_fna
 			"in the current footprint library folder, which "\
 			"is specified in the project settings (Project >> Options):\n\n%s"\
 			"\n\nFootprint %s found in another directory:\n\n%s\n\n"\
-			"Want the "PROGRAM_NAME" to save this footprint in the current library? (is recommended)"):
+			"Want the " PROGRAM_NAME " to save this footprint in the current library? (is recommended)"):
 			("Внимание! Футпринт %s не найден "\
 			"в текущей папке библиотеки, которая "\
 			"указана в настройках проекта (Проект>>Настройки):\n\n%s"\
 			"\n\nВместо этого футпринт %s найден в другом каталоге:\n\n%s\n\n"\
-			"Хотите, чтобы "PROGRAM_NAME" сохранил этот футпринт в текущей библиотеке? (рекомендуется)"), *fname, mem_lib_dir, *fname, catalog);
+			"Хотите, чтобы " PROGRAM_NAME " сохранил этот футпринт в текущей библиотеке? (рекомендуется)"), *fname, mem_lib_dir, *fname, catalog);
 		int retQ = AfxMessageBox( str, MB_ICONQUESTION | MB_YESNO );
 		if( retQ == IDYES )
 		{

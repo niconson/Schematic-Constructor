@@ -303,7 +303,7 @@ void CDlgProjectOptions::OnBnClickedQ11()
 		"for reading to complete successfully. If your PCB editor uses "\
 		"this library format, then success is guaranteed. Associate "\
 		"the footprint file extension with your footprint viewer so "\
-		"that "PROGRAM_NAME" and Windows know which program to "\
+		"that " PROGRAM_NAME " and Windows know which program to "\
 		"open these files. In this case, you can open and view the "\
 		"footprint from the attribute setting dialog by pressing the \"L\" button. "\
 		"So, to see the list of loaded names, select a part (or a group "\
@@ -319,8 +319,8 @@ void CDlgProjectOptions::OnBnClickedQ11()
 		"должна содержать файлы посадочных мест (<имя посадочного места>.<расширение>) "\
 		"для успешного завершения чтения. Если ваш редактор печатных плат использует "\
 		"этот формат библиотеки, то успех гарантирован. Свяжите "\
-		"расширение файла посадочного места с вашим средством просмотра посадочных мест, чтобы "\
-		PROGRAM_NAME" и Windows знали, какой программой "\
+		"расширение файла посадочного места с вашим средством просмотра посадочных мест, "\
+		"чтобы " PROGRAM_NAME " и Windows знали, какой программой "\
 		"открывать эти файлы. В этом случае вы можете открыть и просмотреть "\
 		"посадочное место из диалогового окна настройки атрибутов, нажав кнопку «L».\n\n"\
 		"Чтобы увидеть список загруженных имен, выберите деталь "\
