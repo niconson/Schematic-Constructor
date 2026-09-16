@@ -261,8 +261,8 @@ void CFreePcbView::InitInstance()
 	GetWindowRect( &screen_r );
 	m_Doc->m_dlist->SetMapping( &m_client_r, &screen_r, m_left_pane_w, m_bottom_pane_h,
 		m_pcbu_per_pixel, m_org_x, m_org_y );
-	for(int i=0; i<m_Doc->m_num_layers; i++ )
-		m_Doc->m_dlist->SetLayerRGB( i, m_Doc->m_rgb[i][0], m_Doc->m_rgb[i][1], m_Doc->m_rgb[i][2] );
+	for(int i=0; i<MAX_LAYERS; i++ )
+		m_Doc->m_dlist->SetLayerRGB( i, 255, 255, 255 );
 	ShowSelectStatus();
 	ShowActiveLayer(MAX_LAYERS-LAY_ADD_1);
 	m_polyline_width = abs(m_Doc->m_polyline_w);

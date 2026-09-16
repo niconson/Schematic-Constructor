@@ -234,6 +234,7 @@ CFreePcbDoc::CFreePcbDoc()
 	theApp.m_Doc = this;
 	this_Doc = this;
 	//
+	m_num_layers = 0;
 	for(int i=0; i<NUM_CAM_FOLDERS; i++)
 		CAM[i] = "";
 	m_pcb_filename = "";
