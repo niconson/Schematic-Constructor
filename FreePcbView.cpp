@@ -10019,6 +10019,7 @@ void CFreePcbView::TurnGroup ()
 				{
 					RECT TR;
 					tl->GetTextRectOnPCB( t, &TR );
+					SwellRect(&TR, -t->m_stroke_width / 2);
 					int wid = TR.right - TR.left;
 					int hgt = abs(TR.top - TR.bottom);
 					int newX = 2*groupAverageX - t->m_x;
