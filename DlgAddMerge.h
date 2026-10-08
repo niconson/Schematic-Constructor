@@ -25,6 +25,7 @@ public:
 			M_REPLACE_FAV,
 			M_COPY_FOOTPRINT,
 			M_SET_POLY_LENGTH,
+			M_PIN_COUNT,
 			M_URL
 	};
 protected:

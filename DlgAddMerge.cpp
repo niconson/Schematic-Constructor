@@ -319,6 +319,13 @@ void CDlgAddMerge::DoDataExchange(CDataExchange* pDX)
 			::SetWindowText( wnd, G_LANGUAGE == 0 ? "Set segment length":"Длина сегмента");
 			m_stat.SetWindowTextA(G_LANGUAGE == 0 ? "Enter value":"Введите");
 		}
+		else if (m_mode == M_PIN_COUNT)
+		{
+			m_edit.SetWindowText(m_merge_name);
+			HWND wnd = CDialog::GetSafeHwnd();
+			::SetWindowText(wnd, G_LANGUAGE == 0 ? "Number of pins" : "Количество контактов");
+			m_stat.SetWindowTextA(G_LANGUAGE == 0 ? "Enter value" : "Введите число");
+		}
 	}
 }
 

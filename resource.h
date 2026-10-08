@@ -1437,6 +1437,7 @@
 #define ID_100_PINS                     33400
 #define ID_128_PINS                     33428
 #define ID_256_PINS                     33556
+#define ID_USER_PINS					33557
 #define ID_PROJECT_REFLIST              34000
 #define ID_PLAY_REFLIST1                34001
 #define ID_PLAY_REFLIST2                34002

@@ -179,7 +179,7 @@ ON_WM_SETCURSOR()
 ON_WM_MOVE()
 ON_COMMAND(ID_TOOLS_SETORIGIN, OnSetOriginToSelectedItem)
 ON_COMMAND(ID_MERGE_PASTEFROMFILE, OnImportMerges)
-ON_COMMAND_EX_RANGE(ID_6_PINS,ID_256_PINS, OnCreateMultiPinPartTemplate)
+ON_COMMAND_EX_RANGE(ID_6_PINS, ID_USER_PINS, OnCreateMultiPinPartTemplate)
 ON_COMMAND_EX_RANGE(ID_SEL_POLYLINES, ID_UNSEL_BACKLAYER14, OnEditSelectLayer)
 ON_COMMAND_EX_RANGE(ID_HIDE_BMP, ID_SHOW_BMP, OnHidePictures)
 ON_COMMAND_EX_RANGE(ID_SCALE12,ID_SCALE54, OnApplyScale)
@@ -15960,6 +15960,24 @@ BOOL CFreePcbView::OnApplyScale( UINT CMD )
 BOOL CFreePcbView::OnCreateMultiPinPartTemplate( UINT CMD )
 {
 	CancelSelection();
+	if (CMD == ID_USER_PINS)
+	{
+		CDlgAddMerge dlg;
+		dlg.m_mode = dlg.M_PIN_COUNT;
+		dlg.Doc = m_Doc;
+		dlg.m_merge_name = "4";
+		int ret = dlg.DoModal();
+		if (ret == IDOK)
+		{
+			dlg.m_merge_name.Trim();
+			if (dlg.m_merge_name.GetLength())
+			{
+				CMD = my_atoi(&dlg.m_merge_name) + ID_0_PINS;
+			}
+		}
+		else 
+			return 0;
+	}
 	CreateMultiPinPartTemplate( m_Doc, CMD, CMD-ID_0_PINS, m_Doc->m_polyline_w, m_attr_size.H_pin, m_Doc->m_part_grid_spacing );
 	if( m_sel_count )
 	{

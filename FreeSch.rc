@@ -455,6 +455,8 @@ BEGIN
             MENUITEM "100 контактов",               ID_100_PINS
             MENUITEM "128 контактов",               ID_128_PINS
             MENUITEM "256 контактов",               ID_256_PINS
+            MENUITEM SEPARATOR
+            MENUITEM "Свой вариант",                ID_USER_PINS
         END
     END
     POPUP "Утилиты"
