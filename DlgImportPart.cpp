@@ -399,7 +399,7 @@ void CDlgImportPart::OnClickListButton()
 			m_static[st].ShowWindow(0);
 		CRect getR = rect(0,0,0,0);
 		this->GetWindowRect(&getR);
-		this->SetWindowPos(NULL,getR.left,getR.top,734,615,0);
+		this->SetWindowPos(NULL,getR.left,getR.top,734+8,615+8,0);
 		this->UpdateWindow();
 		if( m_part_list.GetCount() )
 		{
@@ -440,7 +440,7 @@ void CDlgImportPart::OnClickListButton()
 		m_doc3.ShowWindow(0);
 		m_doc4.ShowWindow(0);
 		this->GetWindowRect(&WR);
-		this->SetWindowPos(NULL,WR.left,WR.top,(309),(439),0);
+		this->SetWindowPos(NULL,WR.left,WR.top,(309+8),(439+8),0);
 	}
 }
 
