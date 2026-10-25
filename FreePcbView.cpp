@@ -15254,6 +15254,14 @@ CString CFreePcbView::SelectBlock( CPolyLine * poly, int npage, BOOL bSelect  )
 							{
 								if( bSelect )
 								{
+									if (get_error->GetClosed() == 0)
+										if (get_error->Node[0] || get_error->Node[get_error->GetNumCorners()])
+										{
+											//AfxMessageBox("test");
+											get_error->Node[0] = 0;
+											get_error->Node[get_error->GetNumCorners()] = 0;
+											get_error->Draw();
+										}
 									id ID = get_error->GetId();
 									ID.sst = ID_SIDE;
 									for( int ii=0; ii<get_error->GetNumSides(); ii++ )
