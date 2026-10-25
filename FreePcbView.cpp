@@ -6951,10 +6951,11 @@ void CFreePcbView::SnapCursorPoint( CPoint wp, UINT nFlags )
 								int dist_y = abs(wp.y - p->GetY(ip1));
 								if ((float)dist_x < (float)m_Doc->m_part_grid_spacing/m_user_scale)
 								{
-									if ((dist_y < min_Y - NM_PER_MIL) || (dist_y < min_Y + NM_PER_MIL && dist_x < mX))
+									if (dist_x < mX && dist_y < (min_Y + NM_PER_MIL))
+									//if ((dist_y < min_Y - NM_PER_MIL) || (dist_y < min_Y + NM_PER_MIL && dist_x < mX))
 									{
 										mX = dist_x;
-										min_Y = dist_y;
+										//min_Y = dist_y;
 										BEST_PT1 = CPoint(p->GetX(ip1), p->GetY(ip1));
 										BEST_W1 = p->GetW();
 										//CPoint pt1(p->GetX(ip1), p->GetY(ip1));
@@ -6964,9 +6965,10 @@ void CFreePcbView::SnapCursorPoint( CPoint wp, UINT nFlags )
 								}
 								if ((float)dist_y < (float)m_Doc->m_part_grid_spacing/m_user_scale)
 								{
-									if ((dist_x < min_X - NM_PER_MIL) || (dist_x < min_X + NM_PER_MIL && dist_y < mY))
+									if (dist_y < mY && dist_x < (min_X + NM_PER_MIL))
+									//if ((dist_x < min_X - NM_PER_MIL) || (dist_x < min_X + NM_PER_MIL && dist_y < mY))
 									{
-										min_X = dist_x;
+										//min_X = dist_x;
 										mY = dist_y;
 										BEST_PT2 = CPoint(p->GetX(ip1), p->GetY(ip1));
 										BEST_W2 = p->GetW();
