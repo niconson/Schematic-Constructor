@@ -14548,8 +14548,9 @@ void CFreePcbView::DrawBOM( CText * t, CArray<CPolyLine> * Arr )
 					}
 					else
 					{
-						if( new_page != old_page )
-							m_Doc->Pages.SwitchToPage( new_page );
+						m_Doc->SwitchToPage(old_page, FALSE);		// experimental
+						//if( new_page != old_page )				// вернуть если не прокатит
+						//	m_Doc->Pages.SwitchToPage( new_page );	// вернуть если не прокатит
 						if( inclist >= 0 )
 							inclist += REF_LIST_INDEX;
 						if( exlist >= 0 )
@@ -14557,10 +14558,10 @@ void CFreePcbView::DrawBOM( CText * t, CArray<CPolyLine> * Arr )
 						int CPPresent = 0;
 						if( ie > is && is > 0 )
 							CPPresent = DrawBOM( &Arr->GetAt( t->m_polyline_start ), is, ie, ss, ex, ig, inclist, exlist, &arr.GetAt(14), &pcb_n );
-						if( CPPresent )
-							m_Doc->SwitchToPage( old_page, TRUE );
-						else if( new_page != old_page )
-							m_Doc->Pages.SwitchToPage( old_page );
+						//if( CPPresent )							// вернуть если не прокатит
+							m_Doc->SwitchToPage( old_page, TRUE );	// experimental
+						//else if( new_page != old_page )			// вернуть если не прокатит
+						//	m_Doc->Pages.SwitchToPage( old_page );	// вернуть если не прокатит
 					}
 				}
 				else

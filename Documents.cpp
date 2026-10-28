@@ -10395,7 +10395,8 @@ void CFreePcbDoc::OnFilePrint()
 	SaveOptions();
 
 	//
-	CheckBOM();
+	CheckBOM(); // из-за него происходил Unselect
+	
 	if( ret == IDCANCEL )
 		return;
 	// pin text alignment
@@ -10418,7 +10419,7 @@ void CFreePcbDoc::OnFilePrint()
 	cpdf_setGlobalDocumentLimits(100, 100, 100, 100, 0);
 	cpdf_enableCompression(pdf, TRUE);
 	cpdf_setTitle(pdf,m_name.GetBuffer());
-
+	
 	int cP = 0;
 	int mem_n_page = Pages.GetActiveNumber();
 	BOOL bPrintWasMade = 0;
