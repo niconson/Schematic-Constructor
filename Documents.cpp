@@ -7738,7 +7738,7 @@ int CFreePcbDoc::CreatePCBNets( int ITERATOR )
 							int y2 = m_outline_poly->GetAt(ii).GetY(iico);
 							if( abs(x1-x2) < (w1+w2)/2 && abs(y1-y2) < (w1+w2)/2 )
 							{
-								s.Format("\r\n        Invalid intersection (net %s and net %s)", txt1->m_str, txt2->m_str );
+								s.Format("\r\n        Invalid intersection (net %s and net %s)", txt1->m_str.GetBuffer(), txt2->m_str.GetBuffer());
 								m_dlg_log->AddLine(s);
 								m_dlg_log->UpdateWindow();
 								id id1 = m_outline_poly->GetAt(i).GetId();
@@ -7755,12 +7755,15 @@ int CFreePcbDoc::CreatePCBNets( int ITERATOR )
 		}
 	}
 	// creating nodes at the junction of three vertices
+	int MARK_U = 3;
+	m_view->MarkAllOutlinePoly(0, -1);
 	for( int i=m_outline_poly->GetSize()-1; i>=0; i-- )
 	{
 		if( m_outline_poly->GetAt(i).m_visible == 0 )
 			continue;
+		
 		int W = abs(m_outline_poly->GetAt(i).GetW());
-		if( m_outline_poly->GetAt(i).Node[0] == 1 )
+		if( m_outline_poly->GetAt(i).Node[0] == 1 && m_outline_poly->GetAt(i).GetUtility(0) != MARK_U)
 		{
 			int cnt_connect = 0;
 			int cnt_pin = 0;
@@ -7769,37 +7772,47 @@ int CFreePcbDoc::CreatePCBNets( int ITERATOR )
 			else
 				cnt_connect++;
 			CPoint pt1( m_outline_poly->GetAt(i).GetX(0), m_outline_poly->GetAt(i).GetY(0) );
-			for( int ii=i-1; ii>=0; ii-- )
+			for( int ii= m_outline_poly->GetSize() - 1; ii>=0; ii-- )
 			{
+				if( i == ii )
+					continue;
 				if( m_outline_poly->GetAt(ii).m_visible == 0 )
 					continue;
 				if( m_outline_poly->GetAt(ii).Node[0] == 1 )
 				{
 					CPoint Gpt1( m_outline_poly->GetAt(ii).GetX(0), m_outline_poly->GetAt(ii).GetY(0) );
-					if( abs(Gpt1.x-pt1.x) < W/2 && abs(Gpt1.y-pt1.y) < W/2 )
-						if( m_outline_poly->GetAt(ii).Check( index_pin_attr ) )
+					if (abs(Gpt1.x - pt1.x) < W / 2 && abs(Gpt1.y - pt1.y) < W / 2)
+					{
+						if (m_outline_poly->GetAt(ii).Check(index_pin_attr))
 							cnt_pin++;
 						else
 							cnt_connect++;
+						m_outline_poly->GetAt(ii).SetUtility(0, MARK_U);
+					}
 				}
 				if( m_outline_poly->GetAt(ii).Node[m_outline_poly->GetAt(ii).GetNumCorners()-1] == 1 )
 				{
 					CPoint Gpt2( m_outline_poly->GetAt(ii).GetX(m_outline_poly->GetAt(ii).GetNumCorners()-1), 
 								 m_outline_poly->GetAt(ii).GetY(m_outline_poly->GetAt(ii).GetNumCorners()-1) );
-					if( abs(Gpt2.x-pt1.x) < W/2 && abs(Gpt2.y-pt1.y) < W/2 )
-						if( m_outline_poly->GetAt(ii).Check( index_pin_attr ) )
+					if (abs(Gpt2.x - pt1.x) < W / 2 && abs(Gpt2.y - pt1.y) < W / 2)
+					{
+						if (m_outline_poly->GetAt(ii).Check(index_pin_attr))
 							cnt_pin++;
 						else
 							cnt_connect++;
+						m_outline_poly->GetAt(ii).SetUtility(m_outline_poly->GetAt(ii).GetNumCorners() - 1, MARK_U);
+					}
 				}
 			}
-			if( cnt_connect > 2 || (cnt_connect==2 && cnt_pin) || (cnt_connect && cnt_pin == 2) || cnt_pin > 2 )
+			if( cnt_connect > 2 || (cnt_connect==2 && cnt_pin) || (cnt_connect && cnt_pin == 2) /* || cnt_pin > 2*/)
 			{
 				m_outline_poly->GetAt(i).Node[0] = abs(m_node_w);
 				m_outline_poly->GetAt(i).Draw();
 			}
+			//m_outline_poly->GetAt(i).SetUtility(0, MARK_U);
 		}
-		if( m_outline_poly->GetAt(i).Node[m_outline_poly->GetAt(i).GetNumCorners()-1] == 1 )
+		if( m_outline_poly->GetAt(i).Node[m_outline_poly->GetAt(i).GetNumCorners()-1] == 1 &&
+			m_outline_poly->GetAt(i).GetUtility(m_outline_poly->GetAt(i).GetNumCorners() - 1) != MARK_U)
 		{
 			int cnt_connect = 0;
 			int cnt_pin = 0;
@@ -7809,35 +7822,44 @@ int CFreePcbDoc::CreatePCBNets( int ITERATOR )
 				cnt_connect++;
 			CPoint pt2( m_outline_poly->GetAt(i).GetX(m_outline_poly->GetAt(i).GetNumCorners()-1), 
 						m_outline_poly->GetAt(i).GetY(m_outline_poly->GetAt(i).GetNumCorners()-1) );
-			for( int ii=i-1; ii>=0; ii-- )
+			for( int ii= m_outline_poly->GetSize() - 1; ii>=0; ii-- )
 			{
+				if (i == ii)
+					continue;
 				if( m_outline_poly->GetAt(ii).m_visible == 0 )
 					continue;
 				if( m_outline_poly->GetAt(ii).Node[0] == 1 )
 				{
 					CPoint Gpt1( m_outline_poly->GetAt(ii).GetX(0), m_outline_poly->GetAt(ii).GetY(0) );
-					if( abs(Gpt1.x-pt2.x) < W/2 && abs(Gpt1.y-pt2.y) < W/2 )
-						if( m_outline_poly->GetAt(ii).Check( index_pin_attr ) )
+					if (abs(Gpt1.x - pt2.x) < W / 2 && abs(Gpt1.y - pt2.y) < W / 2)
+					{
+						if (m_outline_poly->GetAt(ii).Check(index_pin_attr))
 							cnt_pin++;
 						else
 							cnt_connect++;
+						m_outline_poly->GetAt(ii).SetUtility(0, MARK_U);
+					}
 				}
 				if( m_outline_poly->GetAt(ii).Node[m_outline_poly->GetAt(ii).GetNumCorners()-1] == 1 )
 				{
 					CPoint Gpt2( m_outline_poly->GetAt(ii).GetX(m_outline_poly->GetAt(ii).GetNumCorners()-1), 
 								 m_outline_poly->GetAt(ii).GetY(m_outline_poly->GetAt(ii).GetNumCorners()-1) );
-					if( abs(Gpt2.x-pt2.x) < W/2 && abs(Gpt2.y-pt2.y) < W/2 )
-						if( m_outline_poly->GetAt(ii).Check( index_pin_attr ) )
+					if (abs(Gpt2.x - pt2.x) < W / 2 && abs(Gpt2.y - pt2.y) < W / 2)
+					{
+						if (m_outline_poly->GetAt(ii).Check(index_pin_attr))
 							cnt_pin++;
 						else
 							cnt_connect++;
+						m_outline_poly->GetAt(ii).SetUtility(m_outline_poly->GetAt(ii).GetNumCorners() - 1, MARK_U);
+					}
 				}
 			}
-			if( cnt_connect > 2 || (cnt_connect==2 && cnt_pin) || (cnt_connect && cnt_pin == 2) || cnt_pin > 2 )
+			if( cnt_connect > 2 || (cnt_connect==2 && cnt_pin) || (cnt_connect && cnt_pin == 2) /* || cnt_pin > 2*/)
 			{
-				m_outline_poly->GetAt(i).Node[m_outline_poly->GetAt(i).GetNumCorners()-1] = abs(m_node_w);
+				m_outline_poly->GetAt(i).Node[m_outline_poly->GetAt(i).GetNumCorners() - 1] = abs(m_node_w);
 				m_outline_poly->GetAt(i).Draw();
 			}
+			//m_outline_poly->GetAt(i).SetUtility(m_outline_poly->GetAt(i).GetNumCorners() - 1, MARK_U);
 		}
 	}
 

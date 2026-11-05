@@ -1,4 +1,6 @@
 d:\freepcbdev\schematic constructor\debug\freecds.bsc
+d:\freepcbdev\schematic constructor\debug\freepcbview.obj
+d:\freepcbdev\schematic constructor\debug\documents.obj
 d:\freepcbdev\schematic constructor\debug\freecds.pch
 d:\freepcbdev\schematic constructor\debug\vc143.pdb
 d:\freepcbdev\schematic constructor\debug\stdafx.sbr
@@ -120,8 +122,6 @@ d:\freepcbdev\schematic constructor\debug\importnetlist.obj
 d:\freepcbdev\schematic constructor\debug\gpc_232.obj
 d:\freepcbdev\schematic constructor\debug\gerber.obj
 d:\freepcbdev\schematic constructor\debug\freesch.obj
-d:\freepcbdev\schematic constructor\debug\freepcbview.obj
-d:\freepcbdev\schematic constructor\debug\documents.obj
 d:\freepcbdev\schematic constructor\debug\file_io.obj
 d:\freepcbdev\schematic constructor\debug\rtcall.sbr
 d:\freepcbdev\schematic constructor\debug\smcharacter.sbr
@@ -203,6 +203,7 @@ d:\freepcbdev\schematic constructor\debug\freecds.exe
 d:\freepcbdev\schematic constructor\debug\freecds.map
 d:\freepcbdev\schematic constructor\debug\freecds.pdb
 d:\freepcbdev\schematic constructor\debug\freesch.res
+d:\freepcbdev\schematic constructor\debug\схематор.iobj
 d:\freepcbdev\schematic constructor\debug\freesch.tlog\bscmake.command.1.tlog
 d:\freepcbdev\schematic constructor\debug\freesch.tlog\bscmake.read.1.tlog
 d:\freepcbdev\schematic constructor\debug\freesch.tlog\bscmake.write.1.tlog
