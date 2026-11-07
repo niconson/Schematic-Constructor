@@ -86,7 +86,7 @@ public:
 	int GetPcbIndex( int ipage, BOOL incCP = TRUE );
 	int GetCurrentPcbIndex();
 	int ReturnPageByPCB( CString * Name );
-	int IsThePageIncludesCP( int cppg=-1 );
+	int IsThePageIncludesCP(int cppg = -1, int best_index = -1);
 	CString GetCurrentPCBName( int ip=-1 );
 	BOOL IsThePageIncludedInNetlist( int ipage, BOOL bAny=FALSE );
 	void Protection( int pcb_num = MAX_PAGES );

@@ -13559,9 +13559,9 @@ void CFreePcbView::OnMess( int command, int n_str, CArray<CString> *str, BOOL Ir
 			SetCursorMode( CUR_GROUP_SELECTED );
 			HighlightGroup();
 		}
-		else if( bPageChanged )
-			OnRangeCmds( NULL );
 		JumpToPart( NULL, NULL, (IronScale?1:0) );// jump to selected rect
+		if (bPageChanged)
+			OnRangeCmds(NULL);
 		bPageChanged = 0;
 	}
 	else if( command == C_PIN )
@@ -13687,13 +13687,14 @@ void CFreePcbView::OnMess( int command, int n_str, CArray<CString> *str, BOOL Ir
 		}
 		else if( mem_p )
 			NewSelectP( mem_p, NULL, FALSE );
-		else if( bPageChanged )
-			OnRangeCmds( NULL );
+		
 		if( IronScale )
 			m_sel_count = 0;
 		JumpToPart( NULL, NULL, (IronScale?2:0) );// jump to selected rect
 		if( old_page != m_Doc->Pages.GetActiveNumber() )
 			InvalidateLeftPane();
+		if (bPageChanged)
+			OnRangeCmds(NULL);
 		bPageChanged = 0;
 	}
 	else if( command == C_REOPEN )

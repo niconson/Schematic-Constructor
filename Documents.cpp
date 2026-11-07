@@ -12687,7 +12687,24 @@ void CFreePcbDoc::SwitchToPCB( BOOL duty, BOOL bGRAB, BOOL bIronScale )
 	}
 	else if( Pages.IsThePageIncludedInNetlist(Pages.GetActiveNumber()) == 0 )
 	{
-		int gip = Pages.IsThePageIncludesCP();
+		CString freepcb = FPC_HEADER;
+		HWND wnd = FindWindowByPrefix(freepcb);
+		int best_page = -1;
+		if (wnd)
+		{
+			int length = ::GetWindowTextLength(wnd);
+			if (length > 0)
+			{
+				CString fullTitle;
+				::GetWindowText(wnd, fullTitle.GetBuffer(length + 1), length + 1);
+				fullTitle.ReleaseBuffer();
+				int len = freepcb.GetLength();
+				CString isFileOpened = fullTitle.Mid(len);
+				best_page = Pages.ReturnPageByPCB(&isFileOpened);
+			}
+		}
+
+		int gip = Pages.IsThePageIncludesCP(-1, best_page);
 		if( gip >= 0 )
 			PcbName = Pages.GetCurrentPCBName(gip);
 		if( PcbName.GetLength() == 0 )

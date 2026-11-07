@@ -3531,3 +3531,34 @@ void CStringToLegalFileName(CString* fileName)
 		}
 #undef ILLEGAL_TOTAL
 }
+
+// Ищет окно, заголовок которого начинается с указанного префикса
+HWND FindWindowByPrefix(const CString& prefix)
+{
+	HWND foundWnd = NULL;
+
+	// Вызываем EnumWindows. Передаем адрес найденного HWND и адрес префикса через лямбду
+	::EnumWindows([](HWND hwnd, LPARAM lParam) -> BOOL
+		{
+			// Скрываем страшную кухню с LPARAM внутри этой функции
+			auto* data = reinterpret_cast<std::pair<const CString*, HWND*>*>(lParam);
+
+			int length = ::GetWindowTextLength(hwnd);
+			if (length > 0)
+			{
+				CString windowTitle;
+				::GetWindowText(hwnd, windowTitle.GetBuffer(length + 1), length + 1);
+				windowTitle.ReleaseBuffer();
+
+				// Если нашли совпадение
+				if (windowTitle.Find(*(data->first)) == 0)
+				{
+					*(data->second) = hwnd; // Записываем результат
+					return FALSE;           // Останавливаем поиск
+				}
+			}
+			return TRUE; // Продолжаем перебор
+		}, reinterpret_cast<LPARAM>(&std::make_pair(&prefix, &foundWnd)));
+
+	return foundWnd;
+}

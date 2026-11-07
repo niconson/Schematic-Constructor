@@ -314,28 +314,36 @@ int CPageList::ReturnPageByPCB( CString * Name )
 //-------------------------------------------------------------------
 //===================================================================
 //-------------------------------------------------------------------
-int CPageList::IsThePageIncludesCP( int cppg )
+int CPageList::IsThePageIncludesCP( int cppg, int best_index)
 {
 	static BOOL WarShown = 0;
 	if( cppg == -1 )
 		cppg = ThisNumber;
+	int mem_i = -1;
 	int it = -1; 
 	int ip = -1;
 	while( CText * t=FindBLK_PTR( &it, &ip, TRUE ) )
 	{
 		int iBlkPage = theApp.m_Doc->ExtractBLK_PTR( &t->m_str );
-		if( iBlkPage == cppg )
-			if( ip < cppg )
-				return ip;
-			else if( WarShown == 0 )
+		if (iBlkPage == cppg)
+		{
+			if (ip != best_index)
 			{
-				AfxMessageBox(G_LANGUAGE == 0 ? 
-					"A complex part cannot link to a page with a lower index! Place complex parts on the last pages":
+				mem_i = ip;
+				continue;
+			}
+			if (ip < cppg)
+				return ip;
+			else if (WarShown == 0)
+			{
+				AfxMessageBox(G_LANGUAGE == 0 ?
+					"A complex part cannot link to a page with a lower index! Place complex parts on the last pages" :
 					"Составная деталь не может ссылаться на страницу с более низким индексом! Размещайте иерархические части на последних страницах", MB_ICONERROR);
 				WarShown = 1;
 			}
+		}
 	}
-	return -1;
+	return mem_i;
 }
 //-------------------------------------------------------------------
 //===================================================================
